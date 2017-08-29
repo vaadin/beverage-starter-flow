@@ -40,6 +40,14 @@ public class Servlet extends VaadinServlet {
              * For the root, only show the main view without any sub view
              */
             configuration.setRoute("", MainView.class);
+            /*
+             * For any of the specific routes, show a particular view inside the
+             * main view
+             */
+            configuration.setRoute("reviews", ReviewsTemplate.class,
+                    MainView.class);
+            configuration.setRoute("categories", ReviewCategoryComponent.class,
+                    MainView.class);
         }
     }
 }
