@@ -37,9 +37,12 @@ public class Servlet extends VaadinServlet {
         @Override
         public void configure(RouterConfiguration configuration) {
             /*
-             * For the root, only show the main view without any sub view
+             * Start in the Reviews view by default
              */
-            configuration.setRoute("", MainView.class);
+            configuration.setRoute("", ReviewsView.class,
+                    MainView.class);
+            configuration.setRoute("categories", ReviewCategoryComponent.class,
+                    MainView.class);
         }
     }
 }
