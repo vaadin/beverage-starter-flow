@@ -5,5 +5,10 @@ node/
 node_modules/
 etc/
 
+.classpath
+.metadata/
+.project
+.settings/
+
 *.iml
 .DS_Store
