@@ -14,6 +14,9 @@ public class ReviewService {
     static String[] names = {"Radisson Hotel","Hilton Hotel","Best Western",
             "Hyatt","InterContinental","Sheraton","Westin","Marriott","Starwood"};
     
+    static String[] categoryNames = {"Living","Food","Transportation",
+            "Shopping","Others"};
+    
     
     private static ReviewService instance;
     
@@ -32,8 +35,7 @@ public class ReviewService {
                 cal.set(1930 + r.nextInt(87), r.nextInt(11), r.nextInt(28));
                 review.setTestDate(cal.getTime());
                 review.setScore(r.nextInt(5));
-                //review.setReviewCategory(category);
-                review.setReviewCategory(Category.values()[r.nextInt(Category.values().length)]);
+                review.setReviewCategory(categoryNames[r.nextInt(categoryNames.length)]);
                 review.setTestTimes(r.nextInt(100));
                 
                 reviewService.saveReview(review);                

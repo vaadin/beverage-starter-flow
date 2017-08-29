@@ -9,7 +9,7 @@ public class Review implements Serializable, Cloneable {
     private int score;
     private String name = "";
     private Date testDate;
-    private Category reviewCategory;
+    private String reviewCategory;
     private int testTimes; 
     
     //review ID in the app is the unique identification of every record
@@ -40,11 +40,11 @@ public class Review implements Serializable, Cloneable {
     }
     
     //get the ReviewCategory and return
-    public Category getReviewCategory() {
+    public String getReviewCategory() {
         return reviewCategory;
     }
     
-    public void setReviewCategory(Category reviewCategory) {
+    public void setReviewCategory(String reviewCategory) {
         this.reviewCategory = reviewCategory;
     }
     
