@@ -36,7 +36,7 @@ public class MainView extends VerticalLayout implements HasChildView {
 
     public MainView() {
         // This is just a simple label created via Elements API
-        Label label = new Label("Food & Drink Reviews");
+        Label label = new Label("Beverage Buddy");
         add(label);
 
         RouterLink reviews = new RouterLink("Reviews", ReviewsView.class);
