@@ -12,7 +12,8 @@ before_install:
 # https://docs.travis-ci.com/user/customizing-the-build#Skipping-the-Installation-Step
 install: true
 
-script: ./.travis.script.sh
+script:
+  - mvn -B -e -V clean verify
 
 # Cache requires a master build
 branches:
