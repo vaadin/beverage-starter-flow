@@ -17,27 +17,28 @@ package com.vaadin.flow.demo.helloworld;
 
 import com.vaadin.annotations.HtmlImport;
 import com.vaadin.annotations.Tag;
-import com.vaadin.flow.demo.helloworld.ExampleTemplate.ExampleModel;
+import com.vaadin.flow.demo.helloworld.ReviewsView.ReviewsModel;
+import com.vaadin.flow.router.View;
 import com.vaadin.flow.template.PolymerTemplate;
 import com.vaadin.flow.template.model.TemplateModel;
 
 /**
  * Simple template example.
  */
-@Tag("example-template")
-@HtmlImport("frontend://ExampleTemplate.html")
-public class ExampleTemplate extends PolymerTemplate<ExampleModel> {
+@Tag("reviews-view")
+@HtmlImport("frontend://ReviewsView.html")
+public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     /**
      * Template model which defines the single "name" property.
      */
-    public static interface ExampleModel extends TemplateModel {
+    public static interface ReviewsModel extends TemplateModel {
 
         void setName(String name);
     }
 
-    public ExampleTemplate() {
+    public ReviewsView() {
         // Set the initial value to the "name" property.
-        getModel().setName("World!");
+        getModel().setName("Reviews!");
     }
 }

@@ -17,17 +17,17 @@
 <!-- Dependency resources -->
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
-<!-- Defines the example-template element -->
-<dom-module id="example-template">
+<!-- Defines the reviews-view element -->
+<dom-module id="reviews-view">
     <template>
         <span>[[name]]</span>
     </template>
     
-    <!-- Polymer boilerplate to register the example-template element -->
+    <!-- Polymer boilerplate to register the reviews-view element -->
     <script>
         class ExampleTemplate extends Polymer.Element {
             static get is() {
-                return 'example-template'
+                return 'reviews-view'
             }
         }
         customElements.define(ExampleTemplate.is, ExampleTemplate);
