@@ -2,66 +2,122 @@ package com.vaadin.flow.starter.app.backend;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.time.LocalDate;
 
 public class Review implements Serializable, Cloneable {
 
-    private long id;
+    private Long id;
     private int score;
     private String name = "";
-    private Date testDate;
-    private Category reviewCategory;
+    private LocalDate testDate;
+    private String reviewCategory;
     private int testTimes; 
     
-    //review ID in the app is the unique identification of every record
+    public Review(int score, String name, LocalDate testDate,
+            String reviewCategory, int testTimes) {
+        this.score = score;
+        this.name = name;
+        this.testDate = testDate;
+        this.reviewCategory = reviewCategory;
+        this.testTimes = testTimes;
+    }
+
+    public Review(){}
+    
     public Long getId() {
         return id;
     }
     
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     
-    //get the test score and return
+    /**
+     * Get the value of score
+     *
+     * @return the value of score
+     */
     public int getScore() {
         return score;
     }
-    
+    /**
+     * Set the value of score
+     *
+     * @param score
+     *       new value of Score
+     */
     public void setScore(int score) {
         this.score = score;
     }
     
-    //get the test content and return
+    /**
+     * Get the value of name
+     *
+     * @return the value of name
+     */
     public String getName() {
         return name;
     }
-    
+    /**
+     * Set the value of name
+     *
+     * @param name
+     *       new value of name
+     */
     public void setName(String name) {
         this.name = name;
     }
     
-    //get the ReviewCategory and return
-    public Category getReviewCategory() {
+    /**
+     * Get the value of reviewCategory
+     *
+     * @return the value of reviewCategory
+     */
+    public String getReviewCategory() {
         return reviewCategory;
     }
-    
-    public void setReviewCategory(Category reviewCategory) {
+    /**
+     * Set the value of reviewCategory
+     *
+     * @param reviewCategory
+     *       new value of reviewCategory
+     */
+    public void setReviewCategory(String reviewCategory) {
         this.reviewCategory = reviewCategory;
     }
     
-    //get the testDate and return
-    public Date getTestDate() {
+    /**
+     * Get the value of testDate
+     *
+     * @return the value of testDate
+     */
+    public LocalDate getTestDate() {
         return testDate;
     }
-    
-    public void setTestDate(Date date) {
+    /**
+     * Set the value of testDate
+     *
+     * @param testDate
+     *       new value of testDate
+     */
+    public void setTestDate(LocalDate date) {
         this.testDate = date;
     }
     
-    //get the testTimes and return
+    /**
+     * Get the value of testTimes
+     *
+     * @return the value of testTimes
+     */
     public int getTestTimes() {
         return testTimes;
     }
-    
+    /**
+     * Set the value of testTimes
+     *
+     * @param testTimes
+     *       new value of testTimes
+     */
     public void setTestTimes(int testTimes) {
         this.testTimes = testTimes;
     }
