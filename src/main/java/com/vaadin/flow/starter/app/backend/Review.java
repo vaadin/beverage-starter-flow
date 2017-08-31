@@ -127,11 +127,10 @@ public class Review implements Serializable, Cloneable {
         this.testTimes = testTimes;
     }
 
-    @Override
-    public Review clone() throws CloneNotSupportedException {
-        return (Review) super.clone();
-    }
-
+    /*
+     * @Override public Review clone() throws CloneNotSupportedException {
+     * return (Review) super.clone(); }
+     */
     @Override
     public String toString() {
         return "Review{" + "id=" + id + ", Score=" + score + ", Name=" + name

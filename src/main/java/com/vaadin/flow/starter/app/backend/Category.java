@@ -35,8 +35,8 @@ public class Category implements Serializable, Cloneable {
         this.categoryName = categoryName;
     }
 
-    @Override
-    public Category clone() throws CloneNotSupportedException {
-        return (Category) super.clone();
-    }
+    /*
+     * @Override public Category clone() throws CloneNotSupportedException {
+     * return (Category) super.clone(); }
+     */
 }

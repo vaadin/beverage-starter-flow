@@ -6,8 +6,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -48,17 +46,13 @@ public class CategoryService {
         String stringCategoryFilterLoCase = stringCategoryFilter.toLowerCase();
 
         for (Category category : categories.values()) {
-            try {
-                boolean passesFilter = (stringCategoryFilter == null
-                        || stringCategoryFilter.isEmpty())
-                        || category.toString().toLowerCase()
-                                .contains(stringCategoryFilterLoCase);
-                if (passesFilter) {
-                    categoryFindList.add(category.clone());
-                }
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(CategoryService.class.getName())
-                        .log(Level.SEVERE, null, ex);
+
+            boolean passesFilter = (stringCategoryFilter == null
+                    || stringCategoryFilter.isEmpty())
+                    || category.toString().toLowerCase()
+                            .contains(stringCategoryFilterLoCase);
+            if (passesFilter) {
+                categoryFindList.add(category);
             }
         }
 

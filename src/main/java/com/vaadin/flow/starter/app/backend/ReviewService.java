@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -75,19 +73,16 @@ public class ReviewService {
         String reviewStringFilter = stringFilter.toLowerCase();
 
         for (Review review : reviews.values()) {
-            try {
-                boolean passesFilter = (stringFilter == null
-                        || stringFilter.isEmpty())
-                        || review.toString().toLowerCase()
-                                .contains(reviewStringFilter);
-                if (passesFilter) {
-                    reviewFindList.add(review.clone());
-                }
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(ReviewService.class.getName())
-                        .log(Level.SEVERE, null, ex);
+
+            boolean passesFilter = (stringFilter == null
+                    || stringFilter.isEmpty())
+                    || review.toString().toLowerCase()
+                            .contains(reviewStringFilter);
+            if (passesFilter) {
+                reviewFindList.add(review);
             }
         }
+
         Collections.sort(reviewFindList, new Comparator<Review>() {
 
             @Override
