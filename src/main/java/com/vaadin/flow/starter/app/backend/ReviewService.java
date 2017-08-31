@@ -22,12 +22,12 @@ public class ReviewService {
 
     // create dummy data
 
-    static String[] names = { "Coca-Cola", "Fanta", "Sprite", "Budweiser",
-            "Heineken", "Guinness", "Maxwell", "Nescafe", "Jacob's Creek",
-            "Barefoot" };
+    static final String[] REVIEW_NAMES = { "Coca-Cola", "Fanta", "Sprite",
+            "Budweiser", "Heineken", "Guinness", "Maxwell", "Nescafe",
+            "Jacob's Creek", "Barefoot" };
 
-    static String[] categoryNames = { "Soft Drink", "Water", "Milk", "Beer",
-            "Coffee", "Wine", "Others" };
+    static final String[] CATEGORY_NAMES = { "Soft Drink", "Water", "Milk",
+            "Beer", "Coffee", "Wine", "Others" };
 
     private static List<Review> reviewList = new ArrayList<Review>();
 
@@ -40,12 +40,12 @@ public class ReviewService {
             for (int i = 0; i < 20; i++) {
                 Review review = new Review();
 
-                review.setName(names[r.nextInt(names.length)]);
+                review.setName(REVIEW_NAMES[r.nextInt(REVIEW_NAMES.length)]);
                 cal.set(1930 + r.nextInt(87), r.nextInt(11), r.nextInt(28));
                 review.setTestDate(DateToLocalTime(cal.getTime()));
                 review.setScore(r.nextInt(5));
                 review.setReviewCategory(
-                        categoryNames[r.nextInt(categoryNames.length)]);
+                        CATEGORY_NAMES[r.nextInt(CATEGORY_NAMES.length)]);
                 review.setTestTimes(r.nextInt(100));
                 reviewList.add(review);
             }
@@ -71,7 +71,7 @@ public class ReviewService {
     }
 
     public synchronized List<Review> findReview(String stringFilter) {
-        List arrayList = new ArrayList();
+        List reviewFindList = new ArrayList();
         String reviewStringFilter = stringFilter.toLowerCase();
 
         for (Review review : reviews.values()) {
@@ -81,21 +81,21 @@ public class ReviewService {
                         || review.toString().toLowerCase()
                                 .contains(reviewStringFilter);
                 if (passesFilter) {
-                    arrayList.add(review.clone());
+                    reviewFindList.add(review.clone());
                 }
             } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(ReviewService.class.getName())
                         .log(Level.SEVERE, null, ex);
             }
         }
-        Collections.sort(arrayList, new Comparator<Review>() {
+        Collections.sort(reviewFindList, new Comparator<Review>() {
 
             @Override
             public int compare(Review o1, Review o2) {
                 return (int) (o2.getId() - o1.getId());
             }
         });
-        return arrayList;
+        return reviewFindList;
     }
 
     public synchronized long count() {

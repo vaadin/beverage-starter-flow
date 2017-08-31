@@ -15,8 +15,8 @@ public class CategoryService {
 
     // create dummy Category
 
-    public static String[] categoryNames = { "Soft Drink", "Water", "Milk",
-            "Beer", "Wine", "Others" };
+    public static final String[] CATEGORY_NAME = { "Soft Drink", "Water",
+            "Milk", "Beer", "Wine", "Others" };
 
     private static CategoryService instance;
 
@@ -25,10 +25,10 @@ public class CategoryService {
         if (instance == null) {
             final CategoryService categoryService = new CategoryService();
 
-            for (int i = 0; i < categoryNames.length; i++) {
+            for (int i = 0; i < CATEGORY_NAME.length; i++) {
                 Category category = new Category();
 
-                category.setCategoryName(categoryNames[i]);
+                category.setCategoryName(CATEGORY_NAME[i]);
 
                 categoryService.saveCategory(category);
             }
@@ -44,7 +44,7 @@ public class CategoryService {
 
     public synchronized List<Category> findCategory(
             String stringCategoryFilter) {
-        List arrayList = new ArrayList();
+        List categoryFindList = new ArrayList();
         String stringCategoryFilterLoCase = stringCategoryFilter.toLowerCase();
 
         for (Category category : categories.values()) {
@@ -54,7 +54,7 @@ public class CategoryService {
                         || category.toString().toLowerCase()
                                 .contains(stringCategoryFilterLoCase);
                 if (passesFilter) {
-                    arrayList.add(category.clone());
+                    categoryFindList.add(category.clone());
                 }
             } catch (CloneNotSupportedException ex) {
                 Logger.getLogger(CategoryService.class.getName())
@@ -62,14 +62,14 @@ public class CategoryService {
             }
         }
 
-        Collections.sort(arrayList, new Comparator<Category>() {
+        Collections.sort(categoryFindList, new Comparator<Category>() {
             @Override
             public int compare(Category o1, Category o2) {
                 return (int) (o2.getCategoryId() - o1.getCategoryId());
             }
         });
 
-        return arrayList;
+        return categoryFindList;
     }
 
     public synchronized long count() {
