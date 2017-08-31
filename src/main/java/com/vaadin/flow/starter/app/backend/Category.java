@@ -2,7 +2,7 @@ package com.vaadin.flow.starter.app.backend;
 
 import java.io.Serializable;
 
-public class Category implements Serializable, Cloneable {
+public class Category implements Serializable {
 
     private Long categoryId;
 
@@ -35,8 +35,4 @@ public class Category implements Serializable, Cloneable {
         this.categoryName = categoryName;
     }
 
-    /*
-     * @Override public Category clone() throws CloneNotSupportedException {
-     * return (Category) super.clone(); }
-     */
 }

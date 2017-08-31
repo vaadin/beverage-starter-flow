@@ -3,7 +3,7 @@ package com.vaadin.flow.starter.app.backend;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Review implements Serializable, Cloneable {
+public class Review implements Serializable {
 
     private Long id;
     private int score;
@@ -127,10 +127,6 @@ public class Review implements Serializable, Cloneable {
         this.testTimes = testTimes;
     }
 
-    /*
-     * @Override public Review clone() throws CloneNotSupportedException {
-     * return (Review) super.clone(); }
-     */
     @Override
     public String toString() {
         return "Review{" + "id=" + id + ", Score=" + score + ", Name=" + name
