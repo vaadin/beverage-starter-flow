@@ -25,8 +25,6 @@ public class ReviewService {
         
         
         if (reviewList.size() == 0){
-            //final ReviewService reviewService = new ReviewService();
-            System.out.println("here is testing");
             Random r = new Random(0);
             Calendar cal = Calendar.getInstance();
             
@@ -36,17 +34,12 @@ public class ReviewService {
                 review.setName(names[r.nextInt(names.length)]);
                 cal.set(1930 + r.nextInt(87), r.nextInt(11), r.nextInt(28));
                 review.setTestDate(DateToLocalTime(cal.getTime()));
-                //review.setTestDate(cal.getTime());
                 review.setScore(r.nextInt(5));
-                //review.setReviewCategory(category);
                 review.setReviewCategory(categoryNames[r.nextInt(categoryNames.length)]);
-                review.setTestTimes(r.nextInt(100));
-                //
-                //reviewService.saveReview(review); 
+                review.setTestTimes(r.nextInt(100)); 
                 reviewList.add(review);
             }
-            
-            
+                
         }
         
         return reviewList;
@@ -75,7 +68,7 @@ public class ReviewService {
             try {
                 boolean passesFilter = (stringFilter == null || stringFilter.isEmpty())
                         || review.toString().toLowerCase()
-                                .contains(stringFilter.toLowerCase());
+                                .contains(reviewStringFilter);
                 if (passesFilter) {
                     arrayList.add(review.clone());
                 }
@@ -102,7 +95,7 @@ public class ReviewService {
         reviews.remove(value.getId());
     }
     
-/*    public synchronized void saveReview(Review entry) {
+    public synchronized void saveReview(Review entry) {
         
         if(entry.getId() == null) {
             entry.setId(nextId++);
@@ -113,5 +106,5 @@ public class ReviewService {
             throw new RuntimeException(ex);
         }
         reviews.put(entry.getId(),entry);
-    }*/
+    }
 }
