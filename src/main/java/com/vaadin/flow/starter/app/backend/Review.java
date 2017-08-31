@@ -1,7 +1,6 @@
 package com.vaadin.flow.starter.app.backend;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.time.LocalDate;
 
 public class Review implements Serializable, Cloneable {
@@ -11,8 +10,8 @@ public class Review implements Serializable, Cloneable {
     private String name = "";
     private LocalDate testDate;
     private String reviewCategory;
-    private int testTimes; 
-    
+    private int testTimes;
+
     public Review(int score, String name, LocalDate testDate,
             String reviewCategory, int testTimes) {
         this.score = score;
@@ -22,16 +21,17 @@ public class Review implements Serializable, Cloneable {
         this.testTimes = testTimes;
     }
 
-    public Review(){}
-    
+    public Review() {
+    }
+
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     /**
      * Get the value of score
      *
@@ -40,16 +40,17 @@ public class Review implements Serializable, Cloneable {
     public int getScore() {
         return score;
     }
+
     /**
      * Set the value of score
      *
      * @param score
-     *       new value of Score
+     *            new value of Score
      */
     public void setScore(int score) {
         this.score = score;
     }
-    
+
     /**
      * Get the value of name
      *
@@ -58,16 +59,17 @@ public class Review implements Serializable, Cloneable {
     public String getName() {
         return name;
     }
+
     /**
      * Set the value of name
      *
      * @param name
-     *       new value of name
+     *            new value of name
      */
     public void setName(String name) {
         this.name = name;
     }
-    
+
     /**
      * Get the value of reviewCategory
      *
@@ -76,16 +78,17 @@ public class Review implements Serializable, Cloneable {
     public String getReviewCategory() {
         return reviewCategory;
     }
+
     /**
      * Set the value of reviewCategory
      *
      * @param reviewCategory
-     *       new value of reviewCategory
+     *            new value of reviewCategory
      */
     public void setReviewCategory(String reviewCategory) {
         this.reviewCategory = reviewCategory;
     }
-    
+
     /**
      * Get the value of testDate
      *
@@ -94,16 +97,17 @@ public class Review implements Serializable, Cloneable {
     public LocalDate getTestDate() {
         return testDate;
     }
+
     /**
      * Set the value of testDate
      *
      * @param testDate
-     *       new value of testDate
+     *            new value of testDate
      */
     public void setTestDate(LocalDate date) {
         this.testDate = date;
     }
-    
+
     /**
      * Get the value of testTimes
      *
@@ -112,26 +116,27 @@ public class Review implements Serializable, Cloneable {
     public int getTestTimes() {
         return testTimes;
     }
+
     /**
      * Set the value of testTimes
      *
      * @param testTimes
-     *       new value of testTimes
+     *            new value of testTimes
      */
     public void setTestTimes(int testTimes) {
         this.testTimes = testTimes;
     }
-    
+
     @Override
     public Review clone() throws CloneNotSupportedException {
         return (Review) super.clone();
     }
-    
+
     @Override
     public String toString() {
-        return "Review{" + "id=" + id +", Score=" + score +", Name=" + name 
-                + ", Category=" + reviewCategory + ", TestDate" + testDate 
+        return "Review{" + "id=" + id + ", Score=" + score + ", Name=" + name
+                + ", Category=" + reviewCategory + ", TestDate" + testDate
                 + ", TestTimes" + testTimes + '}';
     }
-   
+
 }
