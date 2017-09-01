@@ -42,14 +42,15 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
         @Exclude("id")
         @Convert(value = LocalDateToStringConverter.class, path = "testDate")
+
         void setReviews(List<Review> reviews);
 
     }
 
     public ReviewsView() {
 
-        List<Review> reviews = ReviewService.createDemoReviewService();
-        getModel().setReviews(reviews);
-
+        ReviewService reviews = ReviewService.getDemoReviewService();
+        List<Review> reviewList = reviews.findReview("");
+        getModel().setReviews(reviewList);
     }
 }
