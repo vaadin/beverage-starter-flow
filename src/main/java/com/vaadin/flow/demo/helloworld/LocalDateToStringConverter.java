@@ -13,11 +13,12 @@ import com.vaadin.flow.template.model.ModelConverter;
 public class LocalDateToStringConverter
         implements ModelConverter<LocalDate, String> {
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter
+            .ofPattern("MM/dd/yyyy");
 
     @Override
     public LocalDate toModel(String presentationValue) {
-        return LocalDate.parse(presentationValue, formatter);
+        return LocalDate.parse(presentationValue, DATE_FORMAT);
     }
 
     @Override
