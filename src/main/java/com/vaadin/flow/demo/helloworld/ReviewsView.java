@@ -25,11 +25,8 @@ import com.vaadin.flow.demo.helloworld.ReviewsView.ReviewsModel;
 import com.vaadin.flow.router.View;
 import com.vaadin.flow.starter.app.backend.Review;
 import com.vaadin.flow.starter.app.backend.ReviewService;
-
 import com.vaadin.flow.template.PolymerTemplate;
 import com.vaadin.flow.template.model.TemplateModel;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * Simple template example.
@@ -41,20 +38,18 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     /**
      * Template model which defines the single "name" property.
      */
- public static interface ReviewsModel extends TemplateModel {
-        
-        //Review getCurrentReview();
-        //void setCurrentReview(Review currentReview);
+    public static interface ReviewsModel extends TemplateModel {
+
         @Exclude("id")
-        @Convert(value=LocalDateToStringConverter.class, path="testDate")
+        @Convert(value = LocalDateToStringConverter.class, path = "testDate")
         void setReviews(List<Review> reviews);
-        
+
     }
 
     public ReviewsView() {
-        
+
         List<Review> reviews = ReviewService.createDemoReviewService();
         getModel().setReviews(reviews);
-        
+
     }
 }
