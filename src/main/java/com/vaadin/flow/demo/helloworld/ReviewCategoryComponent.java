@@ -32,7 +32,6 @@ public class ReviewCategoryComponent extends VerticalLayout implements View {
         counter.setText(String.valueOf(reviewCount));
         Button editButton = new Button();
         editButton.setText("Edit");
-        //editButton.setRaised(true);
         layout.add(name, counter, editButton);
         layout.setWidth("100%");
         layout.getStyle().set("border", "1px solid #9E9E9E");
