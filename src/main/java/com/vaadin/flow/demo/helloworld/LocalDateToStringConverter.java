@@ -3,18 +3,18 @@ package com.vaadin.flow.demo.helloworld;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.vaadin.flow.template.model.ModelConverter;
+
 /**
- * Converts between Date-objects and their String-representations 
+ * Converts between DateTime-objects and their String-representations
  * 
  */
-
-import com.vaadin.flow.template.model.ModelConverter;
 
 public class LocalDateToStringConverter
         implements ModelConverter<LocalDate, String> {
 
     public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter
-            .ofPattern("MM/dd/yyyy");
+            .ofPattern("dd/MM/yyyy");
 
     @Override
     public LocalDate toModel(String presentationValue) {
@@ -23,7 +23,7 @@ public class LocalDateToStringConverter
 
     @Override
     public String toPresentation(LocalDate modelValue) {
-        return modelValue == null ? null : modelValue.toString();
+        return modelValue == null ? null : modelValue.format(DATE_FORMAT);
     }
 
 }

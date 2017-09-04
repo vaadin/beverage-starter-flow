@@ -16,7 +16,7 @@ public class CategoryService {
 
     private static final CategoryService INSTANCE = createDemoCategoryService();
 
-    public static CategoryService getDemoCategoryService() {
+    public static CategoryService getInstance() {
         return INSTANCE;
     }
 
