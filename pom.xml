@@ -152,6 +152,7 @@
                         <goals>
                             <goal>install-node-and-npm</goal>
                             <goal>npm</goal>
+                            <goal>bower</goal>
                         </goals>
                     </execution>
                     <execution>
