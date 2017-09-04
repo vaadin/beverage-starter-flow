@@ -15,21 +15,21 @@ import com.vaadin.ui.VerticalLayout;
 
 public class ReviewCategoryComponent extends VerticalLayout implements View {
 
-    private final CategoryService categoryService = CategoryService.getInstance();
-    private final ReviewService reviewService = ReviewService.getInstance();
+    private final transient CategoryService categoryService = CategoryService.getInstance();
+    private final transient ReviewService reviewService = ReviewService.getInstance();
     private TextField filter;
-    private VerticalLayout categories = new VerticalLayout();
+    private VerticalLayout categoryLayout = new VerticalLayout();
 
     public ReviewCategoryComponent() {
         getElement().getStyle().set("maxWidth", "500px");
 
         addSearchBar();
-        add(categories);
+        add(categoryLayout);
         updateView();
     }
 
     private void updateView() {
-        categories.removeAll();
+        categoryLayout.removeAll();
         List<Category> categories = categoryService.findCategory(filter.getValue());
         for (Category category : categories) {
             List<Review> reviewsInCategory = reviewService.findReview(category.getCategoryName());
@@ -61,6 +61,6 @@ public class ReviewCategoryComponent extends VerticalLayout implements View {
         layout.setWidth("100%");
         layout.getStyle().set("border", "1px solid #9E9E9E");
         layout.setSpacing(true);
-        categories.add(layout);
+        categoryLayout.add(layout);
     }
 }
