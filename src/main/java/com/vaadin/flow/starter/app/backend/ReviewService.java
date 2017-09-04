@@ -1,20 +1,13 @@
 package com.vaadin.flow.starter.app.backend;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import org.apache.commons.beanutils.BeanUtils;
 
 public class ReviewService {
 
@@ -27,53 +20,41 @@ public class ReviewService {
     static final String[] CATEGORY_NAMES = { "Soft Drink", "Water", "Milk",
             "Beer", "Coffee", "Wine", "Others" };
 
-    private static List<Review> reviewList = new ArrayList<Review>();
+    private static final ReviewService INSTANCE = createDemoReviewService();
 
-    public static List<Review> createDemoReviewService() {
+    public static ReviewService getInstance() {
+        return INSTANCE;
+    }
 
-        if (reviewList.size() == 0) {
-            Random r = new Random(0);
-            Calendar cal = Calendar.getInstance();
+    private static ReviewService createDemoReviewService() {
+        final ReviewService reviewService = new ReviewService();
+        Random r = new Random(0);
 
-            for (int i = 0; i < 20; i++) {
-                Review review = new Review();
+        for (int i = 0; i < 20; i++) {
+            Review review = new Review();
 
-                review.setName(REVIEW_NAMES[r.nextInt(REVIEW_NAMES.length)]);
-                cal.set(1930 + r.nextInt(87), r.nextInt(11), r.nextInt(28));
-                review.setTestDate(DateToLocalTime(cal.getTime()));
-                review.setScore(r.nextInt(5));
-                review.setReviewCategory(
-                        CATEGORY_NAMES[r.nextInt(CATEGORY_NAMES.length)]);
-                review.setTestTimes(r.nextInt(100));
-                reviewList.add(review);
-            }
-
+            review.setName(REVIEW_NAMES[r.nextInt(REVIEW_NAMES.length)]);
+            LocalDate testDay = LocalDate.of(1930 + r.nextInt(87),
+                    1 + r.nextInt(11), 1 + r.nextInt(27));
+            review.setTestDate(testDay);
+            review.setScore(r.nextInt(5));
+            review.setReviewCategory(
+                    CATEGORY_NAMES[r.nextInt(CATEGORY_NAMES.length)]);
+            review.setTestTimes(r.nextInt(100));
+            reviewService.saveReview(review);
         }
 
-        return reviewList;
+        return reviewService;
     }
 
     private Map<Long, Review> reviews = new HashMap<>();
     private long nextId = 0;
-
-    /**
-     * Converts the Java.util.Date to Java.time.LocalTime
-     */
-    public static synchronized LocalDate DateToLocalTime(Date date) {
-        Instant instant = date.toInstant();
-        ZoneId zone = ZoneId.systemDefault();
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, zone);
-        LocalDate localDate = localDateTime.toLocalDate();
-
-        return localDate;
-    }
 
     public synchronized List<Review> findReview(String stringFilter) {
         List reviewFindList = new ArrayList();
         String reviewStringFilter = stringFilter.toLowerCase();
 
         for (Review review : reviews.values()) {
-
             boolean passesFilter = (stringFilter == null
                     || stringFilter.isEmpty())
                     || review.toString().toLowerCase()
@@ -84,7 +65,6 @@ public class ReviewService {
         }
 
         Collections.sort(reviewFindList, new Comparator<Review>() {
-
             @Override
             public int compare(Review o1, Review o2) {
                 return (int) (o2.getId() - o1.getId());
@@ -105,11 +85,6 @@ public class ReviewService {
 
         if (entry.getId() == null) {
             entry.setId(nextId++);
-        }
-        try {
-            entry = (Review) BeanUtils.cloneBean(entry);
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
         }
         reviews.put(entry.getId(), entry);
     }

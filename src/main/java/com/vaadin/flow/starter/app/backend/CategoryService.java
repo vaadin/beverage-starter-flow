@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
-
 public class CategoryService {
 
     // create dummy Category
@@ -16,25 +14,25 @@ public class CategoryService {
     public static final String[] CATEGORY_NAME = { "Soft Drink", "Water",
             "Milk", "Beer", "Wine", "Others" };
 
-    private static CategoryService instance;
+    private static final CategoryService INSTANCE = createDemoCategoryService();
 
-    public static CategoryService createDemoCategoryService() {
+    public static CategoryService getInstance() {
+        return INSTANCE;
+    }
 
-        if (instance == null) {
-            final CategoryService categoryService = new CategoryService();
+    private static CategoryService createDemoCategoryService() {
 
-            for (int i = 0; i < CATEGORY_NAME.length; i++) {
-                Category category = new Category();
+        final CategoryService categoryService = new CategoryService();
 
-                category.setCategoryName(CATEGORY_NAME[i]);
+        for (int i = 0; i < CATEGORY_NAME.length; i++) {
+            Category category = new Category();
 
-                categoryService.saveCategory(category);
-            }
+            category.setCategoryName(CATEGORY_NAME[i]);
 
-            instance = categoryService;
+            categoryService.saveCategory(category);
         }
 
-        return instance;
+        return categoryService;
     }
 
     private Map<Long, Category> categories = new HashMap<>();
@@ -78,11 +76,6 @@ public class CategoryService {
 
         if (entry.getCategoryId() == null) {
             entry.setCategoryId(nextId++);
-        }
-        try {
-            entry = (Category) BeanUtils.cloneBean(entry);
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
         }
         categories.put(entry.getCategoryId(), entry);
     }
