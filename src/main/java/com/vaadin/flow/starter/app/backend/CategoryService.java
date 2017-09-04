@@ -47,7 +47,7 @@ public class CategoryService {
 
             boolean passesFilter = (stringCategoryFilter == null
                     || stringCategoryFilter.isEmpty())
-                    || category.toString().toLowerCase()
+                    || category.getCategoryName().toLowerCase()
                             .contains(stringCategoryFilterLoCase);
             if (passesFilter) {
                 categoryFindList.add(category);
