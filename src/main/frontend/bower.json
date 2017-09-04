@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "polymer": "2.0.0",
-    "paper-toast": "2.0.0"
+    "paper-toast": "2.0.0",
+    "vaadin-button": "~1.0.0"
   }
 }

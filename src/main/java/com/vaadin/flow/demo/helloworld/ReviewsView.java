@@ -15,10 +15,16 @@
  */
 package com.vaadin.flow.demo.helloworld;
 
+import java.util.List;
+
+import com.vaadin.annotations.Convert;
+import com.vaadin.annotations.Exclude;
 import com.vaadin.annotations.HtmlImport;
 import com.vaadin.annotations.Tag;
 import com.vaadin.flow.demo.helloworld.ReviewsView.ReviewsModel;
 import com.vaadin.flow.router.View;
+import com.vaadin.flow.starter.app.backend.Review;
+import com.vaadin.flow.starter.app.backend.ReviewService;
 import com.vaadin.flow.template.PolymerTemplate;
 import com.vaadin.flow.template.model.TemplateModel;
 
@@ -29,16 +35,18 @@ import com.vaadin.flow.template.model.TemplateModel;
 @HtmlImport("frontend://ReviewsView.html")
 public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
-    /**
-     * Template model which defines the single "name" property.
-     */
     public static interface ReviewsModel extends TemplateModel {
+        @Exclude("id")
+        @Convert(value = LocalDateToStringConverter.class, path = "testDate")
 
-        void setName(String name);
+        void setReviews(List<Review> reviews);
+
     }
 
     public ReviewsView() {
-        // Set the initial value to the "name" property.
-        getModel().setName("Reviews!");
+
+        ReviewService reviews = ReviewService.getInstance();
+        List<Review> reviewList = reviews.findReview("");
+        getModel().setReviews(reviewList);
     }
 }

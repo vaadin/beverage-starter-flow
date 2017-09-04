@@ -20,7 +20,14 @@
 <!-- Defines the reviews-view element -->
 <dom-module id="reviews-view">
     <template>
-        <span>[[name]]</span>
+        <div>Review list:</div>
+        <template is="dom-repeat" items="{{reviews}}">
+            <div>Score:{{item.score}} &nbsp;
+            Name:{{item.name}} &nbsp;
+            Category:{{item.reviewCategory}} &nbsp;
+            Times Tasted:{{item.testTimes}} &nbsp;
+            Last Taste Date:{{item.testDate}}</div>
+        </template>
     </template>
     
     <!-- Polymer boilerplate to register the reviews-view element -->
