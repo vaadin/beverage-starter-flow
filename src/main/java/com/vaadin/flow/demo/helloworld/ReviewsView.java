@@ -35,11 +35,7 @@ import com.vaadin.flow.template.model.TemplateModel;
 @HtmlImport("frontend://ReviewsView.html")
 public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
-    /**
-     * Template model which defines the single "name" property.
-     */
     public static interface ReviewsModel extends TemplateModel {
-
         @Exclude("id")
         @Convert(value = LocalDateToStringConverter.class, path = "testDate")
 
