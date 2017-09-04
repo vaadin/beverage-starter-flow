@@ -49,7 +49,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     public ReviewsView() {
 
-        ReviewService reviews = ReviewService.getDemoReviewService();
+        ReviewService reviews = ReviewService.getInstance();
         List<Review> reviewList = reviews.findReview("");
         getModel().setReviews(reviewList);
     }

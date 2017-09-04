@@ -22,7 +22,7 @@ public class ReviewService {
 
     private static final ReviewService INSTANCE = createDemoReviewService();
 
-    public static ReviewService getDemoReviewService() {
+    public static ReviewService getInstance() {
         return INSTANCE;
     }
 
@@ -55,7 +55,6 @@ public class ReviewService {
         String reviewStringFilter = stringFilter.toLowerCase();
 
         for (Review review : reviews.values()) {
-
             boolean passesFilter = (stringFilter == null
                     || stringFilter.isEmpty())
                     || review.toString().toLowerCase()
@@ -66,7 +65,6 @@ public class ReviewService {
         }
 
         Collections.sort(reviewFindList, new Comparator<Review>() {
-
             @Override
             public int compare(Review o1, Review o2) {
                 return (int) (o2.getId() - o1.getId());
