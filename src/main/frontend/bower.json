@@ -16,7 +16,10 @@
   "dependencies": {
     "polymer": "2.0.0",
     "paper-toast": "2.0.0",
+    "paper-dialog": "~2.0.0",
+    "vaadin-text-field": "~1.1.0-alpha3",
     "vaadin-button": "~1.0.0",
-    "vaadin-text-field": "~1.0.0"
+    "vaadin-combo-box": "~2.0.0",
+    "vaadin-date-picker": "~2.0.2"
   }
 }

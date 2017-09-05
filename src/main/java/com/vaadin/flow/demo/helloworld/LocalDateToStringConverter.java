@@ -14,7 +14,7 @@ public class LocalDateToStringConverter
         implements ModelConverter<LocalDate, String> {
 
     public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter
-            .ofPattern("dd/MM/yyyy");
+            .ofPattern("MM/dd/yyyy");
 
     @Override
     public LocalDate toModel(String presentationValue) {
