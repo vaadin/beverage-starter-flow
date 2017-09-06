@@ -123,8 +123,8 @@ public class ReviewForm extends GeneratedPaperDialog {
         if (binder.isValid()) {
             reviewService.saveReview(binder.getBean());
             reviewsView.updateList();
-            notification.show("A new Review added.");
-            // close();
+            close();
+            reviewsView.showMessage();
         } else {
             notification.show("Please double check the information.");
         }

@@ -44,6 +44,8 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     private Button search;
     @Id("addReview")
     private Button addReview;
+    @Id("notification")
+    private PaperToast notification;
 
     public static interface ReviewsModel extends TemplateModel {
         @Exclude("id")
@@ -54,7 +56,6 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     }
 
     private ReviewForm reviewForm = new ReviewForm(this);
-
     ReviewService reviews = ReviewService.getInstance();
 
     public ReviewsView() {
@@ -77,5 +78,9 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     public void updateList() {
         getModel().setReviews(reviews.findReview(""));
+    }
+
+    public void showMessage() {
+        notification.show("Your reviews have been modified.");
     }
 }
