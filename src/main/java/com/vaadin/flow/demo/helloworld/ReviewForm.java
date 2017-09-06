@@ -33,9 +33,8 @@ public class ReviewForm extends GeneratedPaperDialog {
 
     public ReviewForm(ReviewsView reviewsView) {
         this.reviewsView = reviewsView;
-        // Created a separate method for using Binder
+
         bindFields();
-        // creating a ReviewForm
         VerticalLayout reviewFormLayout = new VerticalLayout();
 
         Label label = new Label("Edit Beverage Notes");
@@ -78,12 +77,10 @@ public class ReviewForm extends GeneratedPaperDialog {
         row4.add(save, cancel, delete, notification);
 
         reviewFormLayout.add(row4);
-        // If modal is true, this implies no-cancel-on-outside-click,
-        // no-cancel-on-esc-key and with-backdrop.
+
         setModal(true);
         add(reviewFormLayout);
 
-        // three buttons' listener
         save.addClickListener(e -> saveClicked());
         cancel.addClickListener(e -> cancelClicked());
         delete.addClickListener(null);

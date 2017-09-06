@@ -1,8 +1,16 @@
 package com.vaadin.flow.starter.app.backend;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class CategoryService {
+public class CategoryService implements Serializable {
 
     private static final CategoryService INSTANCE = createDemoCategoryService();
 
@@ -13,7 +21,8 @@ public class CategoryService {
     private static CategoryService createDemoCategoryService() {
 
         CategoryService categoryService = new CategoryService();
-        Set<String> categories = new LinkedHashSet<>(ReviewService.BEVERAGES.values());
+        Set<String> categories = new LinkedHashSet<>(
+                ReviewService.BEVERAGES.values());
 
         for (String categoryName : categories) {
             Category category = new Category();
