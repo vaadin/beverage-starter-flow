@@ -1,6 +1,7 @@
 package com.vaadin.flow.demo.helloworld;
 
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToIntegerConverter;
@@ -21,7 +22,7 @@ public class ReviewForm extends GeneratedPaperDialog {
 
     private ReviewService reviewService = ReviewService.getInstance();
     private Binder<Review> binder = new Binder<>(Review.class);
-
+    private CategoryService categoryService = CategoryService.getInstance();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
     private ComboBox<String> categoryBox = new ComboBox<>();
@@ -51,7 +52,10 @@ public class ReviewForm extends GeneratedPaperDialog {
 
         HorizontalLayout row2 = new HorizontalLayout();
         categoryBox.setLabel("chose a category");
-        categoryBox.setItems(CategoryService.CATEGORY_NAME);
+
+        categoryBox.setItems(categoryService.findCategory("").stream()
+                .map(c -> c.getCategoryName()).collect(Collectors.toList())
+                .toArray(new String[0]));
         lastTasted.setLabel("choose the date");
         row2.add(categoryBox, lastTasted);
         row2.setSpacing(true);
@@ -120,7 +124,7 @@ public class ReviewForm extends GeneratedPaperDialog {
             reviewService.saveReview(binder.getBean());
             reviewsView.updateList();
             notification.show("A new Review added.");
-            close();
+            // close();
         } else {
             notification.show("Please double check the information.");
         }
