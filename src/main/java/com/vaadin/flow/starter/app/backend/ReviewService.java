@@ -2,93 +2,49 @@ package com.vaadin.flow.starter.app.backend;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class ReviewService {
-
-    private static final String MINERAL_WATER = "Mineral Water";
-    private static final String SOFT_DRINK = "Soft Drink";
-    private static final String COFFEE = "Coffee";
-    private static final String TEA = "Tea";
-    private static final String DAIRY = "Dairy";
-    private static final String CIDER = "Cider";
-    private static final String BEER = "Beer";
-    private static final String WINE = "Wine";
-    private static final String OTHER = "Other";
 
     static final Map<String, String> BEVERAGES = new LinkedHashMap<>();
 
     static {
-        BEVERAGES.put("Evian", MINERAL_WATER);
-        BEVERAGES.put("Voss", MINERAL_WATER);
-        BEVERAGES.put("Veen", MINERAL_WATER);
-        BEVERAGES.put("San Pellegrino", MINERAL_WATER);
-        BEVERAGES.put("Perrier", MINERAL_WATER);
+        Stream.of("Evian", "Voss", "Veen", "San Pellegrino", "Perrier")
+                .forEach(name -> BEVERAGES.put(name, "Mineral Water"));
 
-        BEVERAGES.put("Coca-Cola", SOFT_DRINK);
-        BEVERAGES.put("Fanta", SOFT_DRINK);
-        BEVERAGES.put("Sprite", SOFT_DRINK);
+        Stream.of("Coca-Cola", "Fanta", "Sprite")
+                .forEach(name -> BEVERAGES.put(name, "Soft Drink"));
 
-        BEVERAGES.put("Maxwell Ready-to-Drink Coffee", COFFEE);
-        BEVERAGES.put("Nescafé Gold", COFFEE);
-        BEVERAGES.put("Starbucks East Timor Tatamailau", COFFEE);
+        Stream.of("Maxwell Ready-to-Drink Coffee", "Nescafé Gold", "Starbucks East Timor Tatamailau")
+                .forEach(name -> BEVERAGES.put(name, "Coffee"));
 
-        BEVERAGES.put("Prince Of Peace Organic White Tea", TEA);
-        BEVERAGES.put("Pai Mu Tan White Peony Tea", TEA);
-        BEVERAGES.put("Tazo Zen Green Tea", TEA);
-        BEVERAGES.put("Dilmah Sencha Green Tea", TEA);
-        BEVERAGES.put("Twinings Earl Grey", TEA);
-        BEVERAGES.put("Twinings Lady Grey", TEA);
-        BEVERAGES.put("Classic Indian Chai", TEA);
+        Stream.of("Prince Of Peace Organic White Tea", "Pai Mu Tan White Peony Tea",
+                "Tazo Zen Green Tea", "Dilmah Sencha Green Tea",
+                "Twinings Earl Grey", "Twinings Lady Grey", "Classic Indian Chai")
+                .forEach(name -> BEVERAGES.put(name, "Tea"));
 
-        BEVERAGES.put("Cow's Milk", DAIRY);
-        BEVERAGES.put("Goat's Milk", DAIRY);
-        BEVERAGES.put("Unicorn's Milk", DAIRY);
-        BEVERAGES.put("Salt Lassi", DAIRY);
-        BEVERAGES.put("Mango Lassi", DAIRY);
-        BEVERAGES.put("Airag", DAIRY);
+        Stream.of("Cow's Milk", "Goat's Milk", "Unicorn's Milk", "Salt Lassi", "Mango Lassi", "Airag")
+                .forEach(name -> BEVERAGES.put(name, "Dairy"));
 
-        BEVERAGES.put("Crowmoor Extra Dry Apple", CIDER);
-        BEVERAGES.put("Golden Cap Perry", CIDER);
-        BEVERAGES.put("Somersby Blueberry", CIDER);
-        BEVERAGES.put("Kopparbergs Naked Apple Cider", CIDER);
-        BEVERAGES.put("Kopparbergs Raspberry", CIDER);
-        BEVERAGES.put("Kingstone Press Wild Berry Flavoured Cider", CIDER);
-        BEVERAGES.put("Crumpton Oaks Apple Cider", CIDER);
-        BEVERAGES.put("Frosty Jack's", CIDER);
-        BEVERAGES.put("Ciderboys Mad Bark", CIDER);
-        BEVERAGES.put("Angry Orchard Stone Dry", CIDER);
-        BEVERAGES.put("Walden Hollow", CIDER);
-        BEVERAGES.put("Fox Barrel Wit Pear", CIDER);
+        Stream.of("Crowmoor Extra Dry Apple", "Golden Cap Perry", "Somersby Blueberry",
+                "Kopparbergs Naked Apple Cider", "Kopparbergs Raspberry",
+                "Kingstone Press Wild Berry Flavoured Cider", "Crumpton Oaks Apple", "Frosty Jack's",
+                "Ciderboys Mad Bark", "Angry Orchard Stone Dry", "Walden Hollow", "Fox Barrel Wit Pear")
+                .forEach(name -> BEVERAGES.put(name, "Cider"));
 
-        BEVERAGES.put("Budweiser", BEER);
-        BEVERAGES.put("Heineken", BEER);
-        BEVERAGES.put("Holsten Pilsener", BEER);
-        BEVERAGES.put("Krombacher", BEER);
-        BEVERAGES.put("Erdinger Weissbier", BEER);
-        BEVERAGES.put("Weihenstephaner Hefeweissbier", BEER);
-        BEVERAGES.put("Ayinger Kellerbier", BEER);
-        BEVERAGES.put("Guinness Draught", BEER);
-        BEVERAGES.put("Kilkenny Irish Cream Ale", BEER);
-        BEVERAGES.put("Hoegaarden White", BEER);
-        BEVERAGES.put("Barbar", BEER);
-        BEVERAGES.put("Corsendonk Agnus Dei", BEER);
-        BEVERAGES.put("Leffe Blonde", BEER);
-        BEVERAGES.put("Chimay Tripel", BEER);
-        BEVERAGES.put("Duvel", BEER);
-        BEVERAGES.put("Pilsner Urquell", BEER);
-        BEVERAGES.put("Kozel", BEER);
-        BEVERAGES.put("Staropramen", BEER);
-        BEVERAGES.put("Lapin Kulta IVA", BEER);
-        BEVERAGES.put("Kukko Pils III", BEER);
-        BEVERAGES.put("Finlandia Sahti", BEER);
+        Stream.of("Budweiser", "Miller",
+                "Heineken", "Holsten Pilsener", "Krombacher", "Weihenstephaner Hefeweissbier", "Ayinger Kellerbier",
+                "Guinness Draught", "Kilkenny Irish Cream Ale",
+                "Hoegaarden White", "Barbar", "Corsendonk Agnus Dei", "Leffe Blonde", "Chimay Tripel", "Duvel",
+                "Pilsner Urquell", "Kozel", "Staropramen",
+                "Lapin Kulta IVA", "Kukko Pils III", "Finlandia Sahti")
+                .forEach(name -> BEVERAGES.put(name, "Beer"));
 
-        BEVERAGES.put("Jacob's Creek Classic Shiraz", WINE);
-        BEVERAGES.put("Chateau d’Yquem Sauternes", WINE);
-        BEVERAGES.put("Oremus Tokaji Aszú 5 Puttonyos", WINE);
+        Stream.of("Jacob's Creek Classic Shiraz", "Chateau d’Yquem Sauternes", "Oremus Tokaji Aszú 5 Puttonyos")
+                .forEach(name -> BEVERAGES.put(name, "Wine"));
 
-        BEVERAGES.put("Pan Galactic Gargle Blaster", OTHER);
-        BEVERAGES.put("Mead", OTHER);
-        BEVERAGES.put("Soma", OTHER);
+        Stream.of("Pan Galactic Gargle Blaster", "Mead", "Soma")
+                .forEach(name -> BEVERAGES.put(name, "Other"));
     }
 
     private static final ReviewService INSTANCE = createDemoReviewService();
