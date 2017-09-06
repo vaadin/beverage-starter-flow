@@ -54,6 +54,8 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     }
 
     ReviewService reviews = ReviewService.getInstance();
+    private ReviewForm reviewForm = new ReviewForm(this);
+    private Review review = new Review();
 
     public ReviewsView() {
 
@@ -62,7 +64,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
         addReview.setText("Add new rewiew");
         addReview.addClickListener(e -> {
-            ReviewForm reviewForm = new ReviewForm(this);
+            reviewForm.setReview(review);
             getElement().getParent().appendChild(reviewForm.getElement());
             reviewForm.open();
         });

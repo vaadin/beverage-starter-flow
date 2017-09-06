@@ -2,6 +2,8 @@ package com.vaadin.flow.demo.helloworld;
 
 import java.time.LocalDate;
 
+import com.vaadin.data.Binder;
+import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.starter.app.backend.CategoryService;
 import com.vaadin.flow.starter.app.backend.Review;
@@ -17,15 +19,32 @@ import com.vaadin.ui.VerticalLayout;
 
 public class ReviewForm extends GeneratedPaperDialog {
 
-    private ReviewService service = ReviewService.getInstance();
+    private ReviewService reviewService = ReviewService.getInstance();
     private Review review = new Review();
     TextField beverageName = new TextField();
     TextField timesTasted = new TextField();
     ComboBox<String> categoryBox = new ComboBox<>();
     DatePicker lastTasted = new DatePicker();
     ComboBox<String> scoreBox = new ComboBox<>();
+    private Binder<Review> binder = new Binder<>(Review.class);
 
     public ReviewForm(ReviewsView reviewsView) {
+
+        binder.forField(beverageName).withValidator(name -> name.length() >= 3,
+                "The name of the beverage should be at least three characters.")
+                .bind(Review::getName, Review::setName);
+        binder.forField(timesTasted)
+                .withConverter(
+                        new StringToIntegerConverter("Must enter a number"))
+                .bind(Review::getTestTimes, Review::setTestTimes);
+        binder.forField(categoryBox).bind(Review::getReviewCategory,
+                Review::setReviewCategory);
+        binder.forField(lastTasted).bind(Review::getTestDate,
+                Review::setTestDate);
+        binder.forField(scoreBox)
+                .withConverter(
+                        new StringToIntegerConverter("The Score is a number"))
+                .bind(Review::getScore, Review::setScore);
 
         VerticalLayout reviewFormLayout = new VerticalLayout();
         // Title of this dialog is "Edit Beverage Notes"
@@ -75,15 +94,13 @@ public class ReviewForm extends GeneratedPaperDialog {
 
         Button save = new Button("Save");
         save.addClickListener(e -> {
-            Save();
+            saveButton();
             reviewsView.updateList();
             close();
         });
 
         Button cancel = new Button("Cancel");
-        cancel.addClickListener(e -> {
-            Cancel();
-        });
+        cancel.addClickListener(e -> cancelButton());
         Button delete = new Button("Delete");
         delete.setDisabled(true);
         delete.addClickListener(null);
@@ -100,37 +117,18 @@ public class ReviewForm extends GeneratedPaperDialog {
         add(reviewFormLayout);
     }
 
-    private void Cancel() {
+    public void setReview(Review review) {
+        this.review = review;
+        binder.setBean(review);
+    }
+
+    private void cancelButton() {
         close();
     }
 
-    private void Save() {
-        // TODO Auto-generated method stub
-
-        boolean emptyField = (beverageName.getValue() == null
-                || beverageName.isEmpty())
-                || (categoryBox.getValue() == null || categoryBox.isEmpty())
-                || (scoreBox.getValue() == null || scoreBox.isEmpty())
-                || (lastTasted.getValue() == null || lastTasted.isEmpty())
-                || (timesTasted.getValue() == null || timesTasted.isEmpty());
-
-        if (!emptyField) {
-
-            System.out.printf("%s, %s, %s, %s", beverageName.getValue(),
-                    categoryBox.getValue(), scoreBox.getValue(),
-                    timesTasted.getValue());
-
-            review.setName(beverageName.getValue());
-            review.setReviewCategory(categoryBox.getValue());
-            review.setScore(Integer.parseInt(scoreBox.getValue()));
-            review.setTestDate(lastTasted.getValue());
-            review.setTestTimes(Integer.parseInt(timesTasted.getValue()));
-            service.saveReview(review);
-        } else {
-            // post a errormessage
-            close();
-        }
-
+    private void saveButton() {
+        reviewService.saveReview(review);
+        close();
     }
 
 }
