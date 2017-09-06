@@ -2,24 +2,51 @@ package com.vaadin.flow.starter.app.backend;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class ReviewService implements Serializable {
 
-    // create dummy data
+    static final Map<String, String> BEVERAGES = new LinkedHashMap<>();
 
-    static final String[] REVIEW_NAMES = { "Coca-Cola", "Fanta", "Sprite",
-            "Budweiser", "Heineken", "Guinness", "Maxwell", "Nescafe",
-            "Jacob's Creek", "Barefoot" };
+    static {
+        Stream.of("Evian", "Voss", "Veen", "San Pellegrino", "Perrier")
+                .forEach(name -> BEVERAGES.put(name, "Mineral Water"));
 
-    static final String[] CATEGORY_NAMES = { "Soft Drink", "Water", "Milk",
-            "Beer", "Coffee", "Wine", "Others" };
+        Stream.of("Coca-Cola", "Fanta", "Sprite")
+                .forEach(name -> BEVERAGES.put(name, "Soft Drink"));
+
+        Stream.of("Maxwell Ready-to-Drink Coffee", "Nescafé Gold", "Starbucks East Timor Tatamailau")
+                .forEach(name -> BEVERAGES.put(name, "Coffee"));
+
+        Stream.of("Prince Of Peace Organic White Tea", "Pai Mu Tan White Peony Tea",
+                "Tazo Zen Green Tea", "Dilmah Sencha Green Tea",
+                "Twinings Earl Grey", "Twinings Lady Grey", "Classic Indian Chai")
+                .forEach(name -> BEVERAGES.put(name, "Tea"));
+
+        Stream.of("Cow's Milk", "Goat's Milk", "Unicorn's Milk", "Salt Lassi", "Mango Lassi", "Airag")
+                .forEach(name -> BEVERAGES.put(name, "Dairy"));
+
+        Stream.of("Crowmoor Extra Dry Apple", "Golden Cap Perry", "Somersby Blueberry",
+                "Kopparbergs Naked Apple Cider", "Kopparbergs Raspberry",
+                "Kingstone Press Wild Berry Flavoured Cider", "Crumpton Oaks Apple", "Frosty Jack's",
+                "Ciderboys Mad Bark", "Angry Orchard Stone Dry", "Walden Hollow", "Fox Barrel Wit Pear")
+                .forEach(name -> BEVERAGES.put(name, "Cider"));
+
+        Stream.of("Budweiser", "Miller",
+                "Heineken", "Holsten Pilsener", "Krombacher", "Weihenstephaner Hefeweissbier", "Ayinger Kellerbier",
+                "Guinness Draught", "Kilkenny Irish Cream Ale",
+                "Hoegaarden White", "Barbar", "Corsendonk Agnus Dei", "Leffe Blonde", "Chimay Tripel", "Duvel",
+                "Pilsner Urquell", "Kozel", "Staropramen",
+                "Lapin Kulta IVA", "Kukko Pils III", "Finlandia Sahti")
+                .forEach(name -> BEVERAGES.put(name, "Beer"));
+
+        Stream.of("Jacob's Creek Classic Shiraz", "Chateau d’Yquem Sauternes", "Oremus Tokaji Aszú 5 Puttonyos")
+                .forEach(name -> BEVERAGES.put(name, "Wine"));
+
+        Stream.of("Pan Galactic Gargle Blaster", "Mead", "Soma")
+                .forEach(name -> BEVERAGES.put(name, "Other"));
+    }
 
     private static final ReviewService INSTANCE = createDemoReviewService();
 
@@ -29,19 +56,21 @@ public class ReviewService implements Serializable {
 
     private static ReviewService createDemoReviewService() {
         final ReviewService reviewService = new ReviewService();
-        Random r = new Random(0);
+        Random r = new Random();
+        int reviewCount = 20 + r.nextInt(30);
+        List<Map.Entry<String, String>> beverages = new ArrayList<>(BEVERAGES.entrySet());
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < reviewCount; i++) {
             Review review = new Review();
+            Map.Entry<String, String> beverage = beverages.get(r.nextInt(BEVERAGES.size()));
 
-            review.setName(REVIEW_NAMES[r.nextInt(REVIEW_NAMES.length)]);
-            LocalDate testDay = LocalDate.of(1930 + r.nextInt(87),
-                    1 + r.nextInt(11), 1 + r.nextInt(27));
+            review.setName(beverage.getKey());
+            LocalDate testDay = LocalDate.of(1930 + r.nextInt(88),
+                    1 + r.nextInt(12), 1 + r.nextInt(28));
             review.setTestDate(testDay);
-            review.setScore(r.nextInt(5));
-            review.setReviewCategory(
-                    CATEGORY_NAMES[r.nextInt(CATEGORY_NAMES.length)]);
-            review.setTestTimes(r.nextInt(100));
+            review.setScore(1 + r.nextInt(5));
+            review.setReviewCategory(beverage.getValue());
+            review.setTestTimes(1 + r.nextInt(15));
             reviewService.saveReview(review);
         }
 
@@ -59,7 +88,7 @@ public class ReviewService implements Serializable {
             boolean passesFilter = (stringFilter == null
                     || stringFilter.isEmpty())
                     || review.toString().toLowerCase()
-                            .contains(reviewStringFilter);
+                    .contains(reviewStringFilter);
             if (passesFilter) {
                 reviewFindList.add(review);
             }
