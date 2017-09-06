@@ -64,7 +64,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
         addReview.setText("Add new review");
         addReview.addClickListener(e -> {
-            reviewForm.setReview(review);
+            reviewForm.clear();
             getElement().getParent().appendChild(reviewForm.getElement());
             reviewForm.open();
         });

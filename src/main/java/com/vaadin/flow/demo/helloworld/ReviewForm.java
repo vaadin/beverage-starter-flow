@@ -20,17 +20,17 @@ import com.vaadin.ui.VerticalLayout;
 public class ReviewForm extends GeneratedPaperDialog {
 
     private ReviewService reviewService = ReviewService.getInstance();
-    private Review review = new Review();
     private Binder<Review> binder = new Binder<>(Review.class);
 
-    TextField beverageName = new TextField();
-    TextField timesTasted = new TextField();
-    ComboBox<String> categoryBox = new ComboBox<>();
-    DatePicker lastTasted = new DatePicker();
-    ComboBox<String> scoreBox = new ComboBox<>();
+    private TextField beverageName = new TextField();
+    private TextField timesTasted = new TextField();
+    private ComboBox<String> categoryBox = new ComboBox<>();
+    private DatePicker lastTasted = new DatePicker();
+    private ComboBox<String> scoreBox = new ComboBox<>();
+    private ReviewsView reviewsView;
 
     public ReviewForm(ReviewsView reviewsView) {
-
+        this.reviewsView = reviewsView;
         binder.forField(beverageName).withValidator(name -> name.length() >= 3,
                 "The name of the beverage should be at least three characters.")
                 .bind(Review::getName, Review::setName);
@@ -95,12 +95,12 @@ public class ReviewForm extends GeneratedPaperDialog {
 
         Button save = new Button("Save");
         save.addClickListener(e -> {
-            saveButton();
-            reviewsView.updateList();
+            saveClicked();
+
         });
 
         Button cancel = new Button("Cancel");
-        cancel.addClickListener(e -> cancelButton());
+        cancel.addClickListener(e -> cancelClicked());
         Button delete = new Button("Delete");
         delete.setDisabled(true);
         delete.addClickListener(null);
@@ -114,18 +114,22 @@ public class ReviewForm extends GeneratedPaperDialog {
         add(reviewFormLayout);
     }
 
-    public void setReview(Review review) {
-        this.review = review;
-        binder.setBean(review);
+    public void clear() {
+        binder.setBean(new Review());
     }
 
-    private void cancelButton() {
+    private void cancelClicked() {
         close();
     }
 
-    private void saveButton() {
-        reviewService.saveReview(review);
-        close();
+    private void saveClicked() {
+        if (binder.isValid()) {
+            reviewService.saveReview(binder.getBean());
+            reviewsView.updateList();
+            close();
+        } else {
+            close();
+        }
     }
 
 }
