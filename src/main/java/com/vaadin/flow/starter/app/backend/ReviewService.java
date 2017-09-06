@@ -1,10 +1,11 @@
 package com.vaadin.flow.starter.app.backend;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class ReviewService {
+public class ReviewService implements Serializable {
 
     static final Map<String, String> BEVERAGES = new LinkedHashMap<>();
 

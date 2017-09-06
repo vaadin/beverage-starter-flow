@@ -16,13 +16,11 @@
 package com.vaadin.flow.demo.helloworld;
 
 import com.vaadin.annotations.StyleSheet;
-import com.vaadin.flow.html.H2;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.router.HasChildView;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.router.View;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Composite;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -41,13 +39,16 @@ public class MainView extends VerticalLayout implements HasChildView {
 
         RouterLink reviews = new RouterLink("Reviews", ReviewsView.class);
         reviews.setId("reviews-link");
-        RouterLink categories = new RouterLink("Categories", ReviewCategoryComponent.class);
+        RouterLink categories = new RouterLink("Categories",
+                ReviewCategoryComponent.class);
         categories.setId("categories-link");
 
-        HorizontalLayout viewSelector = new HorizontalLayout(label, reviews, categories);
+        HorizontalLayout viewSelector = new HorizontalLayout(label, reviews,
+                categories);
 
         addClassName("main-view");
         add(viewSelector);
+
     }
 
     @Override

@@ -104,8 +104,8 @@ public class Review implements Serializable {
      * @param testDate
      *            new value of testDate
      */
-    public void setTestDate(LocalDate date) {
-        this.testDate = date;
+    public void setTestDate(LocalDate testDate) {
+        this.testDate = testDate;
     }
 
     /**
@@ -130,8 +130,8 @@ public class Review implements Serializable {
     @Override
     public String toString() {
         return "Review{" + "id=" + id + ", Score=" + score + ", Name=" + name
-                + ", Category=" + reviewCategory + ", TestDate" + testDate
-                + ", TestTimes" + testTimes + '}';
+                + ", Category=" + reviewCategory + ", TestDate=" + testDate
+                + ", TestTimes=" + testTimes + '}';
     }
 
 }

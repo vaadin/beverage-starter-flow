@@ -20,6 +20,7 @@ import java.util.List;
 import com.vaadin.annotations.Convert;
 import com.vaadin.annotations.Exclude;
 import com.vaadin.annotations.HtmlImport;
+import com.vaadin.annotations.Id;
 import com.vaadin.annotations.Tag;
 import com.vaadin.flow.demo.helloworld.ReviewsView.ReviewsModel;
 import com.vaadin.flow.router.View;
@@ -27,6 +28,8 @@ import com.vaadin.flow.starter.app.backend.Review;
 import com.vaadin.flow.starter.app.backend.ReviewService;
 import com.vaadin.flow.template.PolymerTemplate;
 import com.vaadin.flow.template.model.TemplateModel;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.TextField;
 
 /**
  * Simple template example.
@@ -34,6 +37,15 @@ import com.vaadin.flow.template.model.TemplateModel;
 @Tag("reviews-view")
 @HtmlImport("frontend://ReviewsView.html")
 public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
+
+    @Id("filterText")
+    private TextField filterText;
+    @Id("search")
+    private Button search;
+    @Id("addReview")
+    private Button addReview;
+    @Id("notification")
+    private PaperToast notification;
 
     public static interface ReviewsModel extends TemplateModel {
         @Exclude("id")
@@ -43,10 +55,32 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     }
 
+    private ReviewForm reviewForm = new ReviewForm(this);
+    ReviewService reviews = ReviewService.getInstance();
+
     public ReviewsView() {
 
-        ReviewService reviews = ReviewService.getInstance();
-        List<Review> reviewList = reviews.findReview("");
-        getModel().setReviews(reviewList);
+        filterText.setPlaceholder("Find a review...");
+        search.setText("Search");
+
+        addReview.setText("Add new review");
+        addReview.addClickListener(e -> addReviewClicked());
+
+        updateList();
+
+    }
+
+    private void addReviewClicked() {
+        reviewForm.clear();
+        getElement().getParent().appendChild(reviewForm.getElement());
+        reviewForm.open();
+    }
+
+    public void updateList() {
+        getModel().setReviews(reviews.findReview(""));
+    }
+
+    public void showMessage() {
+        notification.show("Your reviews have been modified.");
     }
 }
