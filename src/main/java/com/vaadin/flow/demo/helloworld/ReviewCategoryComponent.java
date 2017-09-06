@@ -19,10 +19,16 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
 
     private final transient CategoryService categoryService = CategoryService.getInstance();
     private final transient ReviewService reviewService = ReviewService.getInstance();
-    private TextField filter;
-    private VerticalLayout categoryLayout = new VerticalLayout();
-    private TextField newCategoryNameInput;
+
+    private final TextField filter = new TextField("", "Search");
+    private final VerticalLayout categoryLayout = new VerticalLayout();
+
     private final GeneratedPaperDialog dialog = new GeneratedPaperDialog();
+    private final H2 titleField = new H2();
+    private final TextField newCategoryNameInput = new TextField();
+    private final Button saveButton = new Button("Save");
+    private final Button cancelButton = new Button("Cancel");
+
     private final PaperToast notification = new PaperToast();
 
     public ReviewCategoryComponent() {
@@ -37,7 +43,21 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
     private void initView() {
         getElement().getStyle().set("maxWidth", "500px");
         notification.setBackgroundColor("blue");
+        initDialog();
+
         add(dialog, notification);
+    }
+
+    private void initDialog() {
+        saveButton.getElement().setAttribute("dialog-confirm", true);
+        saveButton.getElement().setAttribute("autofocus", true);
+        saveButton.addClickListener(e -> handleNewCategoryRequest());
+        cancelButton.getElement().setAttribute("dialog-dismiss", true);
+        HorizontalLayout buttonBar = new HorizontalLayout(saveButton, cancelButton);
+        buttonBar.setClassName("buttons");
+        VerticalLayout layout = new VerticalLayout(titleField, newCategoryNameInput, buttonBar);
+        dialog.add(layout);
+        dialog.setModal(true);
     }
 
     private void updateView() {
@@ -54,7 +74,6 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
 
     private void addSearchBar() {
         HorizontalLayout layout = new HorizontalLayout();
-        filter = new TextField("", "Search");
         filter.addValueChangeListener(e -> updateView());
         Button newButton = new Button("+ New Category");
         newButton.addClickListener(e -> displayNewCategoryDialog());
@@ -78,24 +97,10 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
     }
 
     private void displayNewCategoryDialog() {
-        initDialog("Add New Category", "Category Name");
+        titleField.setText("Add New Category");
+        newCategoryNameInput.setLabel("Category Name");
+        newCategoryNameInput.clear();
         dialog.open();
-    }
-
-    private void initDialog(String title, String text) {
-        dialog.removeAll();
-        newCategoryNameInput = new TextField(text);
-        Button saveButton = new Button("Save");
-        saveButton.getElement().setAttribute("dialog-confirm", true);
-        saveButton.getElement().setAttribute("autofocus", true);
-        saveButton.addClickListener(e -> handleNewCategoryRequest());
-        Button cancelButton = new Button("Cancel");
-        cancelButton.getElement().setAttribute("dialog-dismiss", true);
-        HorizontalLayout buttonBar = new HorizontalLayout(saveButton, cancelButton);
-        buttonBar.setClassName("buttons");
-        VerticalLayout layout = new VerticalLayout(new H2(title), newCategoryNameInput, buttonBar);
-        dialog.add(layout);
-        dialog.setModal(true);
     }
 
     private void handleNewCategoryRequest() {
