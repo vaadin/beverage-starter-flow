@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.html.Label;
+import com.vaadin.flow.starter.app.backend.Category;
 import com.vaadin.flow.starter.app.backend.CategoryService;
 import com.vaadin.flow.starter.app.backend.Review;
 import com.vaadin.flow.starter.app.backend.ReviewService;
@@ -33,10 +34,32 @@ public class ReviewForm extends GeneratedPaperDialog {
 
     public ReviewForm(ReviewsView reviewsView) {
         this.reviewsView = reviewsView;
-
         bindFields();
         VerticalLayout reviewFormLayout = new VerticalLayout();
+        addFormTitle(reviewFormLayout);
+        addComboDatePicker(reviewFormLayout);
+        scoreBox.setWidth("20%");
+        scoreBox.setLabel("mark a score");
+        scoreBox.setItems("0", "1", "2", "3", "4", "5");
+        reviewFormLayout.add(scoreBox);
+        addButtonRow(reviewFormLayout);
+        setModal(true);
+        add(reviewFormLayout);
+    }
 
+    private void addComboDatePicker(VerticalLayout reviewFormLayout) {
+        HorizontalLayout row2 = new HorizontalLayout();
+        categoryBox.setLabel("chose a category");
+        categoryBox.setItems(categoryService.findCategory("").stream()
+                .map(Category::getCategoryName).collect(Collectors.toList())
+                .toArray(new String[0]));
+        lastTasted.setLabel("choose the date");
+        row2.add(categoryBox, lastTasted);
+        row2.setSpacing(true);
+        reviewFormLayout.add(row2);
+    }
+
+    private void addFormTitle(VerticalLayout reviewFormLayout) {
         Label label = new Label("Edit Beverage Notes");
         HorizontalLayout row1 = new HorizontalLayout();
         row1.setWidth("90%");
@@ -48,23 +71,9 @@ public class ReviewForm extends GeneratedPaperDialog {
         timesTasted.setPattern("[0-9]*").setPreventInvalidInput(true);
         row1.add(beverageName, timesTasted);
         reviewFormLayout.add(label, row1);
+    }
 
-        HorizontalLayout row2 = new HorizontalLayout();
-        categoryBox.setLabel("chose a category");
-
-        categoryBox.setItems(categoryService.findCategory("").stream()
-                .map(c -> c.getCategoryName()).collect(Collectors.toList())
-                .toArray(new String[0]));
-        lastTasted.setLabel("choose the date");
-        row2.add(categoryBox, lastTasted);
-        row2.setSpacing(true);
-        reviewFormLayout.add(row2);
-
-        scoreBox.setWidth("20%");
-        scoreBox.setLabel("mark a score");
-        scoreBox.setItems("0", "1", "2", "3", "4", "5");
-        reviewFormLayout.add(scoreBox);
-
+    private void addButtonRow(VerticalLayout reviewFormLayout) {
         HorizontalLayout row4 = new HorizontalLayout();
         row4.setWidth("80%");
         row4.setSpacing(true);
@@ -73,17 +82,12 @@ public class ReviewForm extends GeneratedPaperDialog {
         Button save = new Button("Save");
         Button cancel = new Button("Cancel");
         Button delete = new Button("Delete");
-        delete.setDisabled(true);
-        row4.add(save, cancel, delete, notification);
-
-        reviewFormLayout.add(row4);
-
-        setModal(true);
-        add(reviewFormLayout);
-
         save.addClickListener(e -> saveClicked());
         cancel.addClickListener(e -> cancelClicked());
         delete.addClickListener(null);
+        delete.setDisabled(true);
+        row4.add(save, cancel, delete, notification);
+        reviewFormLayout.add(row4);
     }
 
     private void bindFields() {
