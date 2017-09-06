@@ -21,12 +21,13 @@ public class ReviewForm extends GeneratedPaperDialog {
 
     private ReviewService reviewService = ReviewService.getInstance();
     private Review review = new Review();
+    private Binder<Review> binder = new Binder<>(Review.class);
+
     TextField beverageName = new TextField();
     TextField timesTasted = new TextField();
     ComboBox<String> categoryBox = new ComboBox<>();
     DatePicker lastTasted = new DatePicker();
     ComboBox<String> scoreBox = new ComboBox<>();
-    private Binder<Review> binder = new Binder<>(Review.class);
 
     public ReviewForm(ReviewsView reviewsView) {
 
@@ -96,7 +97,6 @@ public class ReviewForm extends GeneratedPaperDialog {
         save.addClickListener(e -> {
             saveButton();
             reviewsView.updateList();
-            close();
         });
 
         Button cancel = new Button("Cancel");
@@ -111,9 +111,6 @@ public class ReviewForm extends GeneratedPaperDialog {
         // If modal is true, this implies no-cancel-on-outside-click,
         // no-cancel-on-esc-key and with-backdrop.
         setModal(true);
-        setEntryAnimation("scale-up-animation")
-                .setExitAnimation("fade-out-animation").isWithBackdrop();
-
         add(reviewFormLayout);
     }
 

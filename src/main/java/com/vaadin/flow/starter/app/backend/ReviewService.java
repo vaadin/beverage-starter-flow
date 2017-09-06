@@ -1,5 +1,6 @@
 package com.vaadin.flow.starter.app.backend;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class ReviewService {
+public class ReviewService implements Serializable {
 
     // create dummy data
 

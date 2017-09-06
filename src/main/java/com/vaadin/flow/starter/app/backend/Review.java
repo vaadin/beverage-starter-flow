@@ -130,8 +130,8 @@ public class Review implements Serializable {
     @Override
     public String toString() {
         return "Review{" + "id=" + id + ", Score=" + score + ", Name=" + name
-                + ", Category=" + reviewCategory + ", TestDate:" + testDate
-                + ", TestTimes:" + testTimes + '}';
+                + ", Category=" + reviewCategory + ", TestDate=" + testDate
+                + ", TestTimes=" + testTimes + '}';
     }
 
 }
