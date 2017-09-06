@@ -1,18 +1,8 @@
 package com.vaadin.flow.starter.app.backend;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CategoryService {
-
-    // create dummy Category
-
-    public static final String[] CATEGORY_NAME = { "Soft Drink", "Water",
-            "Milk", "Beer", "Wine", "Others" };
 
     private static final CategoryService INSTANCE = createDemoCategoryService();
 
@@ -22,12 +12,13 @@ public class CategoryService {
 
     private static CategoryService createDemoCategoryService() {
 
-        final CategoryService categoryService = new CategoryService();
+        CategoryService categoryService = new CategoryService();
+        Set<String> categories = new LinkedHashSet<>(ReviewService.BEVERAGES.values());
 
-        for (int i = 0; i < CATEGORY_NAME.length; i++) {
+        for (String categoryName : categories) {
             Category category = new Category();
 
-            category.setCategoryName(CATEGORY_NAME[i]);
+            category.setCategoryName(categoryName);
 
             categoryService.saveCategory(category);
         }
