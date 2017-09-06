@@ -25,7 +25,7 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
 
     private final GeneratedPaperDialog dialog = new GeneratedPaperDialog();
     private final H2 titleField = new H2();
-    private final TextField newCategoryNameInput = new TextField();
+    private final TextField newCategoryNameInput = new TextField("Category Name");
     private final Button saveButton = new Button("Save");
     private final Button cancelButton = new Button("Cancel");
 
@@ -98,7 +98,6 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
 
     private void displayNewCategoryDialog() {
         titleField.setText("Add New Category");
-        newCategoryNameInput.setLabel("Category Name");
         newCategoryNameInput.clear();
         dialog.open();
     }
