@@ -51,13 +51,9 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     public static interface ReviewsModel extends TemplateModel {
         @Convert(value = LongToStringConverter.class, path = "id")
         @Convert(value = LocalDateToStringConverter.class, path = "testDate")
-
         void setReviews(List<Review> reviews);
 
     }
-    
-    
-    //@EventData("event.mouseLeftKey") boolean leftKeyClicked
 
     private ReviewForm reviewForm = new ReviewForm(this);
     ReviewService reviews = ReviewService.getInstance();
@@ -76,7 +72,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
         reviewForm.clear();
         openForm();
     }
-    
+
     @EventHandler
     private void edit(@ModelItem Review review) {
         openForm();
@@ -91,6 +87,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
         getElement().getParent().appendChild(reviewForm.getElement());
         reviewForm.open();
     }
+
     public void showMessage() {
         notification.show("Your reviews have been modified.");
     }

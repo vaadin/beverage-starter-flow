@@ -100,7 +100,7 @@ public class ReviewForm extends GeneratedPaperDialog {
                 .withConverter(
                         new StringToIntegerConverter(0, "Must enter a number"))
                 .withValidator(testTimes -> testTimes > 0,
-                        "Really?! You tasted?!")
+                        "The taste times should be at least 1")
                 .bind(Review::getTestTimes, Review::setTestTimes);
         binder.forField(categoryBox).bind(Review::getReviewCategory,
                 Review::setReviewCategory);
@@ -109,6 +109,8 @@ public class ReviewForm extends GeneratedPaperDialog {
         binder.forField(scoreBox)
                 .withConverter(new StringToIntegerConverter(0,
                         "The Score is a number"))
+                .withValidator(score -> score >= 1 && score <= 5,
+                        "The score should be between 1 and 5.")
                 .bind(Review::getScore, Review::setScore);
     }
 
@@ -136,7 +138,8 @@ public class ReviewForm extends GeneratedPaperDialog {
             this.close();
             reviewsView.showMessage();
         } catch (ValidationException e) {
-            notification.show("Please double check the information.");
+            notification.show(
+                    "Please double check the information." + e.getMessage());
         }
     }
 

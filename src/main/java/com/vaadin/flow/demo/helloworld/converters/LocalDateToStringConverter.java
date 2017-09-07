@@ -18,7 +18,11 @@ public class LocalDateToStringConverter
 
     @Override
     public LocalDate toModel(String presentationValue) {
-        return presentationValue == null? null : LocalDate.parse(presentationValue, DATE_FORMAT);
+        try {
+            return LocalDate.parse(presentationValue, DATE_FORMAT);
+        } catch (Exception e) {
+            return LocalDate.now();
+        }
     }
 
     @Override
