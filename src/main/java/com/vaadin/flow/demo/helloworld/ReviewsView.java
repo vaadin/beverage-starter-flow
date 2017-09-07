@@ -57,7 +57,6 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     ReviewService reviews = ReviewService.getInstance();
 
     public ReviewsView() {
-        System.out.println();
         filterText.setPlaceholder("Find a review...");
         filterText.addValueChangeListener(e -> updateList());
 
@@ -65,9 +64,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
         addReview.addClickListener(e -> addReviewClicked());
 
         updateList();
-
     }
-
 
     private void addReviewClicked() {
         reviewForm.clear();
