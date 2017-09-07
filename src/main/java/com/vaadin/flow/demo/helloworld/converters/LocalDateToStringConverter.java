@@ -1,4 +1,4 @@
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.flow.demo.helloworld.converters;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.ValidationException;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.starter.app.backend.Category;
@@ -23,6 +24,7 @@ public class ReviewForm extends GeneratedPaperDialog {
 
     private ReviewService reviewService = ReviewService.getInstance();
     private Binder<Review> binder = new Binder<>(Review.class);
+    private Review reviewBean = new Review();
     private CategoryService categoryService = CategoryService.getInstance();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
@@ -82,8 +84,8 @@ public class ReviewForm extends GeneratedPaperDialog {
         Button save = new Button("Save");
         Button cancel = new Button("Cancel");
         Button delete = new Button("Delete");
-        save.addClickListener(e -> saveClicked());
-        cancel.addClickListener(e -> cancelClicked());
+        save.addClickListener(e -> this.saveClicked());
+        cancel.addClickListener(e -> this.cancelClicked());
         delete.addClickListener(null);
         delete.setDisabled(true);
         row4.add(save, cancel, delete, notification);
@@ -97,6 +99,8 @@ public class ReviewForm extends GeneratedPaperDialog {
         binder.forField(timesTasted)
                 .withConverter(
                         new StringToIntegerConverter(0, "Must enter a number"))
+                .withValidator(testTimes -> testTimes > 0,
+                        "The taste times should be at least 1")
                 .bind(Review::getTestTimes, Review::setTestTimes);
         binder.forField(categoryBox).bind(Review::getReviewCategory,
                 Review::setReviewCategory);
@@ -105,29 +109,37 @@ public class ReviewForm extends GeneratedPaperDialog {
         binder.forField(scoreBox)
                 .withConverter(new StringToIntegerConverter(0,
                         "The Score is a number"))
+                .withValidator(score -> score >= 1 && score <= 5,
+                        "The score should be between 1 and 5.")
                 .bind(Review::getScore, Review::setScore);
     }
 
     public void clear() {
-        Review review = new Review();
-        review.setTestDate(LocalDate.now());
-        review.setScore(0);
-        review.setTestTimes(0);
-        binder.setBean(review);
+        reviewBean.setTestDate(LocalDate.now());
+        reviewBean.setScore(1);
+        reviewBean.setTestTimes(0);
+        binder.readBean(reviewBean);
+    }
+
+    public void bindReview(Review review) {
+        this.reviewBean = review;
+        binder.readBean(reviewBean);
     }
 
     private void cancelClicked() {
-        close();
+        this.close();
     }
 
     private void saveClicked() {
-        if (binder.isValid()) {
-            reviewService.saveReview(binder.getBean());
+        try {
+            binder.writeBean(reviewBean);
+            reviewService.saveReview(reviewBean);
             reviewsView.updateList();
-            close();
+            this.close();
             reviewsView.showMessage();
-        } else {
-            notification.show("Please double check the information.");
+        } catch (ValidationException e) {
+            notification.show(
+                    "Please double check the information." + e.getMessage());
         }
     }
 

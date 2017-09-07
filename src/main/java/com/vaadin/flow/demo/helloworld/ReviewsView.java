@@ -18,11 +18,14 @@ package com.vaadin.flow.demo.helloworld;
 import java.util.List;
 
 import com.vaadin.annotations.Convert;
-import com.vaadin.annotations.Exclude;
+import com.vaadin.annotations.EventHandler;
 import com.vaadin.annotations.HtmlImport;
 import com.vaadin.annotations.Id;
+import com.vaadin.annotations.ModelItem;
 import com.vaadin.annotations.Tag;
 import com.vaadin.flow.demo.helloworld.ReviewsView.ReviewsModel;
+import com.vaadin.flow.demo.helloworld.converters.LocalDateToStringConverter;
+import com.vaadin.flow.demo.helloworld.converters.LongToStringConverter;
 import com.vaadin.flow.router.View;
 import com.vaadin.flow.starter.app.backend.Review;
 import com.vaadin.flow.starter.app.backend.ReviewService;
@@ -46,9 +49,8 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     private PaperToast notification;
 
     public static interface ReviewsModel extends TemplateModel {
-        @Exclude("id")
+        @Convert(value = LongToStringConverter.class, path = "id")
         @Convert(value = LocalDateToStringConverter.class, path = "testDate")
-
         void setReviews(List<Review> reviews);
 
     }
@@ -68,12 +70,22 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     private void addReviewClicked() {
         reviewForm.clear();
-        getElement().getParent().appendChild(reviewForm.getElement());
-        reviewForm.open();
+        openForm();
+    }
+
+    @EventHandler
+    private void edit(@ModelItem Review review) {
+        openForm();
+        reviewForm.bindReview(review);
     }
 
     public void updateList() {
         getModel().setReviews(reviews.findReview(filterText.getValue()));
+    }
+
+    private void openForm() {
+        getElement().getParent().appendChild(reviewForm.getElement());
+        reviewForm.open();
     }
 
     public void showMessage() {
