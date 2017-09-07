@@ -1,4 +1,4 @@
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.flow.demo.helloworld.converters;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +18,7 @@ public class LocalDateToStringConverter
 
     @Override
     public LocalDate toModel(String presentationValue) {
-        return LocalDate.parse(presentationValue, DATE_FORMAT);
+        return presentationValue == null? null : LocalDate.parse(presentationValue, DATE_FORMAT);
     }
 
     @Override
