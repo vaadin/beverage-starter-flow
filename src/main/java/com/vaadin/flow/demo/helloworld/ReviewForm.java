@@ -34,7 +34,9 @@ public class ReviewForm extends GeneratedPaperDialog {
     private ReviewsView reviewsView;
     private PaperToast notification = new PaperToast();
     private GeneratedPaperDialog confirmDialog = new GeneratedPaperDialog();
-    private boolean returnConfirmation = false;
+    Button save = new Button("Save");
+    Button cancel = new Button("Cancel");
+    Button delete = new Button("Delete");
 
     public ReviewForm(ReviewsView reviewsView) {
         this.reviewsView = reviewsView;
@@ -79,15 +81,13 @@ public class ReviewForm extends GeneratedPaperDialog {
         reviewFormLayout.add(label, row1);
     }
 
-    private void addButtonRow(VerticalLayout reviewFormLayout) {
+    public void addButtonRow(VerticalLayout reviewFormLayout) {
         HorizontalLayout row4 = new HorizontalLayout();
         row4.setWidth("80%");
         row4.setSpacing(true);
         row4.setHeight("150px");
         row4.setDefaultComponentAlignment(Alignment.END);
-        Button save = new Button("Save");
-        Button cancel = new Button("Cancel");
-        Button delete = new Button("Delete");
+
         save.addClickListener(e -> this.saveClicked());
         cancel.addClickListener(e -> this.cancelClicked());
         delete.addClickListener(e -> this.deleteClicked());
@@ -166,6 +166,9 @@ public class ReviewForm extends GeneratedPaperDialog {
     }
 
     private void deleteClicked() {
+        save.setDisabled(true);
+        delete.setDisabled(true);
+        cancel.setDisabled(true);
         confirmDialog.open();
         confirmDialog.setModal(true);
     }
