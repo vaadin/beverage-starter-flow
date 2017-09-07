@@ -81,7 +81,7 @@ public class ReviewForm extends GeneratedPaperDialog {
         reviewFormLayout.add(label, row1);
     }
 
-    public void addButtonRow(VerticalLayout reviewFormLayout) {
+    private void addButtonRow(VerticalLayout reviewFormLayout) {
         HorizontalLayout row4 = new HorizontalLayout();
         row4.setWidth("80%");
         row4.setSpacing(true);
@@ -108,6 +108,7 @@ public class ReviewForm extends GeneratedPaperDialog {
 
         yes.addClickListener(event -> deleteConfirm());
         no.addClickListener(event -> {
+            buttonEnable();
             confirmDialog.close();
             this.close();
         });
@@ -121,6 +122,7 @@ public class ReviewForm extends GeneratedPaperDialog {
             confirmDialog.close();
             this.close();
             reviewsView.showMessage();
+            buttonEnable();
         } catch (ValidationException e) {
             notification.show(
                     "Please double check the information." + e.getMessage());
@@ -171,6 +173,12 @@ public class ReviewForm extends GeneratedPaperDialog {
         cancel.setDisabled(true);
         confirmDialog.open();
         confirmDialog.setModal(true);
+    }
+
+    private void buttonEnable() {
+        save.setDisabled(false);
+        delete.setDisabled(false);
+        cancel.setDisabled(false);
     }
 
     private void saveClicked() {
