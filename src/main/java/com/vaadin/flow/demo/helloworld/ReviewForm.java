@@ -33,6 +33,8 @@ public class ReviewForm extends GeneratedPaperDialog {
     private ComboBox<String> scoreBox = new ComboBox<>();
     private ReviewsView reviewsView;
     private PaperToast notification = new PaperToast();
+    private GeneratedPaperDialog confirmDialog = new GeneratedPaperDialog();
+    private boolean returnConfirmation = false;
 
     public ReviewForm(ReviewsView reviewsView) {
         this.reviewsView = reviewsView;
@@ -42,11 +44,13 @@ public class ReviewForm extends GeneratedPaperDialog {
         addComboDatePicker(reviewFormLayout);
         scoreBox.setWidth("20%");
         scoreBox.setLabel("mark a score");
-        scoreBox.setItems("0", "1", "2", "3", "4", "5");
+        scoreBox.setItems("1", "2", "3", "4", "5");
         reviewFormLayout.add(scoreBox);
         addButtonRow(reviewFormLayout);
         setModal(true);
         add(reviewFormLayout);
+        deleteConfirmDesign();
+        add(confirmDialog);
     }
 
     private void addComboDatePicker(VerticalLayout reviewFormLayout) {
@@ -86,10 +90,41 @@ public class ReviewForm extends GeneratedPaperDialog {
         Button delete = new Button("Delete");
         save.addClickListener(e -> this.saveClicked());
         cancel.addClickListener(e -> this.cancelClicked());
-        delete.addClickListener(null);
-        delete.setDisabled(true);
+        delete.addClickListener(e -> this.deleteClicked());
         row4.add(save, cancel, delete, notification);
         reviewFormLayout.add(row4);
+    }
+
+    private void deleteConfirmDesign() {
+        VerticalLayout confirmDeleteDesign = new VerticalLayout();
+        HorizontalLayout buttonBar = new HorizontalLayout();
+        Button yes = new Button("Yes");
+        Button no = new Button("No");
+        buttonBar.add(yes, no);
+        Label confirmation = new Label("Are you sure deleteing this Review?");
+        confirmDeleteDesign.add(confirmation, buttonBar);
+        confirmDialog.add(confirmDeleteDesign);
+        confirmDialog.setModal(true);
+
+        yes.addClickListener(event -> deleteConfirm());
+        no.addClickListener(event -> {
+            confirmDialog.close();
+            this.close();
+        });
+    }
+
+    private void deleteConfirm() {
+        try {
+            binder.writeBean(reviewBean);
+            reviewService.deleteReview(reviewBean);
+            reviewsView.updateList();
+            confirmDialog.close();
+            this.close();
+            reviewsView.showMessage();
+        } catch (ValidationException e) {
+            notification.show(
+                    "Please double check the information." + e.getMessage());
+        }
     }
 
     private void bindFields() {
@@ -128,6 +163,11 @@ public class ReviewForm extends GeneratedPaperDialog {
 
     private void cancelClicked() {
         this.close();
+    }
+
+    private void deleteClicked() {
+        confirmDialog.open();
+        confirmDialog.setModal(true);
     }
 
     private void saveClicked() {
