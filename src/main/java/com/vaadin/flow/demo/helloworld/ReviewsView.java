@@ -40,8 +40,6 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     @Id("filterText")
     private TextField filterText;
-    @Id("search")
-    private Button search;
     @Id("addReview")
     private Button addReview;
     @Id("notification")
@@ -59,9 +57,9 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     ReviewService reviews = ReviewService.getInstance();
 
     public ReviewsView() {
-
+        System.out.println();
         filterText.setPlaceholder("Find a review...");
-        search.setText("Search");
+        filterText.addValueChangeListener(e -> updateList());
 
         addReview.setText("Add new review");
         addReview.addClickListener(e -> addReviewClicked());
@@ -70,6 +68,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     }
 
+
     private void addReviewClicked() {
         reviewForm.clear();
         getElement().getParent().appendChild(reviewForm.getElement());
@@ -77,7 +76,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     }
 
     public void updateList() {
-        getModel().setReviews(reviews.findReview(""));
+        getModel().setReviews(reviews.findReview(filterText.getValue()));
     }
 
     public void showMessage() {
