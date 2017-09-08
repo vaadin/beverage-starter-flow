@@ -114,7 +114,7 @@ public class ReviewService implements Serializable {
     public synchronized void saveReview(Review entry) {
 
         if (entry.getId() == null) {
-            entry.setId(nextId++);
+            entry.setId(++nextId);
         }
         reviews.put(entry.getId(), entry);
     }

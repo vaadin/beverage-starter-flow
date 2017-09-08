@@ -158,7 +158,7 @@ public class ReviewForm extends GeneratedPaperDialog {
 
     private Category toCategory(String name) {
         return categoryService.findCategoryByName(name)
-                .orElseThrow(() -> new IllegalStateException("Category name does not exist"));
+                .orElseThrow(() -> new IllegalStateException("Category " + name + " does not exist"));
     }
 
     public void clear() {

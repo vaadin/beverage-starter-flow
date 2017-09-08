@@ -123,20 +123,6 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
         dialog.open();
     }
 
-    private void handleNewCategoryRequest() {
-        try {
-            binder.writeBean(currentCategory);
-            categoryService.saveCategory(currentCategory);
-
-            notification.show("Category successfully added");
-            updateView();
-        } catch (ValidationException ex) {
-            notification.show(ex.getValidationErrors().stream()
-                    .map(ValidationResult::getErrorMessage)
-                    .collect(Collectors.joining("; ")));
-        }
-    }
-
     private void handleSave(String operationName) {
         try {
             binder.writeBean(currentCategory);
