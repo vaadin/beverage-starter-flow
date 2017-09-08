@@ -37,6 +37,7 @@ public class ReviewForm extends GeneratedPaperDialog {
     Button save = new Button("Save");
     Button cancel = new Button("Cancel");
     Button delete = new Button("Delete");
+    HorizontalLayout buttonRow = new HorizontalLayout();
 
     public ReviewForm(ReviewsView reviewsView) {
         this.reviewsView = reviewsView;
@@ -49,6 +50,7 @@ public class ReviewForm extends GeneratedPaperDialog {
         scoreBox.setItems("1", "2", "3", "4", "5");
         reviewFormLayout.add(scoreBox);
         addButtonRow(reviewFormLayout);
+        reviewFormLayout.add(notification);
         setModal(true);
         add(reviewFormLayout);
         addConfirmDialog();
@@ -82,17 +84,16 @@ public class ReviewForm extends GeneratedPaperDialog {
     }
 
     private void addButtonRow(VerticalLayout reviewFormLayout) {
-        HorizontalLayout row4 = new HorizontalLayout();
-        row4.setWidth("80%");
-        row4.setSpacing(true);
-        row4.setHeight("150px");
-        row4.setDefaultComponentAlignment(Alignment.END);
 
+        buttonRow.setWidth("80%");
+        buttonRow.setSpacing(true);
+        buttonRow.setHeight("150px");
+        buttonRow.setDefaultComponentAlignment(Alignment.END);
         save.addClickListener(e -> this.saveClicked());
         cancel.addClickListener(e -> this.cancelClicked());
         delete.addClickListener(e -> this.deleteClicked());
-        row4.add(save, cancel, delete, notification);
-        reviewFormLayout.add(row4);
+        buttonRow.add(save, cancel, delete);
+        reviewFormLayout.add(buttonRow);
     }
 
     private void addConfirmDialog() {
@@ -108,7 +109,7 @@ public class ReviewForm extends GeneratedPaperDialog {
 
         yes.addClickListener(event -> deleteConfirm());
         no.addClickListener(event -> {
-            buttonEnable();
+            setButtonsDisabled(false);
             confirmDialog.close();
             this.close();
         });
@@ -122,7 +123,7 @@ public class ReviewForm extends GeneratedPaperDialog {
             confirmDialog.close();
             this.close();
             reviewsView.showMessage();
-            buttonEnable();
+            setButtonsDisabled(false);
         } catch (ValidationException e) {
             notification.show(
                     "Please double check the information." + e.getMessage());
@@ -168,16 +169,13 @@ public class ReviewForm extends GeneratedPaperDialog {
     }
 
     private void deleteClicked() {
-        save.setDisabled(true);
-        delete.setDisabled(true);
-        cancel.setDisabled(true);
+        setButtonsDisabled(true);
         confirmDialog.open();
     }
 
-    private void buttonEnable() {
-        save.setDisabled(false);
-        delete.setDisabled(false);
-        cancel.setDisabled(false);
+    private void setButtonsDisabled(boolean enable) {
+        buttonRow.getChildren()
+                .forEach(child -> ((Button) child).setDisabled(enable));
     }
 
     private void saveClicked() {
