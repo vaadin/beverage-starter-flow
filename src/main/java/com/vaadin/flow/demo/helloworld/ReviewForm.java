@@ -33,6 +33,11 @@ public class ReviewForm extends GeneratedPaperDialog {
     private ComboBox<String> scoreBox = new ComboBox<>();
     private ReviewsView reviewsView;
     private PaperToast notification = new PaperToast();
+    private GeneratedPaperDialog confirmDialog = new GeneratedPaperDialog();
+    Button save = new Button("Save");
+    Button cancel = new Button("Cancel");
+    Button delete = new Button("Delete");
+    HorizontalLayout buttonRow = new HorizontalLayout();
 
     public ReviewForm(ReviewsView reviewsView) {
         this.reviewsView = reviewsView;
@@ -42,11 +47,14 @@ public class ReviewForm extends GeneratedPaperDialog {
         addComboDatePicker(reviewFormLayout);
         scoreBox.setWidth("20%");
         scoreBox.setLabel("mark a score");
-        scoreBox.setItems("0", "1", "2", "3", "4", "5");
+        scoreBox.setItems("1", "2", "3", "4", "5");
         reviewFormLayout.add(scoreBox);
         addButtonRow(reviewFormLayout);
+        reviewFormLayout.add(notification);
         setModal(true);
         add(reviewFormLayout);
+        addConfirmDialog();
+        add(confirmDialog);
     }
 
     private void addComboDatePicker(VerticalLayout reviewFormLayout) {
@@ -76,20 +84,50 @@ public class ReviewForm extends GeneratedPaperDialog {
     }
 
     private void addButtonRow(VerticalLayout reviewFormLayout) {
-        HorizontalLayout row4 = new HorizontalLayout();
-        row4.setWidth("80%");
-        row4.setSpacing(true);
-        row4.setHeight("150px");
-        row4.setDefaultComponentAlignment(Alignment.END);
-        Button save = new Button("Save");
-        Button cancel = new Button("Cancel");
-        Button delete = new Button("Delete");
+
+        buttonRow.setWidth("80%");
+        buttonRow.setSpacing(true);
+        buttonRow.setHeight("150px");
+        buttonRow.setDefaultComponentAlignment(Alignment.END);
         save.addClickListener(e -> this.saveClicked());
         cancel.addClickListener(e -> this.cancelClicked());
-        delete.addClickListener(null);
-        delete.setDisabled(true);
-        row4.add(save, cancel, delete, notification);
-        reviewFormLayout.add(row4);
+        delete.addClickListener(e -> this.deleteClicked());
+        buttonRow.add(save, cancel, delete);
+        reviewFormLayout.add(buttonRow);
+    }
+
+    private void addConfirmDialog() {
+        VerticalLayout layout = new VerticalLayout();
+        HorizontalLayout buttonBar = new HorizontalLayout();
+        Button yes = new Button("Yes");
+        Button no = new Button("No");
+        buttonBar.add(yes, no);
+        Label confirmation = new Label("Are you sure deleting this Review?");
+        layout.add(confirmation, buttonBar);
+        confirmDialog.add(layout);
+        confirmDialog.setModal(true);
+
+        yes.addClickListener(event -> deleteConfirm());
+        no.addClickListener(event -> {
+            setButtonsDisabled(false);
+            confirmDialog.close();
+            this.close();
+        });
+    }
+
+    private void deleteConfirm() {
+        try {
+            binder.writeBean(reviewBean);
+            reviewService.deleteReview(reviewBean);
+            reviewsView.updateList();
+            confirmDialog.close();
+            this.close();
+            reviewsView.showMessage();
+            setButtonsDisabled(false);
+        } catch (ValidationException e) {
+            notification.show(
+                    "Please double check the information." + e.getMessage());
+        }
     }
 
     private void bindFields() {
@@ -128,6 +166,16 @@ public class ReviewForm extends GeneratedPaperDialog {
 
     private void cancelClicked() {
         this.close();
+    }
+
+    private void deleteClicked() {
+        setButtonsDisabled(true);
+        confirmDialog.open();
+    }
+
+    private void setButtonsDisabled(boolean disable) {
+        buttonRow.getChildren()
+                .forEach(child -> ((Button) child).setDisabled(disable));
     }
 
     private void saveClicked() {
