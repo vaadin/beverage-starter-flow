@@ -4,9 +4,16 @@ import java.io.Serializable;
 
 public class Category implements Serializable {
 
-    private Long categoryId;
+    private Long categoryId = null;
 
     private String categoryName = "";
+
+    public Category() {
+    }
+
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
     public Long getCategoryId() {
         return categoryId;
@@ -35,4 +42,8 @@ public class Category implements Serializable {
         this.categoryName = categoryName;
     }
 
+    @Override
+    public String toString() {
+        return "Category{" + categoryName + '}';
+    }
 }

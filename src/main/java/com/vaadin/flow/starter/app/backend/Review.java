@@ -5,15 +5,15 @@ import java.time.LocalDate;
 
 public class Review implements Serializable {
 
-    private Long id;
+    private Long id = null;
     private int score;
     private String name = "";
     private LocalDate testDate;
-    private String reviewCategory;
+    private Category reviewCategory;
     private int testTimes;
 
     public Review(int score, String name, LocalDate testDate,
-            String reviewCategory, int testTimes) {
+                  Category reviewCategory, int testTimes) {
         this.score = score;
         this.name = name;
         this.testDate = testDate;
@@ -75,7 +75,7 @@ public class Review implements Serializable {
      *
      * @return the value of reviewCategory
      */
-    public String getReviewCategory() {
+    public Category getReviewCategory() {
         return reviewCategory;
     }
 
@@ -85,7 +85,7 @@ public class Review implements Serializable {
      * @param reviewCategory
      *            new value of reviewCategory
      */
-    public void setReviewCategory(String reviewCategory) {
+    public void setReviewCategory(Category reviewCategory) {
         this.reviewCategory = reviewCategory;
     }
 

@@ -1,44 +1,42 @@
 package com.vaadin.flow.starter.app.backend;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class CategoryService implements Serializable {
 
-    private static final CategoryService INSTANCE = createDemoCategoryService();
+    private static class SingletonHolder {
+        private static final CategoryService INSTANCE = createDemoCategoryService();
 
-    public static CategoryService getInstance() {
-        return INSTANCE;
+        private static CategoryService createDemoCategoryService() {
+            CategoryService categoryService = new CategoryService();
+            Set<Category> categories = new LinkedHashSet<>(
+                    ReviewService.BEVERAGES.values());
+
+            categories.forEach(categoryService::saveCategory);
+
+            return categoryService;
+        }
     }
 
-    private static CategoryService createDemoCategoryService() {
+    static final Category MINERAL_WATER = new Category("Mineral Water");
+    static final Category SOFT_DRINK = new Category("Soft Drink");
+    static final Category COFFEE = new Category("Coffee");
+    static final Category TEA = new Category("Tea");
+    static final Category DAIRY = new Category("Dairy");
+    static final Category CIDER = new Category("Cider");
+    static final Category BEER = new Category("Beer");
+    static final Category WINE = new Category("Wine");
+    static final Category OTHER = new Category("Other");
 
-        CategoryService categoryService = new CategoryService();
-        Set<String> categories = new LinkedHashSet<>(
-                ReviewService.BEVERAGES.values());
-
-        for (String categoryName : categories) {
-            Category category = new Category();
-
-            category.setCategoryName(categoryName);
-
-            categoryService.saveCategory(category);
-        }
-
-        return categoryService;
+    public static CategoryService getInstance() {
+        return SingletonHolder.INSTANCE;
     }
 
     private Map<Long, Category> categories = new HashMap<>();
     private long nextId = 0;
 
-    public synchronized List<Category> findCategory(
+    public synchronized List<Category> findCategories(
             String stringCategoryFilter) {
         List categoryFindList = new ArrayList();
         String stringCategoryFilterLoCase = stringCategoryFilter.toLowerCase();
@@ -64,6 +62,18 @@ public class CategoryService implements Serializable {
         return categoryFindList;
     }
 
+    public synchronized Optional<Category> findCategoryByName(String name) {
+        List<Category> categoriesMatching = findCategories(name);
+
+        if (categoriesMatching.isEmpty()) {
+            return Optional.empty();
+        }
+        if (categoriesMatching.size() > 1) {
+            throw new IllegalStateException("Category " + name + " is ambiguous");
+        }
+        return Optional.of(categoriesMatching.get(0));
+    }
+
     public synchronized long count() {
         return categories.size();
     }
@@ -75,7 +85,7 @@ public class CategoryService implements Serializable {
     public synchronized void saveCategory(Category entry) {
 
         if (entry.getCategoryId() == null) {
-            entry.setCategoryId(nextId++);
+            entry.setCategoryId(++nextId);
         }
         categories.put(entry.getCategoryId(), entry);
     }

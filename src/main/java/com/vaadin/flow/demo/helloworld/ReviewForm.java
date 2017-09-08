@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
+import com.vaadin.data.ValidationResult;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.starter.app.backend.Category;
@@ -28,7 +29,7 @@ public class ReviewForm extends GeneratedPaperDialog {
     private CategoryService categoryService = CategoryService.getInstance();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
-    private ComboBox<String> categoryBox = new ComboBox<>();
+    private ComboBox<Category> categoryBox = new ComboBox<>();
     private DatePicker lastTasted = new DatePicker();
     private ComboBox<String> scoreBox = new ComboBox<>();
     private ReviewsView reviewsView;
@@ -59,11 +60,13 @@ public class ReviewForm extends GeneratedPaperDialog {
 
     private void addComboDatePicker(VerticalLayout reviewFormLayout) {
         HorizontalLayout row2 = new HorizontalLayout();
-        categoryBox.setLabel("chose a category");
-        categoryBox.setItems(categoryService.findCategory("").stream()
-                .map(Category::getCategoryName).collect(Collectors.toList())
-                .toArray(new String[0]));
-        lastTasted.setLabel("choose the date");
+        categoryBox.setLabel("Choose a category");
+        categoryBox.setItemLabelPath("categoryName");
+        categoryBox.setItemValuePath("categoryName");
+        categoryBox.setAllowCustomValue(false);
+        // TODO disable/hide the Clear button on the combobox
+        categoryBox.setItems(categoryService.findCategories(""));
+        lastTasted.setLabel("Choose the date");
         row2.add(categoryBox, lastTasted);
         row2.setSpacing(true);
         reviewFormLayout.add(row2);
@@ -140,8 +143,9 @@ public class ReviewForm extends GeneratedPaperDialog {
                 .withValidator(testTimes -> testTimes > 0,
                         "The taste times should be at least 1")
                 .bind(Review::getTestTimes, Review::setTestTimes);
-        binder.forField(categoryBox).bind(Review::getReviewCategory,
-                Review::setReviewCategory);
+        binder.forField(categoryBox)
+                .withConverter(this::toCategory, Category::getCategoryName)
+                .bind(Review::getReviewCategory, Review::setReviewCategory);
         binder.forField(lastTasted).bind(Review::getTestDate,
                 Review::setTestDate);
         binder.forField(scoreBox)
@@ -150,6 +154,11 @@ public class ReviewForm extends GeneratedPaperDialog {
                 .withValidator(score -> score >= 1 && score <= 5,
                         "The score should be between 1 and 5.")
                 .bind(Review::getScore, Review::setScore);
+    }
+
+    private Category toCategory(String name) {
+        return categoryService.findCategoryByName(name)
+                .orElseThrow(() -> new IllegalStateException("Category name does not exist"));
     }
 
     public void clear() {
@@ -185,9 +194,10 @@ public class ReviewForm extends GeneratedPaperDialog {
             reviewsView.updateList();
             this.close();
             reviewsView.showMessage();
-        } catch (ValidationException e) {
-            notification.show(
-                    "Please double check the information." + e.getMessage());
+        } catch (ValidationException ex) {
+            notification.show(ex.getValidationErrors().stream()
+                    .map(ValidationResult::getErrorMessage)
+                    .collect(Collectors.joining("; ")));
         }
     }
 
