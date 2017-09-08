@@ -51,7 +51,7 @@ public class ReviewForm extends GeneratedPaperDialog {
         addButtonRow(reviewFormLayout);
         setModal(true);
         add(reviewFormLayout);
-        deleteConfirmDesign();
+        addConfirmDialog();
         add(confirmDialog);
     }
 
@@ -95,15 +95,15 @@ public class ReviewForm extends GeneratedPaperDialog {
         reviewFormLayout.add(row4);
     }
 
-    private void deleteConfirmDesign() {
-        VerticalLayout confirmDeleteDesign = new VerticalLayout();
+    private void addConfirmDialog() {
+        VerticalLayout layout = new VerticalLayout();
         HorizontalLayout buttonBar = new HorizontalLayout();
         Button yes = new Button("Yes");
         Button no = new Button("No");
         buttonBar.add(yes, no);
-        Label confirmation = new Label("Are you sure deleteing this Review?");
-        confirmDeleteDesign.add(confirmation, buttonBar);
-        confirmDialog.add(confirmDeleteDesign);
+        Label confirmation = new Label("Are you sure deleting this Review?");
+        layout.add(confirmation, buttonBar);
+        confirmDialog.add(layout);
         confirmDialog.setModal(true);
 
         yes.addClickListener(event -> deleteConfirm());
@@ -172,7 +172,6 @@ public class ReviewForm extends GeneratedPaperDialog {
         delete.setDisabled(true);
         cancel.setDisabled(true);
         confirmDialog.open();
-        confirmDialog.setModal(true);
     }
 
     private void buttonEnable() {
