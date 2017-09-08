@@ -173,9 +173,9 @@ public class ReviewForm extends GeneratedPaperDialog {
         confirmDialog.open();
     }
 
-    private void setButtonsDisabled(boolean enable) {
+    private void setButtonsDisabled(boolean disable) {
         buttonRow.getChildren()
-                .forEach(child -> ((Button) child).setDisabled(enable));
+                .forEach(child -> ((Button) child).setDisabled(disable));
     }
 
     private void saveClicked() {
