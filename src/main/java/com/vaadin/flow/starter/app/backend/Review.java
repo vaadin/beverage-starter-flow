@@ -12,16 +12,22 @@ public class Review implements Serializable {
     private Category reviewCategory;
     private int testTimes;
 
+    public Review() {
+    }
+
     public Review(int score, String name, LocalDate testDate,
                   Category reviewCategory, int testTimes) {
         this.score = score;
         this.name = name;
         this.testDate = testDate;
-        this.reviewCategory = reviewCategory;
+        this.reviewCategory = new Category(reviewCategory);
         this.testTimes = testTimes;
     }
 
-    public Review() {
+    public Review(Review other) {
+        this(other.getScore(), other.getName(), other.getTestDate(), other.getReviewCategory(),
+                other.getTestTimes());
+        this.id = other.getId();
     }
 
     public Long getId() {
@@ -129,9 +135,9 @@ public class Review implements Serializable {
 
     @Override
     public String toString() {
-        return "Review{" + "id=" + id + ", Score=" + score + ", Name=" + name
-                + ", Category=" + reviewCategory + ", TestDate=" + testDate
-                + ", TestTimes=" + testTimes + '}';
+        return "Review{" + "id=" + getId() + ", Score=" + getScore() + ", Name=" + getName()
+                + ", Category=" + getReviewCategory() + ", TestDate=" + getTestDate()
+                + ", TestTimes=" + getTestTimes() + '}';
     }
 
 }

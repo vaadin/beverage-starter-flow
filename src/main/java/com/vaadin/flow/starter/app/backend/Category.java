@@ -15,6 +15,11 @@ public class Category implements Serializable {
         this.categoryName = categoryName;
     }
 
+    public Category(Category other) {
+        this(other.getCategoryName());
+        this.categoryId = other.getCategoryId();
+    }
+
     public Long getCategoryId() {
         return categoryId;
     }
@@ -44,6 +49,6 @@ public class Category implements Serializable {
 
     @Override
     public String toString() {
-        return "Category{" + categoryName + '}';
+        return "Category{" + getCategoryId() + ":" + getCategoryName() + '}';
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.vaadin.data.Binder;
-import com.vaadin.data.ValidationException;
+import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationResult;
 import com.vaadin.flow.html.H2;
 import com.vaadin.flow.html.Label;
@@ -15,7 +15,10 @@ import com.vaadin.flow.starter.app.backend.Review;
 import com.vaadin.flow.starter.app.backend.ReviewService;
 import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.shared.Registration;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 
 public final class ReviewCategoryComponent extends VerticalLayout implements View {
 
@@ -63,12 +66,13 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
         dialog.add(layout);
         dialog.setModal(true);
 
-        binder = new Binder<>(Category.class);
+        binder = new Binder<>();
         binder.forField(newCategoryNameInput)
                 .withConverter(String::trim, String::trim)
                 .withValidator(name -> name.length() >= 3,
                         "Category name must contain at least 3 printable characters")
-                .withValidator(name -> categoryService.findCategories(name).size() == 0,
+                .withValidator(
+                        name -> categoryService.findCategories(name).size() == 0,
                         "Category name must be unique")
                 .bind(Category::getCategoryName, Category::setCategoryName);
     }
@@ -124,14 +128,16 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
     }
 
     private void handleSave(String operationName) {
-        try {
-            binder.writeBean(currentCategory);
+        boolean isValid = binder.writeBeanIfValid(currentCategory);
+
+        if (isValid) {
             categoryService.saveCategory(currentCategory);
 
             notification.show("Category successfully " + operationName.toLowerCase() + "ed");
             updateView();
-        } catch (ValidationException ex) {
-            notification.show(ex.getValidationErrors().stream()
+        } else {
+            BinderValidationStatus<Category> status = binder.validate();
+            notification.show(status.getValidationErrors().stream()
                     .map(ValidationResult::getErrorMessage)
                     .collect(Collectors.joining("; ")));
         }

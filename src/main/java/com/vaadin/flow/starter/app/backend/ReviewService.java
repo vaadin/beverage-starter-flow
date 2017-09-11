@@ -1,13 +1,56 @@
 package com.vaadin.flow.starter.app.backend;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Stream;
 
-public class ReviewService implements Serializable {
+public class ReviewService {
 
-    static final Map<String, Category> BEVERAGES = new LinkedHashMap<>();
+    /**
+     * Helper class to initialize the singleton Service in a thread-safe way
+     * and to keep the initialization ordering clear between the two services.
+     * See also:
+     * https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
+     */
+    private static class SingletonHolder {
+        static final ReviewService INSTANCE = createDemoReviewService();
+
+        private static ReviewService createDemoReviewService() {
+            final ReviewService reviewService = new ReviewService();
+            Random r = new Random();
+            int reviewCount = 20 + r.nextInt(30);
+            List<Map.Entry<String, String>> beverages = new ArrayList<>(BEVERAGES.entrySet());
+
+            for (int i = 0; i < reviewCount; i++) {
+                Review review = new Review();
+                Map.Entry<String, String> beverage = beverages.get(r.nextInt(BEVERAGES.size()));
+                Category category = CategoryService.getInstance().findCategoryOrThrow(
+                        beverage.getValue());
+
+                review.setName(beverage.getKey());
+                LocalDate testDay = LocalDate.of(1930 + r.nextInt(88),
+                        1 + r.nextInt(12), 1 + r.nextInt(28));
+                review.setTestDate(testDay);
+                review.setScore(1 + r.nextInt(5));
+                review.setReviewCategory(category);
+                review.setTestTimes(1 + r.nextInt(15));
+                reviewService.saveReview(review);
+            }
+
+            return reviewService;
+        }
+
+    }
+
+    static final Map<String, String> BEVERAGES = new LinkedHashMap<>();
 
     static {
         Stream.of("Evian", "Voss", "Veen", "San Pellegrino", "Perrier")
@@ -48,49 +91,26 @@ public class ReviewService implements Serializable {
                 .forEach(name -> BEVERAGES.put(name, CategoryService.OTHER));
     }
 
-    private static final ReviewService INSTANCE = createDemoReviewService();
-
     public static ReviewService getInstance() {
-        return INSTANCE;
-    }
-
-    private static ReviewService createDemoReviewService() {
-        final ReviewService reviewService = new ReviewService();
-        Random r = new Random();
-        int reviewCount = 20 + r.nextInt(30);
-        List<Map.Entry<String, Category>> beverages = new ArrayList<>(BEVERAGES.entrySet());
-
-        for (int i = 0; i < reviewCount; i++) {
-            Review review = new Review();
-            Map.Entry<String, Category> beverage = beverages.get(r.nextInt(BEVERAGES.size()));
-
-            review.setName(beverage.getKey());
-            LocalDate testDay = LocalDate.of(1930 + r.nextInt(88),
-                    1 + r.nextInt(12), 1 + r.nextInt(28));
-            review.setTestDate(testDay);
-            review.setScore(1 + r.nextInt(5));
-            review.setReviewCategory(beverage.getValue());
-            review.setTestTimes(1 + r.nextInt(15));
-            reviewService.saveReview(review);
-        }
-
-        return reviewService;
+        return SingletonHolder.INSTANCE;
     }
 
     private Map<Long, Review> reviews = new HashMap<>();
     private long nextId = 0;
 
+    private ReviewService() {
+    }
+
     public synchronized List<Review> findReviews(String stringFilter) {
-        List reviewFindList = new ArrayList();
+        List<Review> reviewFindList = new ArrayList<>();
         String reviewStringFilter = stringFilter.toLowerCase();
 
         for (Review review : reviews.values()) {
             boolean passesFilter = (stringFilter == null
                     || stringFilter.isEmpty())
-                    || review.toString().toLowerCase()
-                    .contains(reviewStringFilter);
+                    || review.toString().toLowerCase().contains(reviewStringFilter);
             if (passesFilter) {
-                reviewFindList.add(review);
+                reviewFindList.add(new Review(review));
             }
         }
 
@@ -111,11 +131,24 @@ public class ReviewService implements Serializable {
         reviews.remove(value.getId());
     }
 
-    public synchronized void saveReview(Review entry) {
+    public synchronized void saveReview(Review dto) {
+        final Review entity = reviews.get(dto.getId());
+        Optional<Category> category = CategoryService.getInstance()
+                .findCategoryById(dto.getReviewCategory().getCategoryId());
 
-        if (entry.getId() == null) {
-            entry.setId(++nextId);
+        if (entity == null) {
+            final Review newEntity = new Review(dto);
+            if (dto.getId() == null) {
+                newEntity.setId(++nextId);
+            }
+            category.ifPresent(newEntity::setReviewCategory);
+            reviews.put(newEntity.getId(), newEntity);
+        } else {
+            entity.setScore(dto.getScore());
+            entity.setName(dto.getName());
+            entity.setTestDate(dto.getTestDate());
+            entity.setTestTimes(dto.getTestTimes());
+            category.ifPresent(entity::setReviewCategory);
         }
-        reviews.put(entry.getId(), entry);
     }
 }

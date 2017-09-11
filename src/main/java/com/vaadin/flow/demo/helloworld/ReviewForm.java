@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationException;
 import com.vaadin.data.ValidationResult;
 import com.vaadin.data.converter.StringToIntegerConverter;
@@ -144,7 +145,7 @@ public class ReviewForm extends GeneratedPaperDialog {
                         "The taste times should be at least 1")
                 .bind(Review::getTestTimes, Review::setTestTimes);
         binder.forField(categoryBox)
-                .withConverter(this::toCategory, Category::getCategoryName)
+                .withConverter(categoryService::findCategoryOrThrow, Category::getCategoryName)
                 .bind(Review::getReviewCategory, Review::setReviewCategory);
         binder.forField(lastTasted).bind(Review::getTestDate,
                 Review::setTestDate);
@@ -154,11 +155,6 @@ public class ReviewForm extends GeneratedPaperDialog {
                 .withValidator(score -> score >= 1 && score <= 5,
                         "The score should be between 1 and 5.")
                 .bind(Review::getScore, Review::setScore);
-    }
-
-    private Category toCategory(String name) {
-        return categoryService.findCategoryByName(name)
-                .orElseThrow(() -> new IllegalStateException("Category " + name + " does not exist"));
     }
 
     public void clear() {
@@ -188,14 +184,16 @@ public class ReviewForm extends GeneratedPaperDialog {
     }
 
     private void saveClicked() {
-        try {
-            binder.writeBean(reviewBean);
+        boolean isValid = binder.writeBeanIfValid(reviewBean);
+
+        if (isValid) {
             reviewService.saveReview(reviewBean);
             reviewsView.updateList();
             this.close();
             reviewsView.showMessage();
-        } catch (ValidationException ex) {
-            notification.show(ex.getValidationErrors().stream()
+        } else {
+            BinderValidationStatus<Review> status = binder.validate();
+            notification.show(status.getValidationErrors().stream()
                     .map(ValidationResult::getErrorMessage)
                     .collect(Collectors.joining("; ")));
         }
