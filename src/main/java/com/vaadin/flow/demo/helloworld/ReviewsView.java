@@ -67,28 +67,22 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     }
 
-    public void updateList() {
+    public void afterUpdate(Review review) {
+        updateList();
+        notification.show("Your reviews have been modified.");
+    }
+
+    private void updateList() {
         getModel().setReviews(
                 ReviewService.getInstance().findReview(filterText.getValue()));
     }
 
-    public void afterUpdate(Review review) {
-        updateList();
-        showMessage();
-    }
-
-    public void showMessage() {
-        notification.show("Your reviews have been modified.");
-    }
-
     @EventHandler
     private void edit(@ModelItem Review review) {
-        reviewForm.open();
         reviewForm.openReview(review, true);
     }
 
     private void addReviewClicked() {
-        reviewForm.open();
         reviewForm.openReview(new Review(), false);
     }
 

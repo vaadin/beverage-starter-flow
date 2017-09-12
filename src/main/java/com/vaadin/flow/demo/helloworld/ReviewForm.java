@@ -28,6 +28,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
     private Binder<Review> binder = new Binder<>(Review.class);
     private Review reviewBean = new Review();
+    private Consumer<Review> reviewConsumer;
 
     private FormLayout reviewFormLayout = new FormLayout();
     private HorizontalLayout buttonRow = new HorizontalLayout();
@@ -47,7 +48,6 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private PaperToast notification = new PaperToast();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
-    private Consumer<Review> reviewConsumer;
 
     public ReviewForm(Consumer<Review> reviewConsumer) {
         this.reviewConsumer = reviewConsumer;
@@ -57,26 +57,28 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
         createCategoryBox();
         createDatePicker();
         createScoreBox();
-        setFormLayout();
+        createFormLayout();
         createButtonRow();
         createDeleteConfirmDialog();
+        createNotification();
     }
 
-    public void open() {
+    public void openReview(Review review, boolean allowEdit) {
         this.getContent().open();
-    }
-
-    public void openReview(Review review, boolean allowDelete) {
         this.reviewBean = review;
-        if (!allowDelete) {
-            title.setText("Add a New Reivew");
+        if (!allowEdit) {
+            title.setText("Add a new review");
             reviewBean.setTestDate(LocalDate.now());
             reviewBean.setScore(1);
             reviewBean.setTestTimes(0);
         } else {
-            title.setText("Edit a Review");
+            title.setText("Edit a review");
         }
         binder.readBean(reviewBean);
+    }
+
+    private void createNotification() {
+        this.getContent().add(notification);
     }
 
     private void createDeleteConfirmDialog() {
@@ -94,7 +96,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
         });
     }
 
-    private void setFormLayout() {
+    private void createFormLayout() {
         reviewFormLayout.setResponsiveSteps(new ResponsiveStep("0", 1),
                 new ResponsiveStep("50em", 2));
         reviewFormLayout.getStyle().set("padding", "0");
@@ -113,22 +115,22 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     }
 
     private void createScoreBox() {
-        scoreBox.setLabel("mark a score");
-        scoreBox.setWidth("20em");
+        scoreBox.setLabel("Mark a score");
+        scoreBox.setWidth("15em");
         scoreBox.setAllowCustomValue(false);
         scoreBox.setItems("1", "2", "3", "4", "5");
         reviewFormLayout.add(scoreBox);
 
         binder.forField(scoreBox)
                 .withConverter(new StringToIntegerConverter(0,
-                        "The Score is a number"))
+                        "The score should be a number"))
                 .withValidator(score -> score >= 1 && score <= 5,
                         "The score should be between 1 and 5.")
                 .bind(Review::getScore, Review::setScore);
     }
 
     private void createDatePicker() {
-        lastTasted.setLabel("choose the date");
+        lastTasted.setLabel("Choose the date");
         lastTasted.setMax(LocalDate.now());
         reviewFormLayout.add(lastTasted);
 
@@ -137,8 +139,8 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     }
 
     private void createCategoryBox() {
-        categoryBox.setLabel("chose a category");
-        categoryBox.setWidth("20em");
+        categoryBox.setLabel("Choose a category");
+        categoryBox.setWidth("15em");
         categoryBox.setItems(CategoryService.getInstance().findCategory("")
                 .stream().map(Category::getCategoryName)
                 .collect(Collectors.toList()).toArray(new String[0]));
@@ -149,9 +151,9 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     }
 
     private void createTimesField() {
-        timesTasted.setLabel("Times Tasted");
-        timesTasted.setPlaceholder("add a number ");
-        timesTasted.setPattern("[0-9]*").setPreventInvalidInput(true);
+        timesTasted.setLabel("Times tasted");
+        timesTasted.setPattern("[0-9]*");
+        timesTasted.setPreventInvalidInput(true);
         reviewFormLayout.add(timesTasted);
 
         binder.forField(timesTasted)
@@ -163,19 +165,16 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     }
 
     private void createNameField() {
-        beverageName.setLabel("Beverage Name");
-        beverageName.setPlaceholder("add a beverage name");
+        beverageName.setLabel("Beverage name");
         reviewFormLayout.add(beverageName);
 
         binder.forField(beverageName).withValidator(name -> name.length() >= 3,
-                "The name of the beverage should be at least three characters.")
+                "The name of the beverage should contain at least three characters.")
                 .bind(Review::getName, Review::setName);
     }
 
     private void createFormTitle() {
-        VerticalLayout titleRow = new VerticalLayout();
-        titleRow.add(title);
-        this.getContent().add(titleRow);
+        this.getContent().add(title);
     }
 
     private void deleteConfirm() {
@@ -213,7 +212,6 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
             this.getContent().close();
             this.reviewConsumer.accept(reviewBean);
         } catch (ValidationException e) {
-            this.getContent().add(notification);
             notification.show(
                     "Please double check the information." + e.getMessage());
         }
