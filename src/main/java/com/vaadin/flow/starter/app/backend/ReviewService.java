@@ -91,14 +91,14 @@ public class ReviewService {
                 .forEach(name -> BEVERAGES.put(name, CategoryService.OTHER));
     }
 
-    public static ReviewService getInstance() {
-        return SingletonHolder.INSTANCE;
-    }
-
     private Map<Long, Review> reviews = new HashMap<>();
     private long nextId = 0;
 
     private ReviewService() {
+    }
+
+    public static ReviewService getInstance() {
+        return SingletonHolder.INSTANCE;
     }
 
     public synchronized List<Review> findReviews(String stringFilter) {

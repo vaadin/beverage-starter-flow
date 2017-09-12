@@ -42,14 +42,14 @@ public class CategoryService {
     static final String WINE = "Wine";
     static final String OTHER = "Other";
 
-    public static CategoryService getInstance() {
-        return SingletonHolder.INSTANCE;
-    }
-
     private Map<Long, Category> categories = new HashMap<>();
     private long nextId = 0;
 
     private CategoryService() {
+    }
+
+    public static CategoryService getInstance() {
+        return SingletonHolder.INSTANCE;
     }
 
     public synchronized List<Category> findCategories(

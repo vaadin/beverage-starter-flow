@@ -24,10 +24,10 @@ import com.vaadin.ui.VerticalLayout;
 
 public class ReviewForm extends GeneratedPaperDialog {
 
-    private ReviewService reviewService = ReviewService.getInstance();
+    private transient ReviewService reviewService = ReviewService.getInstance();
     private Binder<Review> binder = new Binder<>(Review.class);
     private Review reviewBean = new Review();
-    private CategoryService categoryService = CategoryService.getInstance();
+    private transient CategoryService categoryService = CategoryService.getInstance();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
     private ComboBox<Category> categoryBox = new ComboBox<>();
