@@ -16,8 +16,12 @@ public class Category implements Serializable {
     }
 
     public Category(Category other) {
-        this(other.getCategoryName());
-        this.categoryId = other.getCategoryId();
+        if (other != null) {
+            this.categoryName = other.getCategoryName();
+            this.categoryId = other.getCategoryId();
+        } else {
+            this.categoryName = "(undefined)";
+        }
     }
 
     public Long getCategoryId() {

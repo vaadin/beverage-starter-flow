@@ -22,20 +22,44 @@ import com.vaadin.ui.VerticalLayout;
 
 public final class ReviewCategoryComponent extends VerticalLayout implements View {
 
+    private enum Operation {
+        ADD("Add", true),
+        EDIT("Edit", false);
+
+        private final String name;
+        private final boolean deleteDisabled;
+
+        Operation(String name, boolean deleteDisabled) {
+            this.name = name;
+            this.deleteDisabled = deleteDisabled;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public boolean isDeleteDisabled() {
+            return deleteDisabled;
+        }
+    }
+
     private final transient CategoryService categoryService = CategoryService.getInstance();
     private final transient ReviewService reviewService = ReviewService.getInstance();
 
     private final TextField filter = new TextField("", "Search");
     private final VerticalLayout categoryLayout = new VerticalLayout();
 
-    private final GeneratedPaperDialog dialog = new GeneratedPaperDialog();
+    private final GeneratedPaperDialog changesDialog = new GeneratedPaperDialog();
     private final H2 titleField = new H2();
     private final TextField newCategoryNameInput = new TextField("Category Name");
     private final Button saveButton = new Button("Save");
     private final Button cancelButton = new Button("Cancel");
+    private final Button deleteButton = new Button("Delete");
     private Registration registration;
     private Binder<Category> binder;
     private Category currentCategory;
+
+    private final ConfirmationDialog confirmationDialog = new ConfirmationDialog();
 
     private final PaperToast notification = new PaperToast();
 
@@ -53,18 +77,19 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
         notification.setBackgroundColor("blue");
         initDialog();
 
-        add(dialog, notification);
+        add(changesDialog, notification);
     }
 
     private void initDialog() {
         saveButton.getElement().setAttribute("dialog-confirm", true);
         saveButton.getElement().setAttribute("autofocus", true);
         cancelButton.getElement().setAttribute("dialog-dismiss", true);
-        HorizontalLayout buttonBar = new HorizontalLayout(saveButton, cancelButton);
+        deleteButton.addClickListener(e -> handleDelete());
+        HorizontalLayout buttonBar = new HorizontalLayout(saveButton, cancelButton, deleteButton);
         buttonBar.setClassName("buttons");
         VerticalLayout layout = new VerticalLayout(titleField, newCategoryNameInput, buttonBar);
-        dialog.add(layout);
-        dialog.setModal(true);
+        changesDialog.add(layout, confirmationDialog);
+        changesDialog.setModal(true);
 
         binder = new Binder<>();
         binder.forField(newCategoryNameInput)
@@ -94,7 +119,7 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
         filter.addValueChangeListener(e -> updateView());
         Button newButton = new Button("+ New Category");
         newButton.addClickListener(
-                e -> displayDialog(new Category(), "Add"));
+                e -> displayDialog(new Category(), Operation.ADD));
         layout.add(filter, newButton);
 
         layout.setWidth("100%");
@@ -108,7 +133,7 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
         Label counter = new Label(String.valueOf(reviewCount));
         Button editButton = new Button("Edit");
         editButton.addClickListener(
-                e -> displayDialog(category, "Edit"));
+                e -> displayDialog(category, Operation.EDIT));
         layout.add(name, counter, editButton);
         layout.setWidth("100%");
         layout.getStyle().set("border", "1px solid #9E9E9E");
@@ -116,24 +141,25 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
         categoryLayout.add(layout);
     }
 
-    private void displayDialog(Category category, String operationName) {
+    private void displayDialog(Category category, Operation operation) {
         currentCategory = category;
-        titleField.setText(operationName + " New Category");
+        titleField.setText(operation.getName() + " New Category");
         if (registration != null) {
             registration.remove();
         }
-        registration = saveButton.addClickListener(e -> handleSave(operationName));
+        registration = saveButton.addClickListener(e -> handleSave(operation));
+        deleteButton.setDisabled(operation.isDeleteDisabled());
         binder.readBean(currentCategory);
-        dialog.open();
+        changesDialog.open();
     }
 
-    private void handleSave(String operationName) {
+    private void handleSave(Operation operation) {
         boolean isValid = binder.writeBeanIfValid(currentCategory);
 
         if (isValid) {
             categoryService.saveCategory(currentCategory);
 
-            notification.show("Category successfully " + operationName.toLowerCase() + "ed");
+            notification.show("Category successfully " + operation.getName().toLowerCase() + "ed");
             updateView();
         } else {
             BinderValidationStatus<Category> status = binder.validate();
@@ -141,5 +167,30 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
                     .map(ValidationResult::getErrorMessage)
                     .collect(Collectors.joining("; ")));
         }
+    }
+
+    private void handleDelete() {
+        int reviewCount = reviewService.findReviews(
+                currentCategory.getCategoryName()).size();
+        String text2 = reviewCount == 0 ? "" :
+                "Deleting the category will mark the associated reviews as \"undefined\". "
+                        + "You may link the reviews to other categories on the edit page.";
+        confirmationDialog.open("Delete Category \"" + currentCategory.getCategoryName() + "\"?",
+                "There are " + reviewCount + " reviews associated with this category.",
+                text2, "Delete", currentCategory, this::deleteCategory);
+    }
+
+    private void deleteCategory(Category category) {
+        List<Review> reviewsInCategory = reviewService.findReviews(category.getCategoryName());
+
+        reviewsInCategory.forEach(review -> {
+            review.setReviewCategory(null);
+            reviewService.saveReview(review);
+        });
+        categoryService.deleteCategory(category);
+
+        changesDialog.close();
+        notification.show("Category successfully deleted");
+        updateView();
     }
 }

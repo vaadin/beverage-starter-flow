@@ -133,24 +133,27 @@ public class ReviewService {
     }
 
     public synchronized void saveReview(Review dto) {
-        final Review entity = reviews.get(dto.getId());
-        Optional<Category> category = CategoryService.getInstance()
-                .findCategoryById(dto.getReviewCategory().getCategoryId());
+        Review entity = reviews.get(dto.getId());
+        Category category = dto.getReviewCategory();
 
+        if (category != null) {
+            category = CategoryService.getInstance().findCategoryById(
+                    category.getCategoryId())
+                    .orElse(null);
+        }
         if (entity == null) {
             // Make a copy to keep entities and DTOs separated
-            final Review newEntity = new Review(dto);
+            entity = new Review(dto);
             if (dto.getId() == null) {
-                newEntity.setId(++nextId);
+                entity.setId(++nextId);
             }
-            category.ifPresent(newEntity::setReviewCategory);
-            reviews.put(newEntity.getId(), newEntity);
+            reviews.put(entity.getId(), entity);
         } else {
             entity.setScore(dto.getScore());
             entity.setName(dto.getName());
             entity.setTestDate(dto.getTestDate());
             entity.setTestTimes(dto.getTestTimes());
-            category.ifPresent(entity::setReviewCategory);
         }
+        entity.setReviewCategory(category);
     }
 }
