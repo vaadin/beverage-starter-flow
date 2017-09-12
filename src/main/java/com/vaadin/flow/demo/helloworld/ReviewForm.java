@@ -28,7 +28,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
     private Binder<Review> binder = new Binder<>(Review.class);
     private Review reviewBean = new Review();
-    private Consumer<Review> reviewConsumer;
+    private transient Consumer<Review> reviewConsumer;
 
     private FormLayout reviewFormLayout = new FormLayout();
     private HorizontalLayout buttonRow = new HorizontalLayout();
