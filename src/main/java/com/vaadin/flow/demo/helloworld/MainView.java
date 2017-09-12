@@ -15,6 +15,7 @@
  */
 package com.vaadin.flow.demo.helloworld;
 
+import com.vaadin.annotations.HtmlImport;
 import com.vaadin.annotations.StyleSheet;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.router.HasChildView;
@@ -27,7 +28,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * The main view contains a simple label element and a template element.
  */
-@StyleSheet("context://styles.css")
+@HtmlImport("context://styles.html")
 public class MainView extends VerticalLayout implements HasChildView {
 
     private View child;

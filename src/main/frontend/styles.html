@@ -1,0 +1,246 @@
+
+<link rel="import" href="./bower_components/polymer/polymer-element.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/typography.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/color.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/sizing-and-spacing.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/style.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/icons.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-button.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-text-field.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-checkbox.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-date-picker.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-form-layout.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-form-item.html">
+<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-combo-box.html">
+
+<!-- valo theme shows clear icons in date-picker and combo-box, but we want it hidden here -->
+<dom-module id="fast-combo-box-date-picker-styles" theme-for="vaadin-combo-box vaadin-date-picker">
+    <template>
+        <style>
+      [part="clear-button"] {
+        display: none;
+      }
+    </style>
+    </template>
+</dom-module>
+
+<!-- theme for vaadin-buttons in menus -->
+<dom-module id="fast-button-styles" theme-for="vaadin-button">
+    <template>
+        <style>
+      :host([theme~="menu"]) [part="button"] {
+        text-align: left;
+      }
+
+      :host([theme~="menu"]) {
+        margin: 0;
+        padding: 0;
+        --valo-size: var(--valo-size-s);
+      }
+
+      :host([theme~="narrow"]) [part="button"] {
+        padding: 0 calc(var(--valo-size, var(--valo-size-m)) / 8 + var(--valo-button-border-radius, var(--valo-border-radius)) / 2);
+      }
+    </style>
+    </template>
+</dom-module>
+
+<!-- Theme for the status selector, we need to theme the text-field instead of the combo-box -->
+<dom-module id="fast-text-field-styles" theme-for="vaadin-text-field">
+    <template>
+        <style>
+      :host([theme~="status"][status="new"]) [part~="input-field"],
+      :host([theme~="status"][status="confirmed"]) [part~="input-field"] {
+        color: var(--valo-primary-color);
+        background: var(--valo-primary-color-10pct);
+      }
+
+      :host([theme~="status"][status="ready"]) [part~="input-field"],
+      :host([theme~="status"][status="delivered"]) [part~="input-field"] {
+        color: var(--valo-success-color);
+        background: var(--valo-success-color-10pct);
+      }
+
+      :host([theme~="status"][status="problem"]) [part~="input-field"],
+      :host([theme~="status"][status="cancelled"]) [part~="input-field"] {
+        color: var(--valo-error-color);
+        background: var(--valo-error-color-10pct);
+      }
+    </style>
+    </template>
+</dom-module>
+
+<!-- Theme for the vaadin-overlays -->
+<dom-module id="fast-overlay-styles" theme-for="vaadin-overlay">
+    <template>
+        <style include="vaadin-overlay-default-theme">
+      [part="content"] {
+        background: var(--valo-base-color) !important;
+      }
+    </style>
+    </template>
+</dom-module>
+
+<!-- Theme for the vaadin-combo-box-items -->
+<dom-module id="fast-combo-box-item-styles" theme-for="vaadin-combo-box-item">
+    <template>
+        <style include="vaadin-combo-box-item-default-theme">
+      :host(:not([touch-device]):hover),
+      :host([focused]) {
+        background: var(--valo-base-color);
+        background-image: linear-gradient(var(--valo-tint-5pct), var(--valo-tint-5pct));
+      }
+    </style>
+    </template>
+</dom-module>
+
+
+<!-- style for the main page -->
+<custom-style>
+    <style is="custom-style" include="valo-colors valo-typography">
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--valo-shade-10pct);
+    }
+
+    fast-app {
+      height: 100%;
+    }
+  </style>
+</custom-style>
+
+<!-- shared styles for all views -->
+<dom-module id="shared-styles">
+    <template>
+        <style>
+      :host([hidden]) {
+        display: none !important;
+      }
+
+      h2,
+      h3 {
+        margin-top: var(--valo-space-m);
+        margin-bottom: var(--valo-space-s);
+      }
+
+      h2 {
+        font-size: var(--valo-font-size-xxl);
+      }
+
+      h3 {
+        font-size: var(--valo-font-size-xl);
+      }
+
+      .overflow-auto {
+        overflow: auto;
+      }
+
+      .card {
+        background: var(--valo-base-color);
+        background-image: linear-gradient(var(--valo-tint-5pct), var(--valo-tint-5pct));
+        border-radius: var(--valo-border-radius);
+        box-shadow: 0 3px 5px #ddd;
+      }
+
+      .scrollable {
+        padding: var(--valo-space-m);
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .footer {
+        display: flex;
+        flex-wrap: wrap;
+        transition: box-shadow .2s;
+        justify-content: space-between;
+        padding: var(--valo-space-s);
+        align-items: baseline;
+      }
+
+      :host([scroll-shadow]) .footer {
+        box-shadow: 0 -1px 5px var(--valo-shade-20pct);
+      }
+
+      .count {
+        display: inline-block;
+        background: var(--valo-shade-10pct);
+        border-radius: var(--valo-border-radius);
+        font-size: var(--valo-font-size-s);
+        padding: 0 var(--valo-space-s);
+        text-align: center;
+      }
+
+      .money {
+        text-align: right;
+      }
+
+      .total {
+        flex: 1;
+        order: -1;
+        box-sizing: border-box;
+        padding: 0 var(--valo-space-s);
+        min-width: 100%;
+        font-size: var(--valo-font-size-l);
+        font-weight: bold;
+        white-space: nowrap;
+      }
+
+      @media (min-width: 600px) {
+        .total {
+          min-width: 0;
+          order: 0;
+          padding: 0 var(--valo-space-l);
+        }
+      }
+
+      .baseline {
+        align-items: baseline;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .flex0 {
+        flex: 0;
+      }
+
+      .flex1 {
+        flex: 1;
+      }
+
+      .flex2 {
+        flex: 2;
+      }
+
+      .flex5 {
+        flex: 5;
+      }
+
+      .flex9 {
+        flex: 9;
+      }
+
+      .column {
+        flex-direction: column;
+      }
+
+      .bold {
+        font-weight: 600;
+      }
+
+      .align-center {
+        align-items: center;
+      }
+
+      .justify-center {
+        justify-content: center;
+      }
+    </style>
+    </template>
+</dom-module>
