@@ -31,6 +31,7 @@ import com.vaadin.flow.starter.app.backend.Review;
 import com.vaadin.flow.starter.app.backend.ReviewService;
 import com.vaadin.flow.template.PolymerTemplate;
 import com.vaadin.flow.template.model.TemplateModel;
+import com.vaadin.ui.AttachEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 
@@ -41,6 +42,12 @@ import com.vaadin.ui.TextField;
 @HtmlImport("frontend://ReviewsView.html")
 public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
+    public static interface ReviewsModel extends TemplateModel {
+        @Convert(value = LongToStringConverter.class, path = "id")
+        @Convert(value = LocalDateToStringConverter.class, path = "testDate")
+        void setReviews(List<Review> reviews);
+    }
+
     @Id("filterText")
     private TextField filterText;
     @Id("addReview")
@@ -48,15 +55,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     @Id("notification")
     private PaperToast notification;
 
-    public static interface ReviewsModel extends TemplateModel {
-        @Convert(value = LongToStringConverter.class, path = "id")
-        @Convert(value = LocalDateToStringConverter.class, path = "testDate")
-        void setReviews(List<Review> reviews);
-
-    }
-
-    private ReviewForm reviewForm = new ReviewForm(this);
-    ReviewService reviews = ReviewService.getInstance();
+    private ReviewForm reviewForm = new ReviewForm(this::afterUpdate);
 
     public ReviewsView() {
         filterText.setPlaceholder("Find a review...");
@@ -64,31 +63,38 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
         addReview.setText("Add new review");
         addReview.addClickListener(e -> addReviewClicked());
-
         updateList();
-    }
 
-    private void addReviewClicked() {
-        reviewForm.clear();
-        openForm();
-    }
-
-    @EventHandler
-    private void edit(@ModelItem Review review) {
-        openForm();
-        reviewForm.bindReview(review);
     }
 
     public void updateList() {
-        getModel().setReviews(reviews.findReview(filterText.getValue()));
+        getModel().setReviews(
+                ReviewService.getInstance().findReview(filterText.getValue()));
     }
 
-    private void openForm() {
-        getElement().getParent().appendChild(reviewForm.getElement());
-        reviewForm.open();
+    public void afterUpdate(Review review) {
+        updateList();
+        showMessage();
     }
 
     public void showMessage() {
         notification.show("Your reviews have been modified.");
     }
+
+    @EventHandler
+    private void edit(@ModelItem Review review) {
+        reviewForm.open();
+        reviewForm.openReview(review, true);
+    }
+
+    private void addReviewClicked() {
+        reviewForm.open();
+        reviewForm.openReview(new Review(), false);
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        getElement().getParent().appendChild(reviewForm.getElement());
+    }
+
 }
