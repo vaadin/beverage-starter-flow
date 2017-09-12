@@ -1,6 +1,5 @@
 package com.vaadin.flow.starter.app.backend;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,39 +7,54 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
-public class CategoryService implements Serializable {
+public class CategoryService {
 
-    private static final CategoryService INSTANCE = createDemoCategoryService();
+    /**
+     * Helper class to initialize the singleton Service in a thread-safe way
+     * and to keep the initialization ordering clear between the two services.
+     * See also:
+     * https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
+     */
+    private static class SingletonHolder {
+        static final CategoryService INSTANCE = createDemoCategoryService();
 
-    public static CategoryService getInstance() {
-        return INSTANCE;
-    }
+        private static CategoryService createDemoCategoryService() {
+            CategoryService categoryService = new CategoryService();
+            Set<String> categoryNames = new LinkedHashSet<>(
+                    ReviewService.BEVERAGES.values());
 
-    private static CategoryService createDemoCategoryService() {
+            categoryNames.forEach(name -> categoryService.saveCategory(new Category(name)));
 
-        CategoryService categoryService = new CategoryService();
-        Set<String> categories = new LinkedHashSet<>(
-                ReviewService.BEVERAGES.values());
-
-        for (String categoryName : categories) {
-            Category category = new Category();
-
-            category.setCategoryName(categoryName);
-
-            categoryService.saveCategory(category);
+            return categoryService;
         }
-
-        return categoryService;
     }
+
+    static final String MINERAL_WATER = "Mineral Water";
+    static final String SOFT_DRINK = "Soft Drink";
+    static final String COFFEE = "Coffee";
+    static final String TEA = "Tea";
+    static final String DAIRY = "Dairy";
+    static final String CIDER = "Cider";
+    static final String BEER = "Beer";
+    static final String WINE = "Wine";
+    static final String OTHER = "Other";
 
     private Map<Long, Category> categories = new HashMap<>();
     private long nextId = 0;
 
-    public synchronized List<Category> findCategory(
+    private CategoryService() {
+    }
+
+    public static CategoryService getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
+    public synchronized List<Category> findCategories(
             String stringCategoryFilter) {
-        List categoryFindList = new ArrayList();
+        List<Category> categoryFindList = new ArrayList<>();
         String stringCategoryFilterLoCase = stringCategoryFilter.toLowerCase();
 
         for (Category category : categories.values()) {
@@ -50,7 +64,8 @@ public class CategoryService implements Serializable {
                     || category.getCategoryName().toLowerCase()
                             .contains(stringCategoryFilterLoCase);
             if (passesFilter) {
-                categoryFindList.add(category);
+                // Make a copy to keep entities and DTOs separated
+                categoryFindList.add(new Category(category));
             }
         }
 
@@ -64,6 +79,28 @@ public class CategoryService implements Serializable {
         return categoryFindList;
     }
 
+    public synchronized Optional<Category> findCategoryByName(String name) {
+        List<Category> categoriesMatching = findCategories(name);
+
+        if (categoriesMatching.isEmpty()) {
+            return Optional.empty();
+        }
+        if (categoriesMatching.size() > 1) {
+            throw new IllegalStateException("Category " + name + " is ambiguous");
+        }
+        return Optional.of(categoriesMatching.get(0));
+    }
+
+    public Category findCategoryOrThrow(String name) {
+        return findCategoryByName(name)
+                .orElseThrow(() -> new IllegalStateException("Category " + name + " does not exist"));
+    }
+
+    public Optional<Category> findCategoryById(Long id) {
+        Category category = categories.get(id);
+        return Optional.ofNullable(category);
+    }
+
     public synchronized long count() {
         return categories.size();
     }
@@ -72,12 +109,19 @@ public class CategoryService implements Serializable {
         categories.remove(value.getCategoryId());
     }
 
-    public synchronized void saveCategory(Category entry) {
+    public synchronized void saveCategory(Category dto) {
+        Category entity = categories.get(dto.getCategoryId());
 
-        if (entry.getCategoryId() == null) {
-            entry.setCategoryId(nextId++);
+        if (entity == null) {
+            // Make a copy to keep entities and DTOs separated
+            entity = new Category(dto);
+            if (dto.getCategoryId() == null) {
+                entity.setCategoryId(++nextId);
+            }
+            categories.put(entity.getCategoryId(), entity);
+        } else {
+            entity.setCategoryName(dto.getCategoryName());
         }
-        categories.put(entry.getCategoryId(), entry);
     }
 
 }
