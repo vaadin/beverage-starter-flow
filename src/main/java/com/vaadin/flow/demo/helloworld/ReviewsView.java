@@ -51,6 +51,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     public static interface ReviewsModel extends TemplateModel {
         @Convert(value = LongToStringConverter.class, path = "id")
         @Convert(value = LocalDateToStringConverter.class, path = "testDate")
+        @Convert(value = LongToStringConverter.class, path = "reviewCategory.categoryId")
         void setReviews(List<Review> reviews);
 
     }
@@ -80,7 +81,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     }
 
     public void updateList() {
-        getModel().setReviews(reviews.findReview(filterText.getValue()));
+        getModel().setReviews(reviews.findReviews(filterText.getValue()));
     }
 
     private void openForm() {
