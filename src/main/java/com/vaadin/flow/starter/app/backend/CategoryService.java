@@ -64,6 +64,7 @@ public class CategoryService {
                     || category.getCategoryName().toLowerCase()
                             .contains(stringCategoryFilterLoCase);
             if (passesFilter) {
+                // Make a copy to keep entities and DTOs separated
                 categoryFindList.add(new Category(category));
             }
         }
@@ -112,6 +113,7 @@ public class CategoryService {
         Category entity = categories.get(dto.getCategoryId());
 
         if (entity == null) {
+            // Make a copy to keep entities and DTOs separated
             entity = new Category(dto);
             if (dto.getCategoryId() == null) {
                 entity.setCategoryId(++nextId);

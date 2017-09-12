@@ -110,6 +110,7 @@ public class ReviewService {
                     || stringFilter.isEmpty())
                     || review.toString().toLowerCase().contains(reviewStringFilter);
             if (passesFilter) {
+                // Make a copy to keep entities and DTOs separated
                 reviewFindList.add(new Review(review));
             }
         }
@@ -137,6 +138,7 @@ public class ReviewService {
                 .findCategoryById(dto.getReviewCategory().getCategoryId());
 
         if (entity == null) {
+            // Make a copy to keep entities and DTOs separated
             final Review newEntity = new Review(dto);
             if (dto.getId() == null) {
                 newEntity.setId(++nextId);
