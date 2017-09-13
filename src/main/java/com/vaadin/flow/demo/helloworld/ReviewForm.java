@@ -14,7 +14,6 @@ import com.vaadin.flow.html.Label;
 import com.vaadin.flow.starter.app.backend.Category;
 import com.vaadin.flow.starter.app.backend.CategoryService;
 import com.vaadin.flow.starter.app.backend.Review;
-import com.vaadin.flow.starter.app.backend.ReviewService;
 import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
@@ -32,7 +31,6 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private Review reviewBean = new Review();
     private transient Consumer<Review> saveHandler;
     private transient Consumer<Review> deleteHandler;
-    private transient ReviewService reviewService = ReviewService.getInstance();
     private transient CategoryService categoryService = CategoryService
             .getInstance();
 
@@ -72,10 +70,10 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
         createNotification();
     }
 
-    public void openReview(Review review, boolean allowEdit) {
+    public void openReview(Review review, boolean existedReview) {
         this.getContent().open();
         this.reviewBean = review;
-        if (!allowEdit) {
+        if (!existedReview) {
             title.setText("Add a new review");
             reviewBean.setTestDate(LocalDate.now());
             reviewBean.setScore(1);
@@ -150,7 +148,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private void createCategoryBox() {
         categoryBox.setLabel("Choose a category");
         categoryBox.setWidth("15em");
-        categoryBox.setItems(CategoryService.getInstance().findCategories(""));
+        categoryBox.setItems(categoryService.findCategories(""));
         reviewFormLayout.add(categoryBox);
 
         binder.forField(categoryBox)
