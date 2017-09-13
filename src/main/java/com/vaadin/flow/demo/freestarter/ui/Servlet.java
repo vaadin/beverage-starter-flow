@@ -13,12 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.flow.demo.freestarter.ui;
 
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.flow.demo.helloworld.Servlet.MyRouterConfigurator;
+import com.vaadin.flow.demo.freestarter.ui.Servlet.MyRouterConfigurator;
 import com.vaadin.flow.router.RouterConfiguration;
 import com.vaadin.flow.router.RouterConfigurator;
 import com.vaadin.server.VaadinServlet;
@@ -39,10 +39,10 @@ public class Servlet extends VaadinServlet {
             /*
              * Start in the Reviews view by default
              */
-            configuration.setRoute("", ReviewsView.class,
-                    MainView.class);
-            configuration.setRoute("categories", ReviewCategoryComponent.class,
-                    MainView.class);
+            configuration.setRoute("", ReviewsList.class,
+                    MainLayout.class);
+            configuration.setRoute("categories", CategoriesList.class,
+                    MainLayout.class);
         }
     }
 }

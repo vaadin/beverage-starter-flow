@@ -1,16 +1,17 @@
-package com.vaadin.flow.starter.app.backend;
+package com.vaadin.flow.demo.freestarter.backend;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.vaadin.flow.demo.helloworld.converters.LocalDateToStringConverter;
+import com.vaadin.flow.demo.freestarter.ui.converters.LocalDateToStringConverter;
 
 /**
  * Simple backend service to store and retrieve {@link Review} instances.
@@ -45,7 +46,7 @@ public class ReviewService {
                         1 + r.nextInt(12), 1 + r.nextInt(28));
                 review.setTestDate(testDay);
                 review.setScore(1 + r.nextInt(5));
-                review.setReviewCategory(category);
+                review.setCategory(category);
                 review.setTestTimes(1 + r.nextInt(15));
                 reviewService.saveReview(review);
             }
@@ -97,7 +98,8 @@ public class ReviewService {
         // Use a delimiter which can't be entered in the search box,
         // to avoid false positives
         String filterableText = Stream.of(review.getName(),
-                review.getReviewCategory().getCategoryName(),
+                Optional.ofNullable(review.getCategory())
+                        .orElse(Category.UNDEFINED).getName(),
                 String.valueOf(review.getScore()),
                 String.valueOf(review.getTestTimes()),
                 dateConverter.toPresentation(review.getTestDate()))
@@ -126,7 +128,7 @@ public class ReviewService {
      */
     public void saveReview(Review dto) {
         Review entity = reviews.get(dto.getId());
-        Category category = dto.getReviewCategory();
+        Category category = dto.getCategory();
 
         if (category != null) {
             // The case when the category is new (not persisted yet, thus
@@ -134,7 +136,7 @@ public class ReviewService {
             // occur via the UI.
             // Note that Category.UNDEFINED also gets mapped to null.
             category = CategoryService.getInstance().findCategoryById(
-                    category.getCategoryId())
+                    category.getId())
                     .orElse(null);
         }
         if (entity == null) {
@@ -150,6 +152,6 @@ public class ReviewService {
             entity.setTestDate(dto.getTestDate());
             entity.setTestTimes(dto.getTestTimes());
         }
-        entity.setReviewCategory(category);
+        entity.setCategory(category);
     }
 }

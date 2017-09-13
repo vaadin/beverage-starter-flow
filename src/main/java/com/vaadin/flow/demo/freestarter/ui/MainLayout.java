@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.flow.demo.freestarter.ui;
 
 import com.vaadin.annotations.HtmlImport;
 import com.vaadin.flow.html.Label;
@@ -28,19 +28,19 @@ import com.vaadin.ui.VerticalLayout;
  * The main view contains a simple label element and a template element.
  */
 @HtmlImport("context://styles.html")
-public class MainView extends VerticalLayout implements HasChildView {
+public class MainLayout extends VerticalLayout implements HasChildView {
 
     private View child;
 
-    public MainView() {
+    public MainLayout() {
         // This is just a simple label created via Elements API
         Label label = new Label("Beverage Buddy");
         add(label);
 
-        RouterLink reviews = new RouterLink("Reviews", ReviewsView.class);
+        RouterLink reviews = new RouterLink("Reviews", ReviewsList.class);
         reviews.setId("reviews-link");
         RouterLink categories = new RouterLink("Categories",
-                ReviewCategoryComponent.class);
+                CategoriesList.class);
         categories.setId("categories-link");
 
         HorizontalLayout viewSelector = new HorizontalLayout(label, reviews,
