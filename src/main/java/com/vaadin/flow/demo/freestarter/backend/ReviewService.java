@@ -1,15 +1,13 @@
-package com.vaadin.flow.starter.app.backend;
+package com.vaadin.flow.demo.freestarter.backend;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.stream.Stream;
 
 public class ReviewService {
 
@@ -41,7 +39,7 @@ public class ReviewService {
                         1 + r.nextInt(12), 1 + r.nextInt(28));
                 review.setTestDate(testDay);
                 review.setScore(1 + r.nextInt(5));
-                review.setReviewCategory(category);
+                review.setCategory(category);
                 review.setTestTimes(1 + r.nextInt(15));
                 reviewService.saveReview(review);
             }
@@ -94,11 +92,11 @@ public class ReviewService {
 
     public synchronized void saveReview(Review dto) {
         Review entity = reviews.get(dto.getId());
-        Category category = dto.getReviewCategory();
+        Category category = dto.getCategory();
 
         if (category != null) {
             category = CategoryService.getInstance().findCategoryById(
-                    category.getCategoryId())
+                    category.getId())
                     .orElse(null);
         }
         if (entity == null) {
@@ -114,6 +112,6 @@ public class ReviewService {
             entity.setTestDate(dto.getTestDate());
             entity.setTestTimes(dto.getTestTimes());
         }
-        entity.setReviewCategory(category);
+        entity.setCategory(category);
     }
 }

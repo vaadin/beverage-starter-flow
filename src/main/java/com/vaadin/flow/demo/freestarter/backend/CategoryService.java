@@ -1,4 +1,4 @@
-package com.vaadin.flow.starter.app.backend;
+package com.vaadin.flow.demo.freestarter.backend;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +51,7 @@ public class CategoryService {
 
             boolean passesFilter = (stringCategoryFilter == null
                     || stringCategoryFilter.isEmpty())
-                    || category.getCategoryName().toLowerCase()
+                    || category.getName().toLowerCase()
                             .contains(stringCategoryFilterLoCase);
             if (passesFilter) {
                 // Make a copy to keep entities and DTOs separated
@@ -62,7 +62,7 @@ public class CategoryService {
         Collections.sort(categoryFindList, new Comparator<Category>() {
             @Override
             public int compare(Category o1, Category o2) {
-                return (int) (o2.getCategoryId() - o1.getCategoryId());
+                return (int) (o2.getId() - o1.getId());
             }
         });
 
@@ -96,21 +96,21 @@ public class CategoryService {
     }
 
     public synchronized void deleteCategory(Category value) {
-        categories.remove(value.getCategoryId());
+        categories.remove(value.getId());
     }
 
     public synchronized void saveCategory(Category dto) {
-        Category entity = categories.get(dto.getCategoryId());
+        Category entity = categories.get(dto.getId());
 
         if (entity == null) {
             // Make a copy to keep entities and DTOs separated
             entity = new Category(dto);
-            if (dto.getCategoryId() == null) {
-                entity.setCategoryId(++nextId);
+            if (dto.getId() == null) {
+                entity.setId(++nextId);
             }
-            categories.put(entity.getCategoryId(), entity);
+            categories.put(entity.getId(), entity);
         } else {
-            entity.setCategoryName(dto.getCategoryName());
+            entity.setName(dto.getName());
         }
     }
 

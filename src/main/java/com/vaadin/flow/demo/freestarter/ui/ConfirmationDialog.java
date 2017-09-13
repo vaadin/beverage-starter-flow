@@ -1,10 +1,10 @@
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.flow.demo.freestarter.ui;
 
 import java.util.function.Consumer;
 
 import com.vaadin.flow.html.H2;
 import com.vaadin.flow.html.Label;
-import com.vaadin.flow.starter.app.backend.Category;
+import com.vaadin.flow.demo.freestarter.backend.Category;
 import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.shared.Registration;
 import com.vaadin.ui.Button;

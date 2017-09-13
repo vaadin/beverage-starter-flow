@@ -1,4 +1,4 @@
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.flow.demo.freestarter.ui;
 
 import com.vaadin.annotations.DomEvent;
 import com.vaadin.ui.ComponentEvent;

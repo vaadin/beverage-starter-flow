@@ -1,4 +1,4 @@
-package com.vaadin.flow.starter.app.backend;
+package com.vaadin.flow.demo.freestarter.backend;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

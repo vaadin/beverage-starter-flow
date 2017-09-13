@@ -1,4 +1,4 @@
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.flow.demo.freestarter.ui;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -12,9 +12,9 @@ import com.vaadin.data.ValidationResult;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.html.Div;
 import com.vaadin.flow.html.Label;
-import com.vaadin.flow.starter.app.backend.Category;
-import com.vaadin.flow.starter.app.backend.CategoryService;
-import com.vaadin.flow.starter.app.backend.Review;
+import com.vaadin.flow.demo.freestarter.backend.Category;
+import com.vaadin.flow.demo.freestarter.backend.CategoryService;
+import com.vaadin.flow.demo.freestarter.backend.Review;
 import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
@@ -159,8 +159,8 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
         binder.forField(categoryBox)
                 .withConverter(categoryService::findCategoryOrThrow,
-                        Category::getCategoryName)
-                .bind(Review::getReviewCategory, Review::setReviewCategory);
+                        Category::getName)
+                .bind(Review::getCategory, Review::setCategory);
     }
 
     private void createTimesField() {
