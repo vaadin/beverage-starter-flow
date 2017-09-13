@@ -1,6 +1,7 @@
 package com.vaadin.flow.demo.helloworld;
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -70,17 +71,22 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
         createNotification();
     }
 
-    public void openReview(Review review, boolean existedReview) {
+    public void openReview(Optional<Review> optionalReview) {
         this.getContent().open();
-        this.reviewBean = review;
-        if (!existedReview) {
+
+        optionalReview.ifPresent(review -> {
+            title.setText("Edit a review");
+            this.reviewBean = review;
+        });
+
+        if (!optionalReview.isPresent()) {
             title.setText("Add a new review");
+            reviewBean = new Review();
             reviewBean.setTestDate(LocalDate.now());
             reviewBean.setScore(1);
             reviewBean.setTestTimes(0);
-        } else {
-            title.setText("Edit a review");
         }
+
         binder.readBean(reviewBean);
     }
 

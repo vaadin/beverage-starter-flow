@@ -16,6 +16,7 @@
 package com.vaadin.flow.demo.helloworld;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.vaadin.annotations.Convert;
 import com.vaadin.annotations.EventHandler;
@@ -88,11 +89,12 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     @EventHandler
     private void edit(@ModelItem Review review) {
-        reviewForm.openReview(review, true);
+        // reviewForm.openReview(review, true);
+        reviewForm.openReview(Optional.of(review));
     }
 
     private void addReviewClicked() {
-        reviewForm.openReview(new Review(), false);
+        reviewForm.openReview(Optional.empty());
     }
 
     @Override
