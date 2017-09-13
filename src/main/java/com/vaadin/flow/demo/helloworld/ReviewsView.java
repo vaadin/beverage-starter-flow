@@ -89,7 +89,6 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     @EventHandler
     private void edit(@ModelItem Review review) {
-        // reviewForm.openReview(review, true);
         reviewForm.openReview(Optional.of(review));
     }
 
