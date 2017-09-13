@@ -5,13 +5,16 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationException;
+import com.vaadin.data.ValidationResult;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.html.Div;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.starter.app.backend.Category;
 import com.vaadin.flow.starter.app.backend.CategoryService;
 import com.vaadin.flow.starter.app.backend.Review;
+import com.vaadin.flow.starter.app.backend.ReviewService;
 import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
@@ -29,6 +32,9 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private Review reviewBean = new Review();
     private transient Consumer<Review> saveHandler;
     private transient Consumer<Review> deleteHandler;
+    private transient ReviewService reviewService = ReviewService.getInstance();
+    private transient CategoryService categoryService = CategoryService
+            .getInstance();
 
     private FormLayout reviewFormLayout = new FormLayout();
     private HorizontalLayout buttonRow = new HorizontalLayout();
@@ -40,7 +46,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private Button delete = new Button("Delete");
     private Button yes = new Button("Yes");
     private Button no = new Button("No");
-    private ComboBox<String> categoryBox = new ComboBox<>();
+    private ComboBox<Category> categoryBox = new ComboBox<>();
     private ComboBox<String> scoreBox = new ComboBox<>();
     private DatePicker lastTasted = new DatePicker();
     private GeneratedPaperDialog confirmDialog = new GeneratedPaperDialog();
@@ -144,13 +150,13 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private void createCategoryBox() {
         categoryBox.setLabel("Choose a category");
         categoryBox.setWidth("15em");
-        categoryBox.setItems(CategoryService.getInstance().findCategory("")
-                .stream().map(Category::getCategoryName)
-                .collect(Collectors.toList()).toArray(new String[0]));
+        categoryBox.setItems(CategoryService.getInstance().findCategories(""));
         reviewFormLayout.add(categoryBox);
 
-        binder.forField(categoryBox).bind(Review::getReviewCategory,
-                Review::setReviewCategory);
+        binder.forField(categoryBox)
+                .withConverter(categoryService::findCategoryOrThrow,
+                        Category::getCategoryName)
+                .bind(Review::getReviewCategory, Review::setReviewCategory);
     }
 
     private void createTimesField() {
@@ -188,8 +194,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
             setButtonsDisabled(false);
             this.deleteHandler.accept(reviewBean);
         } catch (ValidationException e) {
-            notification.show(
-                    "Please double check the information." + e.getMessage());
+            notification.show(e.getMessage());
         }
     }
 
@@ -213,8 +218,10 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
             this.getContent().close();
             this.saveHandler.accept(reviewBean);
         } catch (ValidationException e) {
-            notification.show(
-                    "Please double check the information." + e.getMessage());
+            BinderValidationStatus<Review> status = binder.validate();
+            notification.show(status.getValidationErrors().stream()
+                    .map(ValidationResult::getErrorMessage)
+                    .collect(Collectors.joining("; ")));
         }
     }
 
