@@ -1,6 +1,8 @@
 package com.vaadin.flow.demo.helloworld;
 
 import java.time.LocalDate;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import com.vaadin.data.Binder;
@@ -8,169 +10,200 @@ import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationException;
 import com.vaadin.data.ValidationResult;
 import com.vaadin.data.converter.StringToIntegerConverter;
+import com.vaadin.flow.html.Div;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.starter.app.backend.Category;
 import com.vaadin.flow.starter.app.backend.CategoryService;
 import com.vaadin.flow.starter.app.backend.Review;
-import com.vaadin.flow.starter.app.backend.ReviewService;
 import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Composite;
 import com.vaadin.ui.DatePicker;
-import com.vaadin.ui.FlexLayout.Alignment;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.FormLayout.ResponsiveStep;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class ReviewForm extends GeneratedPaperDialog {
+public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
-    private transient ReviewService reviewService = ReviewService.getInstance();
     private Binder<Review> binder = new Binder<>(Review.class);
     private Review reviewBean = new Review();
-    private transient CategoryService categoryService = CategoryService.getInstance();
+    private transient Consumer<Review> saveHandler;
+    private transient Consumer<Review> deleteHandler;
+    private transient CategoryService categoryService = CategoryService
+            .getInstance();
+
+    private FormLayout reviewFormLayout = new FormLayout();
+    private HorizontalLayout buttonRow = new HorizontalLayout();
+    private HorizontalLayout confirmDialogButtonBar = new HorizontalLayout();
+    private VerticalLayout confirmDialogLayout = new VerticalLayout();
+
+    private Button save = new Button("Save");
+    private Button cancel = new Button("Cancel");
+    private Button delete = new Button("Delete");
+    private Button yes = new Button("Yes");
+    private Button no = new Button("No");
+    private ComboBox<Category> categoryBox = new ComboBox<>();
+    private ComboBox<String> scoreBox = new ComboBox<>();
+    private DatePicker lastTasted = new DatePicker();
+    private GeneratedPaperDialog confirmDialog = new GeneratedPaperDialog();
+    private Label title = new Label();
+    private PaperToast notification = new PaperToast();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
-    private ComboBox<Category> categoryBox = new ComboBox<>();
-    private DatePicker lastTasted = new DatePicker();
-    private ComboBox<String> scoreBox = new ComboBox<>();
-    private ReviewsView reviewsView;
-    private PaperToast notification = new PaperToast();
-    private GeneratedPaperDialog confirmDialog = new GeneratedPaperDialog();
-    Button save = new Button("Save");
-    Button cancel = new Button("Cancel");
-    Button delete = new Button("Delete");
-    HorizontalLayout buttonRow = new HorizontalLayout();
 
-    public ReviewForm(ReviewsView reviewsView) {
-        this.reviewsView = reviewsView;
-        bindFields();
-        VerticalLayout reviewFormLayout = new VerticalLayout();
-        addFormTitle(reviewFormLayout);
-        addComboDatePicker(reviewFormLayout);
-        scoreBox.setWidth("20%");
-        scoreBox.setLabel("mark a score");
-        scoreBox.setItems("1", "2", "3", "4", "5");
-        reviewFormLayout.add(scoreBox);
-        addButtonRow(reviewFormLayout);
-        reviewFormLayout.add(notification);
-        setModal(true);
-        add(reviewFormLayout);
-        addConfirmDialog();
-        add(confirmDialog);
+    public ReviewForm(Consumer<Review> saveHandler,
+            Consumer<Review> deleteHandler) {
+        this.saveHandler = saveHandler;
+        this.deleteHandler = deleteHandler;
+
+        createFormTitle();
+        createNameField();
+        createTimesField();
+        createCategoryBox();
+        createDatePicker();
+        createScoreBox();
+        createFormLayout();
+        createButtonRow();
+        createDeleteConfirmDialog();
+        createNotification();
     }
 
-    private void addComboDatePicker(VerticalLayout reviewFormLayout) {
-        HorizontalLayout row2 = new HorizontalLayout();
-        categoryBox.setLabel("Choose a category");
-        categoryBox.setItemLabelPath("categoryName");
-        categoryBox.setItemValuePath("categoryName");
-        categoryBox.setAllowCustomValue(false);
-        // TODO disable/hide the Clear button on the combobox
-        categoryBox.setItems(categoryService.findCategories(""));
-        lastTasted.setLabel("Choose the date");
-        row2.add(categoryBox, lastTasted);
-        row2.setSpacing(true);
-        reviewFormLayout.add(row2);
+    public void openReview(Optional<Review> optionalReview) {
+        this.getContent().open();
+
+        optionalReview.ifPresent(review -> {
+            title.setText("Edit a review");
+            this.reviewBean = review;
+        });
+
+        if (!optionalReview.isPresent()) {
+            title.setText("Add a new review");
+            reviewBean = new Review();
+            reviewBean.setTestDate(LocalDate.now());
+            reviewBean.setScore(1);
+            reviewBean.setTestTimes(0);
+        }
+
+        binder.readBean(reviewBean);
     }
 
-    private void addFormTitle(VerticalLayout reviewFormLayout) {
-        Label label = new Label("Edit Beverage Notes");
-        HorizontalLayout row1 = new HorizontalLayout();
-        row1.setWidth("90%");
-        row1.setSpacing(true);
-        beverageName.setLabel("Beverage Name");
-        beverageName.setPlaceholder("add a beverage name");
-        timesTasted.setLabel("Times Tasted");
-        timesTasted.setPlaceholder("add a number ");
-        timesTasted.setPattern("[0-9]*").setPreventInvalidInput(true);
-        row1.add(beverageName, timesTasted);
-        reviewFormLayout.add(label, row1);
+    private void createNotification() {
+        this.getContent().add(notification);
     }
 
-    private void addButtonRow(VerticalLayout reviewFormLayout) {
-
-        buttonRow.setWidth("80%");
-        buttonRow.setSpacing(true);
-        buttonRow.setHeight("150px");
-        buttonRow.setDefaultComponentAlignment(Alignment.END);
-        save.addClickListener(e -> this.saveClicked());
-        cancel.addClickListener(e -> this.cancelClicked());
-        delete.addClickListener(e -> this.deleteClicked());
-        buttonRow.add(save, cancel, delete);
-        reviewFormLayout.add(buttonRow);
-    }
-
-    private void addConfirmDialog() {
-        VerticalLayout layout = new VerticalLayout();
-        HorizontalLayout buttonBar = new HorizontalLayout();
-        Button yes = new Button("Yes");
-        Button no = new Button("No");
-        buttonBar.add(yes, no);
+    private void createDeleteConfirmDialog() {
+        confirmDialogButtonBar.add(yes, no);
         Label confirmation = new Label("Are you sure deleting this Review?");
-        layout.add(confirmation, buttonBar);
-        confirmDialog.add(layout);
+        confirmDialogLayout.add(confirmation, confirmDialogButtonBar);
+        confirmDialog.add(confirmDialogLayout);
         confirmDialog.setModal(true);
+        this.getContent().add(confirmDialog);
 
         yes.addClickListener(event -> deleteConfirm());
         no.addClickListener(event -> {
             setButtonsDisabled(false);
             confirmDialog.close();
-            this.close();
         });
     }
 
-    private void deleteConfirm() {
-        try {
-            binder.writeBean(reviewBean);
-            reviewService.deleteReview(reviewBean);
-            reviewsView.updateList();
-            confirmDialog.close();
-            this.close();
-            reviewsView.showMessage();
-            setButtonsDisabled(false);
-        } catch (ValidationException e) {
-            notification.show(
-                    "Please double check the information." + e.getMessage());
-        }
+    private void createFormLayout() {
+        reviewFormLayout.setResponsiveSteps(new ResponsiveStep("0", 1),
+                new ResponsiveStep("50em", 2));
+        reviewFormLayout.getStyle().set("padding", "0");
+        Div div = new Div(reviewFormLayout);
+        div.getStyle().set("padding", "10px");
+        this.getContent().add(div);
+        this.getContent().setModal(true);
     }
 
-    private void bindFields() {
-        binder.forField(beverageName).withValidator(name -> name.length() >= 3,
-                "The name of the beverage should be at least three characters.")
-                .bind(Review::getName, Review::setName);
+    private void createButtonRow() {
+        buttonRow.add(save, cancel, delete);
+        this.getContent().add(buttonRow);
+        save.addClickListener(e -> this.saveClicked());
+        cancel.addClickListener(e -> this.cancelClicked());
+        delete.addClickListener(e -> this.deleteClicked());
+    }
+
+    private void createScoreBox() {
+        scoreBox.setLabel("Mark a score");
+        scoreBox.setWidth("15em");
+        scoreBox.setAllowCustomValue(false);
+        scoreBox.setItems("1", "2", "3", "4", "5");
+        reviewFormLayout.add(scoreBox);
+
+        binder.forField(scoreBox)
+                .withConverter(new StringToIntegerConverter(0,
+                        "The score should be a number"))
+                .withValidator(score -> score >= 1 && score <= 5,
+                        "The score should be between 1 and 5.")
+                .bind(Review::getScore, Review::setScore);
+    }
+
+    private void createDatePicker() {
+        lastTasted.setLabel("Choose the date");
+        lastTasted.setMax(LocalDate.now());
+        reviewFormLayout.add(lastTasted);
+
+        binder.forField(lastTasted).bind(Review::getTestDate,
+                Review::setTestDate);
+    }
+
+    private void createCategoryBox() {
+        categoryBox.setLabel("Choose a category");
+        categoryBox.setWidth("15em");
+        categoryBox.setItems(categoryService.findCategories(""));
+        reviewFormLayout.add(categoryBox);
+
+        binder.forField(categoryBox)
+                .withConverter(categoryService::findCategoryOrThrow,
+                        Category::getCategoryName)
+                .bind(Review::getReviewCategory, Review::setReviewCategory);
+    }
+
+    private void createTimesField() {
+        timesTasted.setLabel("Times tasted");
+        timesTasted.setPattern("[0-9]*");
+        timesTasted.setPreventInvalidInput(true);
+        reviewFormLayout.add(timesTasted);
+
         binder.forField(timesTasted)
                 .withConverter(
                         new StringToIntegerConverter(0, "Must enter a number"))
                 .withValidator(testTimes -> testTimes > 0,
                         "The taste times should be at least 1")
                 .bind(Review::getTestTimes, Review::setTestTimes);
-        binder.forField(categoryBox)
-                .withConverter(categoryService::findCategoryOrThrow, Category::getCategoryName)
-                .bind(Review::getReviewCategory, Review::setReviewCategory);
-        binder.forField(lastTasted).bind(Review::getTestDate,
-                Review::setTestDate);
-        binder.forField(scoreBox)
-                .withConverter(new StringToIntegerConverter(0,
-                        "The Score is a number"))
-                .withValidator(score -> score >= 1 && score <= 5,
-                        "The score should be between 1 and 5.")
-                .bind(Review::getScore, Review::setScore);
     }
 
-    public void clear() {
-        reviewBean.setTestDate(LocalDate.now());
-        reviewBean.setScore(1);
-        reviewBean.setTestTimes(0);
-        binder.readBean(reviewBean);
+    private void createNameField() {
+        beverageName.setLabel("Beverage name");
+        reviewFormLayout.add(beverageName);
+
+        binder.forField(beverageName).withValidator(name -> name.length() >= 3,
+                "The name of the beverage should contain at least three characters.")
+                .bind(Review::getName, Review::setName);
     }
 
-    public void bindReview(Review review) {
-        this.reviewBean = review;
-        binder.readBean(reviewBean);
+    private void createFormTitle() {
+        this.getContent().add(title);
+    }
+
+    private void deleteConfirm() {
+        try {
+            binder.writeBean(reviewBean);
+            confirmDialog.close();
+            this.getContent().close();
+            setButtonsDisabled(false);
+            this.deleteHandler.accept(reviewBean);
+        } catch (ValidationException e) {
+            notification.show(e.getMessage());
+        }
     }
 
     private void cancelClicked() {
-        this.close();
+        this.getContent().close();
     }
 
     private void deleteClicked() {
@@ -184,14 +217,11 @@ public class ReviewForm extends GeneratedPaperDialog {
     }
 
     private void saveClicked() {
-        boolean isValid = binder.writeBeanIfValid(reviewBean);
-
-        if (isValid) {
-            reviewService.saveReview(reviewBean);
-            reviewsView.updateList();
-            this.close();
-            reviewsView.showMessage();
-        } else {
+        try {
+            binder.writeBean(reviewBean);
+            this.getContent().close();
+            this.saveHandler.accept(reviewBean);
+        } catch (ValidationException e) {
             BinderValidationStatus<Review> status = binder.validate();
             notification.show(status.getValidationErrors().stream()
                     .map(ValidationResult::getErrorMessage)
