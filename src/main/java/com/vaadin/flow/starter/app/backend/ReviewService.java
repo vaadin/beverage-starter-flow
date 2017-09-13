@@ -26,11 +26,13 @@ public class ReviewService {
             final ReviewService reviewService = new ReviewService();
             Random r = new Random();
             int reviewCount = 20 + r.nextInt(30);
-            List<Map.Entry<String, String>> beverages = new ArrayList<>(BEVERAGES.entrySet());
+            List<Map.Entry<String, String>> beverages =
+                    new ArrayList<>(StaticData.BEVERAGES.entrySet());
 
             for (int i = 0; i < reviewCount; i++) {
                 Review review = new Review();
-                Map.Entry<String, String> beverage = beverages.get(r.nextInt(BEVERAGES.size()));
+                Map.Entry<String, String> beverage =
+                        beverages.get(r.nextInt(StaticData.BEVERAGES.size()));
                 Category category = CategoryService.getInstance().findCategoryOrThrow(
                         beverage.getValue());
 
@@ -47,47 +49,6 @@ public class ReviewService {
             return reviewService;
         }
 
-    }
-
-    static final Map<String, String> BEVERAGES = new LinkedHashMap<>();
-
-    static {
-        Stream.of("Evian", "Voss", "Veen", "San Pellegrino", "Perrier")
-                .forEach(name -> BEVERAGES.put(name, CategoryService.MINERAL_WATER));
-
-        Stream.of("Coca-Cola", "Fanta", "Sprite")
-                .forEach(name -> BEVERAGES.put(name, CategoryService.SOFT_DRINK));
-
-        Stream.of("Maxwell Ready-to-Drink Coffee", "Nescafé Gold", "Starbucks East Timor Tatamailau")
-                .forEach(name -> BEVERAGES.put(name, CategoryService.COFFEE));
-
-        Stream.of("Prince Of Peace Organic White Tea", "Pai Mu Tan White Peony Tea",
-                "Tazo Zen Green Tea", "Dilmah Sencha Green Tea",
-                "Twinings Earl Grey", "Twinings Lady Grey", "Classic Indian Chai")
-                .forEach(name -> BEVERAGES.put(name, CategoryService.TEA));
-
-        Stream.of("Cow's Milk", "Goat's Milk", "Unicorn's Milk", "Salt Lassi", "Mango Lassi", "Airag")
-                .forEach(name -> BEVERAGES.put(name, CategoryService.DAIRY));
-
-        Stream.of("Crowmoor Extra Dry Apple", "Golden Cap Perry", "Somersby Blueberry",
-                "Kopparbergs Naked Apple Cider", "Kopparbergs Raspberry",
-                "Kingstone Press Wild Berry Flavoured Cider", "Crumpton Oaks Apple", "Frosty Jack's",
-                "Ciderboys Mad Bark", "Angry Orchard Stone Dry", "Walden Hollow", "Fox Barrel Wit Pear")
-                .forEach(name -> BEVERAGES.put(name, CategoryService.CIDER));
-
-        Stream.of("Budweiser", "Miller",
-                "Heineken", "Holsten Pilsener", "Krombacher", "Weihenstephaner Hefeweissbier", "Ayinger Kellerbier",
-                "Guinness Draught", "Kilkenny Irish Cream Ale",
-                "Hoegaarden White", "Barbar", "Corsendonk Agnus Dei", "Leffe Blonde", "Chimay Tripel", "Duvel",
-                "Pilsner Urquell", "Kozel", "Staropramen",
-                "Lapin Kulta IVA", "Kukko Pils III", "Finlandia Sahti")
-                .forEach(name -> BEVERAGES.put(name, CategoryService.BEER));
-
-        Stream.of("Jacob's Creek Classic Shiraz", "Chateau d’Yquem Sauternes", "Oremus Tokaji Aszú 5 Puttonyos")
-                .forEach(name -> BEVERAGES.put(name, CategoryService.WINE));
-
-        Stream.of("Pan Galactic Gargle Blaster", "Mead", "Soma")
-                .forEach(name -> BEVERAGES.put(name, CategoryService.OTHER));
     }
 
     private Map<Long, Review> reviews = new HashMap<>();

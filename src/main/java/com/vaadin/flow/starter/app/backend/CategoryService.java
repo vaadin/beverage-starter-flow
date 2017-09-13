@@ -24,23 +24,13 @@ public class CategoryService {
         private static CategoryService createDemoCategoryService() {
             CategoryService categoryService = new CategoryService();
             Set<String> categoryNames = new LinkedHashSet<>(
-                    ReviewService.BEVERAGES.values());
+                    StaticData.BEVERAGES.values());
 
             categoryNames.forEach(name -> categoryService.saveCategory(new Category(name)));
 
             return categoryService;
         }
     }
-
-    static final String MINERAL_WATER = "Mineral Water";
-    static final String SOFT_DRINK = "Soft Drink";
-    static final String COFFEE = "Coffee";
-    static final String TEA = "Tea";
-    static final String DAIRY = "Dairy";
-    static final String CIDER = "Cider";
-    static final String BEER = "Beer";
-    static final String WINE = "Wine";
-    static final String OTHER = "Other";
 
     private Map<Long, Category> categories = new HashMap<>();
     private long nextId = 0;
