@@ -1,6 +1,5 @@
 package com.vaadin.flow.demo.helloworld;
 
-import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 import com.vaadin.data.Binder;
@@ -17,10 +16,10 @@ import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DatePicker;
-import com.vaadin.ui.FlexLayout.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.FlexLayout.Alignment;
 
 public class ReviewForm extends GeneratedPaperDialog {
 
