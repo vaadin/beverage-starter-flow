@@ -136,6 +136,10 @@ public class ReviewService {
         Category category = dto.getReviewCategory();
 
         if (category != null) {
+            // The case when the category is new (not persisted yet, thus
+            // has null id) is not handled here, because it can't currently
+            // occur via the UI.
+            // Note that Category.UNDEFINED also gets mapped to null.
             category = CategoryService.getInstance().findCategoryById(
                     category.getCategoryId())
                     .orElse(null);

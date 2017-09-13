@@ -158,9 +158,7 @@ public class ReviewForm extends GeneratedPaperDialog {
     }
 
     public void clear() {
-        reviewBean.setTestDate(LocalDate.now());
-        reviewBean.setScore(1);
-        reviewBean.setTestTimes(0);
+        reviewBean.reset();
         binder.readBean(reviewBean);
     }
 
