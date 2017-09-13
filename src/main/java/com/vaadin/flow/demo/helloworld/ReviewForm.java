@@ -12,7 +12,6 @@ import com.vaadin.flow.html.Label;
 import com.vaadin.flow.starter.app.backend.Category;
 import com.vaadin.flow.starter.app.backend.CategoryService;
 import com.vaadin.flow.starter.app.backend.Review;
-import com.vaadin.flow.starter.app.backend.ReviewService;
 import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
@@ -28,7 +27,8 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
     private Binder<Review> binder = new Binder<>(Review.class);
     private Review reviewBean = new Review();
-    private transient Consumer<Review> reviewConsumer;
+    private transient Consumer<Review> saveHandler;
+    private transient Consumer<Review> deleteHandler;
 
     private FormLayout reviewFormLayout = new FormLayout();
     private HorizontalLayout buttonRow = new HorizontalLayout();
@@ -49,8 +49,11 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
 
-    public ReviewForm(Consumer<Review> reviewConsumer) {
-        this.reviewConsumer = reviewConsumer;
+    public ReviewForm(Consumer<Review> saveHandler,
+            Consumer<Review> deleteHandler) {
+        this.saveHandler = saveHandler;
+        this.deleteHandler = deleteHandler;
+
         createFormTitle();
         createNameField();
         createTimesField();
@@ -180,11 +183,10 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private void deleteConfirm() {
         try {
             binder.writeBean(reviewBean);
-            ReviewService.getInstance().deleteReview(reviewBean);
             confirmDialog.close();
             this.getContent().close();
             setButtonsDisabled(false);
-            this.reviewConsumer.accept(reviewBean);
+            this.deleteHandler.accept(reviewBean);
         } catch (ValidationException e) {
             notification.show(
                     "Please double check the information." + e.getMessage());
@@ -208,9 +210,8 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private void saveClicked() {
         try {
             binder.writeBean(reviewBean);
-            ReviewService.getInstance().saveReview(reviewBean);
             this.getContent().close();
-            this.reviewConsumer.accept(reviewBean);
+            this.saveHandler.accept(reviewBean);
         } catch (ValidationException e) {
             notification.show(
                     "Please double check the information." + e.getMessage());

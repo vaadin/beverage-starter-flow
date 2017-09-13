@@ -55,7 +55,8 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     @Id("notification")
     private PaperToast notification;
 
-    private ReviewForm reviewForm = new ReviewForm(this::afterUpdate);
+    private ReviewForm reviewForm = new ReviewForm(this::saveUpdate,
+            this::deleteUpdate);
 
     public ReviewsView() {
         filterText.setPlaceholder("Find a review...");
@@ -67,9 +68,16 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     }
 
-    public void afterUpdate(Review review) {
+    public void saveUpdate(Review review) {
+        ReviewService.getInstance().saveReview(review);
         updateList();
-        notification.show("Your reviews have been modified.");
+        notification.show("A new review/edit has been saved.");
+    }
+
+    public void deleteUpdate(Review review) {
+        ReviewService.getInstance().deleteReview(review);
+        updateList();
+        notification.show("Your selected review has been deleted.");
     }
 
     private void updateList() {
