@@ -17,142 +17,122 @@
 <!-- Dependency resources -->
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="/bower_components/vaadin-icons/vaadin-icons.html">
+<link rel="import"
+    href="/bower_components/vaadin-icons/vaadin-icons.html"
+>
 
 <!-- Defines the reviews-view element -->
 <dom-module id="reviews-view">
     <template>
-    	<style>
-    		.flex-container{
-    			display: -webkit-box;
-  				display: -moz-box;
-  				display: -ms-flexbox;
-  				display: -moz-flex;
-  				display: -webkit-flex;
-      			display: flex;
-      			border: 1px solid silver;
-    			background-color: lightgrey;	
-    		}
-    		
-    		.flex-score {
-			    width: 50px;
-    			height: 50px;
-    			line-height: 50px;
-    			align-self:baseline;
-    			text-align:center;
-    		}
-    		
-    		.flex-score[data-score="1"]{
-    			background-color: slategray;
-    		}
-    		
-    		.flex-score[data-score="2"]{
-    			background-color: lightslategray;
-    		}
-    		
-    		.flex-score[data-score="3"]{
-    			background-color: gray;
-    		}
-    		
-    		.flex-score[data-score="4"]{
-    			background-color: lightgray;
-    		}
-    		
-    		.flex-score[data-score="5"]{
-    			background-color: white;
-    		}
-    		
-    		.flex-name{
-    			width: 300px;
-    			height: 50px;
-    			line-height: 50px;
-    			text-align:center;
-    			align-self:baseline;			
-    		}
-    		
-    		.flex-category{
-			    width: 100px;
-    			height: 50px;
-    			line-height: 50px;
-    			text-align:center;
-    			align-self:baseline;
-			}
-    		
-    		.flex-times{
-			    width: 150px;
-    			height: 50px;
-    			line-height: 50px;
-    			text-align:center;
-    			align-self:baseline;
-    		}
-    		
-    		.flex-date{
-			    width: 150px;
-    			height: 50px;
-    			line-height: 50px;
-    			text-align:center;
-    			align-self:baseline;
-    		}
-    		
-    		.flex-button{
-			    width: 100px;
-    			height: 50px;
-			}
-			
-			.backgroundcolor{
-    			background-color: cornflowerblue;
-    		}
+        <style>
+            .review-container {
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                display: -moz-flex;
+                display: -webkit-flex;
+                display: flex;
+                border: 1px solid silver;               
+                align-items: center;
+                -webkit-flex-wrap: wrap;
+                flex-wrap: wrap;
+                background-color: cornflowerblue;
+            }
 
-    		.alignright{
-    			margin-left:auto;
-    		}
-    		
-    		.wrap{
-    			-webkit-flex-wrap: wrap;
-  				flex-wrap: wrap;
-    		}
-    		
-    		.center{
-    			-webkit-align-items: center; 
-  				align-items: center; 
-    		}
-    		
-    	</style>
-    
-   		<div class="flex-container wrap center">
-    		<iron-icon icon="vaadin:search"></iron-icon>
-        	<vaadin-text-field id='filterText'></vaadin-text-field>
-        	
-        	<div class ="alignright">
-        		<vaadin-button id='addReview'></vaadin-button>
-			</div>        
+            .flex-score {
+                width: 50px;
+            }
+
+            .flex-score[data-score="1"] {
+                background-color: slategray;
+            }
+
+            .flex-score[data-score="2"] {
+                background-color: lightslategray;
+            }
+
+            .flex-score[data-score="3"] {
+                background-color: gray;
+            }
+
+            .flex-score[data-score="4"] {
+                background-color: lightgray;
+            }
+
+            .flex-score[data-score="5"] {
+                background-color: white;
+            }
+
+            .flex-name {
+                width: 350px;
+            }
+
+            .flex-category {
+                width: 100px;
+            }
+
+            .flex-times {
+                width: 150px;
+            }
+
+            .flex-date {
+                width: 150px;
+            }
+
+            .flex-button {
+                width: 100px;    
+            }
+            
+            .review-container > div{
+                line-height: 50px;
+                align-self: baseline;
+                text-align: center;
+            }
+            
+            .titlebarbackground{
+                background-color: lightgrey;
+            }
+
+            .alignright {
+                margin-left: auto;
+            }
+
+    </style>
+
+    <div class="review-container titlebarbackground">
+        <iron-icon icon="vaadin:search"></iron-icon>
+        <vaadin-text-field id='filterText'></vaadin-text-field>
+
+        <div class="alignright">
+            <vaadin-button id='addReview'></vaadin-button>
         </div>
-        
-        <paper-toast id='notification'></paper-toast>
-      
-        <div class="flex-container wrap">       
-        	<div class="flex-score">SCORE</div>
-        	<div class="flex-name">BEVERAGE NAME</div>
-        	<div class="flex-category">CATEGORY</div>
-        	<div class="flex-times">TIMES TASTED</div>
-        	<div class="flex-date">LAST TASTED</div>
+    </div>
+
+    <paper-toast id='notification'></paper-toast>
+
+    <div class="review-container titlebarbackground">
+        <div class="flex-score">SCORE</div>
+        <div class="flex-name">BEVERAGE NAME</div>
+        <div class="flex-category">CATEGORY</div>
+        <div class="flex-times">TIMES TASTED</div>
+        <div class="flex-date">LAST TASTED</div>
+    </div>
+
+    <template is="dom-repeat" items="{{reviews}}">
+        <div class="review-container">
+            <div class="flex-score" data-score$="{{item.score}}">{{item.score}}</div>
+            <div class="flex-name">{{item.name}}</div>
+            <div class="flex-category">{{item.reviewCategory.categoryName}}</div>
+            <div class="flex-times">{{item.testTimes}}</div>
+            <div class="flex-date">{{item.testDate}}</div>
+            <div class="flex-button">
+            <vaadin-button on-click='edit'>Edit</vaadin-button>
+            </div>
         </div>
-               
-        <template is="dom-repeat" items="{{reviews}}">
-        	<div class="flex-container wrap">
-            	<div class="flex-score backgroundcolor" data-score$="{{item.score}}">{{item.score}}</div>
-            	<div class="flex-name backgroundcolor">{{item.name}}</div>
-            	<div class="flex-category backgroundcolor">{{item.reviewCategory.categoryName}}</div>
-            	<div class="flex-times backgroundcolor">{{item.testTimes}}</div>
-            	<div class="flex-date backgroundcolor">{{item.testDate}}</div>
-            	<div class="flex-button backgroundcolor">
-            		<vaadin-button on-click='edit'>Edit</vaadin-button>
-            	</div>
-            </div>	
-        </template>
     </template>
-    
-    <!-- Polymer boilerplate to register the reviews-view element -->
+</template> 
+
+<!-- Polymer boilerplate to register the reviews-view element --> 
     <script>
         class ExampleTemplate extends Polymer.Element {
             static get is() {
