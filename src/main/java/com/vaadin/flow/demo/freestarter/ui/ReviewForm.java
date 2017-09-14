@@ -10,22 +10,21 @@ import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationException;
 import com.vaadin.data.ValidationResult;
 import com.vaadin.data.converter.StringToIntegerConverter;
-import com.vaadin.flow.html.Div;
-import com.vaadin.flow.html.Label;
 import com.vaadin.flow.demo.freestarter.backend.Category;
 import com.vaadin.flow.demo.freestarter.backend.CategoryService;
 import com.vaadin.flow.demo.freestarter.backend.Review;
+import com.vaadin.flow.html.Div;
+import com.vaadin.flow.html.Label;
 import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Composite;
 import com.vaadin.ui.DatePicker;
 import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.FormLayout.ResponsiveStep;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.FlexLayout.Alignment;
+import com.vaadin.ui.FormLayout.ResponsiveStep;
 
 public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
@@ -145,8 +144,8 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
         lastTasted.setMax(LocalDate.now());
         reviewFormLayout.add(lastTasted);
 
-        binder.forField(lastTasted).bind(Review::getTestDate,
-                Review::setTestDate);
+        binder.forField(lastTasted).bind(Review::getDate,
+                Review::setDate);
     }
 
     private void createCategoryBox() {
@@ -176,7 +175,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
                         new StringToIntegerConverter(0, "Must enter a number"))
                 .withValidator(testTimes -> testTimes > 0,
                         "The taste times should be at least 1")
-                .bind(Review::getTestTimes, Review::setTestTimes);
+                .bind(Review::getCount, Review::setCount);
     }
 
     public void clear() {

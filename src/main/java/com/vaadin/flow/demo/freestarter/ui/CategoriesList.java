@@ -108,7 +108,7 @@ public final class CategoriesList extends VerticalLayout implements View {
         for (Category category : categories) {
             List<Review> reviewsInCategory = reviewService.findReviews(category.getName());
             int reviewCount = reviewsInCategory.stream()
-                    .mapToInt(Review::getTestTimes)
+                    .mapToInt(Review::getCount)
                     .sum();
             addRow(category, reviewCount);
         }

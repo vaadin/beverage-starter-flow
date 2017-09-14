@@ -37,10 +37,10 @@ public class ReviewService {
                 review.setName(beverage.getKey());
                 LocalDate testDay = LocalDate.of(1930 + r.nextInt(88),
                         1 + r.nextInt(12), 1 + r.nextInt(28));
-                review.setTestDate(testDay);
+                review.setDate(testDay);
                 review.setScore(1 + r.nextInt(5));
                 review.setCategory(category);
-                review.setTestTimes(1 + r.nextInt(15));
+                review.setCount(1 + r.nextInt(15));
                 reviewService.saveReview(review);
             }
 
@@ -109,8 +109,8 @@ public class ReviewService {
         } else {
             entity.setScore(dto.getScore());
             entity.setName(dto.getName());
-            entity.setTestDate(dto.getTestDate());
-            entity.setTestTimes(dto.getTestTimes());
+            entity.setDate(dto.getDate());
+            entity.setCount(dto.getCount());
         }
         entity.setCategory(category);
     }
