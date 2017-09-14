@@ -25,7 +25,6 @@ import com.vaadin.ui.FormLayout.ResponsiveStep;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.FlexLayout.Alignment;
 
 public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
@@ -154,7 +153,6 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
         categoryBox.setItemLabelPath("categoryName");
         categoryBox.setItemValuePath("categoryName");
         categoryBox.setAllowCustomValue(false);
-        // TODO disable/hide the Clear button on the combobox
         categoryBox.setWidth("15em");
         categoryBox.setItems(categoryService.findCategories(""));
         reviewFormLayout.add(categoryBox);

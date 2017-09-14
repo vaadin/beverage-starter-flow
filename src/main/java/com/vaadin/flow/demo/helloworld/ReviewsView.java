@@ -37,7 +37,11 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
 
 /**
- * Simple template example.
+ * This Reviews List showing the existed reviews.
+ * <p>
+ * Created as a single class because it is based on polymer template. The class
+ * provides with one search bar and one button for adding new reviews. Review
+ * list will be shown as follow in a flexbox.
  */
 @Tag("reviews-view")
 @HtmlImport("frontend://ReviewsView.html")
@@ -70,12 +74,33 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
 
     }
 
+    /**
+     * This method is called once the user saves a review.
+     * <p>
+     * This happens when a user adds a new review to the list or edits an
+     * existed review. After the operation, a notification informs the user that
+     * a new review has been saved.
+     * 
+     * @param review
+     *            the review which is going to be saved.
+     */
+
     public void saveUpdate(Review review) {
         ReviewService.getInstance().saveReview(review);
         updateList();
         notification.show("A new review/edit has been saved.");
     }
 
+    /**
+     * This method is invoked once the user deletes a review.
+     * <p>
+     * This happens when a user confirms that an existed review deletes from the
+     * backend. After the operation, a notification informs the user that the
+     * review has been deletes.
+     * 
+     * @param review
+     *            the review which is going to be deleted.
+     */
     public void deleteUpdate(Review review) {
         ReviewService.getInstance().deleteReview(review);
         updateList();
