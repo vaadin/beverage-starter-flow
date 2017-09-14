@@ -13,6 +13,7 @@ public class Review implements Serializable {
     private int testTimes;
 
     public Review() {
+        reset();
     }
 
     public Review(int score, String name, LocalDate testDate,
@@ -28,6 +29,18 @@ public class Review implements Serializable {
         this(other.getScore(), other.getName(), other.getTestDate(), other.getReviewCategory(),
                 other.getTestTimes());
         this.id = other.getId();
+    }
+
+    /**
+     * Resets all fields to their default values.
+     */
+    public void reset() {
+        this.id = null;
+        this.score = 1;
+        this.name = "";
+        this.testDate = LocalDate.now();
+        this.reviewCategory = Category.UNDEFINED;
+        this.testTimes = 1;
     }
 
     public Long getId() {

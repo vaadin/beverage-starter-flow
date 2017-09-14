@@ -25,6 +25,7 @@ import com.vaadin.ui.FormLayout.ResponsiveStep;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.FlexLayout.Alignment;
 
 public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
@@ -82,9 +83,6 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
         if (!optionalReview.isPresent()) {
             title.setText("Add a new review");
             reviewBean = new Review();
-            reviewBean.setTestDate(LocalDate.now());
-            reviewBean.setScore(1);
-            reviewBean.setTestTimes(0);
         }
 
         binder.readBean(reviewBean);
@@ -153,6 +151,10 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
     private void createCategoryBox() {
         categoryBox.setLabel("Choose a category");
+        categoryBox.setItemLabelPath("categoryName");
+        categoryBox.setItemValuePath("categoryName");
+        categoryBox.setAllowCustomValue(false);
+        // TODO disable/hide the Clear button on the combobox
         categoryBox.setWidth("15em");
         categoryBox.setItems(categoryService.findCategories(""));
         reviewFormLayout.add(categoryBox);
@@ -175,6 +177,11 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
                 .withValidator(testTimes -> testTimes > 0,
                         "The taste times should be at least 1")
                 .bind(Review::getTestTimes, Review::setTestTimes);
+    }
+
+    public void clear() {
+        reviewBean.reset();
+        binder.readBean(reviewBean);
     }
 
     private void createNameField() {
