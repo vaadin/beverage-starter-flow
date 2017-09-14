@@ -1,4 +1,4 @@
-package com.vaadin.flow.demo.helloworld.converters;
+package com.vaadin.starter.beveragebuddy.ui.converters;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

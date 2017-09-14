@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.flow.demo.helloworld.converters;
+package com.vaadin.starter.beveragebuddy.ui.converters;
 
 import com.vaadin.flow.template.model.ModelConverter;
 

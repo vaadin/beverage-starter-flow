@@ -1,4 +1,4 @@
-package com.vaadin.flow.starter.app.backend;
+package com.vaadin.starter.beveragebuddy.backend;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

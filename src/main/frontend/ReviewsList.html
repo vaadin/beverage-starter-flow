@@ -19,8 +19,8 @@
 <link rel="import" href="bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="/bower_components/vaadin-icons/vaadin-icons.html">
 
-<!-- Defines the reviews-view element -->
-<dom-module id="reviews-view">
+<!-- Defines the reviews-list element -->
+<dom-module id="reviews-list">
     <template>
         <style>
             .review-container {
@@ -119,9 +119,9 @@
         <div class="review-container">
             <div class="flex-score" data-score$="{{item.score}}">{{item.score}}</div>
             <div class="flex-name">{{item.name}}</div>
-            <div class="flex-category">{{item.reviewCategory.categoryName}}</div>
-            <div class="flex-times">{{item.testTimes}}</div>
-            <div class="flex-date">{{item.testDate}}</div>
+            <div class="flex-category">{{item.category.name}}</div>
+            <div class="flex-times">{{item.count}}</div>
+            <div class="flex-date">{{item.date}}</div>
             <div class="flex-button">
             <vaadin-button on-click='edit'>Edit</vaadin-button>
             </div>
@@ -129,11 +129,11 @@
     </template>
 </template> 
 
-<!-- Polymer boilerplate to register the reviews-view element --> 
+<!-- Polymer boilerplate to register the reviews-list element -->
     <script>
         class ExampleTemplate extends Polymer.Element {
             static get is() {
-                return 'reviews-view'
+                return 'reviews-list'
             }
         }
         customElements.define(ExampleTemplate.is, ExampleTemplate);
