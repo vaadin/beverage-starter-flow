@@ -2,20 +2,13 @@ package com.vaadin.flow.demo.freestarter.backend;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import com.vaadin.flow.demo.freestarter.ui.converters.LocalDateToStringConverter;
-
-/**
- * Simple backend service to store and retrieve {@link Review} instances.
- */
 public class ReviewService {
 
     /**
@@ -57,84 +50,51 @@ public class ReviewService {
     }
 
     private Map<Long, Review> reviews = new HashMap<>();
-    private AtomicLong nextId = new AtomicLong(0);
+    private long nextId = 0;
 
-    /**
-     * Declared private to ensure uniqueness of this Singleton.
-     */
     private ReviewService() {
     }
 
-    /**
-     * Gets the unique instance of this Singleton.
-     * @return  the unique instance of this Singleton
-     */
     public static ReviewService getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
-    /**
-     * Fetches the reviews matching the given filter text.
-     *
-     * The matching is case insensitive. When passed an empty filter text,
-     * the method returns all categories. The returned list is ordered
-     * by name.
-     *
-     * @param filter    the filter text
-     * @return          the list of matching reviews
-     */
-    public List<Review> findReviews(String filter) {
-        String normalizedFilter = filter.toLowerCase();
+    public synchronized List<Review> findReviews(String stringFilter) {
+        List<Review> reviewFindList = new ArrayList<>();
+        String reviewStringFilter = stringFilter.toLowerCase();
 
-        return reviews.values().stream()
-                .filter(review -> filterTextOf(review).contains(normalizedFilter))
-                .map(Review::new)
-                .sorted((o1, o2) -> o2.getId().compareTo(o1.getId()))
-                .collect(Collectors.toList());
+        for (Review review : reviews.values()) {
+            boolean passesFilter = (stringFilter == null
+                    || stringFilter.isEmpty())
+                    || review.toString().toLowerCase().contains(reviewStringFilter);
+            if (passesFilter) {
+                // Make a copy to keep entities and DTOs separated
+                reviewFindList.add(new Review(review));
+            }
+        }
+
+        Collections.sort(reviewFindList, new Comparator<Review>() {
+            @Override
+            public int compare(Review o1, Review o2) {
+                return (int) (o2.getId() - o1.getId());
+            }
+        });
+        return reviewFindList;
     }
 
-    private String filterTextOf(Review review) {
-        LocalDateToStringConverter dateConverter = new LocalDateToStringConverter();
-        // Use a delimiter which can't be entered in the search box,
-        // to avoid false positives
-        String filterableText = Stream.of(review.getName(),
-                Optional.ofNullable(review.getCategory())
-                        .orElse(Category.UNDEFINED).getName(),
-                String.valueOf(review.getScore()),
-                String.valueOf(review.getTestTimes()),
-                dateConverter.toPresentation(review.getTestDate()))
-                .collect(Collectors.joining("\t"));
-        return filterableText.toLowerCase();
+    public synchronized long count() {
+        return reviews.size();
     }
 
-    /**
-     * Deletes the given review from the review store.
-     * @param review    the review to delete
-     * @return  true if the operation was successful, otherwise false
-     */
-    public boolean deleteReview(Review review) {
-        return reviews.remove(review.getId()) != null;
+    public synchronized void deleteReview(Review value) {
+        reviews.remove(value.getId());
     }
 
-    /**
-     * Persists the given review into the review store.
-     *
-     * If the review is already persistent, the saved review will get updated
-     * with the field values of the given review object.
-     * If the review is new (i.e. its id is null), it will get a new unique id
-     * before being saved.
-     *
-     * @param dto   the review to save
-     */
-    public void saveReview(Review dto) {
+    public synchronized void saveReview(Review dto) {
         Review entity = reviews.get(dto.getId());
         Category category = dto.getCategory();
 
         if (category != null) {
-            // The case when the category is new (not persisted yet, thus
-            // has null id) is not handled here, because it can't currently
-            // occur via the UI.
-            // Note that Category.UNDEFINED also gets mapped to null.
             category = CategoryService.getInstance().findCategoryById(
                     category.getId())
                     .orElse(null);
@@ -143,7 +103,7 @@ public class ReviewService {
             // Make a copy to keep entities and DTOs separated
             entity = new Review(dto);
             if (dto.getId() == null) {
-                entity.setId(nextId.incrementAndGet());
+                entity.setId(++nextId);
             }
             reviews.put(entity.getId(), entity);
         } else {
