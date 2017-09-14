@@ -28,9 +28,9 @@
         <template is="dom-repeat" items="{{reviews}}">
             <div>Score:{{item.score}}&nbsp;
             Name:{{item.name}}&nbsp;
-            Category:{{item.reviewCategory.categoryName}}&nbsp;
-            Times Tasted:{{item.testTimes}}&nbsp;
-            Last Taste Date:{{item.testDate}}&nbsp;
+            Category:{{item.category.name}}&nbsp;
+            Times Tasted:{{item.count}}&nbsp;
+            Last Taste Date:{{item.date}}&nbsp;
             <vaadin-button on-click='edit'>Edit</vaadin-button></div>
         </template>
     </template>

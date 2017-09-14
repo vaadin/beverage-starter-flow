@@ -1,4 +1,4 @@
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.flow.demo.freestarter.ui;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,10 +9,10 @@ import com.vaadin.data.ValidationResult;
 import com.vaadin.flow.html.H2;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.router.View;
-import com.vaadin.flow.starter.app.backend.Category;
-import com.vaadin.flow.starter.app.backend.CategoryService;
-import com.vaadin.flow.starter.app.backend.Review;
-import com.vaadin.flow.starter.app.backend.ReviewService;
+import com.vaadin.flow.demo.freestarter.backend.Category;
+import com.vaadin.flow.demo.freestarter.backend.CategoryService;
+import com.vaadin.flow.demo.freestarter.backend.Review;
+import com.vaadin.flow.demo.freestarter.backend.ReviewService;
 import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.shared.Registration;
 import com.vaadin.ui.Button;
@@ -20,7 +20,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public final class ReviewCategoryComponent extends VerticalLayout implements View {
+public final class CategoriesList extends VerticalLayout implements View {
 
     private enum Operation {
         ADD("Add", true),
@@ -63,7 +63,7 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
 
     private final PaperToast notification = new PaperToast();
 
-    public ReviewCategoryComponent() {
+    public CategoriesList() {
         initView();
 
         addSearchBar();
@@ -99,16 +99,16 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
                 .withValidator(
                         name -> categoryService.findCategories(name).size() == 0,
                         "Category name must be unique")
-                .bind(Category::getCategoryName, Category::setCategoryName);
+                .bind(Category::getName, Category::setName);
     }
 
     private void updateView() {
         categoryLayout.removeAll();
         List<Category> categories = categoryService.findCategories(filter.getValue());
         for (Category category : categories) {
-            List<Review> reviewsInCategory = reviewService.findReviews(category.getCategoryName());
+            List<Review> reviewsInCategory = reviewService.findReviews(category.getName());
             int reviewCount = reviewsInCategory.stream()
-                    .mapToInt(Review::getTestTimes)
+                    .mapToInt(Review::getCount)
                     .sum();
             addRow(category, reviewCount);
         }
@@ -129,7 +129,7 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
 
     private void addRow(Category category, int reviewCount) {
         HorizontalLayout layout = new HorizontalLayout();
-        Label name = new Label(category.getCategoryName());
+        Label name = new Label(category.getName());
         Label counter = new Label(String.valueOf(reviewCount));
         Button editButton = new Button("Edit");
         editButton.addClickListener(
@@ -171,20 +171,20 @@ public final class ReviewCategoryComponent extends VerticalLayout implements Vie
 
     private void handleDelete() {
         int reviewCount = reviewService.findReviews(
-                currentCategory.getCategoryName()).size();
+                currentCategory.getName()).size();
         String text2 = reviewCount == 0 ? "" :
                 "Deleting the category will mark the associated reviews as \"undefined\". "
                         + "You may link the reviews to other categories on the edit page.";
-        confirmationDialog.open("Delete Category \"" + currentCategory.getCategoryName() + "\"?",
+        confirmationDialog.open("Delete Category \"" + currentCategory.getName() + "\"?",
                 "There are " + reviewCount + " reviews associated with this category.",
                 text2, "Delete", currentCategory, this::deleteCategory);
     }
 
     private void deleteCategory(Category category) {
-        List<Review> reviewsInCategory = reviewService.findReviews(category.getCategoryName());
+        List<Review> reviewsInCategory = reviewService.findReviews(category.getName());
 
         reviewsInCategory.forEach(review -> {
-            review.setReviewCategory(null);
+            review.setCategory(null);
             reviewService.saveReview(review);
         });
         categoryService.deleteCategory(category);

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.flow.demo.freestarter.ui;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,12 +24,12 @@ import com.vaadin.annotations.HtmlImport;
 import com.vaadin.annotations.Id;
 import com.vaadin.annotations.ModelItem;
 import com.vaadin.annotations.Tag;
-import com.vaadin.flow.demo.helloworld.ReviewsView.ReviewsModel;
-import com.vaadin.flow.demo.helloworld.converters.LocalDateToStringConverter;
-import com.vaadin.flow.demo.helloworld.converters.LongToStringConverter;
+import com.vaadin.flow.demo.freestarter.ui.converters.LocalDateToStringConverter;
+import com.vaadin.flow.demo.freestarter.ui.ReviewsList.ReviewsModel;
+import com.vaadin.flow.demo.freestarter.ui.converters.LongToStringConverter;
 import com.vaadin.flow.router.View;
-import com.vaadin.flow.starter.app.backend.Review;
-import com.vaadin.flow.starter.app.backend.ReviewService;
+import com.vaadin.flow.demo.freestarter.backend.Review;
+import com.vaadin.flow.demo.freestarter.backend.ReviewService;
 import com.vaadin.flow.template.PolymerTemplate;
 import com.vaadin.flow.template.model.TemplateModel;
 import com.vaadin.ui.AttachEvent;
@@ -40,13 +40,13 @@ import com.vaadin.ui.TextField;
  * Simple template example.
  */
 @Tag("reviews-view")
-@HtmlImport("frontend://ReviewsView.html")
-public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
+@HtmlImport("frontend://ReviewsList.html")
+public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
 
     public static interface ReviewsModel extends TemplateModel {
         @Convert(value = LongToStringConverter.class, path = "id")
-        @Convert(value = LocalDateToStringConverter.class, path = "testDate")
-        @Convert(value = LongToStringConverter.class, path = "reviewCategory.categoryId")
+        @Convert(value = LocalDateToStringConverter.class, path = "date")
+        @Convert(value = LongToStringConverter.class, path = "category.id")
         void setReviews(List<Review> reviews);
     }
 
@@ -60,7 +60,7 @@ public class ReviewsView extends PolymerTemplate<ReviewsModel> implements View {
     private ReviewForm reviewForm = new ReviewForm(this::saveUpdate,
             this::deleteUpdate);
 
-    public ReviewsView() {
+    public ReviewsList() {
         filterText.setPlaceholder("Find a review...");
         filterText.addValueChangeListener(e -> updateList());
 
