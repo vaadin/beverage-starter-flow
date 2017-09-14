@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 public class Category implements Serializable {
 
+    /** A null object, to avoid NullPointerExceptions. */
+    public static final Category UNDEFINED = new Category("(undefined)");
+
     private Long categoryId = null;
 
     private String categoryName = "";
@@ -16,12 +19,11 @@ public class Category implements Serializable {
     }
 
     public Category(Category other) {
-        if (other != null) {
-            this.categoryName = other.getCategoryName();
-            this.categoryId = other.getCategoryId();
-        } else {
-            this.categoryName = "(undefined)";
+        if (other == null) {
+            other = UNDEFINED;
         }
+        this.categoryName = other.getCategoryName();
+        this.categoryId = other.getCategoryId();
     }
 
     public Long getCategoryId() {
