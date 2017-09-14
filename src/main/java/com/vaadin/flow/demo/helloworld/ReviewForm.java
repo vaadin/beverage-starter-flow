@@ -154,6 +154,10 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
     private void createCategoryBox() {
         categoryBox.setLabel("Choose a category");
+        categoryBox.setItemLabelPath("categoryName");
+        categoryBox.setItemValuePath("categoryName");
+        categoryBox.setAllowCustomValue(false);
+        // TODO disable/hide the Clear button on the combobox
         categoryBox.setWidth("15em");
         categoryBox.setItems(categoryService.findCategories(""));
         reviewFormLayout.add(categoryBox);
