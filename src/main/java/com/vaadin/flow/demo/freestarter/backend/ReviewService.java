@@ -27,6 +27,10 @@ public class ReviewService {
     private static class SingletonHolder {
         static final ReviewService INSTANCE = createDemoReviewService();
 
+        /** This class is not to be instantiated. */
+        private SingletonHolder() {
+        }
+
         private static ReviewService createDemoReviewService() {
             final ReviewService reviewService = new ReviewService();
             Random r = new Random();
