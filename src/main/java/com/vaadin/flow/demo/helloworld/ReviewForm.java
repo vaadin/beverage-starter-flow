@@ -83,9 +83,6 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
         if (!optionalReview.isPresent()) {
             title.setText("Add a new review");
             reviewBean = new Review();
-            reviewBean.setTestDate(LocalDate.now());
-            reviewBean.setScore(1);
-            reviewBean.setTestTimes(0);
         }
 
         binder.readBean(reviewBean);
