@@ -1,5 +1,5 @@
 # Free App Starter for Flow
-## (Aka Beverage Buddy :coffee: :tea: :sake: :baby_bottle: :beer: :cocktail: :tropical_drink: :wine_glass:)
+## (Aka Beverage Buddy :coffee::tea::sake::baby_bottle::beer::cocktail::tropical_drink::wine_glass:)
 
 This project can be used as a starting point to create your own awesome Flow applications.
 
