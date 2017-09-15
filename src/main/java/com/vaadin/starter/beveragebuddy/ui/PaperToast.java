@@ -1,4 +1,4 @@
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.starter.beveragebuddy.ui;
 
 import com.vaadin.annotations.HtmlImport;
 import com.vaadin.annotations.Tag;
@@ -31,8 +31,6 @@ public class PaperToast extends Component {
     public int getDuration() {
         return getElement().getProperty("duration", 3000);
     }
-
-    // TODO fitInto?
 
     /**
      * Sets the orientation against which to align the dropdown content horizontally

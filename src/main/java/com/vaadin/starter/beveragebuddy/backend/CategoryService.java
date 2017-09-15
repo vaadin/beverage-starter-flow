@@ -1,4 +1,4 @@
-package com.vaadin.flow.starter.app.backend;
+package com.vaadin.starter.beveragebuddy.backend;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -31,6 +31,10 @@ public class CategoryService {
             categoryNames.forEach(name -> categoryService.saveCategory(new Category(name)));
 
             return categoryService;
+        }
+
+        /** This class is not meant to be instantiated. */
+        private SingletonHolder() {
         }
     }
 
@@ -66,9 +70,9 @@ public class CategoryService {
 
         // Make a copy of each matching item to keep entities and DTOs separated
         return categories.values().stream()
-                .filter(c -> c.getCategoryName().toLowerCase().contains(normalizedFilter))
+                .filter(c -> c.getName().toLowerCase().contains(normalizedFilter))
                 .map(Category::new)
-                .sorted((c1, c2) -> c1.getCategoryName().compareToIgnoreCase(c2.getCategoryName()))
+                .sorted((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()))
                 .collect(Collectors.toList());
     }
 
@@ -128,7 +132,7 @@ public class CategoryService {
      * @return  true if the operation was successful, otherwise false
      */
     public boolean deleteCategory(Category category) {
-        return categories.remove(category.getCategoryId()) != null;
+        return categories.remove(category.getId()) != null;
     }
 
     /**
@@ -142,17 +146,17 @@ public class CategoryService {
      * @param dto   the category to save
      */
     public void saveCategory(Category dto) {
-        Category entity = categories.get(dto.getCategoryId());
+        Category entity = categories.get(dto.getId());
 
         if (entity == null) {
             // Make a copy to keep entities and DTOs separated
             entity = new Category(dto);
-            if (dto.getCategoryId() == null) {
-                entity.setCategoryId(nextId.incrementAndGet());
+            if (dto.getId() == null) {
+                entity.setId(nextId.incrementAndGet());
             }
-            categories.put(entity.getCategoryId(), entity);
+            categories.put(entity.getId(), entity);
         } else {
-            entity.setCategoryName(dto.getCategoryName());
+            entity.setName(dto.getName());
         }
     }
 
