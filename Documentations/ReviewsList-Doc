@@ -35,7 +35,7 @@ More about *https://github.com/vaadin/flow/blob/master/flow-documentation/polyme
 
 @EventHandler
 ^^^^^^^^^^^^^
-As we can see from the preview of reviews list, at the end of each reviews, there is an edit button for users to edit the existed review. To handle the click event from each button, we need to create a separated method with the event name, annotated with `@EventHandler`.
+As we can see from the preview of reviews list, at the end of each reviews, there is an edit button for users to edit the existing review. To handle the click event from each button, we need to create a separated method with the event name, annotated with `@EventHandler`.
 [source, java]
 --------------
 @EventHandler
