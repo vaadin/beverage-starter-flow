@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -97,7 +98,8 @@ public class ReviewService {
         // Use a delimiter which can't be entered in the search box,
         // to avoid false positives
         String filterableText = Stream.of(review.getName(),
-                review.getReviewCategory().getCategoryName(),
+                Optional.ofNullable(review.getReviewCategory())
+                        .orElse(Category.UNDEFINED).getCategoryName(),
                 String.valueOf(review.getScore()),
                 String.valueOf(review.getTestTimes()),
                 dateConverter.toPresentation(review.getTestDate()))
