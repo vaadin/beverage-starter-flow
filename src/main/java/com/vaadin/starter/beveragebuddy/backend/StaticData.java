@@ -100,4 +100,8 @@ class StaticData {
                 "Soma")
                 .forEach(name -> BEVERAGES.put(name, OTHER));
     }
+
+    /** This class is not meant to be instantiated. */
+    private StaticData() {
+    }
 }

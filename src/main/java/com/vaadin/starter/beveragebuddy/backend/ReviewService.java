@@ -54,6 +54,9 @@ public class ReviewService {
             return reviewService;
         }
 
+        /** This class is not meant to be instantiated. */
+        private SingletonHolder() {
+        }
     }
 
     private Map<Long, Review> reviews = new HashMap<>();

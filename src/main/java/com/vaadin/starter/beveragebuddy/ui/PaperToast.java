@@ -32,8 +32,6 @@ public class PaperToast extends Component {
         return getElement().getProperty("duration", 3000);
     }
 
-    // TODO fitInto?
-
     /**
      * Sets the orientation against which to align the dropdown content horizontally
      * relative to <code>positionTarget</code>.

@@ -32,6 +32,10 @@ public class CategoryService {
 
             return categoryService;
         }
+
+        /** This class is not meant to be instantiated. */
+        private SingletonHolder() {
+        }
     }
 
     private Map<Long, Category> categories = new HashMap<>();
