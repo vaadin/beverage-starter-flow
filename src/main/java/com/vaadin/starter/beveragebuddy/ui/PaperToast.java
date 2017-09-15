@@ -1,4 +1,4 @@
-package com.vaadin.flow.demo.helloworld;
+package com.vaadin.starter.beveragebuddy.ui;
 
 import com.vaadin.annotations.HtmlImport;
 import com.vaadin.annotations.Tag;

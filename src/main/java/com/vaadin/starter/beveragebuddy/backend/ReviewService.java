@@ -1,4 +1,4 @@
-package com.vaadin.flow.starter.app.backend;
+package com.vaadin.starter.beveragebuddy.backend;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.vaadin.flow.demo.helloworld.converters.LocalDateToStringConverter;
+import com.vaadin.starter.beveragebuddy.ui.converters.LocalDateToStringConverter;
 
 /**
  * Simple backend service to store and retrieve {@link Review} instances.
@@ -44,10 +44,10 @@ public class ReviewService {
                 review.setName(beverage.getKey());
                 LocalDate testDay = LocalDate.of(1930 + r.nextInt(88),
                         1 + r.nextInt(12), 1 + r.nextInt(28));
-                review.setTestDate(testDay);
+                review.setDate(testDay);
                 review.setScore(1 + r.nextInt(5));
-                review.setReviewCategory(category);
-                review.setTestTimes(1 + r.nextInt(15));
+                review.setCategory(category);
+                review.setCount(1 + r.nextInt(15));
                 reviewService.saveReview(review);
             }
 
@@ -89,7 +89,7 @@ public class ReviewService {
         return reviews.values().stream()
                 .filter(review -> filterTextOf(review).contains(normalizedFilter))
                 .map(Review::new)
-                .sorted((o1, o2) -> o2.getId().compareTo(o1.getId()))
+                .sorted((r1, r2) -> r2.getId().compareTo(r1.getId()))
                 .collect(Collectors.toList());
     }
 
@@ -98,11 +98,11 @@ public class ReviewService {
         // Use a delimiter which can't be entered in the search box,
         // to avoid false positives
         String filterableText = Stream.of(review.getName(),
-                Optional.ofNullable(review.getReviewCategory())
-                        .orElse(Category.UNDEFINED).getCategoryName(),
+                Optional.ofNullable(review.getCategory())
+                        .orElse(Category.UNDEFINED).getName(),
                 String.valueOf(review.getScore()),
-                String.valueOf(review.getTestTimes()),
-                dateConverter.toPresentation(review.getTestDate()))
+                String.valueOf(review.getCount()),
+                dateConverter.toPresentation(review.getDate()))
                 .collect(Collectors.joining("\t"));
         return filterableText.toLowerCase();
     }
@@ -128,7 +128,7 @@ public class ReviewService {
      */
     public void saveReview(Review dto) {
         Review entity = reviews.get(dto.getId());
-        Category category = dto.getReviewCategory();
+        Category category = dto.getCategory();
 
         if (category != null) {
             // The case when the category is new (not persisted yet, thus
@@ -136,7 +136,7 @@ public class ReviewService {
             // occur via the UI.
             // Note that Category.UNDEFINED also gets mapped to null.
             category = CategoryService.getInstance().findCategoryById(
-                    category.getCategoryId())
+                    category.getId())
                     .orElse(null);
         }
         if (entity == null) {
@@ -149,9 +149,9 @@ public class ReviewService {
         } else {
             entity.setScore(dto.getScore());
             entity.setName(dto.getName());
-            entity.setTestDate(dto.getTestDate());
-            entity.setTestTimes(dto.getTestTimes());
+            entity.setDate(dto.getDate());
+            entity.setCount(dto.getCount());
         }
-        entity.setReviewCategory(category);
+        entity.setCategory(category);
     }
 }
