@@ -23,6 +23,10 @@ public class CategoryService {
     private static class SingletonHolder {
         static final CategoryService INSTANCE = createDemoCategoryService();
 
+        /** This class is not meant to be instantiated. */
+        private SingletonHolder() {
+        }
+
         private static CategoryService createDemoCategoryService() {
             CategoryService categoryService = new CategoryService();
             Set<String> categoryNames = new LinkedHashSet<>(
@@ -31,10 +35,6 @@ public class CategoryService {
             categoryNames.forEach(name -> categoryService.saveCategory(new Category(name)));
 
             return categoryService;
-        }
-
-        /** This class is not meant to be instantiated. */
-        private SingletonHolder() {
         }
     }
 
