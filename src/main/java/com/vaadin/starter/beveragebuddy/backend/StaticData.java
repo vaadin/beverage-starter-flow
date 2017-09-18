@@ -1,4 +1,4 @@
-package com.vaadin.flow.starter.app.backend;
+package com.vaadin.starter.beveragebuddy.backend;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -99,5 +99,9 @@ class StaticData {
                 "Mead",
                 "Soma")
                 .forEach(name -> BEVERAGES.put(name, OTHER));
+    }
+
+    /** This class is not meant to be instantiated. */
+    private StaticData() {
     }
 }
