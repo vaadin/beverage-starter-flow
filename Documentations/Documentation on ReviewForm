@@ -1,0 +1,33 @@
+ReviewForm-Doc
+--------------
+Review form is a class built based on the GeneratedPaperDialog, where we integrates several web components, such as `Button`, `ComboBox`, `DatePicker`, `Label` and `TextField`. Besides, a nested dialog is implemented.
+
+This class will be called for two user cases:
+
+* After the user clicks the "Add a new review" button
+* After the user clicks the "Edit" button
+
+In this documentation, concepts used in ``ReviewForm.java`` will be introduced.
+
+Binder
+~~~~~~
+Between the form and the backend data, `Binder` provides a bridge to connect the property names with its related values, so that you can use `readBean` and `writeBean` methods to deal with data easily.
+
+Furthermore, `Binder` offers an easy way to validate the input data.
+Let's make the property "Beverage Name" as an example:
+[source, java]
+--------------
+//declare a Binder for review class
+private Binder<Review> binder = new Binder<>(Review.class);
+private TextField beverageName = new TextField();
+
+public ReviewForm(){
+  //bind the related property with the value
+  //set a validator to make sure the beverage name is longer than 3 characters
+  binder.forField(beverageName).withValidator(name -> name.length() >= 3,
+               "The name of the beverage should contain at least three characters.")
+               .bind(Review::getName, Review::setName);
+  }
+
+--------------
+Beside the validator, in order to manipulate the data, you might also need converter. For more about the content related to `Binder`, you can check *https://github.com/vaadin/flow/blob/master/flow-documentation/binding-data/tutorial-flow-components-binder-beans.asciidoc[Tutorial for Binder^]*.
