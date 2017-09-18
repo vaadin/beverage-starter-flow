@@ -25,6 +25,7 @@ class ConfirmationDialog extends Composite<GeneratedPaperDialog> {
         confirmButton.setAutofocus(true);
         cancelButton.getElement().setAttribute("dialog-dismiss", true);
 
+		// TODO: adding a todo-comment to test Travis and Sonar validation
         HorizontalLayout buttonBar = new HorizontalLayout(confirmButton, cancelButton);
         buttonBar.setClassName("buttons");
         VerticalLayout layout = new VerticalLayout(titleField, messageLabel,
