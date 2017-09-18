@@ -3,7 +3,7 @@ ReviewsList-Doc
 ReviewsList is a *https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-basic.asciidoc/[PolymerTemplate^]* based view class. In this class, the list of reviews will be shown under a "search" bar and "add a new review" button.
 image:ReviewsList.png[alt="Reviews List"]
 
-The following content will introduce some concepts which are used in ``ReviewsList.java`` file.
+The following contents will introduce some concepts which are used in ``ReviewsList.java`` and ``ReviewList.html`` file.
 
 Annotations
 ~~~~~~~~~~~
@@ -23,7 +23,14 @@ More about *https://github.com/vaadin/flow/blob/master/flow-documentation/polyme
 ^^^
 When you need to add web components into the PolymerTemplates, you can use the ``Component`` or ``Element`` API.
 
-As in the view of reviews list, we need to use a few buttons for adding and editing the reviews, while a search textfield is added too. In this case, we add the needed components in the HTML template file with the corresponding identifiers. Then the ``@Id`` annotation in java file maps the components to the elements in the `HTML template`.
+As in the view of reviews list, we need to use a few buttons for adding and editing the reviews, while a search textfield is added too. In this case, we add the needed components in the HTML template file with the corresponding identifiers.
+[source, html]
+--------------
+<vaadin-text-field id='filterText'></vaadin-text-field>
+<vaadin-button id='addReview'></vaadin-button>
+--------------
+
+Then the ``@Id`` annotation in java file maps the components to the elements in the `HTML template`.
 [source, java]
 --------------
 @Id("filterText")
@@ -35,7 +42,7 @@ More about *https://github.com/vaadin/flow/blob/master/flow-documentation/polyme
 
 @EventHandler
 ^^^^^^^^^^^^^
-As we can see from the preview of reviews list, at the end of each reviews, there is an edit button for users to edit the existing review. To handle the click event from each button, we need to create a separated method with the event name, annotated with `@EventHandler`.
+As we can see from the preview of reviews list, at the end of each reviews, there is an edit button for users to edit the existed review. To handle the click event from each button, we need to create a separated method with the event name, annotated with `@EventHandler`.
 [source, java]
 --------------
 @EventHandler
@@ -60,3 +67,21 @@ protected void onAttach(AttachEvent attachEvent) {
 --------------
 More about this content, you can find https://github.com/vaadin/flow/blob/master/flow-documentation/Overview.asciidoc#server-side-dom-tree[here^].
 
+Binding Data in PolymerTemplate
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Every review is shown separately in the view of review list. In order to do this, PolymerTemplate provides a dom-repeat class which lets us add all the properties.
+
+[source, html]
+--------------
+<template is="dom-repeat" items="{{reviews}}">
+    <div class="flex-score">{{item.score}}</div>
+    <div class="flex-name">{{item.name}}</div>
+    <div class="flex-category">{{item.reviewCategory.categoryName}}</div>
+    <div class="flex-times">{{item.testTimes}}</div>
+    <div class="flex-date">{{item.testDate}}</div>
+</template>
+--------------
+
+As can see from the HTML template, we are using `{{}}` to bind our data in it, more elaborately, the data has been bound for two-way (``client-to-server`` and ``server-to-client``).
+
+For this part of the content, we have a more specific tutorial, which you can find *https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-bindings.asciidoc#two-way-binding[here^]*.
