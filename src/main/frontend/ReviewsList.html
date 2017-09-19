@@ -41,6 +41,7 @@
             }
 
             .flex-score[data-score="1"] {
+                /* Background color is the default - nothing to change here */
             }
 
             .flex-score[data-score="2"] {
@@ -87,15 +88,12 @@
                 text-align: center;
             }
 
-            .titlebar{
-            }
-
             .alignright {
                 margin-left: auto;
             }
     </style>
 
-    <div class="review-container titlebar">
+    <div class="review-container">
         <iron-icon icon="vaadin:search"></iron-icon>
         <vaadin-text-field id='filterText'></vaadin-text-field>
 
@@ -106,7 +104,7 @@
 
     <paper-toast id='notification' class="notification"></paper-toast>
 
-    <div class="review-container titlebar">
+    <div class="review-container">
         <div class="flex-score">SCORE</div>
         <div class="flex-name">BEVERAGE NAME</div>
         <div class="flex-category">CATEGORY</div>

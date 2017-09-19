@@ -51,6 +51,8 @@ public class MainLayout extends VerticalLayout implements HasChildView {
 
         viewSelector.addClassName("toolbar-item");
         toolbar.addClassName("toolbar");
+        toolbar.setSpacing(true);
+        toolbar.setDefaultComponentAlignment(Alignment.BASELINE);
         addClassName("main-layout");
         setDefaultComponentAlignment(Alignment.CENTER);
         add(toolbar);
