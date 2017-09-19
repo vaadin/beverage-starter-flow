@@ -23,15 +23,17 @@ import com.vaadin.annotations.EventHandler;
 import com.vaadin.annotations.HtmlImport;
 import com.vaadin.annotations.Id;
 import com.vaadin.annotations.ModelItem;
+import com.vaadin.annotations.Route;
 import com.vaadin.annotations.Tag;
+import com.vaadin.annotations.Title;
+import com.vaadin.flow.router.View;
+import com.vaadin.flow.template.PolymerTemplate;
+import com.vaadin.flow.template.model.TemplateModel;
+import com.vaadin.starter.beveragebuddy.backend.Review;
+import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.starter.beveragebuddy.ui.ReviewsList.ReviewsModel;
 import com.vaadin.starter.beveragebuddy.ui.converters.LocalDateToStringConverter;
 import com.vaadin.starter.beveragebuddy.ui.converters.LongToStringConverter;
-import com.vaadin.flow.router.View;
-import com.vaadin.starter.beveragebuddy.backend.Review;
-import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.flow.template.PolymerTemplate;
-import com.vaadin.flow.template.model.TemplateModel;
 import com.vaadin.ui.AttachEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.TextField;
@@ -39,6 +41,8 @@ import com.vaadin.ui.TextField;
 /**
  * Simple template example.
  */
+@Route(value = "", layout = MainLayout.class)
+@Title("Review List")
 @Tag("reviews-list")
 @HtmlImport("frontend://ReviewsList.html")
 public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {

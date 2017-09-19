@@ -15,10 +15,16 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.vaadin.annotations.HtmlImport;
+import com.vaadin.flow.html.Anchor;
+import com.vaadin.flow.html.Div;
+import com.vaadin.flow.html.HtmlContainer;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.router.HasChildView;
-import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.View;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
@@ -28,27 +34,25 @@ import com.vaadin.ui.VerticalLayout;
  * The main view contains a simple label element and a template element.
  */
 @HtmlImport("context://styles.html")
-public class MainLayout extends VerticalLayout implements HasChildView {
+public class MainLayout extends VerticalLayout
+        implements RouterLayout, HasChildView {
 
     private View child;
-
+    
     public MainLayout() {
         // This is just a simple label created via Elements API
-        Label label = new Label("Beverage Buddy");
-        add(label);
+    	HorizontalLayout viewSelector = new HorizontalLayout();
+    	Label label = new Label("Beverage Buddy");
+    	
+    	HtmlContainer ul = new HtmlContainer("ul");
+        ul.setClassName("topnav");
+        add(ul);
 
-        RouterLink reviews = new RouterLink("Reviews", ReviewsList.class);
-        reviews.setId("reviews-link");
-        RouterLink categories = new RouterLink("Categories",
-                CategoriesList.class);
-        categories.setId("categories-link");
-
-        HorizontalLayout viewSelector = new HorizontalLayout(label, reviews,
-                categories);
-
-        addClassName("main-view");
+        ul.add(new Anchor("/", "Reviews List"));
+        ul.add(new Anchor("categories", "Categories List"));
+        
+        viewSelector.add(label, ul);
         add(viewSelector);
-
     }
 
     @Override
