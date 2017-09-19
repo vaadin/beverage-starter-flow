@@ -34,7 +34,6 @@
                 align-items: center;
                 -webkit-flex-wrap: wrap;
                 flex-wrap: wrap;
-                background-color: cornflowerblue;
             }
 
             .flex-score {
@@ -42,23 +41,24 @@
             }
 
             .flex-score[data-score="1"] {
-                background-color: slategray;
             }
 
             .flex-score[data-score="2"] {
-                background-color: lightslategray;
+                background-color: var(--valo-shade-20pct);
             }
 
             .flex-score[data-score="3"] {
-                background-color: gray;
+                background-color: var(--valo-shade-40pct);
             }
 
             .flex-score[data-score="4"] {
-                background-color: lightgray;
+                background-color: var(--valo-shade-60pct);
+                color: var(--valo-tint);
             }
 
             .flex-score[data-score="5"] {
-                background-color: white;
+                background-color: var(--valo-shade-80pct);
+                color: var(--valo-tint);
             }
 
             .flex-name {
@@ -88,7 +88,6 @@
             }
 
             .titlebar{
-                background-color: lightgrey;
             }
 
             .alignright {
@@ -105,7 +104,7 @@
         </div>
     </div>
 
-    <paper-toast id='notification'></paper-toast>
+    <paper-toast id='notification' class="notification"></paper-toast>
 
     <div class="review-container titlebar">
         <div class="flex-score">SCORE</div>

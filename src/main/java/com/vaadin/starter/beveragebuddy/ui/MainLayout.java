@@ -35,20 +35,25 @@ public class MainLayout extends VerticalLayout implements HasChildView {
     public MainLayout() {
         // This is just a simple label created via Elements API
         Label label = new Label("Beverage Buddy");
-        add(label);
+        label.addClassName("title");
+        label.addClassName("toolbar-item");
 
         RouterLink reviews = new RouterLink("Reviews", ReviewsList.class);
         reviews.setId("reviews-link");
+        reviews.addClassName("link");
         RouterLink categories = new RouterLink("Categories",
                 CategoriesList.class);
         categories.setId("categories-link");
+        categories.addClassName("link");
 
-        HorizontalLayout viewSelector = new HorizontalLayout(label, reviews,
-                categories);
+        HorizontalLayout viewSelector = new HorizontalLayout(reviews, categories);
+        HorizontalLayout toolbar = new HorizontalLayout(label, viewSelector);
 
-        addClassName("main-view");
-        add(viewSelector);
-
+        viewSelector.addClassName("toolbar-item");
+        toolbar.addClassName("toolbar");
+        addClassName("main-layout");
+        setDefaultComponentAlignment(Alignment.CENTER);
+        add(toolbar);
     }
 
     @Override
