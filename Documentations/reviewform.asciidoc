@@ -30,4 +30,4 @@ public ReviewForm(){
   }
 
 --------------
-Beside the validator, in order to manipulate the data, you might also need converters. For more about the content related to `Binder`, you can check *https://github.com/vaadin/flow/blob/master/flow-documentation/binding-data/tutorial-flow-components-binder-beans.asciidoc[Tutorial for Binder^]*.
+Beside the validator, in order to manipulate the data, you might also need a converter. For more about the content related to `Binder`, you can check *https://github.com/vaadin/flow/blob/master/flow-documentation/binding-data/tutorial-flow-components-binder-beans.asciidoc[Tutorial for Binder^]*.
