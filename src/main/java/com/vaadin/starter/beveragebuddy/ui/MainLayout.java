@@ -15,12 +15,9 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import com.vaadin.annotations.HtmlImport;
 import com.vaadin.flow.html.Anchor;
-import com.vaadin.flow.html.Div;
 import com.vaadin.flow.html.HtmlContainer;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.router.HasChildView;
