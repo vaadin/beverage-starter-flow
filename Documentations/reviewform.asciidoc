@@ -1,8 +1,8 @@
 ReviewForm-Doc
 --------------
-Review form is a class built based on the GeneratedPaperDialog, where we integrates several web components, such as `Button`, `ComboBox`, `DatePicker`, `Label` and `TextField`. Besides, a nested dialog is implemented.
+Review form is a class built based on the GeneratedPaperDialog, where it integrates several web components, such as `Button`, `ComboBox`, `DatePicker`, `Label` and `TextField`. Besides, a nested dialog is implemented.
 
-This class will be called for two user cases:
+This class will be called for two use cases:
 
 * After the user clicks the "Add a new review" button
 * After the user clicks the "Edit" button
@@ -30,4 +30,4 @@ public ReviewForm(){
   }
 
 --------------
-Beside the validator, in order to manipulate the data, you might also need converter. For more about the content related to `Binder`, you can check *https://github.com/vaadin/flow/blob/master/flow-documentation/binding-data/tutorial-flow-components-binder-beans.asciidoc[Tutorial for Binder^]*.
+Beside the validator, in order to manipulate the data, you might also need converters. For more about the content related to `Binder`, you can check *https://github.com/vaadin/flow/blob/master/flow-documentation/binding-data/tutorial-flow-components-binder-beans.asciidoc[Tutorial for Binder^]*.
