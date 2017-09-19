@@ -1,0 +1,136 @@
+---
+title: Integrating a Web Component
+order: 1
+layout: page
+---
+
+ifdef::env-github[:outfilesuffix: .asciidoc]
+= Integrating a Web Component
+
+This document describes the implementation of the `PaperToast` web component.
+This is a Polymer web component which can be imported into our project by wrapping
+it into a Java class.
+
+The steps required for the basic integration of web components are described in
+<<https://raw.githubusercontent.com/vaadin/flow/master/flow-documentation/web-components/tutorial-webcomponent-basic.asciidoc,Basic Integration of a Polymer Web Component>>
+
+== Class Definition
+
+According to the above, we decided to import https://elements.polymer-project.org/elements/paper-toast[`<paper-toast>`]
+into our project. Our `PaperToast` class is thus defined as
+[source,java]
+----
+@Tag("paper-toast")
+@HtmlImport("context://bower_components/paper-toast/paper-toast.html")
+public class PaperToast extends Component, implements HasStyle {
+    public PaperToast() {
+    }
+}
+----
+
+[NOTE]
+The class `implements HasStyle`, which adds support to styling without
+needing to write any extra code.
+
+== Adding Properties
+
+Next, we need to add support for the various properties of this component. The
+steps required are described in the tutorial
+<<https://raw.githubusercontent.com/vaadin/flow/master/flow-documentation/web-components/tutorial-webcomponent-attributes-and-properties#,Using Attributes and Properties with a Polymer Web Component>>
+
+`<paper-toast>` has the following core https://www.webcomponents.org/element/PolymerElements/paper-toast/elements/paper-toast#properties[properties]:
+* duration
+* text
+
+Supporting a property is as easy as adding a getter/setter pair for it:
+
+[source,java]
+----
+    public void setText(String text) {
+        getElement().setProperty("text", text);
+    }
+
+    public String getText() {
+        return getElement().getProperty("text", "");
+    }
+
+----
+
+On top of thee above, we decided to similarly support a few more properties in order
+to make our component more customisable:
+* color
+* backgroundColor
+* horizontalAlign
+* verticalAlign
+* noAutoFocus
+* noCancelOnOutsideClick
+
+== Adding Behaviour
+
+We also need methods to actually show and hide the component. These simply
+call the corresponding functions on the underlying element:
+
+[source,java]
+----
+    public void show() {
+        getElement().callFunction("open");
+    }
+
+    public void show(String text) {
+        getElement().callFunction("show", text);
+    }
+
+    public void show(String text, int duration) {
+        setDuration(duration);
+        show(text);
+    }
+
+    public void hide() {
+        getElement().callFunction("hide");
+    }
+----
+
+[NOTE]
+`show` is overloaded to make the component easier to use.
+
+== Handling Events
+
+The details of using events in an imported component are described in the tutorial
+<<https://raw.githubusercontent.com/vaadin/flow/master/flow-documentation/web-components/tutorial-webcomponent-events#,Using Events with a Polymer Web Component>>
+
+`<paper-toast>` supports an event called `iron-announce`. Accordingly, we define our event class as
+[source,java]
+----
+@DomEvent("iron-announce")
+public class IronAnnounceEvent extends ComponentEvent<PaperToast> {
+    public IronAnnounceEvent(PaperToast source, boolean fromClient) {
+        super(source, fromClient);
+    }
+}
+----
+
+And a method is added to `PaperToast` to register listeners to this event:
+
+[source,java]
+----
+    public Registration addIronAnnounceListener(
+            ComponentEventListener<IronAnnounceEvent> ironAnnounceListener) {
+        return super.addListener(IronAnnounceEvent.class, ironAnnounceListener);
+    }
+----
+
+== Using the Component
+
+All this makes using `PaperToast` from Java as simple as
+
+[source,java]
+----
+    PaperToast notification = new PaperToast();
+
+    notification.setBackgroundColor("blue");
+    notification.show("Category successfully deleted");
+----
+
+[NOTE]
+The above code is just an illustration; in real production code, it is recommended
+to use CSS to control the look of your components.
