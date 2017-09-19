@@ -12,7 +12,7 @@ This is a Polymer web component which can be imported into our project by wrappi
 it into a Java class.
 
 The steps required for the basic integration of web components are described in
-<<https://raw.githubusercontent.com/vaadin/flow/master/flow-documentation/web-components/tutorial-webcomponent-basic.asciidoc,Basic Integration of a Polymer Web Component>>
+https://raw.githubusercontent.com/vaadin/flow/master/flow-documentation/web-components/tutorial-webcomponent-basic.asciidoc[Basic Integration of a Polymer Web Component].
 
 == Class Definition
 
@@ -36,9 +36,10 @@ needing to write any extra code.
 
 Next, we need to add support for the various properties of this component. The
 steps required are described in the tutorial
-<<https://raw.githubusercontent.com/vaadin/flow/master/flow-documentation/web-components/tutorial-webcomponent-attributes-and-properties#,Using Attributes and Properties with a Polymer Web Component>>
+https://raw.githubusercontent.com/vaadin/flow/master/flow-documentation/web-components/tutorial-webcomponent-attributes-and-properties.asciidoc[Using Attributes and Properties with a Polymer Web Component].
 
 `<paper-toast>` has the following core https://www.webcomponents.org/element/PolymerElements/paper-toast/elements/paper-toast#properties[properties]:
+
 * duration
 * text
 
@@ -56,8 +57,9 @@ Supporting a property is as easy as adding a getter/setter pair for it:
 
 ----
 
-On top of thee above, we decided to similarly support a few more properties in order
+On top of the above, it is useful to similarly support a few more properties in order
 to make our component more customisable:
+
 * color
 * backgroundColor
 * horizontalAlign
@@ -96,7 +98,7 @@ call the corresponding functions on the underlying element:
 == Handling Events
 
 The details of using events in an imported component are described in the tutorial
-<<https://raw.githubusercontent.com/vaadin/flow/master/flow-documentation/web-components/tutorial-webcomponent-events#,Using Events with a Polymer Web Component>>
+https://raw.githubusercontent.com/vaadin/flow/master/flow-documentation/web-components/tutorial-webcomponent-events.asciidoc[Using Events with a Polymer Web Component].
 
 `<paper-toast>` supports an event called `iron-announce`. Accordingly, we define our event class as
 [source,java]
@@ -107,7 +109,7 @@ public class IronAnnounceEvent extends ComponentEvent<PaperToast> {
         super(source, fromClient);
     }
 }
-----
+    // ...----
 
 And a method is added to `PaperToast` to register listeners to this event:
 
@@ -126,9 +128,11 @@ All this makes using `PaperToast` from Java as simple as
 [source,java]
 ----
     PaperToast notification = new PaperToast();
-
+    notification.setColor("yellow");
     notification.setBackgroundColor("blue");
-    notification.show("Category successfully deleted");
+    notification.setNoCancelOnOutsideClick(false);
+
+    notification.show("Category successfully deleted", 5000);
 ----
 
 [NOTE]
