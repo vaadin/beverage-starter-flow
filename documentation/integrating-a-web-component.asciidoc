@@ -18,7 +18,7 @@ In our case, all of the needed configuration for pulling in web components is al
 [source,json]
 ----
   "dependencies": {
-    "polymer": "~2.0.2",
+    "polymer": "~2.0.0",
     "paper-toast": "~2.0.0"
   }
 ----
