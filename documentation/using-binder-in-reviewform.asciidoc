@@ -1,5 +1,12 @@
-ReviewForm-Doc
---------------
+---
+title: using binder in reviewform 
+order: 3
+layout: page
+---
+
+ifdef::env-github[:outfilesuffix: .asciidoc]
+Using Binder in ReviewForm
+--------------------------
 Review form is a class built based on the GeneratedPaperDialog, where it integrates several web components, such as `Button`, `ComboBox`, `DatePicker`, `Label` and `TextField`. Besides, a nested dialog is implemented.
 
 This class will be called for two use cases:
