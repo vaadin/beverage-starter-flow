@@ -7,7 +7,7 @@ ifdef::env-github[:outfilesuffix: .asciidoc]
 Polymer Template Based View
 '''
 ReviewsList is a *https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-basic.asciidoc/[PolymerTemplate^]* based view class. In this class, the list of reviews will be shown under a "search" bar and "add a new review" button.
-image:ReviewsList.png[alt="Reviews List"]
+image:../images/ReviewsList.png[alt="Reviews List"]
 
 The following contents will introduce some concepts which are used in ``ReviewsList.java`` and ``ReviewList.html`` file.
 
