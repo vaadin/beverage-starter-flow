@@ -116,6 +116,42 @@
 
 <!-- shared styles for all views -->
 <dom-module id="shared-styles">
+    <style>
+      .main-layout {
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      .toolbar {
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        width: 100%;
+        background-color: var(--valo-shade-10pct);
+        transition: box-shadow .2s;
+        padding: var(--valo-space-m);
+      }
+
+      .toolbar > .toolbar-item {
+        flex: initial;
+      }
+
+      .title {
+        line-height: 30px;
+      }
+
+      .link {
+        margin-left: var(--valo-space-m);
+        margin-right: var(--valo-space-m);
+      }
+
+      .categories-list {
+        width: 80% !important;
+      }
+
+      .notification {
+        background-color: blue;
+      }
+    </style>
     <template>
         <style>
       :host([hidden]) {
