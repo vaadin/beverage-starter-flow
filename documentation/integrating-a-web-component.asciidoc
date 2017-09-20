@@ -19,7 +19,8 @@ In our case, all of the needed configuration for pulling in web components is al
 ----
   "dependencies": {
     "polymer": "~2.0.0",
-    "paper-toast": "~2.0.0"
+    "paper-toast": "~2.0.0",
+    ...
   }
 ----
 
@@ -33,17 +34,13 @@ Our initial `PaperToast` class is defined as
 ----
 @Tag("paper-toast")
 @HtmlImport("context://bower_components/paper-toast/paper-toast.html")
-public class PaperToast extends Component, implements HasStyle {
+public class PaperToast extends Component implements HasStyle {
     public PaperToast() {
     }
 }
 ----
 
-It has `@Tag` and `@HtmlImport` annotations to tie it to the web component source, and not much else.
-
-[NOTE]
-The class `implements HasStyle`, which adds support to styling without
-needing to write any extra code.
+It has `@Tag` and `@HtmlImport` annotations to tie it to the web component source, and not much else. Implementing `HasStyle` is not necessary for the integration per se; it just adds the styling API to the component, making it easier to use.
 
 == Supporting Properties
 
@@ -146,7 +143,3 @@ All this makes using `PaperToast` from Java as simple as
 
     notification.show("Category successfully deleted", 5000);
 ----
-
-[NOTE]
-The above code is just an illustration; in real production code, it is recommended
-to use CSS to control the look of your components.
