@@ -5,6 +5,7 @@ import com.vaadin.annotations.Tag;
 import com.vaadin.flow.event.ComponentEventListener;
 import com.vaadin.shared.Registration;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.HasStyle;
 
 /**
  * Wrapper for the paper-toast element.
@@ -13,7 +14,7 @@ import com.vaadin.ui.Component;
  */
 @Tag("paper-toast")
 @HtmlImport("context://bower_components/paper-toast/paper-toast.html")
-public class PaperToast extends Component {
+public class PaperToast extends Component implements HasStyle {
     /**
      * Sets the duration in milliseconds to show the toast.
      * Set to 0, a negative number, or Infinity, to disable the toast auto-closing.

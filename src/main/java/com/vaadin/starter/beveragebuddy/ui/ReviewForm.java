@@ -88,6 +88,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     }
 
     private void createNotification() {
+        notification.addClassName("notification");
         this.getContent().add(notification);
     }
 
