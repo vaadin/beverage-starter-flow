@@ -79,8 +79,8 @@ public final class CategoriesList extends VerticalLayout implements View {
     }
 
     private void initView() {
-        getElement().getStyle().set("maxWidth", "500px");
-        notification.setBackgroundColor("blue");
+        addClassName("categories-list");
+        notification.addClassName("notification");
         initDialog();
 
         add(changesDialog, notification);

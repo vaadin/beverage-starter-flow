@@ -35,14 +35,27 @@ public class MainLayout extends VerticalLayout
     private View child;
 
     public MainLayout() {
-        // This is just a simple label created via Elements API
-        HorizontalLayout viewSelector = new HorizontalLayout();
         Label label = new Label("Beverage Buddy");
-        viewSelector.add(label);
+        label.addClassName("title");
+        label.addClassName("toolbar-item");
 
-        viewSelector.add(new Anchor("/", "Reviews List"));
-        viewSelector.add(new Anchor("categories", "Categories List"));
-        add(viewSelector);
+        Anchor reviews = new Anchor("/", "Reviews List");
+        reviews.setId("reviews-link");
+        reviews.addClassName("link");
+        Anchor categories = new Anchor("categories", "Categories List");
+        categories.setId("categories-link");
+        categories.addClassName("link");
+
+        HorizontalLayout viewSelector = new HorizontalLayout(reviews, categories);
+        HorizontalLayout toolbar = new HorizontalLayout(label, viewSelector);
+
+        viewSelector.addClassName("toolbar-item");
+        toolbar.addClassName("toolbar");
+        toolbar.setSpacing(true);
+        toolbar.setDefaultComponentAlignment(Alignment.BASELINE);
+        addClassName("main-layout");
+        setDefaultComponentAlignment(Alignment.CENTER);
+        add(toolbar);
     }
 
     @Override
