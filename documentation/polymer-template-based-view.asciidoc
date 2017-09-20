@@ -5,7 +5,7 @@ layout: page
 ---
 ifdef::env-github[:outfilesuffix: .asciidoc]
 Polymer Template Based View
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'''
 ReviewsList is a *https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-basic.asciidoc/[PolymerTemplate^]* based view class. In this class, the list of reviews will be shown under a "search" bar and "add a new review" button.
 image:ReviewsList.png[alt="Reviews List"]
 
@@ -13,7 +13,6 @@ The following contents will introduce some concepts which are used in ``ReviewsL
 
 Annotations
 -----------
-'''
 @Convert
 ^^^^^^^^
 There are two data types (``LocalDate``,``Long``) in our case which are not supported to use in the PolymerTemplate model directly, so that we need to use ``@Convert`` annotation:
