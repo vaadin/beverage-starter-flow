@@ -24,7 +24,6 @@ import com.vaadin.ui.VerticalLayout;
 
 @Route(value = "categories", layout = MainLayout.class)
 @Title("Categories List")
-
 public final class CategoriesList extends VerticalLayout implements View {
 
     private enum Operation {

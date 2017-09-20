@@ -17,7 +17,6 @@ package com.vaadin.starter.beveragebuddy.ui;
 
 import com.vaadin.annotations.HtmlImport;
 import com.vaadin.flow.html.Anchor;
-import com.vaadin.flow.html.HtmlContainer;
 import com.vaadin.flow.html.Label;
 import com.vaadin.flow.router.HasChildView;
 import com.vaadin.flow.router.RouterLayout;
@@ -39,15 +38,10 @@ public class MainLayout extends VerticalLayout
         // This is just a simple label created via Elements API
         HorizontalLayout viewSelector = new HorizontalLayout();
         Label label = new Label("Beverage Buddy");
+        viewSelector.add(label);
 
-        HtmlContainer ul = new HtmlContainer("ul");
-        ul.setClassName("topnav");
-        add(ul);
-
-        ul.add(new Anchor("/", "Reviews List"));
-        ul.add(new Anchor("categories", "Categories List"));
-
-        viewSelector.add(label, ul);
+        viewSelector.add(new Anchor("/", "Reviews List"));
+        viewSelector.add(new Anchor("categories", "Categories List"));
         add(viewSelector);
     }
 
