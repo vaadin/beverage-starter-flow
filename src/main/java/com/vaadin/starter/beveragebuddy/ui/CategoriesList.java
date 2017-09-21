@@ -3,24 +3,24 @@ package com.vaadin.starter.beveragebuddy.ui;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.vaadin.annotations.Route;
-import com.vaadin.annotations.Title;
 import com.vaadin.data.Binder;
 import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationResult;
-import com.vaadin.flow.html.H2;
-import com.vaadin.flow.html.Label;
 import com.vaadin.flow.router.View;
-import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
+import com.vaadin.router.Route;
+import com.vaadin.router.Title;
 import com.vaadin.shared.Registration;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.button.Button;
+import com.vaadin.ui.html.H2;
+import com.vaadin.ui.html.Label;
+import com.vaadin.ui.layout.HorizontalLayout;
+import com.vaadin.ui.layout.VerticalLayout;
+import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
+import com.vaadin.ui.textfield.TextField;
 
 @Route(value = "categories", layout = MainLayout.class)
 @Title("Categories List")
@@ -131,7 +131,7 @@ public final class CategoriesList extends VerticalLayout implements View {
         layout.add(filter, newButton);
 
         layout.setWidth("100%");
-        layout.setSpacing(true);
+        layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
         add(layout);
     }
 
@@ -145,7 +145,7 @@ public final class CategoriesList extends VerticalLayout implements View {
         layout.add(name, counter, editButton);
         layout.setWidth("100%");
         layout.getStyle().set("border", "1px solid #9E9E9E");
-        layout.setSpacing(true);
+        layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
         categoryLayout.add(layout);
     }
 

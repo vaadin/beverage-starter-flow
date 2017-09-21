@@ -2,15 +2,15 @@ package com.vaadin.starter.beveragebuddy.ui;
 
 import java.util.function.Consumer;
 
-import com.vaadin.flow.html.H2;
-import com.vaadin.flow.html.Label;
-import com.vaadin.starter.beveragebuddy.backend.Category;
-import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.shared.Registration;
-import com.vaadin.ui.Button;
+import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.ui.Composite;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.button.Button;
+import com.vaadin.ui.html.H2;
+import com.vaadin.ui.html.Label;
+import com.vaadin.ui.layout.HorizontalLayout;
+import com.vaadin.ui.layout.VerticalLayout;
+import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
 
 class ConfirmationDialog extends Composite<GeneratedPaperDialog> {
     private final H2 titleField = new H2();
