@@ -88,6 +88,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
         }
 
         binder.readBean(reviewBean);
+        lastTasted.setValue(reviewBean.getDate());
     }
 
     private void createNotification() {
@@ -137,7 +138,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
         binder.forField(scoreBox)
                 .withConverter(new StringToIntegerConverter(0,
-                        "The score should be a number"))
+                        "The score should be a number."))
                 .withValidator(score -> score >= 1 && score <= 5,
                         "The score should be between 1 and 5.")
                 .bind(Review::getScore, Review::setScore);
@@ -146,9 +147,13 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private void createDatePicker() {
         lastTasted.setLabel("Choose the date");
         lastTasted.setMax(LocalDate.now());
+        lastTasted.setValue(LocalDate.now());
         reviewFormLayout.add(lastTasted);
 
-        binder.forField(lastTasted).bind(Review::getDate, Review::setDate);
+        binder.forField(lastTasted)
+                .withValidator(date -> date != null,
+                        "The date should be in dd/MM/yyyy format.")
+                .bind(Review::getDate, Review::setDate);
     }
 
     private void createCategoryBox() {
