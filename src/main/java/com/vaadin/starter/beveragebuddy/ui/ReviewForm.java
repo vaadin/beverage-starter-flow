@@ -77,6 +77,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
         optionalReview.ifPresent(review -> {
             title.setText("Edit a review");
+            delete.setDisabled(false);
             this.reviewBean = review;
         });
 
