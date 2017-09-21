@@ -11,11 +11,12 @@ import com.vaadin.data.ValidationException;
 import com.vaadin.data.ValidationResult;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.html.Div;
+import com.vaadin.flow.html.H2;
 import com.vaadin.flow.html.Label;
+import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
-import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Composite;
@@ -49,7 +50,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private ComboBox<String> scoreBox = new ComboBox<>();
     private DatePicker lastTasted = new DatePicker();
     private GeneratedPaperDialog confirmDialog = new GeneratedPaperDialog();
-    private Label title = new Label();
+    private H2 title = new H2();
     private PaperToast notification = new PaperToast();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
@@ -81,6 +82,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
         if (!optionalReview.isPresent()) {
             title.setText("Add a new review");
+            delete.setDisabled(true);
             reviewBean = new Review();
         }
 
@@ -145,8 +147,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
         lastTasted.setMax(LocalDate.now());
         reviewFormLayout.add(lastTasted);
 
-        binder.forField(lastTasted).bind(Review::getDate,
-                Review::setDate);
+        binder.forField(lastTasted).bind(Review::getDate, Review::setDate);
     }
 
     private void createCategoryBox() {
