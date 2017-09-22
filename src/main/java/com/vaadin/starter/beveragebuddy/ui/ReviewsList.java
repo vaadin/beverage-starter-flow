@@ -61,7 +61,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
     @Id("notification")
     private PaperToast notification;
 
-    private ReviewForm reviewForm = new ReviewForm(this::saveUpdate,
+    private ReviewEditorDialog reviewForm = new ReviewEditorDialog(this::saveUpdate,
             this::deleteUpdate);
 
     public ReviewsList() {
@@ -71,13 +71,13 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
         addReview.setText("Add new review");
         addReview.setIcon(new Icon(VaadinIcons.PLUS));
         addReview.addClickListener(
-                e -> openForm(new Review(), ItemEditorForm.Operation.ADD));
+                e -> openForm(new Review(), AbstractEditorDialog.Operation.ADD));
 
         updateList();
 
     }
 
-    public void saveUpdate(Review review, ItemEditorForm.Operation operation) {
+    public void saveUpdate(Review review, AbstractEditorDialog.Operation operation) {
         ReviewService.getInstance().saveReview(review);
         updateList();
         notification.show("Beverage successfully " + operation.getNameInText() + "ed.");
@@ -96,10 +96,10 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
 
     @EventHandler
     private void edit(@ModelItem Review review) {
-        openForm(review, ItemEditorForm.Operation.EDIT);
+        openForm(review, AbstractEditorDialog.Operation.EDIT);
     }
 
-    private void openForm(Review review, ItemEditorForm.Operation operation) {
+    private void openForm(Review review, AbstractEditorDialog.Operation operation) {
         // Add the form lazily as the UI is not yet initialized when
         // this view is constructed
         if (reviewForm.getElement().getParent() == null) {

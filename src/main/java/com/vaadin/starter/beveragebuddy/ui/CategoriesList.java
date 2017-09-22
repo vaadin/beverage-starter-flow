@@ -29,8 +29,8 @@ public final class CategoriesList extends VerticalLayout implements View {
     private final TextField filter = new TextField("", "Search");
     private final VerticalLayout categoryLayout = new VerticalLayout();
 
-    private final CategoryForm form =
-            new CategoryForm(this::saveCategory, this::deleteCategory);
+    private final CategoryEditorDialog form =
+            new CategoryEditorDialog(this::saveCategory, this::deleteCategory);
 
     private final PaperToast notification = new PaperToast();
 
@@ -71,7 +71,7 @@ public final class CategoriesList extends VerticalLayout implements View {
         Button newButton = new Button("New Category",
                 new Icon(VaadinIcons.PLUS));
         newButton.addClickListener(
-                e -> form.open(new Category(), ItemEditorForm.Operation.ADD));
+                e -> form.open(new Category(), AbstractEditorDialog.Operation.ADD));
         layout.add(searchField, newButton);
 
         layout.setWidth("100%");
@@ -86,7 +86,7 @@ public final class CategoriesList extends VerticalLayout implements View {
 
         Button editButton = new Button("Edit", new Icon(VaadinIcons.PENCIL));
         editButton.addClickListener(
-                e -> form.open(category, ItemEditorForm.Operation.EDIT));
+                e -> form.open(category, AbstractEditorDialog.Operation.EDIT));
         layout.add(name, counter, editButton);
         layout.setWidth("100%");
         layout.getStyle().set("border", "1px solid #9E9E9E");
@@ -94,7 +94,7 @@ public final class CategoriesList extends VerticalLayout implements View {
         categoryLayout.add(layout);
     }
 
-    private void saveCategory(Category category, ItemEditorForm.Operation operation) {
+    private void saveCategory(Category category, AbstractEditorDialog.Operation operation) {
         categoryService.saveCategory(category);
 
         notification.show("Category successfully "

@@ -8,11 +8,11 @@ import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.ui.textfield.TextField;
 
-public class CategoryForm extends ItemEditorForm<Category> {
+public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
 
     private final TextField categoryNameField = new TextField("Category Name");
 
-    public CategoryForm(BiConsumer<Category, Operation> itemSaver,
+    public CategoryEditorDialog(BiConsumer<Category, Operation> itemSaver,
             Consumer<Category> itemDeleter) {
         super("Category", itemSaver, itemDeleter);
 
@@ -32,7 +32,8 @@ public class CategoryForm extends ItemEditorForm<Category> {
                 .bind(Category::getName, Category::setName);
     }
 
-    @Override protected void confirmDelete() {
+    @Override
+    protected void confirmDelete() {
         int reviewCount = ReviewService.getInstance().findReviews(
                 getCurrentItem().getName()).size();
         String additionalMessage = reviewCount == 0 ? "" :

@@ -12,7 +12,7 @@ import com.vaadin.ui.combobox.ComboBox;
 import com.vaadin.ui.datepicker.DatePicker;
 import com.vaadin.ui.textfield.TextField;
 
-public class ReviewForm extends ItemEditorForm<Review> {
+public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     private transient CategoryService categoryService = CategoryService
             .getInstance();
@@ -23,7 +23,7 @@ public class ReviewForm extends ItemEditorForm<Review> {
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
 
-    public ReviewForm(BiConsumer<Review, Operation> saveHandler,
+    public ReviewEditorDialog(BiConsumer<Review, Operation> saveHandler,
             Consumer<Review> deleteHandler) {
         super("Review", saveHandler, deleteHandler);
 
@@ -102,7 +102,8 @@ public class ReviewForm extends ItemEditorForm<Review> {
                 .bind(Review::getName, Review::setName);
     }
 
-    @Override protected void confirmDelete() {
+    @Override
+    protected void confirmDelete() {
         openConfirmationDialog("Delete beverage \""
                         + getCurrentItem().getName() + "\"?",
                 "", "");

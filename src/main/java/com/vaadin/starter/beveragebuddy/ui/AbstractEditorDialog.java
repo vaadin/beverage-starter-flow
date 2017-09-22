@@ -20,11 +20,11 @@ import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
 
 
 /**
- * Abstract base class for forms adding, editing or deleting items.
+ * Abstract base class for dialogs adding, editing or deleting items.
  * @param <T>   the type of the item to be added, edited or deleted
  */
 @HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
-public abstract class ItemEditorForm<T extends Serializable>
+public abstract class AbstractEditorDialog<T extends Serializable>
         extends Composite<GeneratedPaperDialog> {
 
     /**
@@ -62,7 +62,7 @@ public abstract class ItemEditorForm<T extends Serializable>
     private final Button saveButton = new Button("Save");
     private final Button cancelButton = new Button("Cancel");
     private final Button deleteButton = new Button("Delete");
-    private Registration registration;
+    private Registration registrationForSave;
 
     private final FormLayout formLayout = new FormLayout();
     private final HorizontalLayout buttonBar
@@ -85,7 +85,7 @@ public abstract class ItemEditorForm<T extends Serializable>
      * @param itemSaver     Callback to save the edited item
      * @param itemDeleter   Callback to delete the edited item
      */
-    protected ItemEditorForm(String itemType, BiConsumer<T, Operation> itemSaver,
+    protected AbstractEditorDialog(String itemType, BiConsumer<T, Operation> itemSaver,
             Consumer<T> itemDeleter) {
         this.itemType = itemType;
         this.itemSaver = itemSaver;
@@ -106,14 +106,14 @@ public abstract class ItemEditorForm<T extends Serializable>
     private void initFormLayout() {
         formLayout.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1),
                 new FormLayout.ResponsiveStep("50em", 2));
-        formLayout.getStyle().set("padding", "0");
+        formLayout.addClassName("no-padding");
         Div div = new Div(formLayout);
-        div.getStyle().set("padding", "10px");
+        div.addClassName("has-padding");
         getContent().add(div);
     }
 
     private void initButtonBar() {
-        saveButton.getElement().setAttribute("autofocus", true);
+        saveButton.setAutofocus(true);
         cancelButton.getElement().setAttribute("dialog-dismiss", true);
         deleteButton.addClickListener(e -> deleteClicked());
         buttonBar.setClassName("buttons");
@@ -159,10 +159,10 @@ public abstract class ItemEditorForm<T extends Serializable>
     public final void open(T item, Operation operation) {
         currentItem = item;
         titleField.setText(operation.getNameInTitle() + " " + itemType);
-        if (registration != null) {
-            registration.remove();
+        if (registrationForSave != null) {
+            registrationForSave.remove();
         }
-        registration = saveButton.addClickListener(e -> saveClicked(operation));
+        registrationForSave = saveButton.addClickListener(e -> saveClicked(operation));
         binder.readBean(currentItem);
 
         setButtonsDisabled(false);
