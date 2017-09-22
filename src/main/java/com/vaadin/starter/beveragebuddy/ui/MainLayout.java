@@ -37,24 +37,23 @@ public class MainLayout extends VerticalLayout
     private View child;
 
     public MainLayout() {
-        Icon title = new Icon(VaadinIcons.HANDS_UP);
         Label label = new Label("Beverage Buddy");
         label.addClassName("title");
         label.addClassName("toolbar-item");
-        HorizontalLayout titleBar = new HorizontalLayout(title, label);
+        HorizontalLayout titleBar = new HorizontalLayout(
+                new Icon(VaadinIcons.HANDS_UP), label);
 
-        Icon reviewList = new Icon(VaadinIcons.ARCHIVES);
         Anchor reviews = new Anchor("/", "Reviews List");
         reviews.setId("reviews-link");
         reviews.addClassName("link");
-        Icon categoryList = new Icon(VaadinIcons.LIST);
         Anchor categories = new Anchor("categories", "Categories List");
         categories.setId("categories-link");
         categories.addClassName("link");
 
-        HorizontalLayout logoReview = new HorizontalLayout(reviewList, reviews);
-        HorizontalLayout logoCategory = new HorizontalLayout(categoryList,
-                categories);
+        HorizontalLayout logoReview = new HorizontalLayout(
+                new Icon(VaadinIcons.ARCHIVES), reviews);
+        HorizontalLayout logoCategory = new HorizontalLayout(
+                new Icon(VaadinIcons.LIST), categories);
         HorizontalLayout viewSelector = new HorizontalLayout(logoReview,
                 logoCategory);
         HorizontalLayout toolbar = new HorizontalLayout(titleBar, viewSelector);

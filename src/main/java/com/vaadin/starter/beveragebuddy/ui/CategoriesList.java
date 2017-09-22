@@ -127,10 +127,10 @@ public final class CategoriesList extends VerticalLayout implements View {
     private void addSearchBar() {
         HorizontalLayout layout = new HorizontalLayout();
         HorizontalLayout searchField = new HorizontalLayout();
-        Icon search = new Icon(VaadinIcons.SEARCH);
-        searchField.add(search, filter);
+        searchField.add(new Icon(VaadinIcons.SEARCH), filter);
         filter.addValueChangeListener(e -> updateView());
-        Button newButton = new Button("+ New Category");
+        Button newButton = new Button("New Category",
+                new Icon(VaadinIcons.PLUS));
         newButton.addClickListener(
                 e -> displayDialog(new Category(), Operation.ADD));
         layout.add(searchField, newButton);
@@ -145,10 +145,7 @@ public final class CategoriesList extends VerticalLayout implements View {
         Label name = new Label(category.getName());
         Label counter = new Label(String.valueOf(reviewCount));
 
-        Icon icon = new Icon(VaadinIcons.PENCIL);
-        icon.setSize("20px");
-        Button editButton = new Button("Edit", icon);
-
+        Button editButton = new Button("Edit", new Icon(VaadinIcons.PENCIL));
         editButton
                 .addClickListener(e -> displayDialog(category, Operation.EDIT));
         layout.add(name, counter, editButton);
