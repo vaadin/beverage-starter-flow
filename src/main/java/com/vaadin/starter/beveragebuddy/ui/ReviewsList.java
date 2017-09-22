@@ -68,7 +68,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
         filterText.setPlaceholder("Find a review...");
         filterText.addValueChangeListener(e -> updateList());
 
-        addReview.setText("Add new review");
+        addReview.setText("+ Add new review");
         addReview.addClickListener(e -> addReviewClicked());
         updateList();
 
