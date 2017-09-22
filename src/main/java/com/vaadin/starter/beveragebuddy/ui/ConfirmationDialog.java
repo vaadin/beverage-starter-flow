@@ -3,22 +3,24 @@ package com.vaadin.starter.beveragebuddy.ui;
 import java.util.function.Consumer;
 
 import com.vaadin.shared.Registration;
-import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.ui.Composite;
 import com.vaadin.ui.button.Button;
+import com.vaadin.ui.common.HtmlImport;
 import com.vaadin.ui.html.H2;
 import com.vaadin.ui.html.Label;
 import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
 import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
 
-class ConfirmationDialog extends Composite<GeneratedPaperDialog> {
+@HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
+class ConfirmationDialog<T> extends Composite<GeneratedPaperDialog> {
     private final H2 titleField = new H2();
     private final Label messageLabel = new Label();
     private final Label extraMessageLabel = new Label();
     private final Button confirmButton = new Button();
     private final Button cancelButton = new Button("Cancel");
-    private Registration registration;
+    private Registration registrationForConfirm;
+    private Registration registrationForCancel;
 
     public ConfirmationDialog() {
         confirmButton.getElement().setAttribute("dialog-confirm", true);
@@ -34,15 +36,22 @@ class ConfirmationDialog extends Composite<GeneratedPaperDialog> {
     }
 
     public void open(String title, String message, String additionalMessage,
-            String actionName, Category item, Consumer<Category> handler) {
+            String actionName, T item, Consumer<T> confirmHandler,
+            Runnable cancelHandler) {
         titleField.setText(title);
         messageLabel.setText(message);
         extraMessageLabel.setText(additionalMessage);
         confirmButton.setText(actionName);
-        if (registration != null) {
-            registration.remove();
+
+        if (registrationForConfirm != null) {
+            registrationForConfirm.remove();
         }
-        registration = confirmButton.addClickListener(e -> handler.accept(item));
+        registrationForConfirm = confirmButton.addClickListener(e -> confirmHandler.accept(item));
+        if (registrationForCancel != null) {
+            registrationForCancel.remove();
+        }
+        registrationForCancel = cancelButton.addClickListener(e -> cancelHandler.run());
+
         getContent().open();
     }
 }

@@ -16,7 +16,6 @@
 package com.vaadin.starter.beveragebuddy.ui;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.vaadin.flow.model.Convert;
 import com.vaadin.flow.model.TemplateModel;
@@ -30,7 +29,6 @@ import com.vaadin.starter.beveragebuddy.ui.converters.LocalDateToStringConverter
 import com.vaadin.starter.beveragebuddy.ui.converters.LongToStringConverter;
 import com.vaadin.ui.Tag;
 import com.vaadin.ui.button.Button;
-import com.vaadin.ui.common.AttachEvent;
 import com.vaadin.ui.common.HtmlImport;
 import com.vaadin.ui.icon.Icon;
 import com.vaadin.ui.icon.VaadinIcons;
@@ -72,21 +70,23 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
 
         addReview.setText("Add new review");
         addReview.setIcon(new Icon(VaadinIcons.PLUS));
-        addReview.addClickListener(e -> addReviewClicked());
+        addReview.addClickListener(
+                e -> openForm(new Review(), ItemEditorForm.Operation.ADD));
+
         updateList();
 
     }
 
-    public void saveUpdate(Review review) {
+    public void saveUpdate(Review review, ItemEditorForm.Operation operation) {
         ReviewService.getInstance().saveReview(review);
         updateList();
-        notification.show("A new review/edit has been saved.");
+        notification.show("Beverage successfully " + operation.getNameInText() + "ed.");
     }
 
     public void deleteUpdate(Review review) {
         ReviewService.getInstance().deleteReview(review);
         updateList();
-        notification.show("Your selected review has been deleted.");
+        notification.show("Beverage successfully deleted.");
     }
 
     private void updateList() {
@@ -96,16 +96,16 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
 
     @EventHandler
     private void edit(@ModelItem Review review) {
-        reviewForm.openReview(Optional.of(review));
+        openForm(review, ItemEditorForm.Operation.EDIT);
     }
 
-    private void addReviewClicked() {
-        reviewForm.openReview(Optional.empty());
-    }
-
-    @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        getElement().getParent().appendChild(reviewForm.getElement());
+    private void openForm(Review review, ItemEditorForm.Operation operation) {
+        // Add the form lazily as the UI is not yet initialized when
+        // this view is constructed
+        if (reviewForm.getElement().getParent() == null) {
+            getUI().ifPresent(ui -> ui.add(reviewForm));
+        }
+        reviewForm.open(review, operation);
     }
 
 }

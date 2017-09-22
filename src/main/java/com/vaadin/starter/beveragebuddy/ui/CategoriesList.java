@@ -1,73 +1,36 @@
 package com.vaadin.starter.beveragebuddy.ui;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import com.vaadin.data.Binder;
-import com.vaadin.data.BinderValidationStatus;
-import com.vaadin.data.ValidationResult;
 import com.vaadin.flow.router.View;
 import com.vaadin.router.Route;
 import com.vaadin.router.Title;
-import com.vaadin.shared.Registration;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.ui.button.Button;
-import com.vaadin.ui.html.H2;
 import com.vaadin.ui.html.Label;
 import com.vaadin.ui.icon.Icon;
 import com.vaadin.ui.icon.VaadinIcons;
 import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
-import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
 import com.vaadin.ui.textfield.TextField;
 
 @Route(value = "categories", layout = MainLayout.class)
 @Title("Categories List")
 public final class CategoriesList extends VerticalLayout implements View {
 
-    private enum Operation {
-        ADD("Add", true), EDIT("Edit", false);
-
-        private final String name;
-        private final boolean deleteDisabled;
-
-        Operation(String name, boolean deleteDisabled) {
-            this.name = name;
-            this.deleteDisabled = deleteDisabled;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public boolean isDeleteDisabled() {
-            return deleteDisabled;
-        }
-    }
-
-    private final transient CategoryService categoryService = CategoryService
-            .getInstance();
-    private final transient ReviewService reviewService = ReviewService
-            .getInstance();
+    private final transient CategoryService categoryService =
+            CategoryService.getInstance();
+    private final transient ReviewService reviewService =
+            ReviewService.getInstance();
 
     private final TextField filter = new TextField("", "Search");
     private final VerticalLayout categoryLayout = new VerticalLayout();
 
-    private final GeneratedPaperDialog changesDialog = new GeneratedPaperDialog();
-    private final H2 titleField = new H2();
-    private final TextField newCategoryNameInput = new TextField(
-            "Category Name");
-    private final Button saveButton = new Button("Save");
-    private final Button cancelButton = new Button("Cancel");
-    private final Button deleteButton = new Button("Delete");
-    private Registration registration;
-    private Binder<Category> binder;
-    private Category currentCategory;
-
-    private final ConfirmationDialog confirmationDialog = new ConfirmationDialog();
+    private final CategoryForm form =
+            new CategoryForm(this::saveCategory, this::deleteCategory);
 
     private final PaperToast notification = new PaperToast();
 
@@ -82,42 +45,18 @@ public final class CategoriesList extends VerticalLayout implements View {
 
     private void initView() {
         addClassName("categories-list");
+
         notification.addClassName("notification");
-        initDialog();
-
-        add(changesDialog, notification);
-    }
-
-    private void initDialog() {
-        saveButton.getElement().setAttribute("dialog-confirm", true);
-        saveButton.getElement().setAttribute("autofocus", true);
-        cancelButton.getElement().setAttribute("dialog-dismiss", true);
-        deleteButton.addClickListener(e -> handleDelete());
-        HorizontalLayout buttonBar = new HorizontalLayout(saveButton,
-                cancelButton, deleteButton);
-        buttonBar.setClassName("buttons");
-        VerticalLayout layout = new VerticalLayout(titleField,
-                newCategoryNameInput, buttonBar);
-        changesDialog.add(layout, confirmationDialog);
-        changesDialog.setModal(true);
-
-        binder = new Binder<>();
-        binder.forField(newCategoryNameInput)
-                .withConverter(String::trim, String::trim)
-                .withValidator(name -> name.length() >= 3,
-                        "Category name must contain at least 3 printable characters")
-                .withValidator(name -> categoryService.findCategories(name)
-                        .size() == 0, "Category name must be unique")
-                .bind(Category::getName, Category::setName);
+        add(notification, form);
     }
 
     private void updateView() {
         categoryLayout.removeAll();
-        List<Category> categories = categoryService
-                .findCategories(filter.getValue());
+        List<Category> categories =
+                categoryService.findCategories(filter.getValue());
         for (Category category : categories) {
-            List<Review> reviewsInCategory = reviewService
-                    .findReviews(category.getName());
+            List<Review> reviewsInCategory =
+                    reviewService.findReviews(category.getName());
             int reviewCount = reviewsInCategory.stream()
                     .mapToInt(Review::getCount).sum();
             addRow(category, reviewCount);
@@ -132,7 +71,7 @@ public final class CategoriesList extends VerticalLayout implements View {
         Button newButton = new Button("New Category",
                 new Icon(VaadinIcons.PLUS));
         newButton.addClickListener(
-                e -> displayDialog(new Category(), Operation.ADD));
+                e -> form.open(new Category(), ItemEditorForm.Operation.ADD));
         layout.add(searchField, newButton);
 
         layout.setWidth("100%");
@@ -146,8 +85,8 @@ public final class CategoriesList extends VerticalLayout implements View {
         Label counter = new Label(String.valueOf(reviewCount));
 
         Button editButton = new Button("Edit", new Icon(VaadinIcons.PENCIL));
-        editButton
-                .addClickListener(e -> displayDialog(category, Operation.EDIT));
+        editButton.addClickListener(
+                e -> form.open(category, ItemEditorForm.Operation.EDIT));
         layout.add(name, counter, editButton);
         layout.setWidth("100%");
         layout.getStyle().set("border", "1px solid #9E9E9E");
@@ -155,51 +94,17 @@ public final class CategoriesList extends VerticalLayout implements View {
         categoryLayout.add(layout);
     }
 
-    private void displayDialog(Category category, Operation operation) {
-        currentCategory = category;
-        titleField.setText(operation.getName() + " New Category");
-        if (registration != null) {
-            registration.remove();
-        }
-        registration = saveButton.addClickListener(e -> handleSave(operation));
-        deleteButton.setDisabled(operation.isDeleteDisabled());
-        binder.readBean(currentCategory);
-        changesDialog.open();
-    }
+    private void saveCategory(Category category, ItemEditorForm.Operation operation) {
+        categoryService.saveCategory(category);
 
-    private void handleSave(Operation operation) {
-        boolean isValid = binder.writeBeanIfValid(currentCategory);
-
-        if (isValid) {
-            categoryService.saveCategory(currentCategory);
-
-            notification.show("Category successfully "
-                    + operation.getName().toLowerCase() + "ed");
-            updateView();
-        } else {
-            BinderValidationStatus<Category> status = binder.validate();
-            notification.show(status.getValidationErrors().stream()
-                    .map(ValidationResult::getErrorMessage)
-                    .collect(Collectors.joining("; ")));
-        }
-    }
-
-    private void handleDelete() {
-        int reviewCount = reviewService.findReviews(currentCategory.getName())
-                .size();
-        String text2 = reviewCount == 0 ? ""
-                : "Deleting the category will mark the associated reviews as \"undefined\". "
-                        + "You may link the reviews to other categories on the edit page.";
-        confirmationDialog.open(
-                "Delete Category \"" + currentCategory.getName() + "\"?",
-                "There are " + reviewCount
-                        + " reviews associated with this category.",
-                text2, "Delete", currentCategory, this::deleteCategory);
+        notification.show("Category successfully "
+                + operation.getNameInText() + "ed.");
+        updateView();
     }
 
     private void deleteCategory(Category category) {
-        List<Review> reviewsInCategory = reviewService
-                .findReviews(category.getName());
+        List<Review> reviewsInCategory =
+                reviewService.findReviews(category.getName());
 
         reviewsInCategory.forEach(review -> {
             review.setCategory(null);
@@ -207,8 +112,7 @@ public final class CategoriesList extends VerticalLayout implements View {
         });
         categoryService.deleteCategory(category);
 
-        changesDialog.close();
-        notification.show("Category successfully deleted");
+        notification.show("Category successfully deleted.");
         updateView();
     }
 }
