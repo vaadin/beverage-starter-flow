@@ -19,6 +19,7 @@ import com.vaadin.ui.combobox.ComboBox;
 import com.vaadin.ui.datepicker.DatePicker;
 import com.vaadin.ui.formlayout.FormLayout;
 import com.vaadin.ui.html.Div;
+import com.vaadin.ui.html.H2;
 import com.vaadin.ui.html.Label;
 import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
@@ -48,7 +49,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private ComboBox<String> scoreBox = new ComboBox<>();
     private DatePicker lastTasted = new DatePicker();
     private GeneratedPaperDialog confirmDialog = new GeneratedPaperDialog();
-    private Label title = new Label();
+    private H2 title = new H2();
     private PaperToast notification = new PaperToast();
     private TextField beverageName = new TextField();
     private TextField timesTasted = new TextField();
@@ -75,14 +76,15 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
         optionalReview.ifPresent(review -> {
             title.setText("Edit a review");
+            delete.setDisabled(false);
             this.reviewBean = review;
         });
 
         if (!optionalReview.isPresent()) {
             title.setText("Add a new review");
+            delete.setDisabled(true);
             reviewBean = new Review();
         }
-
         binder.readBean(reviewBean);
     }
 
@@ -133,7 +135,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
         binder.forField(scoreBox)
                 .withConverter(new StringToIntegerConverter(0,
-                        "The score should be a number"))
+                        "The score should be a number."))
                 .withValidator(score -> score >= 1 && score <= 5,
                         "The score should be between 1 and 5.")
                 .bind(Review::getScore, Review::setScore);
@@ -142,10 +144,13 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     private void createDatePicker() {
         lastTasted.setLabel("Choose the date");
         lastTasted.setMax(LocalDate.now());
+        lastTasted.setValue(LocalDate.now());
         reviewFormLayout.add(lastTasted);
 
-        binder.forField(lastTasted).bind(Review::getDate,
-                Review::setDate);
+        binder.forField(lastTasted)
+                .withValidator(date -> date != null,
+                        "The date should be in dd/MM/yyyy format.")
+                .bind(Review::getDate, Review::setDate);
     }
 
     private void createCategoryBox() {
