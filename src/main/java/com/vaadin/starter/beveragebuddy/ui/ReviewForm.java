@@ -19,6 +19,7 @@ import com.vaadin.ui.combobox.ComboBox;
 import com.vaadin.ui.datepicker.DatePicker;
 import com.vaadin.ui.formlayout.FormLayout;
 import com.vaadin.ui.html.Div;
+import com.vaadin.ui.html.H2;
 import com.vaadin.ui.html.Label;
 import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
