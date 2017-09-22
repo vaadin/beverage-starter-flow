@@ -10,11 +10,44 @@ ReviewsList is a PolymerTemplate based view class. In this view, the list of rev
 
 For more information about Polymer Template, you can find *https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-basic.asciidoc[here^]*.The following contents will introduce some concepts which are used in ``ReviewsList.java`` and ``ReviewList.html`` file.
 
+Data binding in PolymerTemplate
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In review list, every review is shown separately in the review list. In order to do this, PolymerTemplate provides a way to generate elements based on a list of items using template repeater, `dom-repeat`.
+
+[source, html]
+--------------
+<template is="dom-repeat" items="{{reviews}}">
+        <div class="flex-score">{{item.score}}</div>
+        <div class="flex-name">{{item.name}}</div>
+        <div class="flex-category">{{item.reviewCategory.categoryName}}</div>
+        <div class="flex-times">{{item.testTimes}}</div>
+        <div class="flex-date">{{item.testDate}}</div>
+        <div class="flex-button">
+        <vaadin-button on-click='edit'>Edit</vaadin-button>
+        </div>
+</template>
+--------------
+
+And on the Java code side, a method is declared in the template model interface for setting the list of items.
+
+[source, java]
+--------------
+ public static interface ReviewsModel extends TemplateModel {
+   //some preprocessing needs to be done beforehand
+   void setReviews(List<Review> reviews);
+}
+--------------
+[NOTE]
+the name of the method should match the name in the `dom-repeat` definition, like the `reviews` in our case. 
+
+Via using this way, we bind our data to the PolymerTemplate. For more about this content, you can find more *https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-list-bindings.asciidoc[here^]*
+
+
 Annotations
 ~~~~~~~~~~~
 @Convert
 ^^^^^^^^
-There are two data types (``LocalDate``,``Long``) in our case which are not supported in the PolymerTemplate model directly, so that we need to use ``@Convert`` annotation:
+As I mentioned preprocessing, there are two data types (``LocalDate``,``Long``) in our case which are not supported in the PolymerTemplate model directly, so that we need to use ``@Convert`` annotation:
 [source, java]
 --------------
 @Convert(value = LongToStringConverter.class, path = "id")
@@ -55,22 +88,3 @@ private void edit(@ModelItem Review review) {
 --------------
 More about *https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-event-handlers.asciidoc#server-side-event-handlers[Handling Users Events in PolymerTemplate-Serverside^]*
 
-Binding Data in PolymerTemplate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Every review is shown separately in the review list. In order to do this, PolymerTemplate provides a `dom-repeat` class which lets us add all the properties.
-
-[source, html]
---------------
-<template is="dom-repeat" items="{{reviews}}">
-        <div class="flex-score">{{item.score}}</div>
-        <div class="flex-name">{{item.name}}</div>
-        <div class="flex-category">{{item.reviewCategory.categoryName}}</div>
-        <div class="flex-times">{{item.testTimes}}</div>
-        <div class="flex-date">{{item.testDate}}</div>
-        <div class="flex-button">
-        <vaadin-button on-click='edit'>Edit</vaadin-button>
-        </div>
-</template>
---------------
-
-In the HTML template, we are using Polymer's two-way databinding. For this part of the content, we have a more specific tutorial, which you can find *https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-bindings.asciidoc#two-way-binding[here^]*.
