@@ -10,21 +10,20 @@ import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationException;
 import com.vaadin.data.ValidationResult;
 import com.vaadin.data.converter.StringToIntegerConverter;
-import com.vaadin.flow.html.Div;
-import com.vaadin.flow.html.Label;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
-import com.vaadin.generated.paper.dialog.GeneratedPaperDialog;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Composite;
-import com.vaadin.ui.DatePicker;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.FormLayout.ResponsiveStep;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.button.Button;
+import com.vaadin.ui.combobox.ComboBox;
+import com.vaadin.ui.datepicker.DatePicker;
+import com.vaadin.ui.formlayout.FormLayout;
+import com.vaadin.ui.html.Div;
+import com.vaadin.ui.html.Label;
+import com.vaadin.ui.layout.HorizontalLayout;
+import com.vaadin.ui.layout.VerticalLayout;
+import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
+import com.vaadin.ui.textfield.TextField;
 
 public class ReviewForm extends Composite<GeneratedPaperDialog> {
 
@@ -108,8 +107,8 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
     }
 
     private void createFormLayout() {
-        reviewFormLayout.setResponsiveSteps(new ResponsiveStep("0", 1),
-                new ResponsiveStep("50em", 2));
+        reviewFormLayout.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1),
+                new FormLayout.ResponsiveStep("50em", 2));
         reviewFormLayout.getStyle().set("padding", "0");
         Div div = new Div(reviewFormLayout);
         div.getStyle().set("padding", "10px");

@@ -18,25 +18,25 @@ package com.vaadin.starter.beveragebuddy.ui;
 import java.util.List;
 import java.util.Optional;
 
-import com.vaadin.annotations.Convert;
-import com.vaadin.annotations.EventHandler;
-import com.vaadin.annotations.HtmlImport;
-import com.vaadin.annotations.Id;
-import com.vaadin.annotations.ModelItem;
-import com.vaadin.annotations.Route;
-import com.vaadin.annotations.Tag;
-import com.vaadin.annotations.Title;
+import com.vaadin.flow.model.Convert;
+import com.vaadin.flow.model.TemplateModel;
 import com.vaadin.flow.router.View;
-import com.vaadin.flow.template.PolymerTemplate;
-import com.vaadin.flow.template.model.TemplateModel;
+import com.vaadin.router.Route;
+import com.vaadin.router.Title;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.starter.beveragebuddy.ui.ReviewsList.ReviewsModel;
 import com.vaadin.starter.beveragebuddy.ui.converters.LocalDateToStringConverter;
 import com.vaadin.starter.beveragebuddy.ui.converters.LongToStringConverter;
-import com.vaadin.ui.AttachEvent;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.Tag;
+import com.vaadin.ui.button.Button;
+import com.vaadin.ui.common.AttachEvent;
+import com.vaadin.ui.common.HtmlImport;
+import com.vaadin.ui.polymertemplate.EventHandler;
+import com.vaadin.ui.polymertemplate.Id;
+import com.vaadin.ui.polymertemplate.ModelItem;
+import com.vaadin.ui.polymertemplate.PolymerTemplate;
+import com.vaadin.ui.textfield.TextField;
 
 /**
  * Simple template example.

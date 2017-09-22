@@ -17,8 +17,8 @@ package com.vaadin.starter.beveragebuddy.ui;
 
 import javax.servlet.annotation.WebServlet;
 
-import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.VaadinServletConfiguration;
 
 /**
  * The main servlet for the application.

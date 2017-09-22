@@ -15,15 +15,15 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
-import com.vaadin.annotations.HtmlImport;
-import com.vaadin.flow.html.Anchor;
-import com.vaadin.flow.html.Label;
 import com.vaadin.flow.router.HasChildView;
-import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.View;
+import com.vaadin.router.RouterLayout;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.common.HtmlImport;
+import com.vaadin.ui.html.Anchor;
+import com.vaadin.ui.html.Label;
+import com.vaadin.ui.layout.HorizontalLayout;
+import com.vaadin.ui.layout.VerticalLayout;
 
 /**
  * The main view contains a simple label element and a template element.
@@ -51,10 +51,10 @@ public class MainLayout extends VerticalLayout
 
         viewSelector.addClassName("toolbar-item");
         toolbar.addClassName("toolbar");
-        toolbar.setSpacing(true);
-        toolbar.setDefaultComponentAlignment(Alignment.BASELINE);
+        toolbar.setJustifyContentMode(JustifyContentMode.BETWEEN);
+        toolbar.setAlignItems(Alignment.BASELINE);
         addClassName("main-layout");
-        setDefaultComponentAlignment(Alignment.CENTER);
+        setAlignItems(Alignment.CENTER);
         add(toolbar);
     }
 
