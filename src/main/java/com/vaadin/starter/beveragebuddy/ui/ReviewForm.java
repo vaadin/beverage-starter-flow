@@ -43,7 +43,7 @@ public class ReviewForm extends ItemEditorForm<Review> {
 
         getBinder().forField(scoreBox)
                 .withConverter(new StringToIntegerConverter(0,
-                        "The score should be a number"))
+                        "The score should be a number."))
                 .withValidator(score -> score >= 1 && score <= 5,
                         "The score should be between 1 and 5.")
                 .bind(Review::getScore, Review::setScore);
@@ -52,9 +52,12 @@ public class ReviewForm extends ItemEditorForm<Review> {
     private void createDatePicker() {
         lastTasted.setLabel("Choose the date");
         lastTasted.setMax(LocalDate.now());
+        lastTasted.setValue(LocalDate.now());
         getFormLayout().add(lastTasted);
 
         getBinder().forField(lastTasted)
+                .withValidator(date -> date != null,
+                        "The date should be in dd/MM/yyyy format.")
                 .bind(Review::getDate, Review::setDate);
     }
 
