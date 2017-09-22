@@ -1,5 +1,6 @@
 package com.vaadin.starter.beveragebuddy.ui;
 
+import java.io.Serializable;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -23,7 +24,8 @@ import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
  * @param <T>   the type of the item to be added, edited or deleted
  */
 @HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
-public abstract class ItemEditorForm<T> extends Composite<GeneratedPaperDialog> {
+public abstract class ItemEditorForm<T extends Serializable>
+        extends Composite<GeneratedPaperDialog> {
 
     /**
      * The operations supported by this dialog.

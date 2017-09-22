@@ -1,5 +1,6 @@
 package com.vaadin.starter.beveragebuddy.ui;
 
+import java.io.Serializable;
 import java.util.function.Consumer;
 
 import com.vaadin.shared.Registration;
@@ -13,7 +14,9 @@ import com.vaadin.ui.layout.VerticalLayout;
 import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
 
 @HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
-class ConfirmationDialog<T> extends Composite<GeneratedPaperDialog> {
+class ConfirmationDialog<T extends Serializable>
+        extends Composite<GeneratedPaperDialog> {
+
     private final H2 titleField = new H2();
     private final Label messageLabel = new Label();
     private final Label extraMessageLabel = new Label();
