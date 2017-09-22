@@ -26,7 +26,7 @@ More about *https://github.com/vaadin/flow/blob/master/flow-documentation/polyme
 @Id
 ^^^
 
-In order to create the view of reviews list, we have button and textfield in the HTML template file with the corresponding identifiers.
+In our HTML template, we have a button and a textfield with corresponding identifiers.
 [source, html]
 --------------
 <vaadin-text-field id='filterText'></vaadin-text-field>
