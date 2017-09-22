@@ -22,6 +22,8 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.common.HtmlImport;
 import com.vaadin.ui.html.Anchor;
 import com.vaadin.ui.html.Label;
+import com.vaadin.ui.icon.Icon;
+import com.vaadin.ui.icon.VaadinIcons;
 import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
 
@@ -38,6 +40,8 @@ public class MainLayout extends VerticalLayout
         Label label = new Label("Beverage Buddy");
         label.addClassName("title");
         label.addClassName("toolbar-item");
+        HorizontalLayout titleBar = new HorizontalLayout(
+                new Icon(VaadinIcons.HANDS_UP), label);
 
         Anchor reviews = new Anchor("/", "Reviews List");
         reviews.setId("reviews-link");
@@ -46,8 +50,13 @@ public class MainLayout extends VerticalLayout
         categories.setId("categories-link");
         categories.addClassName("link");
 
-        HorizontalLayout viewSelector = new HorizontalLayout(reviews, categories);
-        HorizontalLayout toolbar = new HorizontalLayout(label, viewSelector);
+        HorizontalLayout logoReview = new HorizontalLayout(
+                new Icon(VaadinIcons.ARCHIVES), reviews);
+        HorizontalLayout logoCategory = new HorizontalLayout(
+                new Icon(VaadinIcons.LIST), categories);
+        HorizontalLayout viewSelector = new HorizontalLayout(logoReview,
+                logoCategory);
+        HorizontalLayout toolbar = new HorizontalLayout(titleBar, viewSelector);
 
         viewSelector.addClassName("toolbar-item");
         toolbar.addClassName("toolbar");

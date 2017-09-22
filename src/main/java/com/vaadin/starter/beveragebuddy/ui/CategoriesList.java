@@ -17,6 +17,8 @@ import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.ui.button.Button;
 import com.vaadin.ui.html.H2;
 import com.vaadin.ui.html.Label;
+import com.vaadin.ui.icon.Icon;
+import com.vaadin.ui.icon.VaadinIcons;
 import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
 import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
@@ -124,11 +126,14 @@ public final class CategoriesList extends VerticalLayout implements View {
 
     private void addSearchBar() {
         HorizontalLayout layout = new HorizontalLayout();
+        HorizontalLayout searchField = new HorizontalLayout();
+        searchField.add(new Icon(VaadinIcons.SEARCH), filter);
         filter.addValueChangeListener(e -> updateView());
-        Button newButton = new Button("+ New Category");
+        Button newButton = new Button("New Category",
+                new Icon(VaadinIcons.PLUS));
         newButton.addClickListener(
                 e -> displayDialog(new Category(), Operation.ADD));
-        layout.add(filter, newButton);
+        layout.add(searchField, newButton);
 
         layout.setWidth("100%");
         layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
@@ -139,7 +144,8 @@ public final class CategoriesList extends VerticalLayout implements View {
         HorizontalLayout layout = new HorizontalLayout();
         Label name = new Label(category.getName());
         Label counter = new Label(String.valueOf(reviewCount));
-        Button editButton = new Button("Edit");
+
+        Button editButton = new Button("Edit", new Icon(VaadinIcons.PENCIL));
         editButton
                 .addClickListener(e -> displayDialog(category, Operation.EDIT));
         layout.add(name, counter, editButton);

@@ -32,6 +32,8 @@ import com.vaadin.ui.Tag;
 import com.vaadin.ui.button.Button;
 import com.vaadin.ui.common.AttachEvent;
 import com.vaadin.ui.common.HtmlImport;
+import com.vaadin.ui.icon.Icon;
+import com.vaadin.ui.icon.VaadinIcons;
 import com.vaadin.ui.polymertemplate.EventHandler;
 import com.vaadin.ui.polymertemplate.Id;
 import com.vaadin.ui.polymertemplate.ModelItem;
@@ -69,6 +71,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
         filterText.addValueChangeListener(e -> updateList());
 
         addReview.setText("Add new review");
+        addReview.setIcon(new Icon(VaadinIcons.PLUS));
         addReview.addClickListener(e -> addReviewClicked());
         updateList();
 
