@@ -85,9 +85,7 @@ public class ReviewForm extends Composite<GeneratedPaperDialog> {
             delete.setDisabled(true);
             reviewBean = new Review();
         }
-
         binder.readBean(reviewBean);
-        lastTasted.setValue(reviewBean.getDate());
     }
 
     private void createNotification() {
