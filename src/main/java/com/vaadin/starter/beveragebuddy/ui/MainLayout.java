@@ -18,9 +18,9 @@ package com.vaadin.starter.beveragebuddy.ui;
 import com.vaadin.flow.router.HasChildView;
 import com.vaadin.flow.router.View;
 import com.vaadin.router.RouterLayout;
+import com.vaadin.router.RouterLink;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.common.HtmlImport;
-import com.vaadin.ui.html.Anchor;
 import com.vaadin.ui.html.Label;
 import com.vaadin.ui.icon.Icon;
 import com.vaadin.ui.icon.VaadinIcons;
@@ -44,10 +44,11 @@ public class MainLayout extends VerticalLayout
         HorizontalLayout titleBar = new HorizontalLayout(
                 new Icon(VaadinIcons.HANDS_UP), label);
 
-        Anchor reviews = new Anchor("/", "Reviews");
+        RouterLink reviews = new RouterLink("Reviews", ReviewsList.class);
         reviews.setId("reviews-link");
         reviews.addClassName("link");
-        Anchor categories = new Anchor("categories", "Categories");
+        RouterLink categories = new RouterLink("Categories",
+                CategoriesList.class);
         categories.setId("categories-link");
         categories.addClassName("link");
 
