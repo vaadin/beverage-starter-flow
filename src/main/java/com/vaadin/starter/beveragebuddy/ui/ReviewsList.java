@@ -19,7 +19,6 @@ import java.util.List;
 
 import com.vaadin.flow.model.Convert;
 import com.vaadin.flow.model.TemplateModel;
-import com.vaadin.flow.router.View;
 import com.vaadin.router.Route;
 import com.vaadin.router.Title;
 import com.vaadin.starter.beveragebuddy.backend.Review;
@@ -45,7 +44,7 @@ import com.vaadin.ui.textfield.TextField;
 @Title("Review List")
 @Tag("reviews-list")
 @HtmlImport("frontend://ReviewsList.html")
-public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
+public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
     public static interface ReviewsModel extends TemplateModel {
         @Convert(value = LongToStringConverter.class, path = "id")
@@ -61,8 +60,8 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
     @Id("notification")
     private PaperToast notification;
 
-    private ReviewEditorDialog reviewForm = new ReviewEditorDialog(this::saveUpdate,
-            this::deleteUpdate);
+    private ReviewEditorDialog reviewForm = new ReviewEditorDialog(
+            this::saveUpdate, this::deleteUpdate);
 
     public ReviewsList() {
         filterText.setPlaceholder("Find a review...");
@@ -70,17 +69,19 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
 
         addReview.setText("Add new review");
         addReview.setIcon(new Icon(VaadinIcons.PLUS));
-        addReview.addClickListener(
-                e -> openForm(new Review(), AbstractEditorDialog.Operation.ADD));
+        addReview.addClickListener(e -> openForm(new Review(),
+                AbstractEditorDialog.Operation.ADD));
 
         updateList();
 
     }
 
-    public void saveUpdate(Review review, AbstractEditorDialog.Operation operation) {
+    public void saveUpdate(Review review,
+            AbstractEditorDialog.Operation operation) {
         ReviewService.getInstance().saveReview(review);
         updateList();
-        notification.show("Beverage successfully " + operation.getNameInText() + "ed.");
+        notification.show(
+                "Beverage successfully " + operation.getNameInText() + "ed.");
     }
 
     public void deleteUpdate(Review review) {
@@ -99,7 +100,8 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
         openForm(review, AbstractEditorDialog.Operation.EDIT);
     }
 
-    private void openForm(Review review, AbstractEditorDialog.Operation operation) {
+    private void openForm(Review review,
+            AbstractEditorDialog.Operation operation) {
         // Add the form lazily as the UI is not yet initialized when
         // this view is constructed
         if (reviewForm.getElement().getParent() == null) {
