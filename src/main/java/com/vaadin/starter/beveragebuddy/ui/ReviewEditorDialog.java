@@ -1,6 +1,7 @@
 package com.vaadin.starter.beveragebuddy.ui;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -39,7 +40,6 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     private void createScoreBox() {
         scoreBox.setLabel("Mark a score");
-        scoreBox.setWidth("15em");
         scoreBox.setAllowCustomValue(false);
         scoreBox.setItems("1", "2", "3", "4", "5");
         getFormLayout().add(scoreBox);
@@ -59,7 +59,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         getFormLayout().add(lastTasted);
 
         getBinder().forField(lastTasted)
-                .withValidator(date -> date != null,
+                .withValidator(Objects::nonNull,
                         "The date should be in dd/MM/yyyy format.")
                 .bind(Review::getDate, Review::setDate);
     }
@@ -69,8 +69,6 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         categoryBox.setItemLabelPath("name");
         categoryBox.setItemValuePath("name");
         categoryBox.setAllowCustomValue(false);
-        // TODO disable/hide the Clear button on the combobox
-        categoryBox.setWidth("15em");
         categoryBox.setItems(categoryService.findCategories(""));
         getFormLayout().add(categoryBox);
 

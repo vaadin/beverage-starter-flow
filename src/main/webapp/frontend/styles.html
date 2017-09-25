@@ -1,16 +1,16 @@
 <link rel="import" href="./bower_components/polymer/polymer-element.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/typography.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/color.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/sizing-and-spacing.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/style.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/icons.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-button.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-text-field.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-checkbox.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-date-picker.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-form-layout.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-form-item.html">
-<link rel="import" href="./bower_components/vaadin-themes/valo/vaadin-combo-box.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/typography.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/color.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/sizing-and-spacing.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/style.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/icons.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-button.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-text-field.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-checkbox.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-date-picker.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-form-layout.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-form-item.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-combo-box.html">
 
 <!-- valo theme shows clear icons in date-picker and combo-box, but we want it hidden here -->
 <dom-module id="fast-combo-box-date-picker-styles" theme-for="vaadin-combo-box vaadin-date-picker">
@@ -143,6 +143,14 @@
         margin-right: var(--valo-space-m);
       }
 
+      .filter-field {
+        width: 10em;
+      }
+
+      .filter-field[focused] {
+        width: 20em;
+      }
+
       .categories-list {
         width: 80% !important;
       }
@@ -153,6 +161,14 @@
 
       .has-padding {
         padding: 10px;
+      }
+
+      .full-width {
+        width: 100%;
+      }
+
+      .grid-row {
+        border: 1px solid var(--valo-shade-60pct);
       }
 
       .notification {
