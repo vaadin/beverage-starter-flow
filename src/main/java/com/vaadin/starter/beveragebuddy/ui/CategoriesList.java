@@ -2,7 +2,6 @@ package com.vaadin.starter.beveragebuddy.ui;
 
 import java.util.List;
 
-import com.vaadin.flow.router.View;
 import com.vaadin.router.Route;
 import com.vaadin.router.Title;
 import com.vaadin.starter.beveragebuddy.backend.Category;
@@ -23,18 +22,18 @@ import com.vaadin.ui.textfield.TextField;
  */
 @Route(value = "categories", layout = MainLayout.class)
 @Title("Categories List")
-public final class CategoriesList extends VerticalLayout implements View {
+public final class CategoriesList extends VerticalLayout {
 
-    private final transient CategoryService categoryService =
-            CategoryService.getInstance();
-    private final transient ReviewService reviewService =
-            ReviewService.getInstance();
+    private final transient CategoryService categoryService = CategoryService
+            .getInstance();
+    private final transient ReviewService reviewService = ReviewService
+            .getInstance();
 
     private final TextField filter = new TextField("", "Search");
     private final VerticalLayout categoryLayout = new VerticalLayout();
 
-    private final CategoryEditorDialog form =
-            new CategoryEditorDialog(this::saveCategory, this::deleteCategory);
+    private final CategoryEditorDialog form = new CategoryEditorDialog(
+            this::saveCategory, this::deleteCategory);
 
     private final PaperToast notification = new PaperToast();
 
@@ -56,11 +55,11 @@ public final class CategoriesList extends VerticalLayout implements View {
 
     private void updateView() {
         categoryLayout.removeAll();
-        List<Category> categories =
-                categoryService.findCategories(filter.getValue());
+        List<Category> categories = categoryService
+                .findCategories(filter.getValue());
         for (Category category : categories) {
-            List<Review> reviewsInCategory =
-                    reviewService.findReviews(category.getName());
+            List<Review> reviewsInCategory = reviewService
+                    .findReviews(category.getName());
             int reviewCount = reviewsInCategory.stream()
                     .mapToInt(Review::getCount).sum();
             addRow(category, reviewCount);
@@ -74,8 +73,8 @@ public final class CategoriesList extends VerticalLayout implements View {
         filter.addValueChangeListener(e -> updateView());
         Button newButton = new Button("New Category",
                 new Icon(VaadinIcons.PLUS));
-        newButton.addClickListener(
-                e -> form.open(new Category(), AbstractEditorDialog.Operation.ADD));
+        newButton.addClickListener(e -> form.open(new Category(),
+                AbstractEditorDialog.Operation.ADD));
         layout.add(searchField, newButton);
 
         layout.setWidth("100%");
@@ -98,17 +97,18 @@ public final class CategoriesList extends VerticalLayout implements View {
         categoryLayout.add(layout);
     }
 
-    private void saveCategory(Category category, AbstractEditorDialog.Operation operation) {
+    private void saveCategory(Category category,
+            AbstractEditorDialog.Operation operation) {
         categoryService.saveCategory(category);
 
-        notification.show("Category successfully "
-                + operation.getNameInText() + "ed.");
+        notification.show(
+                "Category successfully " + operation.getNameInText() + "ed.");
         updateView();
     }
 
     private void deleteCategory(Category category) {
-        List<Review> reviewsInCategory =
-                reviewService.findReviews(category.getName());
+        List<Review> reviewsInCategory = reviewService
+                .findReviews(category.getName());
 
         reviewsInCategory.forEach(review -> {
             review.setCategory(null);
