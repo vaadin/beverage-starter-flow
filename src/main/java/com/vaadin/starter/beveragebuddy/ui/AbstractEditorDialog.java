@@ -1,10 +1,5 @@
 package com.vaadin.starter.beveragebuddy.ui;
 
-import java.io.Serializable;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
 import com.vaadin.data.Binder;
 import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationResult;
@@ -18,12 +13,18 @@ import com.vaadin.ui.html.H2;
 import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
 
+import java.io.Serializable;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
 
 /**
  * Abstract base class for dialogs adding, editing or deleting items.
  * @param <T>   the type of the item to be added, edited or deleted
  */
 @HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
+@HtmlImport("frontend://bower_components/vaadin-form-layout/vaadin-form-layout.html")
 public abstract class AbstractEditorDialog<T extends Serializable>
         extends Composite<GeneratedPaperDialog> {
 
