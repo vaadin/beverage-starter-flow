@@ -2,7 +2,6 @@ package com.vaadin.starter.beveragebuddy.ui;
 
 import java.util.List;
 
-import com.vaadin.flow.router.View;
 import com.vaadin.router.Route;
 import com.vaadin.router.Title;
 import com.vaadin.starter.beveragebuddy.backend.Category;
@@ -19,13 +18,13 @@ import com.vaadin.ui.textfield.TextField;
 
 @Route(value = "categories", layout = MainLayout.class)
 @Title("Categories List")
-public final class CategoriesList extends VerticalLayout implements View {
+public final class CategoriesList extends VerticalLayout {
 
     private final TextField filter = new TextField("", "Search");
     private final VerticalLayout categoryLayout = new VerticalLayout();
 
-    private final CategoryEditorDialog form =
-            new CategoryEditorDialog(this::saveCategory, this::deleteCategory);
+    private final CategoryEditorDialog form = new CategoryEditorDialog(
+            this::saveCategory, this::deleteCategory);
 
     private final PaperToast notification = new PaperToast();
 
@@ -66,8 +65,8 @@ public final class CategoriesList extends VerticalLayout implements View {
         filter.addClassName("filter-field");
         Button newButton = new Button("New Category",
                 new Icon(VaadinIcons.PLUS));
-        newButton.addClickListener(
-                e -> form.open(new Category(), AbstractEditorDialog.Operation.ADD));
+        newButton.addClickListener(e -> form.open(new Category(),
+                AbstractEditorDialog.Operation.ADD));
         layout.add(searchField, newButton);
 
         layout.addClassName("full-width");
@@ -93,8 +92,8 @@ public final class CategoriesList extends VerticalLayout implements View {
     private void saveCategory(Category category, AbstractEditorDialog.Operation operation) {
         CategoryService.getInstance().saveCategory(category);
 
-        notification.show("Category successfully "
-                + operation.getNameInText() + "ed.");
+        notification.show(
+                "Category successfully " + operation.getNameInText() + "ed.");
         updateView();
     }
 
