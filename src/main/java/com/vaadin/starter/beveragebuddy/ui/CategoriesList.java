@@ -21,11 +21,6 @@ import com.vaadin.ui.textfield.TextField;
 @Title("Categories List")
 public final class CategoriesList extends VerticalLayout implements View {
 
-    private final transient CategoryService categoryService =
-            CategoryService.getInstance();
-    private final transient ReviewService reviewService =
-            ReviewService.getInstance();
-
     private final TextField filter = new TextField("", "Search");
     private final VerticalLayout categoryLayout = new VerticalLayout();
 
@@ -53,10 +48,10 @@ public final class CategoriesList extends VerticalLayout implements View {
     private void updateView() {
         categoryLayout.removeAll();
         List<Category> categories =
-                categoryService.findCategories(filter.getValue());
+                CategoryService.getInstance().findCategories(filter.getValue());
         for (Category category : categories) {
             List<Review> reviewsInCategory =
-                    reviewService.findReviews(category.getName());
+                    ReviewService.getInstance().findReviews(category.getName());
             int reviewCount = reviewsInCategory.stream()
                     .mapToInt(Review::getCount).sum();
             addRow(category, reviewCount);
@@ -68,13 +63,14 @@ public final class CategoriesList extends VerticalLayout implements View {
         HorizontalLayout searchField = new HorizontalLayout();
         searchField.add(new Icon(VaadinIcons.SEARCH), filter);
         filter.addValueChangeListener(e -> updateView());
+        filter.addClassName("filter-field");
         Button newButton = new Button("New Category",
                 new Icon(VaadinIcons.PLUS));
         newButton.addClickListener(
                 e -> form.open(new Category(), AbstractEditorDialog.Operation.ADD));
         layout.add(searchField, newButton);
 
-        layout.setWidth("100%");
+        layout.addClassName("full-width");
         layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
         add(layout);
     }
@@ -88,14 +84,14 @@ public final class CategoriesList extends VerticalLayout implements View {
         editButton.addClickListener(
                 e -> form.open(category, AbstractEditorDialog.Operation.EDIT));
         layout.add(name, counter, editButton);
-        layout.setWidth("100%");
-        layout.getStyle().set("border", "1px solid #9E9E9E");
+        layout.addClassName("full-width");
+        layout.addClassName("grid-row");
         layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
         categoryLayout.add(layout);
     }
 
     private void saveCategory(Category category, AbstractEditorDialog.Operation operation) {
-        categoryService.saveCategory(category);
+        CategoryService.getInstance().saveCategory(category);
 
         notification.show("Category successfully "
                 + operation.getNameInText() + "ed.");
@@ -104,13 +100,13 @@ public final class CategoriesList extends VerticalLayout implements View {
 
     private void deleteCategory(Category category) {
         List<Review> reviewsInCategory =
-                reviewService.findReviews(category.getName());
+                ReviewService.getInstance().findReviews(category.getName());
 
         reviewsInCategory.forEach(review -> {
             review.setCategory(null);
-            reviewService.saveReview(review);
+            ReviewService.getInstance().saveReview(review);
         });
-        categoryService.deleteCategory(category);
+        CategoryService.getInstance().deleteCategory(category);
 
         notification.show("Category successfully deleted.");
         updateView();

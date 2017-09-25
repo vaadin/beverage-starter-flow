@@ -67,6 +67,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
     public ReviewsList() {
         filterText.setPlaceholder("Find a review...");
         filterText.addValueChangeListener(e -> updateList());
+        filterText.addClassName("filter-field");
 
         addReview.setText("Add new review");
         addReview.setIcon(new Icon(VaadinIcons.PLUS));
