@@ -1,6 +1,6 @@
 {
-  "name": "skeleton",
-  "homepage": "https://github.com/vaadin/flow-application-skeleton",
+  "name": "free-starter-flow",
+  "homepage": "https://github.com/vaadin/free-starter-flow",
   "authors": [],
   "description": "",
   "main": "",
@@ -21,7 +21,8 @@
     "vaadin-button": "~1.0.0",
     "vaadin-combo-box": "~2.0.0",
     "vaadin-date-picker": "~2.0.2",
-    "vaadin-themes": "#master",
+    "vaadin-form-layout": "~1.0.2",
+    "vaadin-valo-theme": "#master",
     "vaadin-icons": "4.1.0"
   }
 }
