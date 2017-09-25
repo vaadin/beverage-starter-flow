@@ -13,6 +13,10 @@ import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
 import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
 
+/**
+ * A generic dialog for confirming or cancelling an action.
+ * @param <T>   The type of the action's subject
+ */
 @HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
 class ConfirmationDialog<T extends Serializable>
         extends Composite<GeneratedPaperDialog> {
@@ -25,6 +29,9 @@ class ConfirmationDialog<T extends Serializable>
     private Registration registrationForConfirm;
     private Registration registrationForCancel;
 
+    /**
+     * Constructor.
+     */
     public ConfirmationDialog() {
         confirmButton.getElement().setAttribute("dialog-confirm", true);
         confirmButton.setAutofocus(true);
@@ -38,6 +45,22 @@ class ConfirmationDialog<T extends Serializable>
         getContent().add(layout);
     }
 
+    /**
+     * Opens the confirmation dialog.
+     *
+     * The dialog will display the given title and message(s), then call
+     * <code>confirmHandler()</code> if the Confirm button is clicked,
+     * or <code>cancelHandler()</code> if the Cancel button is clicked.
+     *
+     * @param title             The title text
+     * @param message           Detail message (optional, may be empty)
+     * @param additionalMessage Additional message (optional, may be empty)
+     * @param actionName        The action name to be shown on the
+     *                          Confirm button
+     * @param item              The subject of the action
+     * @param confirmHandler    The confirmation handler function
+     * @param cancelHandler     The cancellation handler function
+     */
     public void open(String title, String message, String additionalMessage,
             String actionName, T item, Consumer<T> confirmHandler,
             Runnable cancelHandler) {
@@ -49,11 +72,13 @@ class ConfirmationDialog<T extends Serializable>
         if (registrationForConfirm != null) {
             registrationForConfirm.remove();
         }
-        registrationForConfirm = confirmButton.addClickListener(e -> confirmHandler.accept(item));
+        registrationForConfirm = confirmButton.addClickListener(
+                e -> confirmHandler.accept(item));
         if (registrationForCancel != null) {
             registrationForCancel.remove();
         }
-        registrationForCancel = cancelButton.addClickListener(e -> cancelHandler.run());
+        registrationForCancel = cancelButton.addClickListener(
+                e -> cancelHandler.run());
 
         getContent().open();
     }

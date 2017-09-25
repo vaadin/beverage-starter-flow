@@ -21,6 +21,16 @@ import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
 
 /**
  * Abstract base class for dialogs adding, editing or deleting items.
+ *
+ * Subclasses are expected to
+ * <ul><li>add, during construction, the needed UI components to
+ * {@link #getFormLayout()} and bind them using {@link #getBinder()},
+ * as well as</li>
+ * <li>override {@link #confirmDelete()} to open the confirmation
+ * dialog with the desired message (by calling
+ * {@link #openConfirmationDialog(String, String, String)}.</li>
+ * </ul>
+ *
  * @param <T>   the type of the item to be added, edited or deleted
  */
 @HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
@@ -194,6 +204,16 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     protected abstract void confirmDelete();
 
+    /**
+     * Opens the confirmation dialog before deleting the current item.
+     *
+     * The dialog will display the given title and message(s), then call
+     * {@link #deleteConfirmed(Serializable)} if the Delete button is clicked.
+     *
+     * @param title             The title text
+     * @param message           Detail message (optional, may be empty)
+     * @param additionalMessage Additional message (optional, may be empty)
+     */
     protected final void openConfirmationDialog(String title, String message,
             String additionalMessage) {
         confirmationDialog.open(title, message, additionalMessage, "Delete",

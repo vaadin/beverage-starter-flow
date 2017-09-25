@@ -17,6 +17,10 @@ import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
 import com.vaadin.ui.textfield.TextField;
 
+/**
+ * Displays the list of available categories, with a search filter as well as
+ * buttons to add a new category or edit existing ones.
+ */
 @Route(value = "categories", layout = MainLayout.class)
 @Title("Categories List")
 public final class CategoriesList extends VerticalLayout implements View {

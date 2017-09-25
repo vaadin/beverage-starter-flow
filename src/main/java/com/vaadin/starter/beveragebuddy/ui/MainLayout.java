@@ -28,7 +28,8 @@ import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
 
 /**
- * The main view contains a simple label element and a template element.
+ * The main layout contains the top toolbar with the view selector buttons,
+ * and the child views below that.
  */
 @HtmlImport("context://styles.html")
 public class MainLayout extends VerticalLayout
@@ -43,10 +44,10 @@ public class MainLayout extends VerticalLayout
         HorizontalLayout titleBar = new HorizontalLayout(
                 new Icon(VaadinIcons.HANDS_UP), label);
 
-        Anchor reviews = new Anchor("/", "Reviews List");
+        Anchor reviews = new Anchor("/", "Reviews");
         reviews.setId("reviews-link");
         reviews.addClassName("link");
-        Anchor categories = new Anchor("categories", "Categories List");
+        Anchor categories = new Anchor("categories", "Categories");
         categories.setId("categories-link");
         categories.addClassName("link");
 

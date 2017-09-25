@@ -39,7 +39,10 @@ import com.vaadin.ui.polymertemplate.PolymerTemplate;
 import com.vaadin.ui.textfield.TextField;
 
 /**
- * Simple template example.
+ * Displays the list of available categories, with a search filter as well as
+ * buttons to add a new category or edit existing ones.
+ *
+ * Implemented using a simple template.
  */
 @Route(value = "", layout = MainLayout.class)
 @Title("Review List")
