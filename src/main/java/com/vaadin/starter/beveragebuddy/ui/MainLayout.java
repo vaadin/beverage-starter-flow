@@ -25,7 +25,8 @@ import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
 
 /**
- * The main view contains a simple label element and a template element.
+ * The main layout contains the top toolbar with the view selector buttons,
+ * and the child views below that.
  */
 @HtmlImport("context://styles.html")
 public class MainLayout extends VerticalLayout implements RouterLayout {
@@ -37,10 +38,10 @@ public class MainLayout extends VerticalLayout implements RouterLayout {
         HorizontalLayout titleBar = new HorizontalLayout(
                 new Icon(VaadinIcons.HANDS_UP), label);
 
-        RouterLink reviews = new RouterLink("Reviews List", ReviewsList.class);
+        RouterLink reviews = new RouterLink("Reviews", ReviewsList.class);
         reviews.setId("reviews-link");
         reviews.addClassName("link");
-        RouterLink categories = new RouterLink("Categories List",
+        RouterLink categories = new RouterLink("Categories",
                 CategoriesList.class);
         categories.setId("categories-link");
         categories.addClassName("link");

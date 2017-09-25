@@ -13,6 +13,9 @@ import com.vaadin.ui.combobox.ComboBox;
 import com.vaadin.ui.datepicker.DatePicker;
 import com.vaadin.ui.textfield.TextField;
 
+/**
+ * A dialog for editing {@link Review} objects.
+ */
 public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     private transient CategoryService categoryService = CategoryService
