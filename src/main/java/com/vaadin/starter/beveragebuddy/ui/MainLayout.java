@@ -15,11 +15,8 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
-import com.vaadin.flow.router.HasChildView;
-import com.vaadin.flow.router.View;
 import com.vaadin.router.RouterLayout;
 import com.vaadin.router.RouterLink;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.common.HtmlImport;
 import com.vaadin.ui.html.Label;
 import com.vaadin.ui.icon.Icon;
@@ -32,10 +29,7 @@ import com.vaadin.ui.layout.VerticalLayout;
  * and the child views below that.
  */
 @HtmlImport("context://styles.html")
-public class MainLayout extends VerticalLayout
-        implements RouterLayout, HasChildView {
-
-    private View child;
+public class MainLayout extends VerticalLayout implements RouterLayout {
 
     public MainLayout() {
         Label label = new Label("Beverage Buddy");
@@ -70,16 +64,4 @@ public class MainLayout extends VerticalLayout
         add(toolbar);
     }
 
-    @Override
-    public void setChildView(View childView) {
-        // Update what we show whenever the sub view changes
-        if (child != null) {
-            this.remove((Component) child);
-        }
-
-        if (childView != null) {
-            add((Component) childView);
-        }
-        child = childView;
-    }
 }
