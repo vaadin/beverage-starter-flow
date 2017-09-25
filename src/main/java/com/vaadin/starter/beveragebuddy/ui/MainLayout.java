@@ -15,11 +15,8 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
-import com.vaadin.flow.router.HasChildView;
-import com.vaadin.flow.router.View;
 import com.vaadin.router.RouterLayout;
 import com.vaadin.router.RouterLink;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.common.HtmlImport;
 import com.vaadin.ui.html.Label;
 import com.vaadin.ui.icon.Icon;
@@ -31,8 +28,7 @@ import com.vaadin.ui.layout.VerticalLayout;
  * The main view contains a simple label element and a template element.
  */
 @HtmlImport("context://styles.html")
-public class MainLayout extends VerticalLayout
-        implements RouterLayout {
+public class MainLayout extends VerticalLayout implements RouterLayout {
 
     public MainLayout() {
         Label label = new Label("Beverage Buddy");
