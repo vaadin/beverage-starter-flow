@@ -32,9 +32,7 @@ import com.vaadin.ui.layout.VerticalLayout;
  */
 @HtmlImport("context://styles.html")
 public class MainLayout extends VerticalLayout
-        implements RouterLayout, HasChildView {
-
-    private View child;
+        implements RouterLayout {
 
     public MainLayout() {
         Label label = new Label("Beverage Buddy");
@@ -68,16 +66,4 @@ public class MainLayout extends VerticalLayout
         add(toolbar);
     }
 
-    @Override
-    public void setChildView(View childView) {
-        // Update what we show whenever the sub view changes
-        if (child != null) {
-            this.remove((Component) child);
-        }
-
-        if (childView != null) {
-            add((Component) childView);
-        }
-        child = childView;
-    }
 }
