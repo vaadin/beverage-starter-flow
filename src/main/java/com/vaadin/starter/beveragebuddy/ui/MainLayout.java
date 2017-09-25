@@ -61,6 +61,7 @@ public class MainLayout extends VerticalLayout
 
         viewSelector.addClassName("toolbar-item");
         toolbar.addClassName("toolbar");
+        toolbar.addClassName("full-width");
         toolbar.setJustifyContentMode(JustifyContentMode.BETWEEN);
         toolbar.setAlignItems(Alignment.BASELINE);
         addClassName("main-layout");
