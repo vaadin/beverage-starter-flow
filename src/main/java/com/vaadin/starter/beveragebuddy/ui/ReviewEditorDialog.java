@@ -37,7 +37,6 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     private void createScoreBox() {
         scoreBox.setLabel("Mark a score");
-        scoreBox.addClassName("editor-combobox");
         scoreBox.setAllowCustomValue(false);
         scoreBox.setItems("1", "2", "3", "4", "5");
         getFormLayout().add(scoreBox);
@@ -67,7 +66,6 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         categoryBox.setItemLabelPath("name");
         categoryBox.setItemValuePath("name");
         categoryBox.setAllowCustomValue(false);
-        categoryBox.addClassName("editor-combobox");
         categoryBox.setItems(categoryService.findCategories(""));
         getFormLayout().add(categoryBox);
 
