@@ -2,6 +2,9 @@ package com.vaadin.starter.beveragebuddy.backend;
 
 import java.io.Serializable;
 
+/**
+ * Represents a beverage category.
+ */
 public class Category implements Serializable {
 
     /** A null object, to avoid NullPointerExceptions. */
@@ -35,7 +38,7 @@ public class Category implements Serializable {
     }
 
     /**
-     * Get the value of name
+     * Gets the value of name
      *
      * @return the value of name
      */
@@ -44,7 +47,7 @@ public class Category implements Serializable {
     }
 
     /**
-     * Set the value name
+     * Sets the value name
      *
      * @param name
      *            new value of name

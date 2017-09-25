@@ -8,6 +8,9 @@ import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.ui.textfield.TextField;
 
+/**
+ * A dialog for editing {@link Category} objects.
+ */
 public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
 
     private final TextField categoryNameField = new TextField("Category Name");
