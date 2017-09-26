@@ -29,7 +29,6 @@ import com.vaadin.ui.layout.VerticalLayout;
  * the child views below that.
  */
 @HtmlImport("context://styles.html")
-
 public class MainLayout extends VerticalLayout implements RouterLayout {
 
     public MainLayout() {

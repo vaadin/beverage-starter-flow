@@ -90,8 +90,8 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         getBinder().forField(timesTasted)
                 .withConverter(
                         new StringToIntegerConverter(0, "Must enter a number."))
-                .withValidator(testTimes -> testTimes > 0,
-                        "The taste times should be at least 1")
+                .withValidator(testTimes -> testTimes > 0 && testTimes < 100,
+                        "The taste times should be larger than 1 and smaller than 100.")
                 .bind(Review::getCount, Review::setCount);
     }
 
