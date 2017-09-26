@@ -65,7 +65,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
                 .withValidator(
                         date -> date.compareTo(LocalDate.now()) <= 0
                                 && date.compareTo(LocalDate.of(1, 1, 1)) >= 0,
-                        "The date should be neither in Before Christ nor in the future.")
+                        "The date should be neither Before Christ nor in the future.")
                 .bind(Review::getDate, Review::setDate);
 
     }
