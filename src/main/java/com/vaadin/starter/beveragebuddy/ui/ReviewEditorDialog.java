@@ -61,7 +61,10 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         getBinder().forField(lastTasted)
                 .withValidator(Objects::nonNull,
                         "The date should be in dd/MM/yyyy format.")
+                .withValidator(date -> date.compareTo(LocalDate.now()) <= 0,
+                        "The date should not be in the future.")
                 .bind(Review::getDate, Review::setDate);
+
     }
 
     private void createCategoryBox() {
@@ -105,9 +108,9 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     @Override
     protected void confirmDelete() {
-        openConfirmationDialog("Delete beverage \""
-                        + getCurrentItem().getName() + "\"?",
-                "", "");
+        openConfirmationDialog(
+                "Delete beverage \"" + getCurrentItem().getName() + "\"?", "",
+                "");
     }
 
 }
