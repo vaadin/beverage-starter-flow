@@ -1,15 +1,15 @@
 ---
-title: Using Annotation Based Router API
+title: Using the Annotation Based Router API
 order: 4
 layout: page
 ---
 
-= Using Annotation Based Router API
+= Using the Annotation Based Router API
 
-In Beverage Buddy, we are using the annotation based routing API instead of the imperative one. The following sections demonstrate the usage of the new API through snippets from the code.
+In Beverage Buddy, we are using the annotation based router API. The following sections demonstrate the usage of the new API through snippets from the code.
 
 == Defining the routes with @Route
-In the annotation based router API, different routes are defined by annotating your target classes with @Route.
+In the annotation based router API, different routes are defined by annotating your target classes with `@Route`.
 [source, java]
 --------------
 @Route(value = "", layout = MainLayout.class)
@@ -26,9 +26,9 @@ public final class CategoriesList extends VerticalLayout {
 Here, we have two views, `reviews view` and `categories view`. As you notice, the value for `reviews view` is set with empty string, which means it is the *default* route target for this application.
 
 [NOTE]
-`*MainLayout.class*` is used as the parent layout here, in order to do this, make sure that it implements `RouterLayout` interface.
+`*MainLayout.class*` is used as the parent layout here, in order to do this, make sure that it implements the `RouterLayout` interface.
 
-In annotation based router API, servlet will be registered automatically by mapping the `@Route` annotation from each navigation targets, so that the user don't need to configure it in a separate file.
+In annotation based router API, the servlet will be registered automatically by mapping the `@Route` annotation from each navigation targets, so there is no need to declare it manually.
 
 You can find more about this topic https://github.com/vaadin/flow/blob/master/flow-documentation/routing/tutorial-routing-annotation.asciidoc[here^].
 
