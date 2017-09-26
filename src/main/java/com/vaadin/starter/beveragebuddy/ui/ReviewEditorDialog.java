@@ -79,8 +79,6 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         getFormLayout().add(categoryBox);
 
         getBinder().forField(categoryBox)
-                .withConverter(categoryService::findCategoryOrThrow,
-                        Category::getName)
                 .bind(Review::getCategory, Review::setCategory);
     }
 
