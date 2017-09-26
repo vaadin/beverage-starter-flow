@@ -1,0 +1,43 @@
+---
+title: Using Annotation Based Router API
+order: 4
+layout: page
+---
+
+= Using Annotation Based Router API
+
+In Beverage Buddy, we are using the annotation based routing API instead of the imperative one. The following sections demonstrate the usage of the new API through snippets from the code.
+
+== Defining the routes with @Route
+In the annotation based router API, different routes are defined by annotating your target classes with @Route.
+[source, java]
+--------------
+@Route(value = "", layout = MainLayout.class)
+public class ReviewsList extends PolymerTemplate<ReviewsModel> {
+}
+--------------
+[source, java]
+--------------
+@Route(value = "categories", layout = MainLayout.class)
+public final class CategoriesList extends VerticalLayout {
+}
+--------------
+
+Here, we have two views, `reviews view` and `categories view`. As you notice, the value for `reviews view` is set with empty string, which means it is the *default* route target for this application.
+
+[NOTE]
+`*MainLayout.class*` is used as the parent layout here, in order to do this, make sure that it implements `RouterLayout` interface.
+
+In annotation based router API, servlet will be registered automatically by mapping the `@Route` annotation from each navigation targets, so that the user don't need to configure it in a separate file.
+
+You can find more about this topic https://github.com/vaadin/flow/blob/master/flow-documentation/routing/tutorial-routing-annotation.asciidoc[here^].
+
+== Navigating between routes
+After defining the routes, you can use `RouterLink` to create the links in `MainLayout`.
+[source, java]
+--------------
+RouterLink reviews = new RouterLink("Reviews", ReviewsList.class);
+RouterLink categories = new RouterLink("Categories", CategoriesList.class);
+--------------
+[TIP]
+You can also add a URL parameter in the `RouterLink` component. You can find more about this topic https://github.com/vaadin/flow/blob/master/flow-documentation/routing/tutorial-routing-navigation.asciidoc[here^].
