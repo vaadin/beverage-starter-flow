@@ -23,6 +23,7 @@
     "vaadin-date-picker": "~2.0.4",
     "vaadin-form-layout": "~1.0.2",
     "vaadin-valo-theme": "#master",
-    "vaadin-icons": "4.1.1"
+    "vaadin-icons": "4.1.1",
+    "vaadin-grid": "3.0.2"
   }
 }
