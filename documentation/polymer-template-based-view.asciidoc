@@ -40,12 +40,12 @@ And on the Java code side, a method is declared in the template model interface 
    void setReviews(List<Review> reviews);
 }
 --------------
-There are two data types (``Long``, ``LocalDate``) in our case which are not supported to use in the PolymerTemplate model directly, so that we need to use ``@Convert`` annotation to convert. More about ``@Convert`` annotation, you can find  https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-model-converters.asciidoc[here^].
+There are two data types (``Long``, ``LocalDate``) in our case which are not supported  by `TemplateModel` directly, so we need to convert them by using ``@Convert`` annotation. More about ``ModelConverters``, you can find  https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-model-converters.asciidoc[here^].
 
 [NOTE]
 The name of the method should match the property name used in the template, `reviews` in our case.
 
-And you can get more information about "Data Binding in PolymerTemplate" in the tutorial  https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-list-bindings.asciidoc[here^].
+You can get more information about "Data Binding in PolymerTemplate" in the tutorial  https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-list-bindings.asciidoc[here^].
 
 Binding components from the template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
