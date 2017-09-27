@@ -50,14 +50,14 @@ You can get more information about "Data Binding in PolymerTemplate" in the tuto
 Binding components from the template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the view of reviews list, we add button and textfield in the HTML template file with the corresponding identifiers.
+In the HTML template, we have a text-field and a button with the corresponding identifiers.
 [source, html]
 --------------
 <vaadin-text-field id='filterText'></vaadin-text-field>
 <vaadin-button id='addReview'></vaadin-button>
 --------------
 
-Then the ``@Id`` annotation in java file maps the components to the elements in the `HTML template`.
+We can use these elements in our server-side code by mapping them with @Id annotation.
 [source, java]
 --------------
 @Id("filterText")
@@ -69,7 +69,7 @@ More about this topic, you can find https://github.com/vaadin/flow/blob/master/f
 
 Listening for user events from the template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-At the end of each reviews, there is an edit button for users to edit the existing review. To handle the click event from each button, we need to create a separate method with the event name, annotated with `@EventHandler`.
+At the end of each review, there is an edit button for users to edit the existing review. To handle the click event from each button, we need to create a separate method with the event name, annotated with `@EventHandler`.
 [source, java]
 --------------
 @EventHandler
