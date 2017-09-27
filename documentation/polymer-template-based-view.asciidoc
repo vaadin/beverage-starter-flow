@@ -1,0 +1,81 @@
+---
+title: polymer template based view
+order: 2
+layout: page
+---
+ifdef::env-github[:outfilesuffix: .asciidoc]
+
+Polymer Template Based View
+---------------------------
+ReviewsList is a Polymer template based view class. In this view, the list of reviews will be shown under a "search" bar and "add a new review" button.
+
+For more content about Polymer template, you can find https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-basic.asciidoc[here^].The following contents will introduce some concepts which are used in ``ReviewsList.java`` and ``ReviewList.html`` file.
+
+Data binding in PolymerTemplate
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In reviews list, every review is shown separately. In order to do this, PolymerTemplate provides a way to generate elements based on a list of items using template repeater, `dom-repeat`.
+
+[source, html]
+--------------
+<template is="dom-repeat" items="{{reviews}}">
+        <div class="flex-score">{{item.score}}</div>
+        <div class="flex-name">{{item.name}}</div>
+        <div class="flex-category">{{item.reviewCategory.categoryName}}</div>
+        <div class="flex-times">{{item.testTimes}}</div>
+        <div class="flex-date">{{item.testDate}}</div>
+        <div class="flex-button">
+        <vaadin-button on-click='edit'>Edit</vaadin-button>
+        </div>
+</template>
+--------------
+
+And on the Java code side, a method is declared in the template model interface for setting the list of items.
+
+[source, java]
+--------------
+ public static interface ReviewsModel extends TemplateModel {
+   @Convert(value = LongToStringConverter.class, path = "id")
+   @Convert(value = LongToStringConverter.class, path = "reviewCategory.categoryId")
+   @Convert(value = LocalDateToStringConverter.class, path = "testDate")
+   void setReviews(List<Review> reviews);
+}
+--------------
+There are two data types (``Long``, ``LocalDate``) in our case which are not supported  by `TemplateModel` directly, so we need to convert them by using ``@Convert`` annotation. More about ``ModelConverters``, you can find  https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-model-converters.asciidoc[here^].
+
+[NOTE]
+The name of the method should match the property name used in the template, `reviews` in our case.
+
+You can get more information about "Data Binding in PolymerTemplate" in the tutorial  https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-list-bindings.asciidoc[here^].
+
+Binding components from the template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the HTML template, we have a text-field and a button with the corresponding identifiers.
+[source, html]
+--------------
+<vaadin-text-field id='filterText'></vaadin-text-field>
+<vaadin-button id='addReview'></vaadin-button>
+--------------
+
+We can use these elements in our server-side code by mapping them with `@Id` annotation.
+[source, java]
+--------------
+@Id("filterText")
+private TextField filterText;
+@Id("addReview")
+private Button addReview;
+--------------
+More about this topic, you can find https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-components.asciidoc[here^].
+
+Listening for user events from the template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+At the end of each review, there is an edit button for users to edit the existing review. To handle the click event from each button, we need to create a separate method with the event name, annotated with `@EventHandler`.
+[source, java]
+--------------
+@EventHandler
+private void edit(@ModelItem Review review) {
+   reviewForm.openReview(Optional.of(review));
+}
+--------------
+More about this topic, you can find  https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-event-handlers.asciidoc#server-side-event-handlers[here^].
+
