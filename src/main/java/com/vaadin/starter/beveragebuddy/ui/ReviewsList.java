@@ -16,32 +16,38 @@
 package com.vaadin.starter.beveragebuddy.ui;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.vaadin.annotations.Convert;
-import com.vaadin.annotations.EventHandler;
-import com.vaadin.annotations.HtmlImport;
-import com.vaadin.annotations.Id;
-import com.vaadin.annotations.ModelItem;
-import com.vaadin.annotations.Tag;
+import com.vaadin.flow.model.Convert;
+import com.vaadin.flow.model.TemplateModel;
+import com.vaadin.router.Route;
+import com.vaadin.router.Title;
+import com.vaadin.starter.beveragebuddy.backend.Review;
+import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.starter.beveragebuddy.ui.ReviewsList.ReviewsModel;
 import com.vaadin.starter.beveragebuddy.ui.converters.LocalDateToStringConverter;
 import com.vaadin.starter.beveragebuddy.ui.converters.LongToStringConverter;
-import com.vaadin.flow.router.View;
-import com.vaadin.starter.beveragebuddy.backend.Review;
-import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.flow.template.PolymerTemplate;
-import com.vaadin.flow.template.model.TemplateModel;
-import com.vaadin.ui.AttachEvent;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.Tag;
+import com.vaadin.ui.button.Button;
+import com.vaadin.ui.common.HtmlImport;
+import com.vaadin.ui.icon.Icon;
+import com.vaadin.ui.icon.VaadinIcons;
+import com.vaadin.ui.polymertemplate.EventHandler;
+import com.vaadin.ui.polymertemplate.Id;
+import com.vaadin.ui.polymertemplate.ModelItem;
+import com.vaadin.ui.polymertemplate.PolymerTemplate;
+import com.vaadin.ui.textfield.TextField;
 
 /**
- * Simple template example.
+ * Displays the list of available categories, with a search filter as well as
+ * buttons to add a new category or edit existing ones.
+ *
+ * Implemented using a simple template.
  */
+@Route(value = "", layout = MainLayout.class)
+@Title("Review List")
 @Tag("reviews-list")
 @HtmlImport("frontend://ReviewsList.html")
-public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
+public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
     public static interface ReviewsModel extends TemplateModel {
         @Convert(value = LongToStringConverter.class, path = "id")
@@ -57,29 +63,35 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
     @Id("notification")
     private PaperToast notification;
 
-    private ReviewForm reviewForm = new ReviewForm(this::saveUpdate,
-            this::deleteUpdate);
+    private ReviewEditorDialog reviewForm = new ReviewEditorDialog(
+            this::saveUpdate, this::deleteUpdate);
 
     public ReviewsList() {
         filterText.setPlaceholder("Find a review...");
         filterText.addValueChangeListener(e -> updateList());
+        filterText.addClassName("filter-field");
 
         addReview.setText("Add new review");
-        addReview.addClickListener(e -> addReviewClicked());
+        addReview.setIcon(new Icon(VaadinIcons.PLUS));
+        addReview.addClickListener(e -> openForm(new Review(),
+                AbstractEditorDialog.Operation.ADD));
+
         updateList();
 
     }
 
-    public void saveUpdate(Review review) {
+    public void saveUpdate(Review review,
+            AbstractEditorDialog.Operation operation) {
         ReviewService.getInstance().saveReview(review);
         updateList();
-        notification.show("A new review/edit has been saved.");
+        notification.show(
+                "Beverage successfully " + operation.getNameInText() + "ed.");
     }
 
     public void deleteUpdate(Review review) {
         ReviewService.getInstance().deleteReview(review);
         updateList();
-        notification.show("Your selected review has been deleted.");
+        notification.show("Beverage successfully deleted.");
     }
 
     private void updateList() {
@@ -89,16 +101,17 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> implements View {
 
     @EventHandler
     private void edit(@ModelItem Review review) {
-        reviewForm.openReview(Optional.of(review));
+        openForm(review, AbstractEditorDialog.Operation.EDIT);
     }
 
-    private void addReviewClicked() {
-        reviewForm.openReview(Optional.empty());
-    }
-
-    @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        getElement().getParent().appendChild(reviewForm.getElement());
+    private void openForm(Review review,
+            AbstractEditorDialog.Operation operation) {
+        // Add the form lazily as the UI is not yet initialized when
+        // this view is constructed
+        if (reviewForm.getElement().getParent() == null) {
+            getUI().ifPresent(ui -> ui.add(reviewForm));
+        }
+        reviewForm.open(review, operation);
     }
 
 }

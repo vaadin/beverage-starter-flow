@@ -3,19 +3,33 @@ package com.vaadin.starter.beveragebuddy.backend;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+ * Represents a beverage review.
+ */
 public class Review implements Serializable {
 
     private Long id = null;
     private int score;
-    private String name = "";
+    private String name;
     private LocalDate date;
     private Category category;
     private int count;
 
+    /**
+     * Default constructor.
+     */
     public Review() {
         reset();
     }
 
+    /**
+     * Constructs a new instance with the given data.
+     * @param score     Review score
+     * @param name      Name of beverage reviewed
+     * @param date      Last review date
+     * @param category  Category of beverage
+     * @param count     Times tasted
+     */
     public Review(int score, String name, LocalDate date,
                   Category category, int count) {
         this.score = score;
@@ -25,6 +39,10 @@ public class Review implements Serializable {
         this.count = count;
     }
 
+    /**
+     * Copy constructor.
+     * @param other The instance to copy
+     */
     public Review(Review other) {
         this(other.getScore(), other.getName(), other.getDate(), other.getCategory(),
                 other.getCount());
@@ -52,7 +70,7 @@ public class Review implements Serializable {
     }
 
     /**
-     * Get the value of score
+     * Gets the value of score
      *
      * @return the value of score
      */
@@ -61,7 +79,7 @@ public class Review implements Serializable {
     }
 
     /**
-     * Set the value of score
+     * Sets the value of score
      *
      * @param score
      *            new value of Score
@@ -71,7 +89,7 @@ public class Review implements Serializable {
     }
 
     /**
-     * Get the value of name
+     * Gets the value of name
      *
      * @return the value of name
      */
@@ -80,7 +98,7 @@ public class Review implements Serializable {
     }
 
     /**
-     * Set the value of name
+     * Sets the value of name
      *
      * @param name
      *            new value of name
@@ -90,7 +108,7 @@ public class Review implements Serializable {
     }
 
     /**
-     * Get the value of category
+     * Gets the value of category
      *
      * @return the value of category
      */
@@ -99,7 +117,7 @@ public class Review implements Serializable {
     }
 
     /**
-     * Set the value of category
+     * Sets the value of category
      *
      * @param category
      *            new value of category
@@ -109,7 +127,7 @@ public class Review implements Serializable {
     }
 
     /**
-     * Get the value of date
+     * Gets the value of date
      *
      * @return the value of date
      */
@@ -118,7 +136,7 @@ public class Review implements Serializable {
     }
 
     /**
-     * Set the value of date
+     * Sets the value of date
      *
      * @param date
      *            new value of date
@@ -128,7 +146,7 @@ public class Review implements Serializable {
     }
 
     /**
-     * Get the value of count
+     * Gets the value of count
      *
      * @return the value of count
      */
@@ -137,7 +155,7 @@ public class Review implements Serializable {
     }
 
     /**
-     * Set the value of count
+     * Sets the value of count
      *
      * @param count
      *            new value of count

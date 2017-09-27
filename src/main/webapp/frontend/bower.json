@@ -1,0 +1,28 @@
+{
+  "name": "free-starter-flow",
+  "homepage": "https://github.com/vaadin/free-starter-flow",
+  "authors": [],
+  "description": "",
+  "main": "",
+  "license": "Apache2",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "~2.0.2",
+    "paper-toast": "~2.0.0",
+    "paper-dialog": "~2.0.0",
+    "vaadin-text-field": "~1.1.0-alpha5",
+    "vaadin-button": "~1.0.3",
+    "vaadin-combo-box": "~3.0.0-alpha5",
+    "vaadin-date-picker": "~2.0.4",
+    "vaadin-form-layout": "~1.0.2",
+    "vaadin-valo-theme": "#master",
+    "vaadin-icons": "4.1.1"
+  }
+}

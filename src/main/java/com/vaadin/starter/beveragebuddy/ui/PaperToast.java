@@ -1,11 +1,11 @@
 package com.vaadin.starter.beveragebuddy.ui;
 
-import com.vaadin.annotations.HtmlImport;
-import com.vaadin.annotations.Tag;
-import com.vaadin.flow.event.ComponentEventListener;
 import com.vaadin.shared.Registration;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.HasStyle;
+import com.vaadin.ui.Tag;
+import com.vaadin.ui.common.HasStyle;
+import com.vaadin.ui.common.HtmlImport;
+import com.vaadin.ui.event.ComponentEventListener;
 
 /**
  * Wrapper for the paper-toast element.

@@ -15,28 +15,28 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
-import com.vaadin.annotations.HtmlImport;
-import com.vaadin.flow.html.Label;
-import com.vaadin.flow.router.HasChildView;
-import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.router.View;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.router.RouterLayout;
+import com.vaadin.router.RouterLink;
+import com.vaadin.ui.common.HtmlImport;
+import com.vaadin.ui.html.Label;
+import com.vaadin.ui.icon.Icon;
+import com.vaadin.ui.icon.VaadinIcons;
+import com.vaadin.ui.layout.HorizontalLayout;
+import com.vaadin.ui.layout.VerticalLayout;
 
 /**
- * The main view contains a simple label element and a template element.
+ * The main layout contains the top toolbar with the view selector buttons, and
+ * the child views below that.
  */
 @HtmlImport("context://styles.html")
-public class MainLayout extends VerticalLayout implements HasChildView {
-
-    private View child;
+public class MainLayout extends VerticalLayout implements RouterLayout {
 
     public MainLayout() {
-        // This is just a simple label created via Elements API
         Label label = new Label("Beverage Buddy");
         label.addClassName("title");
         label.addClassName("toolbar-item");
+        HorizontalLayout titleBar = new HorizontalLayout(
+                new Icon(VaadinIcons.HANDS_UP), label);
 
         RouterLink reviews = new RouterLink("Reviews", ReviewsList.class);
         reviews.setId("reviews-link");
@@ -46,28 +46,22 @@ public class MainLayout extends VerticalLayout implements HasChildView {
         categories.setId("categories-link");
         categories.addClassName("link");
 
-        HorizontalLayout viewSelector = new HorizontalLayout(reviews, categories);
-        HorizontalLayout toolbar = new HorizontalLayout(label, viewSelector);
+        HorizontalLayout logoReview = new HorizontalLayout(
+                new Icon(VaadinIcons.ARCHIVES), reviews);
+        HorizontalLayout logoCategory = new HorizontalLayout(
+                new Icon(VaadinIcons.LIST), categories);
+        HorizontalLayout viewSelector = new HorizontalLayout(logoReview,
+                logoCategory);
+        HorizontalLayout toolbar = new HorizontalLayout(titleBar, viewSelector);
 
         viewSelector.addClassName("toolbar-item");
         toolbar.addClassName("toolbar");
-        toolbar.setSpacing(true);
-        toolbar.setDefaultComponentAlignment(Alignment.BASELINE);
+        toolbar.addClassName("full-width");
+        toolbar.setJustifyContentMode(JustifyContentMode.BETWEEN);
+        toolbar.setAlignItems(Alignment.BASELINE);
         addClassName("main-layout");
-        setDefaultComponentAlignment(Alignment.CENTER);
+        setAlignItems(Alignment.CENTER);
         add(toolbar);
     }
 
-    @Override
-    public void setChildView(View childView) {
-        // Update what we show whenever the sub view changes
-        if (child != null) {
-            this.remove((Component) child);
-        }
-
-        if (childView != null) {
-            add((Component) childView);
-        }
-        child = childView;
-    }
 }
