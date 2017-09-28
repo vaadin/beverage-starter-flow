@@ -6,6 +6,9 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.vaadin.data.converter.StringToIntegerConverter;
+import com.vaadin.data.validator.DateRangeValidator;
+import com.vaadin.data.validator.IntegerRangeValidator;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
@@ -47,8 +50,8 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         getBinder().forField(scoreBox)
                 .withConverter(new StringToIntegerConverter(0,
                         "The score should be a number."))
-                .withValidator(score -> score >= 1 && score <= 5,
-                        "The score should be between 1 and 5.")
+                .withValidator(new IntegerRangeValidator(
+                        "The tasting count must be between 1 and 5.", 1, 5))
                 .bind(Review::getScore, Review::setScore);
     }
 
@@ -62,24 +65,22 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         getBinder().forField(lastTasted)
                 .withValidator(Objects::nonNull,
                         "The date should be in MM/dd/yyyy format.")
-                .withValidator(
-                        date -> date.compareTo(LocalDate.now()) <= 0
-                                && date.compareTo(LocalDate.of(1, 1, 1)) >= 0,
-                        "The date should be neither Before Christ nor in the future.")
+                .withValidator(new DateRangeValidator(
+                        "The date should be neither Before Christ nor in the future.",
+                        LocalDate.of(1, 1, 1), LocalDate.now()))
                 .bind(Review::getDate, Review::setDate);
 
     }
 
     private void createCategoryBox() {
         categoryBox.setLabel("Choose a category");
-        categoryBox.setItemLabelPath("name");
-        categoryBox.setItemValuePath("name");
+        categoryBox.setItemLabelGenerator(Category::getName);
         categoryBox.setAllowCustomValue(false);
         categoryBox.setItems(categoryService.findCategories(""));
         getFormLayout().add(categoryBox);
 
-        getBinder().forField(categoryBox)
-                .bind(Review::getCategory, Review::setCategory);
+        getBinder().forField(categoryBox).bind(Review::getCategory,
+                Review::setCategory);
     }
 
     private void createTimesField() {
@@ -91,8 +92,8 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         getBinder().forField(timesTasted)
                 .withConverter(
                         new StringToIntegerConverter(0, "Must enter a number."))
-                .withValidator(testTimes -> testTimes > 0 && testTimes < 100,
-                        "The tasting count must be between 1 and 99.")
+                .withValidator(new IntegerRangeValidator(
+                        "The tasting count must be between 1 and 99.", 1, 99))
                 .bind(Review::getCount, Review::setCount);
     }
 
@@ -102,8 +103,9 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
         getBinder().forField(beverageName)
                 .withConverter(String::trim, String::trim)
-                .withValidator(name -> name.length() >= 3,
-                        "Beverage name must contain at least 3 printable characters")
+                .withValidator(new StringLengthValidator(
+                        "Beverage name must contain at least 3 printable characters",
+                        3, null))
                 .bind(Review::getName, Review::setName);
     }
 
