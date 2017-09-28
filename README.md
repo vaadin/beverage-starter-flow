@@ -1,16 +1,16 @@
-# BeverageBuddy App Starter for Flow
+# Free Starter for Flow
 ## (Aka Beverage Buddy :coffee::tea::sake::baby_bottle::beer::cocktail::tropical_drink::wine_glass:)
 
 This project can be used as a starting point to create your own awesome Flow applications.
 
-The App Starter demonstrates the core Flow concepts:
+The Starter demonstrates the core Flow concepts:
 * Building UIs from Flow components such as `TextField`, `Button`, `ComboBox`, `DatePicker` or `Grid`
 * Creating forms with `Binder`
-* Making reusable Components on server side with `Composite` (`BeanEditorDialog`)
-* Creating a view based on a HTML Template (`ReviewsList`) [documentation](https://github.com/vaadin/free-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc#polymer-template-based-view)
+* Making reusable Components on server side with `Composite` (`AbstractEditorDialog`)
+* [Creating a view based on a HTML Template](https://github.com/vaadin/free-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc#polymer-template-based-view) (`ReviewsList`) 
 * Implementing a view entirely from server side Components (`CategoriesList`)
-* Integrating a third-party Web Component (`PaperToast`) [documentation](https://github.com/vaadin/free-starter-flow/blob/master/documentation/integrating-a-web-component.asciidoc#integrating-a-web-component)
-* Navigating views with Annotation-Based Router API (`@Route`) 
+* [Integrating a third-party Web Component](https://github.com/vaadin/free-starter-flow/blob/master/documentation/integrating-a-web-component.asciidoc#integrating-a-web-component) (`PaperToast`) 
+* [Navigating views with Annotation-Based Router API](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-annotation-based-router-api.asciidoc#using-the-annotation-based-router-api) (`@Route`) 
 
 ## Prerequisites
 
