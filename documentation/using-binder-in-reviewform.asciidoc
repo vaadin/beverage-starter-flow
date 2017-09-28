@@ -1,5 +1,5 @@
 ---
-title: using binder in reviewform
+title: Using binder in Reviewform
 order: 3
 layout: page
 ---
@@ -9,7 +9,7 @@ Using Binder in Reviewform
 --------------------------
 Review form is a class built based on the GeneratedPaperDialog, where it integrates several web components, such as `Button`, `ComboBox`, `DatePicker`, `Label` and `TextField`. Besides, a nested dialog is implemented.
 
-This class will be called for two use cases:
+This mothed will be called for two use cases:
 
 * After the user clicks the "Add a new review" button
 * After the user clicks the "Edit" button
@@ -21,7 +21,7 @@ Binder
 Between the form and the backend data, `Binder` provides a bridge to connect the property names with its related values, so that you can use `readBean` and `writeBean` methods to deal with data easily.
 
 Furthermore, `Binder` offers an easy way to validate the input data.
-Let's make the property "Beverage Name" as an example:
+Let's take the property "Beverage Name" as an example:
 [source, java]
 --------------
 //declare a Binder for review class
@@ -31,9 +31,12 @@ private TextField beverageName = new TextField();
 public ReviewForm(){
   //bind the related property with the value
   //set a validator to make sure the beverage name is longer than 3 characters
-  binder.forField(beverageName).withValidator(name -> name.length() >= 3,
-               "The name of the beverage should contain at least three characters.")
-               .bind(Review::getName, Review::setName);
+  getBinder().forField(beverageName)
+                .withConverter(String::trim, String::trim)
+                .withValidator(new StringLengthValidator(
+                        "Beverage name must contain at least 3 printable characters",
+                        3, null))
+                .bind(Review::getName, Review::setName);
   }
 
 --------------
