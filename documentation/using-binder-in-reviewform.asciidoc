@@ -9,7 +9,7 @@ Using Binder in Reviewform
 --------------------------
 Review form is a class built based on the GeneratedPaperDialog, where it integrates several web components, such as `Button`, `ComboBox`, `DatePicker`, `Label` and `TextField`. Besides, a nested dialog is implemented.
 
-This mothed will be called for two use cases:
+This class will be exemplified in these two use cases:
 
 * After the user clicks the "Add a new review" button
 * After the user clicks the "Edit" button
