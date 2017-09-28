@@ -38,7 +38,10 @@ import com.vaadin.ui.polymertemplate.PolymerTemplate;
 import com.vaadin.ui.textfield.TextField;
 
 /**
- * Simple template example.
+ * Displays the list of available categories, with a search filter as well as
+ * buttons to add a new category or edit existing ones.
+ *
+ * Implemented using a simple template.
  */
 @Route(value = "", layout = MainLayout.class)
 @Title("Review List")
@@ -66,6 +69,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     public ReviewsList() {
         filterText.setPlaceholder("Find a review...");
         filterText.addValueChangeListener(e -> updateList());
+        filterText.addClassName("filter-field");
 
         addReview.setText("Add new review");
         addReview.setIcon(new Icon(VaadinIcons.PLUS));
