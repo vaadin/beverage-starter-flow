@@ -72,8 +72,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     private void createCategoryBox() {
         categoryBox.setLabel("Choose a category");
-        categoryBox.setItemLabelPath("name");
-        categoryBox.setItemValuePath("name");
+        categoryBox.setItemLabelGenerator(Category::getName);
         categoryBox.setAllowCustomValue(false);
         categoryBox.setItems(categoryService.findCategories(""));
         getFormLayout().add(categoryBox);
