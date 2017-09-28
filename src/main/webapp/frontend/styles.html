@@ -11,6 +11,7 @@
 <link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-form-layout.html">
 <link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-form-item.html">
 <link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-combo-box.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-grid.html">
 
 <!-- valo theme shows clear icons in date-picker and combo-box, but we want it hidden here -->
 <dom-module id="fast-combo-box-date-picker-styles" theme-for="vaadin-combo-box vaadin-date-picker">
@@ -88,6 +89,19 @@
       :host([focused]) {
         background: var(--valo-base-color);
         background-image: linear-gradient(var(--valo-tint-5pct), var(--valo-tint-5pct));
+      }
+    </style>
+    </template>
+</dom-module>
+
+<!-- Theme for the vaadin-grid -->
+<dom-module id="fast-grid-styles" theme-for="vaadin-grid">
+    <template>
+        <style include="vaadin-grid-default-theme">
+      /* TODO Make the cursor change over the whole grid row */
+      [part~="row"]:hover [part~="body-cell"] {
+        cursor: pointer;
+        background: var(--valo-shade-20pct);
       }
     </style>
     </template>
