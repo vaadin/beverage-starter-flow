@@ -9,7 +9,8 @@ import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.ui.button.Button;
-import com.vaadin.ui.html.Label;
+import com.vaadin.ui.common.HasValue;
+import com.vaadin.ui.grid.Grid;
 import com.vaadin.ui.icon.Icon;
 import com.vaadin.ui.icon.VaadinIcons;
 import com.vaadin.ui.layout.HorizontalLayout;
@@ -25,7 +26,7 @@ import com.vaadin.ui.textfield.TextField;
 public final class CategoriesList extends VerticalLayout {
 
     private final TextField filter = new TextField("", "Search");
-    private final VerticalLayout categoryLayout = new VerticalLayout();
+    private final Grid<Category> grid = new Grid<>();
 
     private final CategoryEditorDialog form = new CategoryEditorDialog(
             this::saveCategory, this::deleteCategory);
@@ -36,7 +37,7 @@ public final class CategoriesList extends VerticalLayout {
         initView();
 
         addSearchBar();
-        add(categoryLayout);
+        addGrid();
 
         updateView();
     }
@@ -46,19 +47,6 @@ public final class CategoriesList extends VerticalLayout {
 
         notification.addClassName("notification");
         add(notification, form);
-    }
-
-    private void updateView() {
-        categoryLayout.removeAll();
-        List<Category> categories =
-                CategoryService.getInstance().findCategories(filter.getValue());
-        for (Category category : categories) {
-            List<Review> reviewsInCategory =
-                    ReviewService.getInstance().findReviews(category.getName());
-            int reviewCount = reviewsInCategory.stream()
-                    .mapToInt(Review::getCount).sum();
-            addRow(category, reviewCount);
-        }
     }
 
     private void addSearchBar() {
@@ -78,19 +66,36 @@ public final class CategoriesList extends VerticalLayout {
         add(layout);
     }
 
-    private void addRow(Category category, int reviewCount) {
-        HorizontalLayout layout = new HorizontalLayout();
-        Label name = new Label(category.getName());
-        Label counter = new Label(String.valueOf(reviewCount));
+    private void addGrid() {
+        grid.addColumn("CATEGORY", Category::getName);
+        grid.addColumn("BEVERAGES", this::getReviewCount);
+        // Grid does not yet implement HasStyle
+        grid.getElement().getClassList().add("full-width");
+        grid.asSingleSelect().addValueChangeListener(this::selectionChanged);
+        add(grid);
+    }
 
-        Button editButton = new Button("Edit", new Icon(VaadinIcons.PENCIL));
-        editButton.addClickListener(
-                e -> form.open(category, AbstractEditorDialog.Operation.EDIT));
-        layout.add(name, counter, editButton);
-        layout.addClassName("full-width");
-        layout.addClassName("grid-row");
-        layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
-        categoryLayout.add(layout);
+    private void selectionChanged(
+            HasValue.ValueChangeEvent<Grid<Category>, Category> event) {
+        Category selectedItem = event.getValue();
+
+        if (selectedItem != null) {
+            form.open(selectedItem, AbstractEditorDialog.Operation.EDIT);
+            grid.getSelectionModel().deselect(selectedItem);
+        }
+    }
+
+    private String getReviewCount(Category category) {
+        List<Review> reviewsInCategory =
+                ReviewService.getInstance().findReviews(category.getName());
+        int sum = reviewsInCategory.stream().mapToInt(Review::getCount).sum();
+        return Integer.toString(sum);
+    }
+
+    private void updateView() {
+        List<Category> categories =
+                CategoryService.getInstance().findCategories(filter.getValue());
+        grid.setItems(categories);
     }
 
     private void saveCategory(Category category, AbstractEditorDialog.Operation operation) {
