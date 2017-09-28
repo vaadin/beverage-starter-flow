@@ -55,13 +55,19 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     private void createDatePicker() {
         lastTasted.setLabel("Choose the date");
         lastTasted.setMax(LocalDate.now());
+        lastTasted.setMin(LocalDate.of(1, 1, 1));
         lastTasted.setValue(LocalDate.now());
         getFormLayout().add(lastTasted);
 
         getBinder().forField(lastTasted)
                 .withValidator(Objects::nonNull,
-                        "The date should be in dd/MM/yyyy format.")
+                        "The date should be in MM/dd/yyyy format.")
+                .withValidator(
+                        date -> date.compareTo(LocalDate.now()) <= 0
+                                && date.compareTo(LocalDate.of(1, 1, 1)) >= 0,
+                        "The date should be neither Before Christ nor in the future.")
                 .bind(Review::getDate, Review::setDate);
+
     }
 
     private void createCategoryBox() {
@@ -73,8 +79,6 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         getFormLayout().add(categoryBox);
 
         getBinder().forField(categoryBox)
-                .withConverter(categoryService::findCategoryOrThrow,
-                        Category::getName)
                 .bind(Review::getCategory, Review::setCategory);
     }
 
@@ -87,8 +91,8 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         getBinder().forField(timesTasted)
                 .withConverter(
                         new StringToIntegerConverter(0, "Must enter a number."))
-                .withValidator(testTimes -> testTimes > 0,
-                        "The taste times should be at least 1")
+                .withValidator(testTimes -> testTimes > 0 && testTimes < 100,
+                        "The tasting count must be between 1 and 99.")
                 .bind(Review::getCount, Review::setCount);
     }
 
@@ -105,9 +109,9 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     @Override
     protected void confirmDelete() {
-        openConfirmationDialog("Delete beverage \""
-                        + getCurrentItem().getName() + "\"?",
-                "", "");
+        openConfirmationDialog(
+                "Delete beverage \"" + getCurrentItem().getName() + "\"?", "",
+                "");
     }
 
 }

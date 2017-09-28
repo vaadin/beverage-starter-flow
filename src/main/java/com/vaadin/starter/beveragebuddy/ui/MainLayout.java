@@ -25,8 +25,8 @@ import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.layout.VerticalLayout;
 
 /**
- * The main layout contains the top toolbar with the view selector buttons,
- * and the child views below that.
+ * The main layout contains the top toolbar with the view selector buttons, and
+ * the child views below that.
  */
 @HtmlImport("context://styles.html")
 public class MainLayout extends VerticalLayout implements RouterLayout {
