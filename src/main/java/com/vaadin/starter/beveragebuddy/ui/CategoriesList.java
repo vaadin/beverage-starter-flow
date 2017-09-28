@@ -1,3 +1,18 @@
+/*
+ * Copyright 2000-2017 Vaadin Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.vaadin.starter.beveragebuddy.ui;
 
 import java.util.List;
@@ -11,10 +26,9 @@ import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.ui.button.Button;
 import com.vaadin.ui.common.HasValue;
 import com.vaadin.ui.grid.Grid;
+import com.vaadin.ui.html.Div;
 import com.vaadin.ui.icon.Icon;
 import com.vaadin.ui.icon.VaadinIcons;
-import com.vaadin.ui.layout.HorizontalLayout;
-import com.vaadin.ui.layout.VerticalLayout;
 import com.vaadin.ui.textfield.TextField;
 
 /**
@@ -23,9 +37,9 @@ import com.vaadin.ui.textfield.TextField;
  */
 @Route(value = "categories", layout = MainLayout.class)
 @Title("Categories List")
-public final class CategoriesList extends VerticalLayout {
+public final class CategoriesList extends Div {
 
-    private final TextField filter = new TextField("", "Search");
+    private final TextField searchField = new TextField("", "Search");
     private final Grid<Category> grid = new Grid<>();
 
     private final CategoryEditorDialog form = new CategoryEditorDialog(
@@ -50,27 +64,29 @@ public final class CategoriesList extends VerticalLayout {
     }
 
     private void addSearchBar() {
-        HorizontalLayout layout = new HorizontalLayout();
-        HorizontalLayout searchField = new HorizontalLayout();
-        searchField.add(new Icon(VaadinIcons.SEARCH), filter);
-        filter.addValueChangeListener(e -> updateView());
-        filter.addClassName("filter-field");
-        Button newButton = new Button("New Category",
+        Div viewToolbar = new Div();
+        viewToolbar.addClassName("view-toolbar");
+
+        searchField.addClassName("view-toolbar__search-field");
+        searchField.addValueChangeListener(e -> updateView());
+
+        Button newButton = new Button("New category",
                 new Icon(VaadinIcons.PLUS));
+        newButton.getElement().setAttribute("theme", "primary");
+        newButton.addClassName("view-toolbar__button");
         newButton.addClickListener(e -> form.open(new Category(),
                 AbstractEditorDialog.Operation.ADD));
-        layout.add(searchField, newButton);
 
-        layout.addClassName("full-width");
-        layout.setJustifyContentMode(JustifyContentMode.BETWEEN);
-        add(layout);
+        viewToolbar.add(searchField, newButton);
+        add(viewToolbar);
     }
 
     private void addGrid() {
-        grid.addColumn("CATEGORY", Category::getName);
-        grid.addColumn("BEVERAGES", this::getReviewCount);
+        grid.addColumn("Category", Category::getName);
+        grid.addColumn("Beverages", this::getReviewCount);
         // Grid does not yet implement HasStyle
-        grid.getElement().getClassList().add("full-width");
+        grid.getElement().getClassList().add("categories");
+        grid.getElement().setAttribute("theme", "row-dividers");
         grid.asSingleSelect().addValueChangeListener(this::selectionChanged);
         add(grid);
     }
@@ -86,19 +102,20 @@ public final class CategoriesList extends VerticalLayout {
     }
 
     private String getReviewCount(Category category) {
-        List<Review> reviewsInCategory =
-                ReviewService.getInstance().findReviews(category.getName());
+        List<Review> reviewsInCategory = ReviewService.getInstance()
+                .findReviews(category.getName());
         int sum = reviewsInCategory.stream().mapToInt(Review::getCount).sum();
         return Integer.toString(sum);
     }
 
     private void updateView() {
-        List<Category> categories =
-                CategoryService.getInstance().findCategories(filter.getValue());
+        List<Category> categories = CategoryService.getInstance()
+                .findCategories(searchField.getValue());
         grid.setItems(categories);
     }
 
-    private void saveCategory(Category category, AbstractEditorDialog.Operation operation) {
+    private void saveCategory(Category category,
+            AbstractEditorDialog.Operation operation) {
         CategoryService.getInstance().saveCategory(category);
 
         notification.show(
@@ -107,8 +124,8 @@ public final class CategoriesList extends VerticalLayout {
     }
 
     private void deleteCategory(Category category) {
-        List<Review> reviewsInCategory =
-                ReviewService.getInstance().findReviews(category.getName());
+        List<Review> reviewsInCategory = ReviewService.getInstance()
+                .findReviews(category.getName());
 
         reviewsInCategory.forEach(review -> {
             review.setCategory(null);

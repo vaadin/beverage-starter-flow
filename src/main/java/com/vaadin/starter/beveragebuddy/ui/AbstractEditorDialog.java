@@ -1,3 +1,18 @@
+/*
+ * Copyright 2000-2017 Vaadin Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.vaadin.starter.beveragebuddy.ui;
 
 import com.vaadin.data.Binder;
@@ -18,20 +33,21 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-
 /**
  * Abstract base class for dialogs adding, editing or deleting items.
  *
  * Subclasses are expected to
- * <ul><li>add, during construction, the needed UI components to
- * {@link #getFormLayout()} and bind them using {@link #getBinder()},
- * as well as</li>
- * <li>override {@link #confirmDelete()} to open the confirmation
- * dialog with the desired message (by calling
+ * <ul>
+ * <li>add, during construction, the needed UI components to
+ * {@link #getFormLayout()} and bind them using {@link #getBinder()}, as well
+ * as</li>
+ * <li>override {@link #confirmDelete()} to open the confirmation dialog with
+ * the desired message (by calling
  * {@link #openConfirmationDialog(String, String, String)}.</li>
  * </ul>
  *
- * @param <T>   the type of the item to be added, edited or deleted
+ * @param <T>
+ *            the type of the item to be added, edited or deleted
  */
 @HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
 @HtmlImport("frontend://bower_components/vaadin-form-layout/vaadin-form-layout.html")
@@ -39,18 +55,18 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         extends Composite<GeneratedPaperDialog> {
 
     /**
-     * The operations supported by this dialog.
-     * Delete is enabled when editing an already existing item.
+     * The operations supported by this dialog. Delete is enabled when editing
+     * an already existing item.
      */
     public enum Operation {
-        ADD("Add New", "add", true),
-        EDIT("Edit", "edit", false);
+        ADD("Add New", "add", true), EDIT("Edit", "edit", false);
 
         private final String nameInTitle;
         private final String nameInText;
         private final boolean deleteDisabled;
 
-        Operation(String nameInTitle, String nameInText, boolean deleteDisabled) {
+        Operation(String nameInTitle, String nameInText,
+                boolean deleteDisabled) {
             this.nameInTitle = nameInTitle;
             this.nameInText = nameInText;
             this.deleteDisabled = deleteDisabled;
@@ -76,14 +92,13 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     private Registration registrationForSave;
 
     private final FormLayout formLayout = new FormLayout();
-    private final HorizontalLayout buttonBar
-            = new HorizontalLayout(saveButton, cancelButton, deleteButton);
+    private final HorizontalLayout buttonBar = new HorizontalLayout(saveButton,
+            cancelButton, deleteButton);
 
     private Binder<T> binder = new Binder<>();
     private T currentItem;
 
-    private final ConfirmationDialog<T> confirmationDialog
-            = new ConfirmationDialog<>();
+    private final ConfirmationDialog<T> confirmationDialog = new ConfirmationDialog<>();
     private final PaperToast notification = new PaperToast();
 
     private final String itemType;
@@ -92,12 +107,16 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     /**
      * Constructs a new instance.
-     * @param itemType      The readable name of the item type
-     * @param itemSaver     Callback to save the edited item
-     * @param itemDeleter   Callback to delete the edited item
+     * 
+     * @param itemType
+     *            The readable name of the item type
+     * @param itemSaver
+     *            Callback to save the edited item
+     * @param itemDeleter
+     *            Callback to delete the edited item
      */
-    protected AbstractEditorDialog(String itemType, BiConsumer<T, Operation> itemSaver,
-            Consumer<T> itemDeleter) {
+    protected AbstractEditorDialog(String itemType,
+            BiConsumer<T, Operation> itemSaver, Consumer<T> itemDeleter) {
         this.itemType = itemType;
         this.itemSaver = itemSaver;
         this.itemDeleter = itemDeleter;
@@ -125,8 +144,10 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     private void initButtonBar() {
         saveButton.setAutofocus(true);
+        saveButton.getElement().setAttribute("theme", "primary");
         cancelButton.getElement().setAttribute("dialog-dismiss", true);
         deleteButton.addClickListener(e -> deleteClicked());
+        deleteButton.getElement().setAttribute("theme", "tertiary danger");
         buttonBar.setClassName("buttons");
         getContent().add(buttonBar);
     }
@@ -137,9 +158,10 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     }
 
     /**
-     * Gets the form layout, where additional components can be added
-     * for displaying or editing the item's properties.
-     * @return  the form layout
+     * Gets the form layout, where additional components can be added for
+     * displaying or editing the item's properties.
+     * 
+     * @return the form layout
      */
     protected final FormLayout getFormLayout() {
         return formLayout;
@@ -147,7 +169,8 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     /**
      * Gets the binder.
-     * @return  the binder
+     * 
+     * @return the binder
      */
     protected final Binder<T> getBinder() {
         return binder;
@@ -155,7 +178,8 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     /**
      * Gets the item currently being edited.
-     * @return  the item currently being edited
+     * 
+     * @return the item currently being edited
      */
     protected final T getCurrentItem() {
         return currentItem;
@@ -163,9 +187,12 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     /**
      * Opens the given item for editing in the dialog.
-     * @param item      The item to edit; it may be an existing or
-     *                  a newly created instance
-     * @param operation The operation being performed on the item
+     * 
+     * @param item
+     *            The item to edit; it may be an existing or a newly created
+     *            instance
+     * @param operation
+     *            The operation being performed on the item
      */
     public final void open(T item, Operation operation) {
         currentItem = item;
@@ -173,10 +200,10 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         if (registrationForSave != null) {
             registrationForSave.remove();
         }
-        registrationForSave = saveButton.addClickListener(e -> saveClicked(operation));
+        registrationForSave = saveButton
+                .addClickListener(e -> saveClicked(operation));
         binder.readBean(currentItem);
 
-        setButtonsDisabled(false);
         deleteButton.setDisabled(operation.isDeleteDisabled());
         getContent().open();
     }
@@ -199,7 +226,8 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         if (confirmationDialog.getElement().getParent() == null) {
             getUI().ifPresent(ui -> ui.add(confirmationDialog));
         }
-        setButtonsDisabled(true);
+        confirmationDialog.confirmButton.getElement().setAttribute("theme",
+                "tertiary danger");
         confirmDelete();
     }
 
@@ -211,25 +239,23 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      * The dialog will display the given title and message(s), then call
      * {@link #deleteConfirmed(Serializable)} if the Delete button is clicked.
      *
-     * @param title             The title text
-     * @param message           Detail message (optional, may be empty)
-     * @param additionalMessage Additional message (optional, may be empty)
+     * @param title
+     *            The title text
+     * @param message
+     *            Detail message (optional, may be empty)
+     * @param additionalMessage
+     *            Additional message (optional, may be empty)
      */
     protected final void openConfirmationDialog(String title, String message,
             String additionalMessage) {
+        getContent().close();
         confirmationDialog.open(title, message, additionalMessage, "Delete",
                 getCurrentItem(), this::deleteConfirmed,
-                () -> setButtonsDisabled(false));
+                () -> getContent().open());
     }
 
     private void deleteConfirmed(T item) {
         itemDeleter.accept(item);
-        setButtonsDisabled(false);
         getContent().close();
-    }
-
-    private void setButtonsDisabled(boolean disable) {
-        buttonBar.getChildren().forEach(
-                child -> ((Button) child).setDisabled(disable));
     }
 }
