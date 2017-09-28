@@ -24,6 +24,6 @@
     "vaadin-form-layout": "~1.0.2",
     "vaadin-valo-theme": "#master",
     "vaadin-icons": "4.1.1",
-    "vaadin-grid": "3.0.2"
+    "vaadin-grid": "~4.0.0-alpha2"
   }
 }
