@@ -5,7 +5,7 @@ This project can be used as a starting point to create your own awesome Flow app
 
 The Starter demonstrates the core Flow concepts:
 * Building UIs from Flow components such as `TextField`, `Button`, `ComboBox`, `DatePicker` or `Grid`
-* Creating forms with `Binder`
+* [Creating forms with `Binder`](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-binder-in-reviewform.asciidoc#using-binder-in-reviewform)
 * Making reusable Components on server side with `Composite` (`AbstractEditorDialog`)
 * [Creating a view based on a HTML Template](https://github.com/vaadin/free-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc#polymer-template-based-view) (`ReviewsList`) 
 * Implementing a view entirely from server side Components (`CategoriesList`)
