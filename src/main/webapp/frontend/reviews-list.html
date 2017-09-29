@@ -245,9 +245,6 @@
                 <iron-icon icon="valo:magnifier" slot="prefix"></iron-icon>
             </vaadin-text-field>
             <vaadin-button id="newReview" theme="primary">
-                <!-- TODO the label text should be set from Java (to allow easy localization),
-                     but currently it’s not possible to generate this exact DOM structure from
-                     there (it produces unnecessary white-space between the icon and the span) -->
                 <iron-icon icon="valo:plus"></iron-icon><span>New review</span>
             </vaadin-button>
         </div>
@@ -275,7 +272,6 @@
                                 <p>[[item.date]]</p>
                         </div>
                         <vaadin-button on-click="edit" class="review__edit" theme="tertiary">
-                            <!-- TODO the label text should be set from Java -->
                             <iron-icon icon="valo:edit"></iron-icon><span>Edit</span>
                         </vaadin-button>
                     </div>

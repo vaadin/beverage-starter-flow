@@ -59,7 +59,8 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      * an already existing item.
      */
     public enum Operation {
-        ADD("Add New", "add", true), EDIT("Edit", "edit", false);
+        ADD("Add New", "add", true),
+        EDIT("Edit", "edit", false);
 
         private final String nameInTitle;
         private final String nameInText;
@@ -226,8 +227,6 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         if (confirmationDialog.getElement().getParent() == null) {
             getUI().ifPresent(ui -> ui.add(confirmationDialog));
         }
-        confirmationDialog.confirmButton.getElement().setAttribute("theme",
-                "tertiary danger");
         confirmDelete();
     }
 
@@ -250,7 +249,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
             String additionalMessage) {
         getContent().close();
         confirmationDialog.open(title, message, additionalMessage, "Delete",
-                getCurrentItem(), this::deleteConfirmed,
+                true, getCurrentItem(), this::deleteConfirmed,
                 () -> getContent().open());
     }
 

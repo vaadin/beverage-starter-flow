@@ -37,8 +37,6 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
 
         addNameField();
 
-        // TODO this doesn’t actually focus the field, it just visually looks
-        // focused
         categoryNameField.focus();
     }
 

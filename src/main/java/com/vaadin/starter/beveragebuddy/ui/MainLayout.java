@@ -38,7 +38,7 @@ public class MainLayout extends Div implements RouterLayout {
         RouterLink reviews = new RouterLink(null, ReviewsList.class);
         reviews.add(new Icon(VaadinIcons.LIST), new Text("Reviews"));
         reviews.addClassName("main-layout__nav-item");
-        // TODO this should be set by some view logic
+        // This should be set dynamically by some view logic; opened #101 to fix
         reviews.addClassName("main-layout__nav-item--selected");
 
         RouterLink categories = new RouterLink(null, CategoriesList.class);

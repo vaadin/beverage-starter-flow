@@ -40,8 +40,7 @@ class ConfirmationDialog<T extends Serializable>
     private final H2 titleField = new H2();
     private final Div messageLabel = new Div();
     private final Div extraMessageLabel = new Div();
-    // Package private to allow overriding the theme in "delete" dialogs
-    final Button confirmButton = new Button();
+    private final Button confirmButton = new Button();
     private final Button cancelButton = new Button("Cancel");
     private Registration registrationForConfirm;
     private Registration registrationForCancel;
@@ -50,7 +49,6 @@ class ConfirmationDialog<T extends Serializable>
      * Constructor.
      */
     public ConfirmationDialog() {
-        // TODO should allow closing the dialog by pressing the ESC key
         getContent().setModal(true);
 
         getElement().getClassList().add("confirm-dialog");
@@ -74,8 +72,8 @@ class ConfirmationDialog<T extends Serializable>
      * Opens the confirmation dialog.
      *
      * The dialog will display the given title and message(s), then call
-     * <code>confirmHandler()</code> if the Confirm button is clicked, or
-     * <code>cancelHandler()</code> if the Cancel button is clicked.
+     * <code>confirmHandler</code> if the Confirm button is clicked, or
+     * <code>cancelHandler</code> if the Cancel button is clicked.
      *
      * @param title
      *            The title text
@@ -85,6 +83,8 @@ class ConfirmationDialog<T extends Serializable>
      *            Additional message (optional, may be empty)
      * @param actionName
      *            The action name to be shown on the Confirm button
+     * @param isDisruptive
+     *            True if the action is disruptive, such as deleting an item
      * @param item
      *            The subject of the action
      * @param confirmHandler
@@ -93,12 +93,11 @@ class ConfirmationDialog<T extends Serializable>
      *            The cancellation handler function
      */
     public void open(String title, String message, String additionalMessage,
-            String actionName, T item, Consumer<T> confirmHandler,
+            String actionName, boolean isDisruptive, T item, Consumer<T> confirmHandler,
             Runnable cancelHandler) {
         titleField.setText(title);
         messageLabel.setText(message);
         extraMessageLabel.setText(additionalMessage);
-        // TODO this causes the "theme" attribute to be removed
         confirmButton.setText(actionName);
 
         if (registrationForConfirm != null) {
@@ -111,7 +110,9 @@ class ConfirmationDialog<T extends Serializable>
         }
         registrationForCancel = cancelButton
                 .addClickListener(e -> cancelHandler.run());
-
+        if (isDisruptive) {
+            confirmButton.getElement().setAttribute("theme", "tertiary danger");
+        }
         getContent().open();
     }
 }

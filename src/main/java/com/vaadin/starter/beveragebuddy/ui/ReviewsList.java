@@ -101,7 +101,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
             header.add(new Span(reviews.size() + " in total"));
         } else {
             header.setText("Search for “" + search.getValue() + "”");
-            if (reviews.size() > 0) {
+            if (!reviews.isEmpty()) {
                 header.add(new Span(reviews.size() + " results"));
             }
         }
