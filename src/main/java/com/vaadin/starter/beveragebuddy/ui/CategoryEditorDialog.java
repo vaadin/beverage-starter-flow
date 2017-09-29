@@ -3,6 +3,7 @@ package com.vaadin.starter.beveragebuddy.ui;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
@@ -27,8 +28,9 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
 
         getBinder().forField(categoryNameField)
                 .withConverter(String::trim, String::trim)
-                .withValidator(name -> name.length() >= 3,
-                        "Category name must contain at least 3 printable characters")
+                .withValidator(new StringLengthValidator(
+                        "Category name must contain at least 3 printable characters",
+                        3, null))
                 .withValidator(
                         name -> CategoryService.getInstance().findCategories(name).size() == 0,
                         "Category name must be unique")
