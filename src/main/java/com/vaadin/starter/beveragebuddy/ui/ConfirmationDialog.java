@@ -15,9 +15,6 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
-import java.io.Serializable;
-import java.util.function.Consumer;
-
 import com.vaadin.shared.Registration;
 import com.vaadin.ui.Composite;
 import com.vaadin.ui.button.Button;
@@ -26,6 +23,9 @@ import com.vaadin.ui.html.Div;
 import com.vaadin.ui.html.H2;
 import com.vaadin.ui.layout.HorizontalLayout;
 import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
+
+import java.io.Serializable;
+import java.util.function.Consumer;
 
 /**
  * A generic dialog for confirming or cancelling an action.
@@ -50,6 +50,9 @@ class ConfirmationDialog<T extends Serializable>
      */
     public ConfirmationDialog() {
         getContent().setModal(true);
+        // Enabling modality disables cancel-on-esc (and cancel-on-outside-click)
+        // We want to cancel on esc
+        getContent().setNoCancelOnEscKey(false);
 
         getElement().getClassList().add("confirm-dialog");
         confirmButton.getElement().setAttribute("dialog-confirm", true);

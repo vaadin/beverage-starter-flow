@@ -108,7 +108,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     /**
      * Constructs a new instance.
-     * 
+     *
      * @param itemType
      *            The readable name of the item type
      * @param itemSaver
@@ -127,7 +127,9 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         initButtonBar();
         initNotification();
         getContent().setModal(true);
-
+        // Enabling modality disables cancel-on-esc (and cancel-on-outside-click)
+        // We want to cancel on esc
+        getContent().setNoCancelOnEscKey(false);
     }
 
     private void initTitle() {
@@ -161,7 +163,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     /**
      * Gets the form layout, where additional components can be added for
      * displaying or editing the item's properties.
-     * 
+     *
      * @return the form layout
      */
     protected final FormLayout getFormLayout() {
@@ -170,7 +172,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     /**
      * Gets the binder.
-     * 
+     *
      * @return the binder
      */
     protected final Binder<T> getBinder() {
@@ -179,7 +181,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     /**
      * Gets the item currently being edited.
-     * 
+     *
      * @return the item currently being edited
      */
     protected final T getCurrentItem() {
@@ -188,7 +190,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     /**
      * Opens the given item for editing in the dialog.
-     * 
+     *
      * @param item
      *            The item to edit; it may be an existing or a newly created
      *            instance
