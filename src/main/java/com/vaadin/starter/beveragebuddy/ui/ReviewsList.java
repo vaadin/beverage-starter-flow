@@ -29,8 +29,8 @@ import com.vaadin.starter.beveragebuddy.ui.converters.LongToStringConverter;
 import com.vaadin.ui.Tag;
 import com.vaadin.ui.button.Button;
 import com.vaadin.ui.common.HtmlImport;
-import com.vaadin.ui.icon.Icon;
-import com.vaadin.ui.icon.VaadinIcons;
+import com.vaadin.ui.html.H1;
+import com.vaadin.ui.html.Span;
 import com.vaadin.ui.polymertemplate.EventHandler;
 import com.vaadin.ui.polymertemplate.Id;
 import com.vaadin.ui.polymertemplate.ModelItem;
@@ -46,7 +46,7 @@ import com.vaadin.ui.textfield.TextField;
 @Route(value = "", layout = MainLayout.class)
 @Title("Review List")
 @Tag("reviews-list")
-@HtmlImport("frontend://ReviewsList.html")
+@HtmlImport("frontend://reviews-list.html")
 public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
     public static interface ReviewsModel extends TemplateModel {
@@ -56,23 +56,22 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         void setReviews(List<Review> reviews);
     }
 
-    @Id("filterText")
-    private TextField filterText;
-    @Id("addReview")
+    @Id("search")
+    private TextField search;
+    @Id("newReview")
     private Button addReview;
     @Id("notification")
     private PaperToast notification;
+    @Id("header")
+    private H1 header;
 
     private ReviewEditorDialog reviewForm = new ReviewEditorDialog(
             this::saveUpdate, this::deleteUpdate);
 
     public ReviewsList() {
-        filterText.setPlaceholder("Find a review...");
-        filterText.addValueChangeListener(e -> updateList());
-        filterText.addClassName("filter-field");
+        search.setPlaceholder("Search");
+        search.addValueChangeListener(e -> updateList());
 
-        addReview.setText("Add new review");
-        addReview.setIcon(new Icon(VaadinIcons.PLUS));
         addReview.addClickListener(e -> openForm(new Review(),
                 AbstractEditorDialog.Operation.ADD));
 
@@ -95,8 +94,18 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     }
 
     private void updateList() {
-        getModel().setReviews(
-                ReviewService.getInstance().findReviews(filterText.getValue()));
+        List<Review> reviews = ReviewService.getInstance()
+                .findReviews(search.getValue());
+        if (search.isEmpty()) {
+            header.setText("Reviews");
+            header.add(new Span(reviews.size() + " in total"));
+        } else {
+            header.setText("Search for “" + search.getValue() + "”");
+            if (!reviews.isEmpty()) {
+                header.add(new Span(reviews.size() + " results"));
+            }
+        }
+        getModel().setReviews(reviews);
     }
 
     @EventHandler

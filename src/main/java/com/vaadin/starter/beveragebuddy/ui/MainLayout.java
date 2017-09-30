@@ -17,51 +17,42 @@ package com.vaadin.starter.beveragebuddy.ui;
 
 import com.vaadin.router.RouterLayout;
 import com.vaadin.router.RouterLink;
+import com.vaadin.ui.Text;
 import com.vaadin.ui.common.HtmlImport;
-import com.vaadin.ui.html.Label;
+import com.vaadin.ui.html.Div;
+import com.vaadin.ui.html.H2;
 import com.vaadin.ui.icon.Icon;
 import com.vaadin.ui.icon.VaadinIcons;
-import com.vaadin.ui.layout.HorizontalLayout;
-import com.vaadin.ui.layout.VerticalLayout;
 
 /**
- * The main layout contains the top toolbar with the view selector buttons, and
- * the child views below that.
+ * The main layout contains the header with the navigation buttons, and the
+ * child views below that.
  */
-@HtmlImport("context://styles.html")
-public class MainLayout extends VerticalLayout implements RouterLayout {
+@HtmlImport("frontend://styles.html")
+public class MainLayout extends Div implements RouterLayout {
 
     public MainLayout() {
-        Label label = new Label("Beverage Buddy");
-        label.addClassName("title");
-        label.addClassName("toolbar-item");
-        HorizontalLayout titleBar = new HorizontalLayout(
-                new Icon(VaadinIcons.HANDS_UP), label);
+        H2 title = new H2("Beverage Buddy");
+        title.addClassName("main-layout__title");
 
-        RouterLink reviews = new RouterLink("Reviews", ReviewsList.class);
-        reviews.setId("reviews-link");
-        reviews.addClassName("link");
-        RouterLink categories = new RouterLink("Categories",
-                CategoriesList.class);
-        categories.setId("categories-link");
-        categories.addClassName("link");
+        RouterLink reviews = new RouterLink(null, ReviewsList.class);
+        reviews.add(new Icon(VaadinIcons.LIST), new Text("Reviews"));
+        reviews.addClassName("main-layout__nav-item");
+        // This should be set dynamically by some view logic; opened #101 to fix
+        reviews.addClassName("main-layout__nav-item--selected");
 
-        HorizontalLayout logoReview = new HorizontalLayout(
-                new Icon(VaadinIcons.ARCHIVES), reviews);
-        HorizontalLayout logoCategory = new HorizontalLayout(
-                new Icon(VaadinIcons.LIST), categories);
-        HorizontalLayout viewSelector = new HorizontalLayout(logoReview,
-                logoCategory);
-        HorizontalLayout toolbar = new HorizontalLayout(titleBar, viewSelector);
+        RouterLink categories = new RouterLink(null, CategoriesList.class);
+        categories.add(new Icon(VaadinIcons.ARCHIVES), new Text("Categories"));
+        categories.addClassName("main-layout__nav-item");
 
-        viewSelector.addClassName("toolbar-item");
-        toolbar.addClassName("toolbar");
-        toolbar.addClassName("full-width");
-        toolbar.setJustifyContentMode(JustifyContentMode.BETWEEN);
-        toolbar.setAlignItems(Alignment.BASELINE);
+        Div navigation = new Div(reviews, categories);
+        navigation.addClassName("main-layout__nav");
+
+        Div header = new Div(title, navigation);
+        header.addClassName("main-layout__header");
+        add(header);
+
         addClassName("main-layout");
-        setAlignItems(Alignment.CENTER);
-        add(toolbar);
     }
 
 }

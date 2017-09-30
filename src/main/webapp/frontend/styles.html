@@ -1,9 +1,19 @@
-<link rel="import" href="./bower_components/polymer/polymer-element.html">
-<link rel="import" href="./bower_components/vaadin-valo-theme/typography.html">
-<link rel="import" href="./bower_components/vaadin-valo-theme/color.html">
-<link rel="import" href="./bower_components/vaadin-valo-theme/sizing-and-spacing.html">
-<link rel="import" href="./bower_components/vaadin-valo-theme/style.html">
-<link rel="import" href="./bower_components/vaadin-valo-theme/icons.html">
+<!--
+  ~ Copyright 2000-2017 Vaadin Ltd.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not
+  ~ use this file except in compliance with the License. You may obtain a copy of
+  ~ the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing permissions and limitations under
+  ~ the License.
+  -->
+
 <link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-button.html">
 <link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-text-field.html">
 <link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-checkbox.html">
@@ -12,308 +22,249 @@
 <link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-form-item.html">
 <link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-combo-box.html">
 <link rel="import" href="./bower_components/vaadin-valo-theme/vaadin-grid.html">
+<link rel="import" href="./bower_components/vaadin-valo-theme/icons.html">
 
-<!-- valo theme shows clear icons in date-picker and combo-box, but we want it hidden here -->
-<dom-module id="fast-combo-box-date-picker-styles" theme-for="vaadin-combo-box vaadin-date-picker">
-    <template>
-        <style>
-      [part="clear-button"] {
-        display: none;
-      }
-    </style>
-    </template>
-</dom-module>
-
-<!-- theme for vaadin-buttons in menus -->
-<dom-module id="fast-button-styles" theme-for="vaadin-button">
-    <template>
-        <style>
-      :host([theme~="menu"]) [part="button"] {
-        text-align: left;
-      }
-
-      :host([theme~="menu"]) {
-        margin: 0;
-        padding: 0;
-        --valo-size: var(--valo-size-s);
-      }
-
-      :host([theme~="narrow"]) [part="button"] {
-        padding: 0 calc(var(--valo-size, var(--valo-size-m)) / 8 + var(--valo-button-border-radius, var(--valo-border-radius)) / 2);
-      }
-    </style>
-    </template>
-</dom-module>
-
-<!-- Theme for the status selector, we need to theme the text-field instead of the combo-box -->
-<dom-module id="fast-text-field-styles" theme-for="vaadin-text-field">
-    <template>
-        <style>
-      :host([theme~="status"][status="new"]) [part~="input-field"],
-      :host([theme~="status"][status="confirmed"]) [part~="input-field"] {
-        color: var(--valo-primary-color);
-        background: var(--valo-primary-color-10pct);
-      }
-
-      :host([theme~="status"][status="ready"]) [part~="input-field"],
-      :host([theme~="status"][status="delivered"]) [part~="input-field"] {
-        color: var(--valo-success-color);
-        background: var(--valo-success-color-10pct);
-      }
-
-      :host([theme~="status"][status="problem"]) [part~="input-field"],
-      :host([theme~="status"][status="cancelled"]) [part~="input-field"] {
-        color: var(--valo-error-color);
-        background: var(--valo-error-color-10pct);
-      }
-    </style>
-    </template>
-</dom-module>
-
-<!-- Theme for the vaadin-overlays -->
-<dom-module id="fast-overlay-styles" theme-for="vaadin-overlay">
-    <template>
-        <style include="vaadin-overlay-default-theme">
-      [part="content"] {
-        background: var(--valo-base-color) !important;
-      }
-    </style>
-    </template>
-</dom-module>
-
-<!-- Theme for the vaadin-combo-box-items -->
-<dom-module id="fast-combo-box-item-styles" theme-for="vaadin-combo-box-item">
-    <template>
-        <style include="vaadin-combo-box-item-default-theme">
-      :host(:not([touch-device]):hover),
-      :host([focused]) {
-        background: var(--valo-base-color);
-        background-image: linear-gradient(var(--valo-tint-5pct), var(--valo-tint-5pct));
-      }
-    </style>
-    </template>
-</dom-module>
-
-<!-- Theme for the vaadin-grid -->
-<dom-module id="fast-grid-styles" theme-for="vaadin-grid">
-    <template>
-        <style include="vaadin-grid-default-theme">
-      /* TODO Make the cursor change over the whole grid row */
-      [part~="row"]:hover [part~="body-cell"] {
-        cursor: pointer;
-        background: var(--valo-shade-20pct);
-      }
-    </style>
-    </template>
-</dom-module>
-
-
-<!-- style for the main page -->
 <custom-style>
-    <style is="custom-style" include="valo-colors valo-typography">
-    html,
-    body {
-      height: 100%;
-    }
+    <style include="valo-colors valo-typography">
+        html,
+        body {
+            height: auto;
+        }
 
-    body {
-      margin: 0;
-      background: var(--valo-shade-10pct);
-    }
+        html {
+            background-color: var(--valo-contrast-5pct);
+            --main-layout-header-height: 64px;
+        }
 
-    fast-app {
-      height: 100%;
-    }
-  </style>
+        .main-layout {
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        .main-layout__title {
+            font-size: 1em;
+            margin: 0;
+            /* Allow the nav-items to take all the space so they are centered */
+            width: 0;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            font-weight: 500;
+        }
+
+        .main-layout__header {
+            display: flex;
+            align-items: center;
+            height: var(--main-layout-header-height);
+
+            /* Stretch to fill the entire browser viewport, while keeping the content constrained to
+               parent element max-width */
+            margin: 0 calc(-50vw + 50%);
+            padding: 0 calc(50vw - 50% + 16px);
+
+            background-color: var(--valo-base-color);
+            box-shadow: 0 1px 0 0 var(--valo-contrast-5pct);
+        }
+
+        .main-layout__nav {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .main-layout__nav-item {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4px 8px;
+            cursor: pointer;
+            transition: 0.3s color, 0.3s transform;
+            will-change: transform;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            font-size: var(--valo-font-size-s);
+            color: var(--valo-secondary-text-color);
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .main-layout__nav-item:hover {
+            text-decoration: none;
+        }
+
+        .main-layout__nav-item:not(.main-layout__nav-item--selected):hover {
+            color: inherit;
+        }
+
+        .main-layout__nav-item--selected {
+            color: var(--valo-primary-text-color);
+            cursor: default;
+        }
+
+        .main-layout__nav-item iron-icon {
+            /* Vaadin icons are using a 16x16 grid */
+            padding: 4px;
+            box-sizing: border-box;
+        }
+
+
+        /* Category list view styles, placed here because the view is created using the Java API
+          instead of a HTML template */
+        /* In a real project, some of these would be encapsulated in a reusable component instead */
+
+        .categories-list {
+            height: calc(100vh - var(--main-layout-header-height));
+        }
+
+        .view-toolbar {
+            display: flex;
+            background-color: var(--valo-base-color);
+            box-shadow: 0 1px 0 0 var(--valo-contrast-5pct);
+            margin: 0 calc(-50vw + 50%);
+            padding: 8px calc(50vw - 50% + 16px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .view-toolbar__search-field {
+            flex: auto;
+            margin-right: 16px;
+        }
+
+        .view-toolbar__button {
+            margin-left: 0;
+            margin-right: 0;
+            min-width: 0;
+            flex: none;
+        }
+
+        vaadin-grid.categories {
+            /* We are not expecting there to be too many categories, so the grid is allowed to grow
+               with the items, and never have its own scrollbar (and load all items immediately) */
+            height: auto;
+            margin: 0 16px;
+            border-width: 0;
+            border-radius: 0 0 var(--valo-border-radius) var(--valo-border-radius);
+            box-shadow: 0 0 0 1px var(--valo-shade-5pct), 0 2px 5px 0 var(--valo-shade-10pct);
+        }
+
+        /* Small viewport styles */
+
+        @media (max-width: 600px) {
+            .main-layout__header {
+                padding: 0 8px;
+            }
+
+            .view-toolbar {
+                padding: 4px 8px;
+            }
+
+            /* Hide the button label when the browser viewport is narrow */
+            .view-toolbar__button span {
+                display: none;
+            }
+
+            .view-toolbar__button iron-icon {
+                margin: 0;
+            }
+
+            vaadin-grid.categories {
+                margin: 0;
+            }
+        }
+
+        /* Dialog styles */
+
+        html {
+            --paper-dialog-background-color: var(--valo-base-color);
+            --paper-dialog-color: var(--valo-body-text-color);
+            --paper-dialog: {
+                font-family: var(--valo-font-family);
+                -webkit-tap-highlight-color: transparent;
+                min-width: 320px;
+                max-width: 100%;
+                margin: 8px 16px;
+                border-radius: var(--valo-border-radius);
+                /* TODO use this once available */
+                /*box-shadow: var(--valo-dialog-box-shadow);*/
+                box-shadow: 0 0 0 1px var(--valo-contrast-5pct),
+                            0 1px 6px 0 var(--valo-shade-30pct),
+                            0 24px 56px -6px var(--valo-shade-40pct);
+
+            };
+            --paper-dialog-title: {
+                font-family: var(--valo-font-family);
+            };
+            --iron-overlay-backdrop-background-color: var(--valo-shade-30pct);
+            --iron-overlay-backdrop-opacity: 1;
+        }
+
+        /* TODO these should be encapsulated in a reusable component. Now these styles only work
+           inside the main style scope */
+        paper-dialog .buttons {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 16px;
+            margin-top: 16px;
+            border-top: 1px solid var(--valo-contrast-10pct);
+        }
+
+        paper-dialog .buttons [theme~="danger"] {
+            margin-left: auto;
+        }
+
+        paper-dialog h2,
+        paper-dialog .has-padding {
+            padding: 0 16px;
+        }
+
+        paper-dialog.confirm-dialog h2 {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--valo-secondary-text-color);
+            margin-top: 16px;
+        }
+
+        paper-dialog.confirm-dialog .text div {
+            margin-bottom: 0.6em;
+            max-width: 40em;
+        }
+
+        paper-dialog.confirm-dialog .text div:first-child {
+            font-weight: 600;
+            color: var(--valo-header-text-color);
+        }
+
+        paper-dialog.confirm-dialog .buttons {
+            padding: 8px;
+            justify-content: space-between;
+        }
+    </style>
 </custom-style>
 
-<!-- shared styles for all views -->
-<dom-module id="shared-styles">
-    <style>
-      .main-layout {
-        max-width: 1000px;
-        margin: auto;
-      }
-
-      .toolbar {
-        -webkit-flex-wrap: wrap;
-        flex-wrap: wrap;
-        width: 100%;
-        background-color: var(--valo-shade-10pct);
-        transition: box-shadow .2s;
-        padding: var(--valo-space-m);
-      }
-
-      .toolbar > .toolbar-item {
-        flex: initial;
-      }
-
-      .title {
-        line-height: 30px;
-      }
-
-      .link {
-        margin-left: var(--valo-space-m);
-        margin-right: var(--valo-space-m);
-      }
-
-      .filter-field {
-        width: 10em;
-      }
-
-      .filter-field[focused] {
-        width: 20em;
-      }
-
-      .categories-list {
-        width: 80% !important;
-      }
-
-      .no-padding {
-        padding: 0;
-      }
-
-      .has-padding {
-        padding: 10px;
-      }
-
-      .full-width {
-        width: 100%;
-      }
-
-      .grid-row {
-        border: 1px solid var(--valo-shade-60pct);
-      }
-
-      .notification {
-        background-color: blue;
-      }
-    </style>
+<dom-module id="beverage-buddy-grids" theme-for="vaadin-grid">
     <template>
-        <style>
-      :host([hidden]) {
-        display: none !important;
-      }
+        <!-- Extend the Valo grid theme -->
+        <style include="valo-grid">
+            @media (pointer: coarse) {
+                :host(.categories) [part~="body-cell"]:last-child::after {
+                    content: "Edit";
+                    color: var(--valo-primary-text-color);
+                }
+            }
 
-      h2,
-      h3 {
-        margin-top: var(--valo-space-m);
-        margin-bottom: var(--valo-space-s);
-      }
+            :host(.categories) [part~="row"]:hover [part~="body-cell"] {
+                cursor: pointer;
+                background: var(--valo-shade-5pct);
+            }
 
-      h2 {
-        font-size: var(--valo-font-size-xxl);
-      }
-
-      h3 {
-        font-size: var(--valo-font-size-xl);
-      }
-
-      .overflow-auto {
-        overflow: auto;
-      }
-
-      .card {
-        background: var(--valo-base-color);
-        background-image: linear-gradient(var(--valo-tint-5pct), var(--valo-tint-5pct));
-        border-radius: var(--valo-border-radius);
-        box-shadow: 0 3px 5px #ddd;
-      }
-
-      .scrollable {
-        padding: var(--valo-space-m);
-        overflow: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      .footer {
-        display: flex;
-        flex-wrap: wrap;
-        transition: box-shadow .2s;
-        justify-content: space-between;
-        padding: var(--valo-space-s);
-        align-items: baseline;
-      }
-
-      :host([scroll-shadow]) .footer {
-        box-shadow: 0 -1px 5px var(--valo-shade-20pct);
-      }
-
-      .count {
-        display: inline-block;
-        background: var(--valo-shade-10pct);
-        border-radius: var(--valo-border-radius);
-        font-size: var(--valo-font-size-s);
-        padding: 0 var(--valo-space-s);
-        text-align: center;
-      }
-
-      .money {
-        text-align: right;
-      }
-
-      .total {
-        flex: 1;
-        order: -1;
-        box-sizing: border-box;
-        padding: 0 var(--valo-space-s);
-        min-width: 100%;
-        font-size: var(--valo-font-size-l);
-        font-weight: bold;
-        white-space: nowrap;
-      }
-
-      @media (min-width: 600px) {
-        .total {
-          min-width: 0;
-          order: 0;
-          padding: 0 var(--valo-space-l);
-        }
-      }
-
-      .baseline {
-        align-items: baseline;
-      }
-
-      .flex {
-        display: flex;
-      }
-
-      .flex0 {
-        flex: 0;
-      }
-
-      .flex1 {
-        flex: 1;
-      }
-
-      .flex2 {
-        flex: 2;
-      }
-
-      .flex5 {
-        flex: 5;
-      }
-
-      .flex9 {
-        flex: 9;
-      }
-
-      .column {
-        flex-direction: column;
-      }
-
-      .bold {
-        font-weight: 600;
-      }
-
-      .align-center {
-        align-items: center;
-      }
-
-      .justify-center {
-        justify-content: center;
-      }
-    </style>
+            :host(.categories) [part~="cell"]:not([part~="details-cell"]) ::slotted(vaadin-grid-cell-content) {
+                cursor: inherit;
+            }
+        </style>
     </template>
 </dom-module>
