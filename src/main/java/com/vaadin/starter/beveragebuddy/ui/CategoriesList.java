@@ -67,6 +67,7 @@ public final class CategoriesList extends Div {
         Div viewToolbar = new Div();
         viewToolbar.addClassName("view-toolbar");
 
+        searchField.addToPrefix(new Icon(VaadinIcons.SEARCH));
         searchField.addClassName("view-toolbar__search-field");
         searchField.addValueChangeListener(e -> updateView());
 

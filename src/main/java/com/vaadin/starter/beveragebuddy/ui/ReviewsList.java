@@ -47,7 +47,7 @@ import com.vaadin.ui.textfield.TextField;
 @Title("Review List")
 @Tag("reviews-list")
 @HtmlImport("frontend://reviews-list.html")
-public class ReviewsList extends PolymerTemplate<ReviewsModel> {
+public final class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
     public static interface ReviewsModel extends TemplateModel {
         @Convert(value = LongToStringConverter.class, path = "id")
