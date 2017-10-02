@@ -37,7 +37,7 @@ import com.vaadin.ui.textfield.TextField;
  */
 @Route(value = "categories", layout = MainLayout.class)
 @Title("Categories List")
-public final class CategoriesList extends Div {
+public class CategoriesList extends Div {
 
     private final TextField searchField = new TextField("", "Search");
     private final Grid<Category> grid = new Grid<>();
@@ -67,6 +67,7 @@ public final class CategoriesList extends Div {
         Div viewToolbar = new Div();
         viewToolbar.addClassName("view-toolbar");
 
+        searchField.addToPrefix(new Icon(VaadinIcons.SEARCH));
         searchField.addClassName("view-toolbar__search-field");
         searchField.addValueChangeListener(e -> updateView());
 
