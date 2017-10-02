@@ -37,7 +37,7 @@ import com.vaadin.ui.textfield.TextField;
  */
 @Route(value = "categories", layout = MainLayout.class)
 @Title("Categories List")
-public final class CategoriesList extends Div {
+public class CategoriesList extends Div {
 
     private final TextField searchField = new TextField("", "Search");
     private final Grid<Category> grid = new Grid<>();

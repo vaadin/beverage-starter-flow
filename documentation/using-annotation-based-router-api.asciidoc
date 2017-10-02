@@ -13,13 +13,13 @@ In the annotation based router API, different routes are defined by annotating y
 [source, java]
 --------------
 @Route(value = "", layout = MainLayout.class)
-public final class ReviewsList extends PolymerTemplate<ReviewsModel> {
+public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 }
 --------------
 [source, java]
 --------------
 @Route(value = "categories", layout = MainLayout.class)
-public final class CategoriesList extends Div {
+public class CategoriesList extends Div {
 }
 --------------
 
