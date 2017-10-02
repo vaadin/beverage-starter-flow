@@ -15,14 +15,14 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.ui.textfield.TextField;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * A dialog for editing {@link Category} objects.
@@ -36,7 +36,7 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
         super("Category", itemSaver, itemDeleter);
 
         addNameField();
-
+        // Due to a bug, not currently focusing vaadin/flow#2548
         categoryNameField.focus();
     }
 
