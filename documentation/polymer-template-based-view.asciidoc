@@ -5,14 +5,14 @@ layout: page
 ---
 ifdef::env-github[:outfilesuffix: .asciidoc]
 
-Polymer Template Based View
----------------------------
+= Polymer Template Based View
+
 ReviewsList is a Polymer template based view class. In this view, the list of reviews will be shown under a "search" bar and "add a new review" button.
 
-For more content about Polymer template, you can find https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-basic.asciidoc[here^].The following contents will introduce some concepts which are used in ``ReviewsList.java`` and ``ReviewList.html`` file.
+For more content about Polymer template, you can find https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-basic.asciidoc[here^].The following contents will introduce some concepts which are used in ``ReviewsList.java`` and ``reviews-list.html`` file.
 
-Data binding in PolymerTemplate
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== Data binding in PolymerTemplate
+
 In reviews list, every review is shown separately. In order to do this, PolymerTemplate provides a way to generate elements based on a list of items using template repeater, `dom-repeat`.
 
 [source, html]
@@ -47,8 +47,7 @@ The name of the method should match the property name used in the template, `rev
 
 You can get more information about "Data Binding in PolymerTemplate" in the tutorial  https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-list-bindings.asciidoc[here^].
 
-Binding components from the template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== Binding components from the template
 
 In the HTML template, we have a text-field and a button with the corresponding identifiers.
 [source, html]
@@ -67,8 +66,8 @@ private Button addReview;
 --------------
 More about this topic, you can find https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-components.asciidoc[here^].
 
-Listening for user events from the template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+== Listening for user events from the template
+
 At the end of each review, there is an edit button for users to edit the existing review. To handle the click event from each button, we need to create a separate method with the event name, annotated with `@EventHandler`.
 [source, java]
 --------------
@@ -77,5 +76,12 @@ private void edit(@ModelItem Review review) {
    reviewForm.openReview(Optional.of(review));
 }
 --------------
-More about this topic, you can find  https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-event-handlers.asciidoc#server-side-event-handlers[here^].
+You can look https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-event-handlers.asciidoc#server-side-event-handlers[here^] for more information about sending events from template to the server.
 
+
+== Adding template files to `index.html
+
+Once you are ready to take your App in to production, you need to build it using the `productionMode` Maven profile.
+The production build transpiles your front-end files into ES5 for adding support to older browsers (IE11).
+For this to work, you need to add your root level template files into the https://github.com/vaadin/beverage-starter-flow/blob/master/src/main/webapp/frontend/index.html[index.html^] file.
+This has been done already for `reviews-list.html` template. For more information, please see the https://github.com/vaadin/flow/blob/master/flow-documentation/web-components/tutorial-webcomponents-es5.asciidoc[Flow documentation]
