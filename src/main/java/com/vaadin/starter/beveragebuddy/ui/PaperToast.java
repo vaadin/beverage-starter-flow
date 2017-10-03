@@ -28,7 +28,7 @@ import com.vaadin.ui.event.ComponentEventListener;
  * See https://www.webcomponents.org/element/PolymerElements/paper-toast/elements/paper-toast for details.
  */
 @Tag("paper-toast")
-@HtmlImport("context://bower_components/paper-toast/paper-toast.html")
+@HtmlImport("frontend://bower_components/paper-toast/paper-toast.html")
 public class PaperToast extends Component implements HasStyle {
     /**
      * Sets the duration in milliseconds to show the toast.

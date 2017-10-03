@@ -50,7 +50,6 @@ import java.util.stream.Collectors;
  *            the type of the item to be added, edited or deleted
  */
 @HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
-@HtmlImport("frontend://bower_components/vaadin-form-layout/vaadin-form-layout.html")
 public abstract class AbstractEditorDialog<T extends Serializable>
         extends Composite<GeneratedPaperDialog> {
 
