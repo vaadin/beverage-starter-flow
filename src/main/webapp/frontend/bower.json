@@ -17,13 +17,6 @@
     "polymer": "~2.0.2",
     "paper-toast": "~2.0.0",
     "paper-dialog": "~2.0.0",
-    "vaadin-text-field": "~1.1.0-beta1",
-    "vaadin-button": "~1.0.4",
-    "vaadin-combo-box": "~3.0.0-beta1",
-    "vaadin-date-picker": "~2.0.5",
-    "vaadin-form-layout": "~1.0.3",
-    "vaadin-valo-theme": "~2.0.0-alpha2",
-    "vaadin-icons": "4.1.1",
-    "vaadin-grid": "~4.0.0-alpha2"
+    "vaadin-core": "2.0.0-alpha3"
   }
 }
