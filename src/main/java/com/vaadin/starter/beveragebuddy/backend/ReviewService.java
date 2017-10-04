@@ -47,7 +47,7 @@ public class ReviewService {
 
                 review.setName(beverage.getKey());
                 LocalDate testDay = LocalDate.of(1930 + r.nextInt(88),
-                        1 + r.nextInt(12), 1 + r.nextInt(28));
+                        1 + r.nextInt(9), 1 + r.nextInt(28));
                 review.setDate(testDay);
                 review.setScore(1 + r.nextInt(5));
                 review.setCategory(category);
