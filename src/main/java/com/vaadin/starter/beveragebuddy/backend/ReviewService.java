@@ -44,6 +44,7 @@ public class ReviewService {
                         .get(r.nextInt(StaticData.BEVERAGES.size()));
                 Category category = CategoryService.getInstance()
                         .findCategoryOrThrow(beverage.getValue());
+
                 review.setName(beverage.getKey());
                 LocalDate testDay = getRandomDate();
                 review.setDate(testDay);
@@ -55,13 +56,14 @@ public class ReviewService {
 
             return reviewService;
         }
-    }
 
-    private static LocalDate getRandomDate() {
-        long minDay = LocalDate.of(1930, 1, 1).toEpochDay();
-        long maxDay = LocalDate.now().toEpochDay();
-        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
-        return LocalDate.ofEpochDay(randomDay);
+        private static LocalDate getRandomDate() {
+            long minDay = LocalDate.of(1930, 1, 1).toEpochDay();
+            long maxDay = LocalDate.now().toEpochDay();
+            long randomDay = ThreadLocalRandom.current().nextLong(minDay,
+                    maxDay);
+            return LocalDate.ofEpochDay(randomDay);
+        }
     }
 
     private Map<Long, Review> reviews = new HashMap<>();
@@ -71,21 +73,6 @@ public class ReviewService {
      * Declared private to ensure uniqueness of this Singleton.
      */
     private ReviewService() {
-    }
-
-    private String filterTextOf(Review review) {
-        LocalDateToStringConverter dateConverter = new LocalDateToStringConverter();
-        // Use a delimiter which can't be entered in the search box,
-        // to avoid false positives
-        String filterableText = Stream
-                .of(review.getName(),
-                        Optional.ofNullable(review.getCategory())
-                                .orElse(Category.UNDEFINED).getName(),
-                        String.valueOf(review.getScore()),
-                        String.valueOf(review.getCount()),
-                        dateConverter.toPresentation(review.getDate()))
-                .collect(Collectors.joining("\t"));
-        return filterableText.toLowerCase();
     }
 
     /**
@@ -116,6 +103,21 @@ public class ReviewService {
                 .map(Review::new)
                 .sorted((r1, r2) -> r2.getId().compareTo(r1.getId()))
                 .collect(Collectors.toList());
+    }
+
+    private String filterTextOf(Review review) {
+        LocalDateToStringConverter dateConverter = new LocalDateToStringConverter();
+        // Use a delimiter which can't be entered in the search box,
+        // to avoid false positives
+        String filterableText = Stream
+                .of(review.getName(),
+                        Optional.ofNullable(review.getCategory())
+                                .orElse(Category.UNDEFINED).getName(),
+                        String.valueOf(review.getScore()),
+                        String.valueOf(review.getCount()),
+                        dateConverter.toPresentation(review.getDate()))
+                .collect(Collectors.joining("\t"));
+        return filterableText.toLowerCase();
     }
 
     /**
