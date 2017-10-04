@@ -173,7 +173,7 @@
 
             <properties>
                 <npm.build.goal>run prodMode</npm.build.goal>
-                <jetty.extra.resource.base>${frontend.working.directory}/build</jetty.extra.resource.base>
+                <jetty.extra.resource.base>${project.basedir}/src/main/webapp/frontend/build</jetty.extra.resource.base>
             </properties>
 
             <dependencies>
