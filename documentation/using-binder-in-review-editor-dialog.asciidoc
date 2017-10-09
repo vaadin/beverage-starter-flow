@@ -1,0 +1,54 @@
+---
+title: Using Binder in ReviewEditorDialog
+order: 3
+layout: page
+---
+
+ifdef::env-github[:outfilesuffix: .asciidoc]
+Using Binder in ReviewEditorDialog
+----------------------------------
+`ReviewEditorDialog` implements a form which lets the user edit the various
+properties of a `Review` object.
+
+The logic related to properly displaying, converting and validating field values
+to and from the specific web components used to display may become quite complex
+and may also be repeated across different fields. The `Binder` can greatly
+simplify this.
+
+Binder
+~~~~~~
+Between the form and the backend data, `Binder` provides a bridge to connect the
+property names with the related values. Once the bindings are declared,
+you can use the `readBean` and `writeBean` methods to sync data.
+[source, java]
+--------------
+//declare a Binder for review class
+private Binder<Review> binder = new Binder<>();
+...
+// populate the dialog components with the current item's property values
+binder.readBean(currentItem);
+--------------
+
+Furthermore, `Binder` offers an easy way to convert and validate the input data.
+Let's take the property "Times Tasted" as an example:
+[source, java]
+--------------
+private TextField timesTasted = new TextField();
+...
+getBinder().forField(timesTasted)
+        .withConverter(
+                new StringToIntegerConverter(0, "Must enter a number."))
+        .withValidator(new IntegerRangeValidator(
+                "The tasting count must be between 1 and 99.", 1, 99))
+        .bind(Review::getCount, Review::setCount);
+--------------
+This code declares a converter to convert between the `int` property of the
+current item and the `String` text displayed in the text field. If the text
+can not be converted to an integer, the conversion fails and the given error
+message is displayed.
+
+To further restrict the possible values for this field, a validator is also
+declared to ensure that the values is between 1 and 99.
+
+For more information related to `Binder`, you may check the
+https://github.com/vaadin/flow/blob/master/flow-documentation/binding-data/tutorial-flow-components-binder-beans.asciidoc[Tutorial for Binder].

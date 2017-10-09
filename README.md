@@ -7,11 +7,11 @@ This is a Vaadin Flow example application, and can be used as a starting point t
 
 The Starter demonstrates the core Flow concepts:
 * Building UIs in Java with Components based on [Vaadin Elements](https://vaadin.com/elements/browse), such as `TextField`, `Button`, `ComboBox`, `DatePicker`, `VerticalLayout` and `Grid` (see `CategoriesList`)
-* [Creating forms with `Binder`](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-binder-in-reviewform.asciidoc#using-binder-in-reviewform) (`ReviewForm`)
+* [Creating forms with `Binder`](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-binder-in-review-editor-dialog.asciidoc) (`ReviewEditorDialog`)
 * Making reusable Components on server side with `Composite` (`AbstractEditorDialog`)
-* [Creating a Component based on a HTML Template](https://github.com/vaadin/free-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc#polymer-template-based-view) (`ReviewsList`) 
-* [Integrating a third-party Web Component](https://github.com/vaadin/free-starter-flow/blob/master/documentation/integrating-a-web-component.asciidoc#integrating-a-web-component) (`PaperToast`) 
-* [Creating Navigation with the Router API](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-annotation-based-router-api.asciidoc#using-the-annotation-based-router-api) (`MainLayout`, `ReviewsList`, `CategoriesList`) 
+* [Creating a Component based on a HTML Template](https://github.com/vaadin/free-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc) (`ReviewsList`) 
+* [Integrating a third-party Web Component](https://github.com/vaadin/free-starter-flow/blob/master/documentation/integrating-a-web-component.asciidoc) (`PaperToast`) 
+* [Creating Navigation with the Router API](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-annotation-based-router-api.asciidoc) (`MainLayout`, `ReviewsList`, `CategoriesList`) 
 
 ## Prerequisites
 
