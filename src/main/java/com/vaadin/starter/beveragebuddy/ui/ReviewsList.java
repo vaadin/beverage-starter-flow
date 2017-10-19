@@ -19,8 +19,8 @@ import java.util.List;
 
 import com.vaadin.flow.model.Convert;
 import com.vaadin.flow.model.TemplateModel;
+import com.vaadin.router.PageTitle;
 import com.vaadin.router.Route;
-import com.vaadin.router.Title;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.starter.beveragebuddy.ui.ReviewsList.ReviewsModel;
@@ -44,12 +44,12 @@ import com.vaadin.ui.textfield.TextField;
  * Implemented using a simple template.
  */
 @Route(value = "", layout = MainLayout.class)
-@Title("Review List")
+@PageTitle("Review List")
 @Tag("reviews-list")
 @HtmlImport("frontend://reviews-list.html")
 public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
-    public static interface ReviewsModel extends TemplateModel {
+    public interface ReviewsModel extends TemplateModel {
         @Convert(value = LongToStringConverter.class, path = "id")
         @Convert(value = LocalDateToStringConverter.class, path = "date")
         @Convert(value = LongToStringConverter.class, path = "category.id")
