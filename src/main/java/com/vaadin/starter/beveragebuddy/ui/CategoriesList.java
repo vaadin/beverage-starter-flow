@@ -28,7 +28,6 @@ import com.vaadin.ui.common.HasValue;
 import com.vaadin.ui.grid.Grid;
 import com.vaadin.ui.html.Div;
 import com.vaadin.ui.icon.Icon;
-import com.vaadin.ui.icon.VaadinIcons;
 import com.vaadin.ui.textfield.TextField;
 
 /**
@@ -67,12 +66,12 @@ public class CategoriesList extends Div {
         Div viewToolbar = new Div();
         viewToolbar.addClassName("view-toolbar");
 
-        searchField.addToPrefix(new Icon(VaadinIcons.SEARCH));
+        searchField.addToPrefix(new Icon("valo", "magnifier"));
         searchField.addClassName("view-toolbar__search-field");
         searchField.addValueChangeListener(e -> updateView());
 
         Button newButton = new Button("New category",
-                new Icon(VaadinIcons.PLUS));
+                new Icon("valo", "plus"));
         newButton.getElement().setAttribute("theme", "primary");
         newButton.addClassName("view-toolbar__button");
         newButton.addClickListener(e -> form.open(new Category(),
