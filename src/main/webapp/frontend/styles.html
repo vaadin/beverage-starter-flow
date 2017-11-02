@@ -245,26 +245,3 @@
         }
     </style>
 </custom-style>
-
-<dom-module id="beverage-buddy-grids" theme-for="vaadin-grid">
-    <template>
-        <!-- Extend the Valo grid theme -->
-        <style include="valo-grid">
-            @media (pointer: coarse) {
-                :host(.categories) [part~="body-cell"]:last-child::after {
-                    content: "Edit";
-                    color: var(--valo-primary-text-color);
-                }
-            }
-
-            :host(.categories) [part~="row"]:hover [part~="body-cell"] {
-                cursor: pointer;
-                background: var(--valo-shade-5pct);
-            }
-
-            :host(.categories) [part~="cell"]:not([part~="details-cell"]) ::slotted(vaadin-grid-cell-content) {
-                cursor: inherit;
-            }
-        </style>
-    </template>
-</dom-module>
