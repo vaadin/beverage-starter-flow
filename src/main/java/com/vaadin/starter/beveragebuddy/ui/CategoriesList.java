@@ -81,12 +81,10 @@ public class CategoriesList extends Div {
     }
 
     private void addGrid() {
-        grid.addColumn("Category", Category::getName)
-                .setWidth("calc(50% - 60px)");
-        grid.addColumn("Beverages", this::getReviewCount)
-                .setWidth("calc(50% - 60px)");
+        grid.addColumn("Category", Category::getName);
+        grid.addColumn("Beverages", this::getReviewCount);
         grid.addColumn("", new ComponentRenderer<>(this::createEditButton))
-                .setWidth("120px");
+                .setFlexGrow(0);
 
         grid.addClassName("categories");
         grid.getElement().setAttribute("theme", "row-dividers");
