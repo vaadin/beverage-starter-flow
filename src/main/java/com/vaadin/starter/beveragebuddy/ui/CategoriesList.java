@@ -24,10 +24,10 @@ import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.ui.button.Button;
-import com.vaadin.ui.common.HasValue;
 import com.vaadin.ui.grid.Grid;
 import com.vaadin.ui.html.Div;
 import com.vaadin.ui.icon.Icon;
+import com.vaadin.ui.renderers.ComponentRenderer;
 import com.vaadin.ui.textfield.TextField;
 
 /**
@@ -70,8 +70,7 @@ public class CategoriesList extends Div {
         searchField.addClassName("view-toolbar__search-field");
         searchField.addValueChangeListener(e -> updateView());
 
-        Button newButton = new Button("New category",
-                new Icon("valo", "plus"));
+        Button newButton = new Button("New category", new Icon("valo", "plus"));
         newButton.getElement().setAttribute("theme", "primary");
         newButton.addClassName("view-toolbar__button");
         newButton.addClickListener(e -> form.open(new Category(),
@@ -84,21 +83,21 @@ public class CategoriesList extends Div {
     private void addGrid() {
         grid.addColumn("Category", Category::getName);
         grid.addColumn("Beverages", this::getReviewCount);
-        // Grid does not yet implement HasStyle
-        grid.getElement().getClassList().add("categories");
+        grid.addColumn("", new ComponentRenderer<>(this::createEditButton))
+                .setFlexGrow(0);
+
+        grid.addClassName("categories");
         grid.getElement().setAttribute("theme", "row-dividers");
-        grid.asSingleSelect().addValueChangeListener(this::selectionChanged);
         add(grid);
     }
 
-    private void selectionChanged(
-            HasValue.ValueChangeEvent<Grid<Category>, Category> event) {
-        Category selectedItem = event.getValue();
-
-        if (selectedItem != null) {
-            form.open(selectedItem, AbstractEditorDialog.Operation.EDIT);
-            grid.getSelectionModel().deselect(selectedItem);
-        }
+    private Button createEditButton(Category category) {
+        Button edit = new Button("Edit", event -> form.open(category,
+                AbstractEditorDialog.Operation.EDIT));
+        edit.setIcon(new Icon("valo", "edit"));
+        edit.addClassName("review__edit");
+        edit.getElement().setAttribute("theme", "tertiary");
+        return edit;
     }
 
     private String getReviewCount(Category category) {
