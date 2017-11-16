@@ -81,9 +81,9 @@ public class CategoriesList extends Div {
     }
 
     private void addGrid() {
-        grid.addColumn("Category", Category::getName);
-        grid.addColumn("Beverages", this::getReviewCount);
-        grid.addColumn("", new ComponentRenderer<>(this::createEditButton))
+        grid.addColumn(Category::getName).setHeader("Category");
+        grid.addColumn(this::getReviewCount).setHeader("Beverages");
+        grid.addColumn(new ComponentRenderer<>(this::createEditButton))
                 .setFlexGrow(0);
 
         grid.addClassName("categories");
