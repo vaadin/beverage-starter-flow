@@ -36,6 +36,13 @@
         <jetty.extra.resource.base>${project.basedir}/src/main/webapp/</jetty.extra.resource.base>
     </properties>
 
+    <pluginRepositories>
+        <pluginRepository>
+            <id>flow-internal-release</id>
+            <url>https://repo.vaadin.com/nexus/content/repositories/flow</url>
+        </pluginRepository>
+    </pluginRepositories>
+
     <repositories>
         <repository>
             <id>flow-internal-release</id>
@@ -61,6 +68,22 @@
                 <type>pom</type>
                 <scope>import</scope>
                 <version>${flow.project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>github-com-polymerelements-paper-dialog-behavior</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>github-com-polymerelements-paper-styles</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars.bower</groupId>
+                <artifactId>github-com-polymerelements-font-roboto</artifactId>
+                <version>1.0.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -110,15 +133,38 @@
             <artifactId>flow-components</artifactId>
             <version>${flow.project.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-generated-components</artifactId>
-            <version>${flow.project.version}</version>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>polymer</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-html-components</artifactId>
-            <version>${flow.project.version}</version>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vaadin-valo-theme</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vaadin-button</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vaadin-text-field</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vaadin-date-picker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vaadin-form-layout</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vaadin-combo-box</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vaadin-grid</artifactId>
         </dependency>
 
         <dependency>
@@ -136,58 +182,9 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>${maven.clean.plugin.version}</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>${frontend.working.directory}/bower_components</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>${frontend.working.directory}/build</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>${frontend.working.directory}/node</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>${frontend.working.directory}/node_modules</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
-                <configuration>
-                    <scanIntervalSeconds>-1</scanIntervalSeconds>
-                    <stopPort>8081</stopPort>
-                    <stopWait>5</stopWait>
-                    <stopKey>foo</stopKey>
-                    <webAppConfig>
-                        <containerIncludeJarPattern>^$</containerIncludeJarPattern>
-                        <resourceBases>
-                            <resourceBase>${jetty.extra.resource.base}</resourceBase>
-                        </resourceBases>
-                    </webAppConfig>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>${maven.war.plugin.version}</version>
-                <configuration>
-                    <archive>
-                        <manifestEntries>
-                            <Implementation-Title>${project.name}</Implementation-Title>
-                            <Implementation-Version>${project.version}</Implementation-Version>
-                        </manifestEntries>
-                    </archive>
-                    <warSourceExcludes>**/node_modules/,**/node/,**/build/,**/etc/</warSourceExcludes>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -202,7 +199,7 @@
             </activation>
 
             <properties>
-                <jetty.extra.resource.base>${project.basedir}/src/main/webapp/frontend/build</jetty.extra.resource.base>
+                <transpilation.output>${project.build.directory}/build</transpilation.output>
             </properties>
 
             <dependencies>
@@ -216,29 +213,17 @@
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>com.github.eirslett</groupId>
-                        <artifactId>frontend-maven-plugin</artifactId>
-                        <version>${frontend.maven.plugin.version}</version>
-                        <configuration>
-                            <nodeVersion>${node.version}</nodeVersion>
-                            <npmVersion>${npm.version}</npmVersion>
-                            <workingDirectory>${frontend.working.directory}</workingDirectory>
-                        </configuration>
+                        <groupId>com.vaadin</groupId>
+                        <artifactId>flow-maven-plugin</artifactId>
+                        <version>0.0.3</version>
                         <executions>
                             <execution>
-                                <id>install-node-and-npm</id>
                                 <goals>
-                                    <goal>install-node-and-npm</goal>
-                                    <goal>npm</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>npm run</id>
-                                <goals>
-                                    <goal>npm</goal>
+                                    <goal>copy-production-files</goal>
+                                    <goal>transpile-production-files</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>run prodMode</arguments>
+                                    <transpileOutputDirectory>${transpilation.output}</transpileOutputDirectory>
                                 </configuration>
                             </execution>
                         </executions>
@@ -251,10 +236,22 @@
                         <configuration>
                             <webResources>
                                 <resource>
-                                    <directory>${frontend.working.directory}/build</directory>
+                                    <directory>${transpilation.output}</directory>
                                 </resource>
                             </webResources>
-                            <warSourceExcludes>**/frontend/bower_components/,**/node_modules/,**/node/,**/build/,**/etc/</warSourceExcludes>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <version>${jetty.version}</version>
+                        <configuration>
+                            <webAppConfig>
+                                <resourceBases>
+                                    <resourceBase>${transpilation.output}</resourceBase>
+                                </resourceBases>
+                            </webAppConfig>
                         </configuration>
                     </plugin>
                 </plugins>
