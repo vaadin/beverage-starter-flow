@@ -28,6 +28,7 @@ import com.vaadin.ui.grid.Grid;
 import com.vaadin.ui.html.Div;
 import com.vaadin.ui.icon.Icon;
 import com.vaadin.ui.renderers.ComponentRenderer;
+import com.vaadin.ui.renderers.ComponentTemplateRenderer;
 import com.vaadin.ui.textfield.TextField;
 
 /**
@@ -83,7 +84,7 @@ public class CategoriesList extends Div {
     private void addGrid() {
         grid.addColumn(Category::getName).setHeader("Category");
         grid.addColumn(this::getReviewCount).setHeader("Beverages");
-        grid.addColumn(new ComponentRenderer<>(this::createEditButton))
+        grid.addColumn(new ComponentTemplateRenderer<>(this::createEditButton))
                 .setFlexGrow(0);
 
         grid.addClassName("categories");
