@@ -27,7 +27,6 @@ import com.vaadin.ui.button.Button;
 import com.vaadin.ui.grid.Grid;
 import com.vaadin.ui.html.Div;
 import com.vaadin.ui.icon.Icon;
-import com.vaadin.ui.renderers.ComponentRenderer;
 import com.vaadin.ui.renderers.ComponentTemplateRenderer;
 import com.vaadin.ui.textfield.TextField;
 
