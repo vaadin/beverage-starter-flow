@@ -59,7 +59,7 @@
             <url>https://dl.bintray.com/webjars/maven</url>
         </repository>
         <repository>
-            <id>flow</id>
+            <id>vaadin-prereleases</id>
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
         </repository>
     </repositories>
@@ -111,81 +111,6 @@
             <version>1.9.2</version>
             <type>jar</type>
         </dependency>
-
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-server</artifactId>
-            <version>${flow.project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-push</artifactId>
-            <version>${flow.project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-client</artifactId>
-            <version>${flow.project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-data</artifactId>
-            <version>${flow.project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-components</artifactId>
-            <version>${flow.project.version}</version>
-        </dependency>
-
-
-        <!-- Component instances -->
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-button-flow</artifactId>
-            <version>1.0.0.alpha2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-text-field-flow</artifactId>
-            <version>1.0.0.alpha2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-form-layout-flow</artifactId>
-            <version>1.0.0.alpha2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-ordered-layout-flow</artifactId>
-            <version>1.0.0.alpha2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-combo-box-flow</artifactId>
-            <version>1.0.0.alpha2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-date-picker-flow</artifactId>
-            <version>1.0.0.alpha2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-icons-flow</artifactId>
-            <version>1.0.0.alpha3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-grid-flow</artifactId>
-            <version>1.0.0.alpha1</version>
-        </dependency>
-<!--         <dependency> -->
-<!--             <groupId>org.webjars.bower</groupId> -->
-<!--             <artifactId>vaadin-grid</artifactId> -->
-<!--         </dependency> -->
 
         <dependency>
             <groupId>org.webjars.bower</groupId>
