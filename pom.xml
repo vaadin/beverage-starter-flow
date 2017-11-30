@@ -39,7 +39,7 @@
     <pluginRepositories>
         <pluginRepository>
             <id>flow-internal-release</id>
-            <url>https://repo.vaadin.com/nexus/content/repositories/flow</url>
+            <url>https://maven.vaadin.com/vaadin-prereleases</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -215,7 +215,7 @@
                     <plugin>
                         <groupId>com.vaadin</groupId>
                         <artifactId>flow-maven-plugin</artifactId>
-                        <version>0.0.3</version>
+                        <version>0.0.5</version>
                         <executions>
                             <execution>
                                 <goals>
