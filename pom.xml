@@ -62,6 +62,10 @@
             <id>vaadin-prereleases</id>
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
         </repository>
+        <repository>
+            <id>vaadin-snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots</url>
+        </repository>
     </repositories>
 
     <dependencyManagement>
@@ -97,6 +101,17 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin</artifactId>
             <version>${vaadin.project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>flow-generated-components</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>polymer</artifactId>
         </dependency>
 
         <dependency>
@@ -121,6 +136,17 @@
             <groupId>org.webjars.bower</groupId>
             <artifactId>paper-dialog</artifactId>
             <version>2.0.0</version>
+        </dependency>
+        <!--Remove this after new platform released  -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-text-field-flow</artifactId>
+            <version>1.0.0.alpha3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vaadin-valo-theme</artifactId>
         </dependency>
     </dependencies>
 

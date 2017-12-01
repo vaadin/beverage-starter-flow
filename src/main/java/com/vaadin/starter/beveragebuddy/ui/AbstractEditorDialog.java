@@ -15,6 +15,11 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
+import java.io.Serializable;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
 import com.vaadin.data.Binder;
 import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationResult;
@@ -26,12 +31,6 @@ import com.vaadin.ui.formlayout.FormLayout;
 import com.vaadin.ui.html.Div;
 import com.vaadin.ui.html.H2;
 import com.vaadin.ui.layout.HorizontalLayout;
-import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
-
-import java.io.Serializable;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * Abstract base class for dialogs adding, editing or deleting items.
