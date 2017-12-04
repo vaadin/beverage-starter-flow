@@ -15,6 +15,9 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
+import java.io.Serializable;
+import java.util.function.Consumer;
+
 import com.vaadin.shared.Registration;
 import com.vaadin.ui.Composite;
 import com.vaadin.ui.button.Button;
@@ -22,10 +25,6 @@ import com.vaadin.ui.common.HtmlImport;
 import com.vaadin.ui.html.Div;
 import com.vaadin.ui.html.H2;
 import com.vaadin.ui.layout.HorizontalLayout;
-import com.vaadin.ui.paper.dialog.GeneratedPaperDialog;
-
-import java.io.Serializable;
-import java.util.function.Consumer;
 
 /**
  * A generic dialog for confirming or cancelling an action.

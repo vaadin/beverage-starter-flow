@@ -16,9 +16,9 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
         <!-- Dependencies -->
-        <vaadin.project.version>10.0.0-alpha6</vaadin.project.version>
+        <vaadin.project.version>10.0.0.alpha8</vaadin.project.version>
         <!-- Needed for production mode -->
-        <flow.project.version>1.0.0.alpha10</flow.project.version>
+        <flow.project.version>1.0.0.alpha11</flow.project.version>
         <servlet.api.version>3.1.0</servlet.api.version>
         <selenium.server.version>3.4.0</selenium.server.version>
 
@@ -38,14 +38,14 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>flow-internal-release</id>
+            <id>vaadin-prereleases</id>
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
         </pluginRepository>
     </pluginRepositories>
 
     <repositories>
         <repository>
-            <id>flow-internal-release</id>
+            <id>vaadin-platform</id>
             <url>https://repo.vaadin.com/nexus/content/repositories/flow</url>
         </repository>
 
@@ -57,6 +57,14 @@
         <repository>
             <id>webjars</id>
             <url>https://dl.bintray.com/webjars/maven</url>
+        </repository>
+        <repository>
+            <id>vaadin-prereleases</id>
+            <url>https://maven.vaadin.com/vaadin-prereleases</url>
+        </repository>
+        <repository>
+            <id>vaadin-snapshot</id>
+            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots</url>
         </repository>
     </repositories>
 
@@ -93,6 +101,17 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin</artifactId>
             <version>${vaadin.project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>flow-generated-components</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>polymer</artifactId>
         </dependency>
 
         <dependency>
@@ -109,65 +128,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-server</artifactId>
-            <version>${flow.project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-push</artifactId>
-            <version>${flow.project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-client</artifactId>
-            <version>${flow.project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-data</artifactId>
-            <version>${flow.project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-components</artifactId>
-            <version>${flow.project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>polymer</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>vaadin-valo-theme</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>vaadin-button</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>vaadin-text-field</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>vaadin-date-picker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>vaadin-form-layout</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>vaadin-combo-box</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>vaadin-grid</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>paper-toast</artifactId>
             <version>2.0.0</version>
@@ -176,6 +136,17 @@
             <groupId>org.webjars.bower</groupId>
             <artifactId>paper-dialog</artifactId>
             <version>2.0.0</version>
+        </dependency>
+        <!--Remove this after new platform released  -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-text-field-flow</artifactId>
+            <version>1.0.0.alpha2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vaadin-valo-theme</artifactId>
         </dependency>
     </dependencies>
 
@@ -206,7 +177,6 @@
                 <dependency>
                     <groupId>com.vaadin</groupId>
                     <artifactId>flow-server-production-mode</artifactId>
-                    <version>${flow.project.version}</version>
                 </dependency>
             </dependencies>
 
