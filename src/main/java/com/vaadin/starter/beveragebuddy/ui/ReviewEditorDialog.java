@@ -20,16 +20,16 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import com.vaadin.data.converter.StringToIntegerConverter;
-import com.vaadin.data.validator.DateRangeValidator;
-import com.vaadin.data.validator.IntegerRangeValidator;
-import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.converter.StringToIntegerConverter;
+import com.vaadin.flow.data.validator.DateRangeValidator;
+import com.vaadin.flow.data.validator.IntegerRangeValidator;
+import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
-import com.vaadin.ui.combobox.ComboBox;
-import com.vaadin.ui.datepicker.DatePicker;
-import com.vaadin.ui.textfield.TextField;
 
 /**
  * A dialog for editing {@link Review} objects.

@@ -3,8 +3,8 @@ package com.vaadin.starter.beveragebuddy;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.vaadin.server.ServiceInitEvent;
-import com.vaadin.server.VaadinServiceInitListener;
+import com.vaadin.flow.server.ServiceInitEvent;
+import com.vaadin.flow.server.VaadinServiceInitListener;
 
 public class ApplicationServiceInitListener implements VaadinServiceInitListener {
 

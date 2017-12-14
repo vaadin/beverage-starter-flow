@@ -17,18 +17,18 @@ package com.vaadin.starter.beveragebuddy.ui;
 
 import java.util.List;
 
-import com.vaadin.router.PageTitle;
-import com.vaadin.router.Route;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.renderer.ComponentTemplateRenderer;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.ui.button.Button;
-import com.vaadin.ui.grid.Grid;
-import com.vaadin.ui.html.Div;
-import com.vaadin.ui.icon.Icon;
-import com.vaadin.ui.renderers.ComponentTemplateRenderer;
-import com.vaadin.ui.textfield.TextField;
 
 /**
  * Displays the list of available categories, with a search filter as well as

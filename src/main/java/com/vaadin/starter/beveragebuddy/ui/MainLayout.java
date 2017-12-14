@@ -15,16 +15,16 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
-import com.vaadin.router.RouterLayout;
-import com.vaadin.router.RouterLink;
-import com.vaadin.router.event.AfterNavigationEvent;
-import com.vaadin.router.event.AfterNavigationObserver;
-import com.vaadin.ui.Text;
-import com.vaadin.ui.common.HtmlImport;
-import com.vaadin.ui.html.Div;
-import com.vaadin.ui.html.H2;
-import com.vaadin.ui.icon.Icon;
-import com.vaadin.ui.icon.VaadinIcons;
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcons;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
+import com.vaadin.flow.router.RouterLayout;
+import com.vaadin.flow.router.RouterLink;
 
 /**
  * The main layout contains the header with the navigation buttons, and the

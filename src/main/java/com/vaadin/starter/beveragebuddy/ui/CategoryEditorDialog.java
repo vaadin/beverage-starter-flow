@@ -15,14 +15,14 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
-import com.vaadin.data.validator.StringLengthValidator;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.ui.textfield.TextField;
-
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  * A dialog for editing {@link Category} objects.
