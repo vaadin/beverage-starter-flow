@@ -15,8 +15,8 @@
  */
 package com.vaadin.starter.beveragebuddy.ui;
 
-import com.vaadin.ui.event.ComponentEvent;
-import com.vaadin.ui.event.DomEvent;
+import com.vaadin.flow.component.ComponentEvent;
+import com.vaadin.flow.component.DomEvent;
 
 @DomEvent("iron-announce")
 public class IronAnnounceEvent extends ComponentEvent<PaperToast> {

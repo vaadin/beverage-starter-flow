@@ -16,7 +16,7 @@
 package com.vaadin.starter.beveragebuddy.ui.converters;
 
 
-import com.vaadin.flow.model.ModelConverter;
+import com.vaadin.flow.templatemodel.ModelConverter;
 
 /**
  * @author Vaadin Ltd
