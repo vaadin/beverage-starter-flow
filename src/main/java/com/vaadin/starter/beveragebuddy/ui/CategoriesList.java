@@ -21,6 +21,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.renderer.ComponentTemplateRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -36,7 +37,7 @@ import com.vaadin.starter.beveragebuddy.backend.ReviewService;
  */
 @Route(value = "categories", layout = MainLayout.class)
 @PageTitle("Categories List")
-public class CategoriesList extends Div {
+public class CategoriesList extends VerticalLayout {
 
     private final TextField searchField = new TextField("", "Search");
     private final Grid<Category> grid = new Grid<>();
@@ -57,6 +58,7 @@ public class CategoriesList extends Div {
 
     private void initView() {
         addClassName("categories-list");
+        setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
 
         notification.addClassName("notification");
         add(notification, form);
