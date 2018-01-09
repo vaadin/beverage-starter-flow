@@ -21,6 +21,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcons;
+import com.vaadin.flow.component.page.BodySize;
 import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
@@ -33,6 +34,7 @@ import com.vaadin.flow.server.PageConfigurator;
  * The main layout contains the header with the navigation buttons, and the
  * child views below that.
  */
+@BodySize(height = "100vh", width = "100vw")
 @HtmlImport("frontend://styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class MainLayout extends Div implements RouterLayout,
