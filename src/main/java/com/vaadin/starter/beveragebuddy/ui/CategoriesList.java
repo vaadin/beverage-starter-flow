@@ -68,11 +68,11 @@ public class CategoriesList extends VerticalLayout {
         Div viewToolbar = new Div();
         viewToolbar.addClassName("view-toolbar");
 
-        searchField.addToPrefix(new Icon("valo", "magnifier"));
+        searchField.addToPrefix(new Icon("lumo", "magnifier"));
         searchField.addClassName("view-toolbar__search-field");
         searchField.addValueChangeListener(e -> updateView());
 
-        Button newButton = new Button("New category", new Icon("valo", "plus"));
+        Button newButton = new Button("New category", new Icon("lumo", "plus"));
         newButton.getElement().setAttribute("theme", "primary");
         newButton.addClassName("view-toolbar__button");
         newButton.addClickListener(e -> form.open(new Category(),
@@ -96,7 +96,7 @@ public class CategoriesList extends VerticalLayout {
     private Button createEditButton(Category category) {
         Button edit = new Button("Edit", event -> form.open(category,
                 AbstractEditorDialog.Operation.EDIT));
-        edit.setIcon(new Icon("valo", "edit"));
+        edit.setIcon(new Icon("lumo", "edit"));
         edit.addClassName("review__edit");
         edit.getElement().setAttribute("theme", "tertiary");
         return edit;

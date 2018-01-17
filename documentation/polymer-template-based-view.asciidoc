@@ -43,7 +43,7 @@ using the repeater template, `dom-repeat`.
                 <p>[[item.date]]</p>
         </div>
         <vaadin-button on-click="edit" class="review__edit" theme="tertiary">
-            <iron-icon icon="valo:edit"></iron-icon><span>Edit</span>
+            <iron-icon icon="lumo:edit"></iron-icon><span>Edit</span>
         </vaadin-button>
     </div>
 </template>
@@ -81,10 +81,10 @@ In the HTML template, we have a text-field and a button with the corresponding i
 [source, html]
 --------------
 <vaadin-text-field id="search" autocapitalize=off>
-    <iron-icon icon="valo:magnifier" slot="prefix"></iron-icon>
+    <iron-icon icon="lumo:magnifier" slot="prefix"></iron-icon>
 </vaadin-text-field>
 <vaadin-button id="newReview" theme="primary">
-    <iron-icon icon="valo:plus"></iron-icon><span>New review</span>
+    <iron-icon icon="lumo:plus"></iron-icon><span>New review</span>
 </vaadin-button>
 --------------
 
