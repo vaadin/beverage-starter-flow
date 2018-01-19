@@ -22,6 +22,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.ModelItem;
@@ -61,7 +63,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     @Id("newReview")
     private Button addReview;
     @Id("notification")
-    private PaperToast notification;
+    private Notification notification;
     @Id("header")
     private H1 header;
 
@@ -84,13 +86,13 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         ReviewService.getInstance().saveReview(review);
         updateList();
         notification.show(
-                "Beverage successfully " + operation.getNameInText() + "ed.");
+                "Beverage successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
     }
 
     public void deleteUpdate(Review review) {
         ReviewService.getInstance().deleteReview(review);
         updateList();
-        notification.show("Beverage successfully deleted.");
+        notification.show("Beverage successfully deleted.", 3000, Position.BOTTOM_START);
     }
 
     private void updateList() {

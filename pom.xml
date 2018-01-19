@@ -85,6 +85,13 @@
             <artifactId>vaadin</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
+        
+        <!-- This should be removed after new platform (alpha1) release -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-notification-flow</artifactId>
+            <version>1.0.0.alpha3</version>
+        </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -110,11 +117,6 @@
             <type>jar</type>
         </dependency>
 
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>paper-toast</artifactId>
-            <version>2.0.0</version>
-        </dependency>
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>paper-dialog</artifactId>

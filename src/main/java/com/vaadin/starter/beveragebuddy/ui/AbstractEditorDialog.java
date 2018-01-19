@@ -26,12 +26,13 @@ import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.BinderValidationStatus;
 import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.shared.Registration;
-
 
 /**
  * Abstract base class for dialogs adding, editing or deleting items.
@@ -99,7 +100,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     private T currentItem;
 
     private final ConfirmationDialog<T> confirmationDialog = new ConfirmationDialog<>();
-    private final PaperToast notification = new PaperToast();
+    private final Notification notification = new Notification("");
 
     private final String itemType;
     private final BiConsumer<T, Operation> itemSaver;
@@ -220,7 +221,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
             BinderValidationStatus<T> status = binder.validate();
             notification.show(status.getValidationErrors().stream()
                     .map(ValidationResult::getErrorMessage)
-                    .collect(Collectors.joining("; ")));
+                    .collect(Collectors.joining("; ")), 3000, Position.BOTTOM_START);
         }
     }
 
