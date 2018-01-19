@@ -83,7 +83,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
             AbstractEditorDialog.Operation operation) {
         ReviewService.getInstance().saveReview(review);
         updateList();
-        Notification notification = Notification.show(
+        Notification.show(
                 "Beverage successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
     }
 
