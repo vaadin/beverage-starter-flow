@@ -47,8 +47,6 @@ public class CategoriesList extends VerticalLayout {
     private final CategoryEditorDialog form = new CategoryEditorDialog(
             this::saveCategory, this::deleteCategory);
 
-    private final Notification notification = new Notification("");
-
     public CategoriesList() {
         initView();
 
@@ -61,8 +59,7 @@ public class CategoriesList extends VerticalLayout {
     private void initView() {
         addClassName("categories-list");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
-
-        notification.addClassName("notification");
+        
         add(form);
     }
 
@@ -121,9 +118,8 @@ public class CategoriesList extends VerticalLayout {
             AbstractEditorDialog.Operation operation) {
         CategoryService.getInstance().saveCategory(category);
 
-        notification.setText(
-                "Category successfully " + operation.getNameInText() + "ed.");
-        notification.open();
+        Notification.show(
+                "Category successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
         updateView();
     }
 
@@ -137,8 +133,7 @@ public class CategoriesList extends VerticalLayout {
         });
         CategoryService.getInstance().deleteCategory(category);
 
-        notification.setText("Category successfully deleted.");
-        notification.open();
+        Notification.show("Category successfully deleted.", 3000, Position.BOTTOM_START);
         updateView();
     }
 }

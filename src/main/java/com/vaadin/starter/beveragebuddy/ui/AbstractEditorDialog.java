@@ -100,7 +100,6 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     private T currentItem;
 
     private final ConfirmationDialog<T> confirmationDialog = new ConfirmationDialog<>();
-    private final Notification notification = new Notification("");
 
     private final String itemType;
     private final BiConsumer<T, Operation> itemSaver;
@@ -125,7 +124,6 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         initTitle();
         initFormLayout();
         initButtonBar();
-        initNotification();
         getContent().setModal(true);
         // Enabling modality disables cancel-on-esc (and cancel-on-outside-click)
         // We want to cancel on esc
@@ -153,10 +151,6 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         deleteButton.getElement().setAttribute("theme", "tertiary danger");
         buttonBar.setClassName("buttons");
         getContent().add(buttonBar);
-    }
-
-    private void initNotification() {
-        notification.addClassName("notification");
     }
 
     /**
@@ -218,10 +212,9 @@ public abstract class AbstractEditorDialog<T extends Serializable>
             getContent().close();
         } else {
             BinderValidationStatus<T> status = binder.validate();
-            notification.setText(status.getValidationErrors().stream()
+            Notification.show(status.getValidationErrors().stream()
                     .map(ValidationResult::getErrorMessage)
-                    .collect(Collectors.joining("; ")));
-            notification.open();
+                    .collect(Collectors.joining("; ")), 3000, Position.BOTTOM_START);
         }
     }
 
