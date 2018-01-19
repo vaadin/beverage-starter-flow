@@ -59,7 +59,6 @@ public class CategoriesList extends VerticalLayout {
     private void initView() {
         addClassName("categories-list");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
-        
         add(form);
     }
 
