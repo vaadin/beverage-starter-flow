@@ -1,6 +1,6 @@
 ---
 title: Using the Annotation Based Router API
-order: 4
+order: 3
 layout: page
 ---
 
