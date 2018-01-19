@@ -86,7 +86,7 @@
             <version>${vaadin.version}</version>
         </dependency>
         
-        <!-- This should be removed after new platform (alpha1) release -->
+        <!-- This should be removed after new platform (alpha13) release -->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-notification-flow</artifactId>
