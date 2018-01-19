@@ -156,7 +156,6 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     }
 
     private void initNotification() {
-        getContent().add(notification);
         notification.addClassName("notification");
     }
 
@@ -219,9 +218,10 @@ public abstract class AbstractEditorDialog<T extends Serializable>
             getContent().close();
         } else {
             BinderValidationStatus<T> status = binder.validate();
-            notification.show(status.getValidationErrors().stream()
+            notification.setText(status.getValidationErrors().stream()
                     .map(ValidationResult::getErrorMessage)
-                    .collect(Collectors.joining("; ")), 3000, Position.BOTTOM_START);
+                    .collect(Collectors.joining("; ")));
+            notification.open();
         }
     }
 

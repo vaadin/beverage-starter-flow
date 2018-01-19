@@ -63,7 +63,7 @@ public class CategoriesList extends VerticalLayout {
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
 
         notification.addClassName("notification");
-        add(notification, form);
+        add(form);
     }
 
     private void addSearchBar() {
@@ -121,8 +121,9 @@ public class CategoriesList extends VerticalLayout {
             AbstractEditorDialog.Operation operation) {
         CategoryService.getInstance().saveCategory(category);
 
-        notification.show(
-                "Category successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
+        notification.setText(
+                "Category successfully " + operation.getNameInText() + "ed.");
+        notification.open();
         updateView();
     }
 
@@ -136,7 +137,8 @@ public class CategoriesList extends VerticalLayout {
         });
         CategoryService.getInstance().deleteCategory(category);
 
-        notification.show("Category successfully deleted.", 3000, Position.BOTTOM_START);
+        notification.setText("Category successfully deleted.");
+        notification.open();
         updateView();
     }
 }

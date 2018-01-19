@@ -85,14 +85,16 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
             AbstractEditorDialog.Operation operation) {
         ReviewService.getInstance().saveReview(review);
         updateList();
-        notification.show(
-                "Beverage successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
+        notification.setText(
+                "Beverage successfully " + operation.getNameInText() + "ed.");
+        notification.open();
     }
 
     public void deleteUpdate(Review review) {
         ReviewService.getInstance().deleteReview(review);
         updateList();
-        notification.show("Beverage successfully deleted.", 3000, Position.BOTTOM_START);
+        notification.setText("Beverage successfully deleted.");
+        notification.open();
     }
 
     private void updateList() {
