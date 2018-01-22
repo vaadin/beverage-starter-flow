@@ -10,8 +10,7 @@ The Starter demonstrates the core Flow concepts:
 * [Creating forms with `Binder`](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-binder-in-review-editor-dialog.asciidoc) (`ReviewEditorDialog`)
 * Making reusable Components on server side with `Composite` (`AbstractEditorDialog`)
 * [Creating a Component based on a HTML Template](https://github.com/vaadin/free-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc) (`ReviewsList`) 
-* [Integrating a third-party Web Component](https://github.com/vaadin/free-starter-flow/blob/master/documentation/integrating-a-web-component.asciidoc) (`PaperToast`) 
-* [Creating Navigation with the Router API](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-annotation-based-router-api.asciidoc) (`MainLayout`, `ReviewsList`, `CategoriesList`) 
+* [Creating Navigation with the Router API](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-annotation-based-router-api.asciidoc) (`MainLayout`, `ReviewsList`, `CategoriesList`)
 
 ## Prerequisites
 
