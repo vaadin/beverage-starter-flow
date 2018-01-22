@@ -20,7 +20,7 @@ import java.util.function.Consumer;
 
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -33,9 +33,8 @@ import com.vaadin.flow.shared.Registration;
  * @param <T>
  *            The type of the action's subject
  */
-@HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
 class ConfirmationDialog<T extends Serializable>
-        extends Composite<GeneratedPaperDialog> {
+        extends Dialog {
 
     private final H2 titleField = new H2();
     private final Div messageLabel = new Div();
@@ -49,16 +48,14 @@ class ConfirmationDialog<T extends Serializable>
      * Constructor.
      */
     public ConfirmationDialog() {
-        getContent().setModal(true);
-        // Enabling modality disables cancel-on-esc (and cancel-on-outside-click)
-        // We want to cancel on esc
-        getContent().setNoCancelOnEscKey(false);
+        setCloseOnEsc(true);
+        setCloseOnOutsideClick(false);
 
         getElement().getClassList().add("confirm-dialog");
-        confirmButton.getElement().setAttribute("dialog-confirm", true);
+        confirmButton.addClickListener(e -> close());
         confirmButton.getElement().setAttribute("theme", "tertiary");
         confirmButton.setAutofocus(true);
-        cancelButton.getElement().setAttribute("dialog-dismiss", true);
+        cancelButton.addClickListener(e -> close());
         cancelButton.getElement().setAttribute("theme", "tertiary");
 
         HorizontalLayout buttonBar = new HorizontalLayout(confirmButton,
@@ -68,7 +65,13 @@ class ConfirmationDialog<T extends Serializable>
         Div labels = new Div(messageLabel, extraMessageLabel);
         labels.setClassName("text");
 
-        getContent().add(titleField, labels, buttonBar);
+        add(titleField, labels, buttonBar);
+        
+        this.addOpenedChangeListener(event -> {
+        	if (this.isOpened() == false){
+        		this.getElement().removeFromParent();
+        	}
+        });
     }
 
     /**
@@ -116,6 +119,6 @@ class ConfirmationDialog<T extends Serializable>
         if (isDisruptive) {
             confirmButton.getElement().setAttribute("theme", "tertiary danger");
         }
-        getContent().open();
+        open();
     }
 }

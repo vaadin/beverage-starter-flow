@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
@@ -50,9 +51,8 @@ import com.vaadin.flow.shared.Registration;
  * @param <T>
  *            the type of the item to be added, edited or deleted
  */
-@HtmlImport("frontend://bower_components/paper-dialog/paper-dialog.html")
 public abstract class AbstractEditorDialog<T extends Serializable>
-        extends Composite<GeneratedPaperDialog> {
+        extends Dialog {
 
     /**
      * The operations supported by this dialog. Delete is enabled when editing
@@ -124,14 +124,17 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         initTitle();
         initFormLayout();
         initButtonBar();
-        getContent().setModal(true);
-        // Enabling modality disables cancel-on-esc (and cancel-on-outside-click)
-        // We want to cancel on esc
-        getContent().setNoCancelOnEscKey(false);
+        setCloseOnEsc(true);
+        setCloseOnOutsideClick(false);
+        this.addOpenedChangeListener(event -> {
+        	if (this.isOpened() == false) {
+        		this.getElement().removeFromParent();
+        	}
+        });
     }
 
     private void initTitle() {
-        getContent().add(titleField);
+        add(titleField);
     }
 
     private void initFormLayout() {
@@ -140,17 +143,17 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         formLayout.addClassName("no-padding");
         Div div = new Div(formLayout);
         div.addClassName("has-padding");
-        getContent().add(div);
+        add(div);
     }
 
     private void initButtonBar() {
         saveButton.setAutofocus(true);
         saveButton.getElement().setAttribute("theme", "primary");
-        cancelButton.getElement().setAttribute("dialog-dismiss", true);
+        cancelButton.addClickListener(e -> close());
         deleteButton.addClickListener(e -> deleteClicked());
         deleteButton.getElement().setAttribute("theme", "tertiary danger");
         buttonBar.setClassName("buttons");
-        getContent().add(buttonBar);
+        add(buttonBar);
     }
 
     /**
@@ -201,7 +204,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         binder.readBean(currentItem);
 
         deleteButton.setDisabled(operation.isDeleteDisabled());
-        getContent().open();
+        open();
     }
 
     private void saveClicked(Operation operation) {
@@ -209,7 +212,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
         if (isValid) {
             itemSaver.accept(currentItem, operation);
-            getContent().close();
+            close();
         } else {
             BinderValidationStatus<T> status = binder.validate();
             Notification.show(status.getValidationErrors().stream()
@@ -242,14 +245,14 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      */
     protected final void openConfirmationDialog(String title, String message,
             String additionalMessage) {
-        getContent().close();
+        close();
         confirmationDialog.open(title, message, additionalMessage, "Delete",
                 true, getCurrentItem(), this::deleteConfirmed,
-                () -> getContent().open());
+                () -> open());
     }
 
     private void deleteConfirmed(T item) {
         itemDeleter.accept(item);
-        getContent().close();
+        close();
     }
 }
