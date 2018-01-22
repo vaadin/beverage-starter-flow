@@ -21,6 +21,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.renderer.ComponentTemplateRenderer;
@@ -45,8 +47,6 @@ public class CategoriesList extends VerticalLayout {
     private final CategoryEditorDialog form = new CategoryEditorDialog(
             this::saveCategory, this::deleteCategory);
 
-    private final PaperToast notification = new PaperToast();
-
     public CategoriesList() {
         initView();
 
@@ -59,9 +59,7 @@ public class CategoriesList extends VerticalLayout {
     private void initView() {
         addClassName("categories-list");
         setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
-
-        notification.addClassName("notification");
-        add(notification, form);
+        add(form);
     }
 
     private void addSearchBar() {
@@ -119,8 +117,8 @@ public class CategoriesList extends VerticalLayout {
             AbstractEditorDialog.Operation operation) {
         CategoryService.getInstance().saveCategory(category);
 
-        notification.show(
-                "Category successfully " + operation.getNameInText() + "ed.");
+        Notification.show(
+                "Category successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
         updateView();
     }
 
@@ -134,7 +132,7 @@ public class CategoriesList extends VerticalLayout {
         });
         CategoryService.getInstance().deleteCategory(category);
 
-        notification.show("Category successfully deleted.");
+        Notification.show("Category successfully deleted.", 3000, Position.BOTTOM_START);
         updateView();
     }
 }
