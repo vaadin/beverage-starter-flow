@@ -1,14 +1,12 @@
 package com.vaadin.starter.beveragebuddy.backend;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Represents a beverage category.
  */
 public class Category implements Serializable {
-
-    /** A null object, to avoid NullPointerExceptions. */
-    public static final Category UNDEFINED = new Category("(undefined)");
 
     private Long id = null;
 
@@ -22,9 +20,7 @@ public class Category implements Serializable {
     }
 
     public Category(Category other) {
-        if (other == null) {
-            other = UNDEFINED;
-        }
+        Objects.requireNonNull(other);
         this.name = other.getName();
         this.id = other.getId();
     }

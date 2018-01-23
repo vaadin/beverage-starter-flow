@@ -263,7 +263,12 @@
                         </div>
                         <div class="review__details">
                             <h4 class="review__name">[[item.name]]</h4>
-                            <p class="review__category" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
+                            <template is="dom-if" if="[[item.category]]">
+                                <p class="review__category" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
+                            </template>
+                            <template is="dom-if" if="[[!item.category]]">
+                                <p class="review__category" style="--category: -1;">Undefined</p>
+                            </template>
                         </div>
                         <div class="review__date">
                                 <h5>Last tasted</h5>
