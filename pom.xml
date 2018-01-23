@@ -16,7 +16,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
         <!-- Dependencies -->
-        <vaadin.version>10.0.0.alpha13</vaadin.version>
+        <vaadin.version>10.0.0.alpha14</vaadin.version>
         <!-- Needed for production mode -->
         <servlet.api.version>3.1.0</servlet.api.version>
         <selenium.server.version>3.4.0</selenium.server.version>
@@ -69,14 +69,13 @@
             <artifactId>vaadin</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
-        
-        <!-- This should be removed after new platform (alpha13) release -->
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-notification-flow</artifactId>
-            <version>1.0.0.alpha4</version>
+            <artifactId>vaadin-lumo-theme</artifactId>
         </dependency>
 
+        <!-- Added to provide logging output as Flow uses -->
+        <!-- the unbound SLF4J no-operation (NOP) logger implementation -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -99,11 +98,6 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.2</version>
             <type>jar</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>vaadin-valo-theme</artifactId>
         </dependency>
     </dependencies>
 
