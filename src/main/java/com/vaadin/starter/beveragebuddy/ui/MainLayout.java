@@ -29,6 +29,8 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 
 /**
  * The main layout contains the header with the navigation buttons, and the
@@ -37,6 +39,7 @@ import com.vaadin.flow.server.PageConfigurator;
 @BodySize(height = "100vh", width = "100vw")
 @HtmlImport("frontend://styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
+@Theme(Lumo.class)
 public class MainLayout extends Div implements RouterLayout,
         AfterNavigationObserver, PageConfigurator {
 
