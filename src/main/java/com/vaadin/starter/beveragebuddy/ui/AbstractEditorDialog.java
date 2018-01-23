@@ -125,9 +125,9 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         setCloseOnEsc(true);
         setCloseOnOutsideClick(false);
         this.addOpenedChangeListener(event -> {
-        	if (this.isOpened() == false) {
-        		this.getElement().removeFromParent();
-        	}
+            if (!this.isOpened()) {
+                    this.getElement().removeFromParent();
+            }
         });
     }
 

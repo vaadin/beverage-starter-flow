@@ -84,7 +84,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         ReviewService.getInstance().saveReview(review);
         updateList();
         Notification.show(
-                "Beverage successfully " + operation.getNameInText() + "ed.", 0, Position.BOTTOM_START);
+                "Beverage successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
     }
 
     public void deleteUpdate(Review review) {

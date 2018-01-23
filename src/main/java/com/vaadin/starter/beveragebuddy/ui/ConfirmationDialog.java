@@ -69,7 +69,7 @@ class ConfirmationDialog<T extends Serializable>
         add(titleField, labels, buttonBar);
         
         this.addOpenedChangeListener(event -> {
-        	if (this.isOpened() == false){
+        	if (!this.isOpened()){
         		this.getElement().removeFromParent();
         	}
         });
