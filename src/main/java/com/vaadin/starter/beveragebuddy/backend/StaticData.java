@@ -16,6 +16,8 @@ class StaticData {
     private static final String WINE = "Wine";
     private static final String OTHER = "Other";
 
+    public static final String UNDEFINED = "Undefined";
+    
     static final Map<String, String> BEVERAGES = new LinkedHashMap<>();
 
     static {
