@@ -124,9 +124,9 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         initButtonBar();
         setCloseOnEsc(true);
         setCloseOnOutsideClick(false);
-        this.addOpenedChangeListener(event -> {
-            if (!this.isOpened()) {
-                    this.getElement().removeFromParent();
+        addOpenedChangeListener(event -> {
+            if (!isOpened()) {
+                getElement().removeFromParent();
             }
         });
     }
@@ -246,7 +246,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         close();
         confirmationDialog.open(title, message, additionalMessage, "Delete",
                 true, getCurrentItem(), this::deleteConfirmed,
-                () -> open());
+                this::open);
     }
 
     private void deleteConfirmed(T item) {
