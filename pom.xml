@@ -60,22 +60,6 @@
                 <scope>import</scope>
                 <version>${vaadin.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>github-com-polymerelements-paper-dialog-behavior</artifactId>
-                <version>2.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>github-com-polymerelements-paper-styles</artifactId>
-                <version>2.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.webjars.bower</groupId>
-                <artifactId>github-com-polymerelements-font-roboto</artifactId>
-                <version>1.0.3</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -114,12 +98,6 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.2</version>
             <type>jar</type>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>paper-dialog</artifactId>
-            <version>2.0.0</version>
         </dependency>
     </dependencies>
 
