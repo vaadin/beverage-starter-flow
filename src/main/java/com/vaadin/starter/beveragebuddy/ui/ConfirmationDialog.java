@@ -63,15 +63,15 @@ class ConfirmationDialog<T extends Serializable>
 
         Div labels = new Div(messageLabel, extraMessageLabel);
         labels.setClassName("confirm-text");
-        
+
         titleField.setClassName("confirm-dialog-heading");
 
         add(titleField, labels, buttonBar);
-        
+
         this.addOpenedChangeListener(event -> {
-        	if (!this.isOpened()){
-        		this.getElement().removeFromParent();
-        	}
+            if (!this.isOpened()){
+                this.getElement().removeFromParent();
+            }
         });
     }
 
