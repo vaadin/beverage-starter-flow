@@ -1,6 +1,6 @@
 ---
 title: Using Binder in ReviewEditorDialog
-order: 3
+order: 2
 layout: page
 ---
 

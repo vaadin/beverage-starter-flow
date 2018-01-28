@@ -21,6 +21,9 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.Notification.Position;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.renderer.ComponentTemplateRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -36,15 +39,13 @@ import com.vaadin.starter.beveragebuddy.backend.ReviewService;
  */
 @Route(value = "categories", layout = MainLayout.class)
 @PageTitle("Categories List")
-public class CategoriesList extends Div {
+public class CategoriesList extends VerticalLayout {
 
     private final TextField searchField = new TextField("", "Search");
     private final Grid<Category> grid = new Grid<>();
 
     private final CategoryEditorDialog form = new CategoryEditorDialog(
             this::saveCategory, this::deleteCategory);
-
-    private final PaperToast notification = new PaperToast();
 
     public CategoriesList() {
         initView();
@@ -57,20 +58,18 @@ public class CategoriesList extends Div {
 
     private void initView() {
         addClassName("categories-list");
-
-        notification.addClassName("notification");
-        add(notification, form);
+        setDefaultHorizontalComponentAlignment(Alignment.STRETCH);
     }
 
     private void addSearchBar() {
         Div viewToolbar = new Div();
         viewToolbar.addClassName("view-toolbar");
 
-        searchField.addToPrefix(new Icon("valo", "magnifier"));
+        searchField.addToPrefix(new Icon("lumo", "magnifier"));
         searchField.addClassName("view-toolbar__search-field");
         searchField.addValueChangeListener(e -> updateView());
 
-        Button newButton = new Button("New category", new Icon("valo", "plus"));
+        Button newButton = new Button("New category", new Icon("lumo", "plus"));
         newButton.getElement().setAttribute("theme", "primary");
         newButton.addClassName("view-toolbar__button");
         newButton.addClickListener(e -> form.open(new Category(),
@@ -94,7 +93,7 @@ public class CategoriesList extends Div {
     private Button createEditButton(Category category) {
         Button edit = new Button("Edit", event -> form.open(category,
                 AbstractEditorDialog.Operation.EDIT));
-        edit.setIcon(new Icon("valo", "edit"));
+        edit.setIcon(new Icon("lumo", "edit"));
         edit.addClassName("review__edit");
         edit.getElement().setAttribute("theme", "tertiary");
         return edit;
@@ -117,8 +116,8 @@ public class CategoriesList extends Div {
             AbstractEditorDialog.Operation operation) {
         CategoryService.getInstance().saveCategory(category);
 
-        notification.show(
-                "Category successfully " + operation.getNameInText() + "ed.");
+        Notification.show(
+                "Category successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
         updateView();
     }
 
@@ -132,7 +131,7 @@ public class CategoriesList extends Div {
         });
         CategoryService.getInstance().deleteCategory(category);
 
-        notification.show("Category successfully deleted.");
+        Notification.show("Category successfully deleted.", 3000, Position.BOTTOM_START);
         updateView();
     }
 }

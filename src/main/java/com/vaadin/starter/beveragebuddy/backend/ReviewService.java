@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
@@ -97,10 +96,8 @@ public class ReviewService {
     public List<Review> findReviews(String filter) {
         String normalizedFilter = filter.toLowerCase();
 
-        return reviews.values().stream()
-                .filter(review -> filterTextOf(review)
-                        .contains(normalizedFilter))
-                .map(Review::new)
+        return reviews.values().stream().filter(
+                review -> filterTextOf(review).contains(normalizedFilter))
                 .sorted((r1, r2) -> r2.getId().compareTo(r1.getId()))
                 .collect(Collectors.toList());
     }
@@ -111,8 +108,8 @@ public class ReviewService {
         // to avoid false positives
         String filterableText = Stream
                 .of(review.getName(),
-                        Optional.ofNullable(review.getCategory())
-                                .orElse(Category.UNDEFINED).getName(),
+                        review.getCategory() == null ? StaticData.UNDEFINED
+                                : review.getCategory().getName(),
                         String.valueOf(review.getScore()),
                         String.valueOf(review.getCount()),
                         dateConverter.toPresentation(review.getDate()))
