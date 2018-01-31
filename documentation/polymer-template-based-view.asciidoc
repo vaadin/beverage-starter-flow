@@ -9,7 +9,7 @@ ifdef::env-github[:outfilesuffix: .asciidoc]
 
 `ReviewsList` is a Polymer template based view class.
 For more information about Polymer templates, see
-https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-basic.asciidoc[
+https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-basic.html[
 Creating A Simple Component Using the Template API].
 
 In this view, the list of reviews will be shown under a search bar and an
@@ -64,7 +64,7 @@ public static interface ReviewsModel extends TemplateModel {
 There are two data types (`Long` and `LocalDate`) which are not supported  by
 `TemplateModel` directly, so we need to convert them by using the `@Convert`
 annotation. For more about `ModelConverters`, see
-https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-model-converters.asciidoc[
+https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-model-converters.asciidoc[
 Using Model Converters with a PolymerTemplate Model].
 
 [NOTE]
@@ -72,7 +72,7 @@ The name of the setter method should match the property name used in the
 template, `reviews` in our case.
 
 You can get more information about "Data Binding in PolymerTemplate" in the tutorial
-https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-list-bindings.asciidoc[
+https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-list-bindings.asciidoc[
 Creating Template Contents Dynamically Based on a List of Items].
 
 == Binding components from the template
@@ -97,7 +97,7 @@ private TextField search;
 private Button addReview;
 --------------
 For more about this topic, see
-https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-components.asciidoc[
+https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-components.asciidoc[
 Binding Components from a PolymerTemplate].
 
 == Listening for user events from the template
@@ -113,14 +113,6 @@ private void edit(@ModelItem Review review) {
 }
 --------------
 You can check out
-https://github.com/vaadin/flow/blob/master/flow-documentation/polymer-templates/tutorial-template-event-handlers.asciidoc[
+https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-event-handlers.asciidoc[
 Handling User Events in a PolymerTemplate]
 for more information about sending events from template to the server.
-
-
-== Adding template files to `index.html`
-
-Once you are ready to take your App in to production, you need to build it using the `productionMode` Maven profile.
-The production build transpiles your front-end files into ES5 for adding support to older browsers (IE11).
-For this to work, you need to add your root level template files into the https://github.com/vaadin/beverage-starter-flow/blob/master/src/main/webapp/frontend/index.html[index.html^] file.
-This has been done already for `reviews-list.html` template. For more information, please see the https://github.com/vaadin/flow/blob/master/flow-documentation/web-components/tutorial-webcomponents-es5.asciidoc[Flow documentation]
