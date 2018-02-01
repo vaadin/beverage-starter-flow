@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui;
+package com.vaadin.starter.beveragebuddy.ui.views.categorieslist;
 
 import java.util.List;
 
@@ -32,6 +32,8 @@ import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
+import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
+import com.vaadin.starter.beveragebuddy.ui.MainLayout;
 
 /**
  * Displays the list of available categories, with a search filter as well as

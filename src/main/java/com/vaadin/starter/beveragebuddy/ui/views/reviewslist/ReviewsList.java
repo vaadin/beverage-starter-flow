@@ -13,9 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui;
-
-import java.util.List;
+package com.vaadin.starter.beveragebuddy.ui.views.reviewslist;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
@@ -35,9 +33,13 @@ import com.vaadin.flow.templatemodel.Convert;
 import com.vaadin.flow.templatemodel.TemplateModel;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.starter.beveragebuddy.ui.ReviewsList.ReviewsModel;
+import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
+import com.vaadin.starter.beveragebuddy.ui.MainLayout;
 import com.vaadin.starter.beveragebuddy.ui.converters.LocalDateToStringConverter;
 import com.vaadin.starter.beveragebuddy.ui.converters.LongToStringConverter;
+import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList.ReviewsModel;
+
+import java.util.List;
 
 /**
  * Displays the list of available categories, with a search filter as well as
@@ -48,7 +50,7 @@ import com.vaadin.starter.beveragebuddy.ui.converters.LongToStringConverter;
 @Route(value = "", layout = MainLayout.class)
 @PageTitle("Review List")
 @Tag("reviews-list")
-@HtmlImport("frontend://reviews-list.html")
+@HtmlImport("frontend://src/views/reviewslist/reviews-list.html")
 public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
     public interface ReviewsModel extends TemplateModel {

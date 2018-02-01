@@ -13,16 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui;
-
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
+package com.vaadin.starter.beveragebuddy.ui.views.categorieslist;
 
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
+import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * A dialog for editing {@link Category} objects.
@@ -36,8 +37,6 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
         super("Category", itemSaver, itemDeleter);
 
         addNameField();
-        // Due to a bug, not currently focusing vaadin/flow#2548
-        categoryNameField.focus();
     }
 
     private void addNameField() {
