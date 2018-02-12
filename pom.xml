@@ -15,18 +15,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <!-- Dependencies -->
         <vaadin.version>10.0.0.alpha14</vaadin.version>
-        <!-- Needed for production mode -->
-        <servlet.api.version>3.1.0</servlet.api.version>
-        <selenium.server.version>3.4.0</selenium.server.version>
-        <slf4j.version>1.7.25</slf4j.version>
 
-        <!-- Plugins -->
-        <frontend.maven.plugin.version>1.5</frontend.maven.plugin.version>
         <jetty.version>9.3.7.v20160115</jetty.version>
-        <maven.clean.plugin.version>3.0.0</maven.clean.plugin.version>
-        <maven.war.plugin.version>3.1.0</maven.war.plugin.version>
     </properties>
 
     <pluginRepositories>
@@ -90,7 +81,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet.api.version}</version>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -136,12 +127,12 @@
                     <plugin>
                         <groupId>com.vaadin</groupId>
                         <artifactId>flow-maven-plugin</artifactId>
-                        <version>1.0.0.alpha18</version>
+                        <version>1.0.0.alpha20</version>
                         <executions>
                             <execution>
                                 <goals>
                                     <goal>copy-production-files</goal>
-                                    <goal>transpile-production-files</goal>
+                                    <goal>package-for-production</goal>
                                 </goals>
                                 <configuration>
                                     <transpileOutputDirectory>${transpilation.output}</transpileOutputDirectory>
@@ -153,7 +144,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
-                        <version>${maven.war.plugin.version}</version>
+                        <version>3.1.0</version>
                         <configuration>
                             <webResources>
                                 <resource>
