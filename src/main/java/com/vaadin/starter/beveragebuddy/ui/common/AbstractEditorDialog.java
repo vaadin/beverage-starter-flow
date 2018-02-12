@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui;
+package com.vaadin.starter.beveragebuddy.ui.common;
 
 import java.io.Serializable;
 import java.util.function.BiConsumer;

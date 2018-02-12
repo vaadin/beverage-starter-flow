@@ -51,4 +51,4 @@ To further restrict the possible values for this field, a validator is also
 declared to ensure that the values is between 1 and 99.
 
 For more information related to `Binder`, you may check the
-https://github.com/vaadin/flow/blob/master/flow-documentation/binding-data/tutorial-flow-components-binder-beans.asciidoc[Tutorial for Binder].
+https://vaadin.com/docs/v10/flow/binding-data/tutorial-flow-components-binder-beans.html[Tutorial for Binder].

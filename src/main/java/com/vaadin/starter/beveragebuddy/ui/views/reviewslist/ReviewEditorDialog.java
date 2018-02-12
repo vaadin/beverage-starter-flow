@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.starter.beveragebuddy.ui;
+package com.vaadin.starter.beveragebuddy.ui.views.reviewslist;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -30,6 +30,7 @@ import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
+import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
 
 /**
  * A dialog for editing {@link Review} objects.

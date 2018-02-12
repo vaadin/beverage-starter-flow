@@ -15,7 +15,14 @@
   -->
 
 <!-- Dependency resources -->
-<link rel="import" href="bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
+<!-- Added Web Component dependencies to make Vaadin Designer preview work -->
+<link rel="import" href="../../../bower_components/vaadin-text-field/src/vaadin-text-field.html">
+<link rel="import" href="../../../bower_components/vaadin-button/src/vaadin-button.html">
+<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
+<!-- TODO Needed to show icons in Vaadin Designer preview mode for now, but can be removed soon -->
+<link rel="import" href="../../../bower_components/vaadin-lumo-styles/icons.html">
+
 
 <!-- Defines the reviews-list element -->
 <dom-module id="reviews-list">

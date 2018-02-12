@@ -31,13 +31,15 @@ import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
+import com.vaadin.starter.beveragebuddy.ui.views.categorieslist.CategoriesList;
+import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
 
 /**
  * The main layout contains the header with the navigation buttons, and the
  * child views below that.
  */
 @BodySize(height = "100vh", width = "100vw")
-@HtmlImport("frontend://styles.html")
+@HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 @Theme(Lumo.class)
 public class MainLayout extends Div implements RouterLayout,
