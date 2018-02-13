@@ -57,18 +57,18 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      * an already existing item.
      */
     public enum Operation {
-        ADD("Add New", "add", true),
-        EDIT("Edit", "edit", false);
+        ADD("Add New", "add", false),
+        EDIT("Edit", "edit", true);
 
         private final String nameInTitle;
         private final String nameInText;
-        private final boolean deleteDisabled;
+        private final boolean deleteEnabled;
 
         Operation(String nameInTitle, String nameInText,
-                boolean deleteDisabled) {
+                boolean deleteEnabled) {
             this.nameInTitle = nameInTitle;
             this.nameInText = nameInText;
-            this.deleteDisabled = deleteDisabled;
+            this.deleteEnabled = deleteEnabled;
         }
 
         public String getNameInTitle() {
@@ -79,8 +79,8 @@ public abstract class AbstractEditorDialog<T extends Serializable>
             return nameInText;
         }
 
-        public boolean isDeleteDisabled() {
-            return deleteDisabled;
+        public boolean isDeleteEnabled() {
+            return deleteEnabled;
         }
     }
 
@@ -151,6 +151,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         deleteButton.addClickListener(e -> deleteClicked());
         deleteButton.getElement().setAttribute("theme", "tertiary danger");
         buttonBar.setClassName("buttons");
+        buttonBar.setSpacing(true);
         add(buttonBar);
     }
 
@@ -201,7 +202,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
                 .addClickListener(e -> saveClicked(operation));
         binder.readBean(currentItem);
 
-        deleteButton.setDisabled(operation.isDeleteDisabled());
+        deleteButton.setEnabled(operation.isDeleteEnabled());
         open();
     }
 

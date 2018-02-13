@@ -32,8 +32,8 @@ import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
 import com.vaadin.starter.beveragebuddy.ui.MainLayout;
+import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
 
 /**
  * Displays the list of available categories, with a search filter as well as
@@ -67,7 +67,7 @@ public class CategoriesList extends VerticalLayout {
         Div viewToolbar = new Div();
         viewToolbar.addClassName("view-toolbar");
 
-        searchField.addToPrefix(new Icon("lumo", "magnifier"));
+        searchField.setPrefixComponent(new Icon("lumo", "magnifier"));
         searchField.addClassName("view-toolbar__search-field");
         searchField.addValueChangeListener(e -> updateView());
 
