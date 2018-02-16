@@ -27,6 +27,7 @@ import com.vaadin.flow.component.polymertemplate.Id;
 import com.vaadin.flow.component.polymertemplate.ModelItem;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.templatemodel.Convert;
@@ -73,7 +74,8 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     public ReviewsList() {
         search.setPlaceholder("Search");
         search.addValueChangeListener(e -> updateList());
-
+        search.setValueChangeMode(ValueChangeMode.EAGER);
+        
         addReview.addClickListener(e -> openForm(new Review(),
                 AbstractEditorDialog.Operation.ADD));
 
