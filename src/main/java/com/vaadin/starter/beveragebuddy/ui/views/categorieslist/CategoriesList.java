@@ -25,7 +25,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.renderer.ComponentTemplateRenderer;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.beveragebuddy.backend.Category;
@@ -84,7 +84,7 @@ public class CategoriesList extends VerticalLayout {
     private void addGrid() {
         grid.addColumn(Category::getName).setHeader("Category");
         grid.addColumn(this::getReviewCount).setHeader("Beverages");
-        grid.addColumn(new ComponentTemplateRenderer<>(this::createEditButton))
+        grid.addColumn(new ComponentRenderer<>(this::createEditButton))
                 .setFlexGrow(0);
 
         grid.addClassName("categories");
