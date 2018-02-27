@@ -15,15 +15,15 @@
  */
 package com.vaadin.starter.beveragebuddy.ui.views.categorieslist;
 
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
-
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 /**
  * A dialog for editing {@link Category} objects.
@@ -58,13 +58,13 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
     protected void confirmDelete() {
         int reviewCount = ReviewService.getInstance()
                 .findReviews(getCurrentItem().getName()).size();
-        String additionalMessage = reviewCount == 0 ? ""
-                : "Deleting the category will mark the associated reviews as “undefined”."
-                        + "You may link the reviews to other categories on the edit page.";
-        openConfirmationDialog(
-                "Delete Category “" + getCurrentItem().getName() + "”?",
-                "There are " + reviewCount
-                        + " reviews associated with this category.",
-                additionalMessage);
+        if (reviewCount > 0) {
+            openConfirmationDialog(
+                    "Delete Category “" + getCurrentItem().getName() + "”?",
+                    "There are " + reviewCount
+                            + " reviews associated with this category.",
+                    "Deleting the category will mark the associated reviews as “undefined”."
+                            + "You may link the reviews to other categories on the edit page.");
+        }
     }
 }
