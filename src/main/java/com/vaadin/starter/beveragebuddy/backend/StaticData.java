@@ -102,7 +102,7 @@ class StaticData {
                 "Soma")
                 .forEach(name -> BEVERAGES.put(name, OTHER));
 
-        Stream.of("").forEach(name -> BEVERAGES.put(name, UNDEFINED));
+        BEVERAGES.put("", UNDEFINED);
     }
 
     /** This class is not meant to be instantiated. */
