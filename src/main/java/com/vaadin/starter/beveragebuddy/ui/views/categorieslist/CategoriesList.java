@@ -86,7 +86,7 @@ public class CategoriesList extends VerticalLayout {
         grid.addColumn(this::getReviewCount).setHeader("Beverages");
         grid.addColumn(new ComponentRenderer<>(this::createEditButton))
                 .setFlexGrow(0);
-
+        
         grid.addClassName("categories");
         grid.getElement().setAttribute("theme", "row-dividers");
         add(grid);
@@ -128,7 +128,8 @@ public class CategoriesList extends VerticalLayout {
                 .findReviews(category.getName());
 
         reviewsInCategory.forEach(review -> {
-            review.setCategory(null);
+            review.setCategory(CategoryService.getInstance()
+                    .findCategoryOrThrow("Undefined"));
             ReviewService.getInstance().saveReview(review);
         });
         CategoryService.getInstance().deleteCategory(category);
