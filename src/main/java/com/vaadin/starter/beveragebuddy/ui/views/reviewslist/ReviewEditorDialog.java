@@ -59,6 +59,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     private void createScoreBox() {
         scoreBox.setLabel("Mark a score");
+        scoreBox.setRequired(true);
         scoreBox.setAllowCustomValue(false);
         scoreBox.setItems("1", "2", "3", "4", "5");
         getFormLayout().add(scoreBox);
@@ -73,6 +74,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     private void createDatePicker() {
         lastTasted.setLabel("Choose the date");
+        lastTasted.setRequired(true);
         lastTasted.setMax(LocalDate.now());
         lastTasted.setMin(LocalDate.of(1, 1, 1));
         lastTasted.setValue(LocalDate.now());
@@ -90,17 +92,21 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     private void createCategoryBox() {
         categoryBox.setLabel("Choose a category");
+        categoryBox.setRequired(true);
         categoryBox.setItemLabelGenerator(Category::getName);
         categoryBox.setAllowCustomValue(false);
         categoryBox.setItems(categoryService.findCategories(""));
         getFormLayout().add(categoryBox);
 
-        getBinder().forField(categoryBox).bind(Review::getCategory,
-                Review::setCategory);
+        getBinder().forField(categoryBox)
+                .withValidator(Objects::nonNull,
+                        "The category should be defined.")
+                .bind(Review::getCategory, Review::setCategory);
     }
 
     private void createTimesField() {
         timesTasted.setLabel("Times tasted");
+        timesTasted.setRequired(true);
         timesTasted.setPattern("[0-9]*");
         timesTasted.setPreventInvalidInput(true);
         getFormLayout().add(timesTasted);
@@ -115,6 +121,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     private void createNameField() {
         beverageName.setLabel("Beverage name");
+        beverageName.setRequired(true);
         getFormLayout().add(beverageName);
 
         getBinder().forField(beverageName)
