@@ -24,7 +24,7 @@ public class Review implements Serializable {
 
     /**
      * Constructs a new instance with the given data.
-     * 
+     *
      * @param score
      *            Review score
      * @param name
@@ -41,13 +41,15 @@ public class Review implements Serializable {
         this.score = score;
         this.name = name;
         this.date = date;
-        this.category = new Category(category);
+        if (category != null) {
+            this.category = new Category(category);
+        }
         this.count = count;
     }
 
     /**
      * Copy constructor.
-     * 
+     *
      * @param other
      *            The instance to copy
      */
