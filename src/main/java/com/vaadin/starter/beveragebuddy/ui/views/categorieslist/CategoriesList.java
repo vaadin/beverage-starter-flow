@@ -67,7 +67,7 @@ public class CategoriesList extends VerticalLayout {
         Div viewToolbar = new Div();
         viewToolbar.addClassName("view-toolbar");
 
-        searchField.setPrefixComponent(new Icon("lumo", "magnifier"));
+        searchField.setPrefixComponent(new Icon("lumo", "search"));
         searchField.addClassName("view-toolbar__search-field");
         searchField.addValueChangeListener(e -> updateView());
 
