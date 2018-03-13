@@ -88,7 +88,7 @@ In the HTML template, we have a text-field and a button with the corresponding i
 </vaadin-button>
 --------------
 
-We can use these elements in our server-side code by mapping them with `@Id` annotation.
+We can use these components in our server-side code by mapping them with `@Id` annotation.
 [source, java]
 --------------
 @Id("search")
