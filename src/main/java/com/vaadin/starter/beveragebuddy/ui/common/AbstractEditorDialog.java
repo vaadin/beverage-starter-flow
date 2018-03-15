@@ -24,7 +24,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -57,7 +57,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      * an already existing item.
      */
     public enum Operation {
-        ADD("Add New", "add", false),
+        ADD("New", "add", false),
         EDIT("Edit", "edit", true);
 
         private final String nameInTitle;
@@ -84,7 +84,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         }
     }
 
-    private final H2 titleField = new H2();
+    private final H3 titleField = new H3();
     private final Button saveButton = new Button("Save");
     private final Button cancelButton = new Button("Cancel");
     private final Button deleteButton = new Button("Delete");
@@ -137,8 +137,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     private void initFormLayout() {
         formLayout.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1),
-                new FormLayout.ResponsiveStep("50em", 2));
-        formLayout.addClassName("no-padding");
+                new FormLayout.ResponsiveStep("25em", 2));
         Div div = new Div(formLayout);
         div.addClassName("has-padding");
         add(div);
@@ -149,7 +148,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         saveButton.getElement().setAttribute("theme", "primary");
         cancelButton.addClickListener(e -> close());
         deleteButton.addClickListener(e -> deleteClicked());
-        deleteButton.getElement().setAttribute("theme", "tertiary danger");
+        deleteButton.getElement().setAttribute("theme", "tertiary error");
         buttonBar.setClassName("buttons");
         buttonBar.setSpacing(true);
         add(buttonBar);
@@ -214,9 +213,6 @@ public abstract class AbstractEditorDialog<T extends Serializable>
             close();
         } else {
             BinderValidationStatus<T> status = binder.validate();
-            Notification.show(status.getValidationErrors().stream()
-                    .map(ValidationResult::getErrorMessage)
-                    .collect(Collectors.joining("; ")), 3000, Position.BOTTOM_START);
         }
     }
 

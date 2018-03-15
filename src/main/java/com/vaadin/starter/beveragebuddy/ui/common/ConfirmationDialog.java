@@ -18,7 +18,7 @@ package com.vaadin.starter.beveragebuddy.ui.common;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.shared.Registration;
 
@@ -28,14 +28,14 @@ import java.util.function.Consumer;
 
 /**
  * A generic dialog for confirming or cancelling an action.
- * 
+ *
  * @param <T>
  *            The type of the action's subject
  */
 class ConfirmationDialog<T extends Serializable>
         extends Dialog {
 
-    private final H2 titleField = new H2();
+    private final H3 titleField = new H3();
     private final Div messageLabel = new Div();
     private final Div extraMessageLabel = new Div();
     private final Button confirmButton = new Button();
@@ -50,7 +50,6 @@ class ConfirmationDialog<T extends Serializable>
         setCloseOnEsc(true);
         setCloseOnOutsideClick(false);
 
-        getElement().getClassList().add("confirm-dialog");
         confirmButton.addClickListener(e -> close());
         confirmButton.getElement().setAttribute("theme", "tertiary");
         confirmButton.setAutofocus(true);
@@ -59,12 +58,12 @@ class ConfirmationDialog<T extends Serializable>
 
         HorizontalLayout buttonBar = new HorizontalLayout(confirmButton,
                 cancelButton);
-        buttonBar.setClassName("confirm-dialog-buttons");
+        buttonBar.setClassName("buttons confirm-buttons");
 
         Div labels = new Div(messageLabel, extraMessageLabel);
         labels.setClassName("confirm-text");
 
-        titleField.setClassName("confirm-dialog-heading");
+        titleField.setClassName("confirm-title");
 
         add(titleField, labels, buttonBar);
 
@@ -117,8 +116,15 @@ class ConfirmationDialog<T extends Serializable>
         }
         registrationForCancel = cancelButton
                 .addClickListener(e -> cancelHandler.run());
+        this.addOpenedChangeListener(e -> {
+            if (!e.isOpened()) {
+               // TODO this should not be run when the dialog is closed by confirmation
+               // Now it produces an RPC warning
+               cancelHandler.run();
+            }
+        });
         if (isDisruptive) {
-            confirmButton.getElement().setAttribute("theme", "tertiary danger");
+            confirmButton.getElement().setAttribute("theme", "tertiary error");
         }
         open();
     }

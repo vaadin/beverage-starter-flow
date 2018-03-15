@@ -48,7 +48,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     public ReviewEditorDialog(BiConsumer<Review, Operation> saveHandler,
             Consumer<Review> deleteHandler) {
-        super("Review", saveHandler, deleteHandler);
+        super("review", saveHandler, deleteHandler);
 
         createNameField();
         createTimesField();
@@ -134,9 +134,8 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     @Override
     protected void confirmDelete() {
-        openConfirmationDialog(
-                "Delete beverage \"" + getCurrentItem().getName() + "\"?", "",
-                "");
+        openConfirmationDialog("Delete review",
+                "Are you sure you want to delete the review for “" + getCurrentItem().getName() + "”?", "");
     }
 
 }

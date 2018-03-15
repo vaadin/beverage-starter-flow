@@ -18,7 +18,7 @@ package com.vaadin.starter.beveragebuddy.ui.views.reviewslist;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
-import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
@@ -66,16 +66,16 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     @Id("newReview")
     private Button addReview;
     @Id("header")
-    private H1 header;
+    private H2 header;
 
     private ReviewEditorDialog reviewForm = new ReviewEditorDialog(
             this::saveUpdate, this::deleteUpdate);
 
     public ReviewsList() {
-        search.setPlaceholder("Search");
+        search.setPlaceholder("Search reviews");
         search.addValueChangeListener(e -> updateList());
         search.setValueChangeMode(ValueChangeMode.EAGER);
-        
+
         addReview.addClickListener(e -> openForm(new Review(),
                 AbstractEditorDialog.Operation.ADD));
 

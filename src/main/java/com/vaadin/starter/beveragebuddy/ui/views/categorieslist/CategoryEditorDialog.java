@@ -30,11 +30,11 @@ import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
  */
 public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
 
-    private final TextField categoryNameField = new TextField("Category Name");
+    private final TextField categoryNameField = new TextField("Name");
 
     public CategoryEditorDialog(BiConsumer<Category, Operation> itemSaver,
             Consumer<Category> itemDeleter) {
-        super("Category", itemSaver, itemDeleter);
+        super("category", itemSaver, itemDeleter);
 
         addNameField();
     }
@@ -59,11 +59,11 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
         int reviewCount = ReviewService.getInstance()
                 .findReviews(getCurrentItem().getName()).size();
         if (reviewCount > 0) {
-            openConfirmationDialog(
-                    "Delete Category “" + getCurrentItem().getName() + "”?",
-                    "There are " + reviewCount
+            openConfirmationDialog("Delete category",
+                    "Are you sure you want to delete the “" + getCurrentItem().getName()
+                            + "” category? There are " + reviewCount
                             + " reviews associated with this category.",
-                    "Deleting the category will mark the associated reviews as “undefined”."
+                    "Deleting the category will mark the associated reviews as “undefined”. "
                             + "You may link the reviews to other categories on the edit page.");
         }
     }

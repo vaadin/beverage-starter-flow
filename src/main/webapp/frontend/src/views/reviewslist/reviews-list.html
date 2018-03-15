@@ -20,6 +20,7 @@
 <link rel="import" href="../../../bower_components/vaadin-text-field/src/vaadin-text-field.html">
 <link rel="import" href="../../../bower_components/vaadin-button/src/vaadin-button.html">
 <link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../../bower_components/vaadin-lumo-styles/badge.html">
 <!-- TODO Needed to show icons in Vaadin Designer preview mode for now, but can be removed soon -->
 <link rel="import" href="../../../bower_components/vaadin-lumo-styles/icons.html">
 
@@ -27,41 +28,12 @@
 <!-- Defines the reviews-list element -->
 <dom-module id="reviews-list">
     <template>
-        <style>
+        <style include="lumo-color lumo-typography lumo-badge view-styles">
             :host {
                 display: block;
             }
 
-            /* Stretch to fill the entire browser viewport while keeping the content constrained to
-               parent element max-width */
-            .view-toolbar,
-            .reviews {
-                margin: 0 calc(-50vw + 50%);
-                padding: 8px calc(50vw - 50% + 16px);
-            }
-
-            .view-toolbar {
-                display: flex;
-                min-height: 45px;
-                background-color: var(--lumo-base-color);
-                box-shadow: 0 1px 0 0 var(--lumo-contrast-5pct);
-            }
-
-            #search {
-                flex: auto;
-                margin-right: 16px;
-            }
-
-            vaadin-button {
-                margin-left: 0;
-                margin-right: 0;
-                min-width: 0;
-                flex: none;
-            }
-
-            h1 {
-                letter-spacing: -0.015em;
-                line-height: 1.1;
+            #header {
                 display: flex;
                 justify-content: space-between;
                 flex-wrap: wrap;
@@ -69,20 +41,22 @@
             }
 
             /* Subtitle for the header */
-            h1 span {
+            #header span {
                 display: block;
-                font-size: 14px;
+                font-size: var(--lumo-font-size-s);
                 font-weight: 400;
-                color: var(--lumo-tertiary-text-color);
+                color: var(--lumo-secondary-text-color);
                 letter-spacing: 0;
                 margin-top: 0.3em;
+                margin-left: auto;
             }
 
             .review {
                 display: flex;
                 align-items: center;
                 width: 100%;
-                padding: 24px 32px;
+                padding: var(--lumo-space-wide-xl);
+                padding-right: var(--lumo-space-m);
                 box-sizing: border-box;
                 margin-bottom: 8px;
                 background-color: var(--lumo-base-color);
@@ -162,27 +136,23 @@
             }
 
             .review__details {
-                width: 70%;
+                width: 100%;
+                max-width: calc(100% - 8.5em);
                 flex: auto;
-                line-height: 1.2em;
+                line-height: var(--lumo-line-height-xs);
+                overflow: hidden;
             }
 
             .review__name {
-                margin: 0;
-                font-weight: 600;
-                color: var(--lumo-header-text-color);
-                margin-bottom: 0.3em;
+                margin: 0 0.5em 0 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .review__category {
-                display: inline-block;
                 margin: 0;
-                font-size: 12px;
-                font-weight: 500;
-                background-color: var(--lumo-primary-color-10pct);
-                color: var(--lumo-primary-text-color);
-                border-radius: calc(var(--lumo-border-radius) / 2);
-                padding: 0 0.5em;
+                flex: none;
             }
 
             /* We only expect to have 10 categories at most, after which the colors start to rotate */
@@ -193,22 +163,28 @@
 
             .review__date {
                 white-space: nowrap;
-                line-height: 1.3;
+                line-height: var(--lumo-line-height-xs);
                 margin: 0 1em;
-                flex-grow: auto;
                 width: 30%;
             }
 
             .review__date h5 {
-                font-size: 13px;
+                font-size: var(--lumo-font-size-s);
                 font-weight: 400;
                 color: var(--lumo-secondary-text-color);
                 margin: 0;
             }
 
             .review__date p {
+                font-size: var(--lumo-font-size-s);
                 margin: 0;
-                font-size: 15px;
+            }
+
+            .review__edit {
+                align-self: flex-start;
+                flex: none;
+                margin: 0 0 0 auto;
+                width: 5em;
             }
 
             .reviews__no-matches {
@@ -222,43 +198,34 @@
 
             /* Small viewport styles */
 
-            @media (max-width: 600px) {
-                .view-toolbar,
-                .reviews {
-                    padding: 4px 8px;
-                }
-
-                /* Hide the button label when the browser viewport is narrow */
-                vaadin-button span {
-                    display: none;
-                }
-
-                vaadin-button iron-icon {
-                    margin: 0;
-                }
-
+            @media (max-width: 500px) {
                 .review {
-                    padding: 16px;
+                    padding: var(--lumo-space-m);
+                    padding-right: var(--lumo-space-s);
+                    flex-wrap: wrap;
                 }
 
-                .review__name {
-                    display: inline;
+                .review__date {
+                    order: 1;
+                    margin-left: 3.5em;
+                    margin-top: 0.5em;
                 }
             }
 
         </style>
 
         <div class="view-toolbar">
-            <vaadin-text-field id="search" autocapitalize=off>
+            <vaadin-text-field id="search" class="view-toolbar__search-field" autocapitalize=off>
                 <iron-icon icon="lumo:search" slot="prefix"></iron-icon>
             </vaadin-text-field>
-            <vaadin-button id="newReview" theme="primary">
-                <iron-icon icon="lumo:plus"></iron-icon><span>New review</span>
+            <vaadin-button id="newReview" class="view-toolbar__button" theme="primary">
+                <iron-icon icon="lumo:plus" slot="prefix"></iron-icon>
+                <span>New review</span>
             </vaadin-button>
         </div>
 
-        <div class="reviews">
-            <h1 id="header"></h1>
+        <div class="view-container reviews">
+            <h2 id="header"></h2>
             <template is="dom-if" if="{{!_isEmpty(reviews)}}">
                 <template is="dom-repeat" items="[[reviews]]">
                     <div class="review">
@@ -272,15 +239,15 @@
                         <div class="review__details">
                             <h4 class="review__name">[[item.name]]</h4>
                             <template is="dom-if" if="[[item.category]]">
-                                <p class="review__category" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
+                                <p class="review__category" theme="badge small" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
                             </template>
                             <template is="dom-if" if="[[!item.category]]">
                                 <p class="review__category" style="--category: -1;">Undefined</p>
                             </template>
                         </div>
                         <div class="review__date">
-                                <h5>Last tasted</h5>
-                                <p>[[item.date]]</p>
+                            <h5>Last tasted</h5>
+                            <p>[[item.date]]</p>
                         </div>
                         <vaadin-button on-click="edit" class="review__edit" theme="tertiary">
                             <iron-icon icon="lumo:edit"></iron-icon><span>Edit</span>
