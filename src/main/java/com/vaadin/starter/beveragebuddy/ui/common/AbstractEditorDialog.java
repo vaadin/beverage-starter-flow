@@ -148,7 +148,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         saveButton.getElement().setAttribute("theme", "primary");
         cancelButton.addClickListener(e -> close());
         deleteButton.addClickListener(e -> deleteClicked());
-        deleteButton.getElement().setAttribute("theme", "tertiary error");
+        deleteButton.getElement().setAttribute("theme", "error");
         buttonBar.setClassName("buttons");
         buttonBar.setSpacing(true);
         add(buttonBar);
