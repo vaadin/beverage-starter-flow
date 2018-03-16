@@ -51,9 +51,9 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
         super("review", saveHandler, deleteHandler);
 
         createNameField();
-        createTimesField();
         createCategoryBox();
         createDatePicker();
+        createTimesField();
         createScoreBox();
     }
 
@@ -73,7 +73,7 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     }
 
     private void createDatePicker() {
-        lastTasted.setLabel("Date");
+        lastTasted.setLabel("Last tasted");
         lastTasted.setRequired(true);
         lastTasted.setMax(LocalDate.now());
         lastTasted.setMin(LocalDate.of(1, 1, 1));
