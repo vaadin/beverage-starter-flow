@@ -118,8 +118,6 @@ class ConfirmationDialog<T extends Serializable>
                 .addClickListener(e -> cancelHandler.run());
         this.addOpenedChangeListener(e -> {
             if (!e.isOpened()) {
-               // TODO this should not be run when the dialog is closed by confirmation
-               // Now it produces an RPC warning
                cancelHandler.run();
             }
         });
