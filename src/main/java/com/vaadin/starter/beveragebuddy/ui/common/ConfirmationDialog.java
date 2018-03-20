@@ -66,12 +66,6 @@ class ConfirmationDialog<T extends Serializable>
         titleField.setClassName("confirm-title");
 
         add(titleField, labels, buttonBar);
-
-        this.addOpenedChangeListener(event -> {
-            if (!this.isOpened()){
-                this.getElement().removeFromParent();
-            }
-        });
     }
 
     /**
