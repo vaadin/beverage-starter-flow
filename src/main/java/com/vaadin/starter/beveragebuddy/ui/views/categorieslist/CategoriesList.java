@@ -121,7 +121,7 @@ public class CategoriesList extends VerticalLayout {
         List<Category> categories = CategoryService.getInstance()
                 .findCategories(searchField.getValue());
         grid.setItems(categories);
-        
+
         if (searchField.getValue().length() > 0) {
             header.setText("Search for “"+ searchField.getValue() +"”");
         } else {
