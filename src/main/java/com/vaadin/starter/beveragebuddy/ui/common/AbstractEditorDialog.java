@@ -124,11 +124,6 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         initButtonBar();
         setCloseOnEsc(true);
         setCloseOnOutsideClick(false);
-        addOpenedChangeListener(event -> {
-            if (!isOpened()) {
-                getElement().removeFromParent();
-            }
-        });
     }
 
     private void initTitle() {
