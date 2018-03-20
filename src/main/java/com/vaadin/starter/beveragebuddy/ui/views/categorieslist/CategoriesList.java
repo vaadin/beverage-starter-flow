@@ -19,6 +19,8 @@ import java.util.List;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.Grid.SelectionMode;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
@@ -26,6 +28,7 @@ import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.beveragebuddy.backend.Category;
@@ -43,7 +46,8 @@ import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
 @PageTitle("Categories List")
 public class CategoriesList extends VerticalLayout {
 
-    private final TextField searchField = new TextField("", "Search");
+    private final TextField searchField = new TextField("", "Search categories");
+    private final H2 header = new H2("Categories");
     private final Grid<Category> grid = new Grid<>();
 
     private final CategoryEditorDialog form = new CategoryEditorDialog(
@@ -53,7 +57,7 @@ public class CategoriesList extends VerticalLayout {
         initView();
 
         addSearchBar();
-        addGrid();
+        addContent();
 
         updateView();
     }
@@ -70,6 +74,7 @@ public class CategoriesList extends VerticalLayout {
         searchField.setPrefixComponent(new Icon("lumo", "search"));
         searchField.addClassName("view-toolbar__search-field");
         searchField.addValueChangeListener(e -> updateView());
+        searchField.setValueChangeMode(ValueChangeMode.EAGER);
 
         Button newButton = new Button("New category", new Icon("lumo", "plus"));
         newButton.getElement().setAttribute("theme", "primary");
@@ -81,15 +86,19 @@ public class CategoriesList extends VerticalLayout {
         add(viewToolbar);
     }
 
-    private void addGrid() {
-        grid.addColumn(Category::getName).setHeader("Category");
-        grid.addColumn(this::getReviewCount).setHeader("Beverages");
+    private void addContent() {
+        VerticalLayout container = new VerticalLayout();
+        container.setClassName("view-container");
+        container.setAlignItems(Alignment.STRETCH);
+
+        grid.addColumn(Category::getName).setHeader("Name").setWidth("8em").setResizable(true);
+        grid.addColumn(this::getReviewCount).setHeader("Beverages").setWidth("6em");
         grid.addColumn(new ComponentRenderer<>(this::createEditButton))
                 .setFlexGrow(0);
-        
-        grid.addClassName("categories");
-        grid.getElement().setAttribute("theme", "row-dividers");
-        add(grid);
+        grid.setSelectionMode(SelectionMode.NONE);
+
+        container.add(header, grid);
+        add(container);
     }
 
     private Button createEditButton(Category category) {
@@ -112,6 +121,12 @@ public class CategoriesList extends VerticalLayout {
         List<Category> categories = CategoryService.getInstance()
                 .findCategories(searchField.getValue());
         grid.setItems(categories);
+
+        if (searchField.getValue().length() > 0) {
+            header.setText("Search for “"+ searchField.getValue() +"”");
+        } else {
+            header.setText("Categories");
+        }
     }
 
     private void saveCategory(Category category,
