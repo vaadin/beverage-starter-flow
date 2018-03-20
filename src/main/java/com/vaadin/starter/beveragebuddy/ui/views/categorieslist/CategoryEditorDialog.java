@@ -64,7 +64,7 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
                             + "” category? There are " + reviewCount
                             + " reviews associated with this category.",
                     "Deleting the category will mark the associated reviews as “undefined”. "
-                            + "You may link the reviews to other categories on the edit page.");
+                            + "You can edit individual reviews to select another category.");
         }
     }
 }
