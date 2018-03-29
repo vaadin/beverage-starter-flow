@@ -101,6 +101,8 @@ class StaticData {
                 "Mead",
                 "Soma")
                 .forEach(name -> BEVERAGES.put(name, OTHER));
+
+        BEVERAGES.put("", UNDEFINED);
     }
 
     /** This class is not meant to be instantiated. */

@@ -48,17 +48,18 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     public ReviewEditorDialog(BiConsumer<Review, Operation> saveHandler,
             Consumer<Review> deleteHandler) {
-        super("Review", saveHandler, deleteHandler);
+        super("review", saveHandler, deleteHandler);
 
         createNameField();
-        createTimesField();
         createCategoryBox();
         createDatePicker();
+        createTimesField();
         createScoreBox();
     }
 
     private void createScoreBox() {
-        scoreBox.setLabel("Mark a score");
+        scoreBox.setLabel("Rating");
+        scoreBox.setRequired(true);
         scoreBox.setAllowCustomValue(false);
         scoreBox.setItems("1", "2", "3", "4", "5");
         getFormLayout().add(scoreBox);
@@ -72,7 +73,8 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     }
 
     private void createDatePicker() {
-        lastTasted.setLabel("Choose the date");
+        lastTasted.setLabel("Last tasted");
+        lastTasted.setRequired(true);
         lastTasted.setMax(LocalDate.now());
         lastTasted.setMin(LocalDate.of(1, 1, 1));
         lastTasted.setValue(LocalDate.now());
@@ -89,18 +91,22 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     }
 
     private void createCategoryBox() {
-        categoryBox.setLabel("Choose a category");
+        categoryBox.setLabel("Category");
+        categoryBox.setRequired(true);
         categoryBox.setItemLabelGenerator(Category::getName);
         categoryBox.setAllowCustomValue(false);
         categoryBox.setItems(categoryService.findCategories(""));
         getFormLayout().add(categoryBox);
 
-        getBinder().forField(categoryBox).bind(Review::getCategory,
-                Review::setCategory);
+        getBinder().forField(categoryBox)
+                .withValidator(Objects::nonNull,
+                        "The category should be defined.")
+                .bind(Review::getCategory, Review::setCategory);
     }
 
     private void createTimesField() {
         timesTasted.setLabel("Times tasted");
+        timesTasted.setRequired(true);
         timesTasted.setPattern("[0-9]*");
         timesTasted.setPreventInvalidInput(true);
         getFormLayout().add(timesTasted);
@@ -114,7 +120,8 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
     }
 
     private void createNameField() {
-        beverageName.setLabel("Beverage name");
+        beverageName.setLabel("Beverage");
+        beverageName.setRequired(true);
         getFormLayout().add(beverageName);
 
         getBinder().forField(beverageName)
@@ -127,9 +134,8 @@ public class ReviewEditorDialog extends AbstractEditorDialog<Review> {
 
     @Override
     protected void confirmDelete() {
-        openConfirmationDialog(
-                "Delete beverage \"" + getCurrentItem().getName() + "\"?", "",
-                "");
+        openConfirmationDialog("Delete review",
+                "Are you sure you want to delete the review for “" + getCurrentItem().getName() + "”?", "");
     }
 
 }
