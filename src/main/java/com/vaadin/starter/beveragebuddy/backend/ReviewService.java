@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.vaadin.starter.beveragebuddy.ui.converters.LocalDateToStringConverter;
+import com.vaadin.starter.beveragebuddy.ui.encoders.LocalDateToStringEncoder;
 
 /**
  * Simple backend service to store and retrieve {@link Review} instances.
@@ -76,7 +76,7 @@ public class ReviewService {
 
     /**
      * Gets the unique instance of this Singleton.
-     * 
+     *
      * @return the unique instance of this Singleton
      */
     public static ReviewService getInstance() {
@@ -103,7 +103,7 @@ public class ReviewService {
     }
 
     private String filterTextOf(Review review) {
-        LocalDateToStringConverter dateConverter = new LocalDateToStringConverter();
+        LocalDateToStringEncoder dateConverter = new LocalDateToStringEncoder();
         // Use a delimiter which can't be entered in the search box,
         // to avoid false positives
         String filterableText = Stream
@@ -112,14 +112,14 @@ public class ReviewService {
                                 : review.getCategory().getName(),
                         String.valueOf(review.getScore()),
                         String.valueOf(review.getCount()),
-                        dateConverter.toPresentation(review.getDate()))
+                        dateConverter.encode(review.getDate()))
                 .collect(Collectors.joining("\t"));
         return filterableText.toLowerCase();
     }
 
     /**
      * Deletes the given review from the review store.
-     * 
+     *
      * @param review
      *            the review to delete
      * @return true if the operation was successful, otherwise false

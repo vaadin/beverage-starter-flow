@@ -24,7 +24,7 @@ public class Review implements Serializable {
 
     /**
      * Constructs a new instance with the given data.
-     * 
+     *
      * @param score
      *            Review score
      * @param name
@@ -47,7 +47,7 @@ public class Review implements Serializable {
 
     /**
      * Copy constructor.
-     * 
+     *
      * @param other
      *            The instance to copy
      */

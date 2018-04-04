@@ -15,6 +15,8 @@
  */
 package com.vaadin.starter.beveragebuddy.ui.views.reviewslist;
 
+import java.util.List;
+
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -30,17 +32,15 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.templatemodel.Convert;
+import com.vaadin.flow.templatemodel.Encode;
 import com.vaadin.flow.templatemodel.TemplateModel;
 import com.vaadin.starter.beveragebuddy.backend.Review;
 import com.vaadin.starter.beveragebuddy.backend.ReviewService;
-import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
 import com.vaadin.starter.beveragebuddy.ui.MainLayout;
-import com.vaadin.starter.beveragebuddy.ui.converters.LocalDateToStringConverter;
-import com.vaadin.starter.beveragebuddy.ui.converters.LongToStringConverter;
+import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
+import com.vaadin.starter.beveragebuddy.ui.encoders.LocalDateToStringEncoder;
+import com.vaadin.starter.beveragebuddy.ui.encoders.LongToStringEncoder;
 import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList.ReviewsModel;
-
-import java.util.List;
 
 /**
  * Displays the list of available categories, with a search filter as well as
@@ -55,9 +55,9 @@ import java.util.List;
 public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
     public interface ReviewsModel extends TemplateModel {
-        @Convert(value = LongToStringConverter.class, path = "id")
-        @Convert(value = LocalDateToStringConverter.class, path = "date")
-        @Convert(value = LongToStringConverter.class, path = "category.id")
+        @Encode(value = LongToStringEncoder.class, path = "id")
+        @Encode(value = LocalDateToStringEncoder.class, path = "date")
+        @Encode(value = LongToStringEncoder.class, path = "category.id")
         void setReviews(List<Review> reviews);
     }
 
@@ -88,13 +88,15 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         ReviewService.getInstance().saveReview(review);
         updateList();
         Notification.show(
-                "Beverage successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
+                "Beverage successfully " + operation.getNameInText() + "ed.",
+                3000, Position.BOTTOM_START);
     }
 
     public void deleteUpdate(Review review) {
         ReviewService.getInstance().deleteReview(review);
         updateList();
-        Notification.show("Beverage successfully deleted.", 3000, Position.BOTTOM_START);
+        Notification.show("Beverage successfully deleted.", 3000,
+                Position.BOTTOM_START);
     }
 
     private void updateList() {
