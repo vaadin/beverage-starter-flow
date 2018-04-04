@@ -15,7 +15,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>10.0.0.beta5</vaadin.version>
+        <vaadin.version>10.0.0.beta7</vaadin.version>
 
         <jetty.version>9.3.7.v20160115</jetty.version>
     </properties>
@@ -58,7 +58,6 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-core</artifactId>
-            <version>${vaadin.version}</version>
         </dependency>
 
         <!-- Added to provide logging output as Flow uses -->
@@ -117,7 +116,7 @@
                     <plugin>
                         <groupId>com.vaadin</groupId>
                         <artifactId>flow-maven-plugin</artifactId>
-                        <version>1.0.0.beta2</version>
+                        <version>1.0.0.beta5</version>
                         <executions>
                             <execution>
                                 <goals>
