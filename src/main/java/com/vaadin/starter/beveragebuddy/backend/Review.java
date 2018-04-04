@@ -41,9 +41,7 @@ public class Review implements Serializable {
         this.score = score;
         this.name = name;
         this.date = date;
-        if (category != null) {
-            this.category = new Category(category);
-        }
+        this.category = new Category(category);
         this.count = count;
     }
 
