@@ -125,11 +125,11 @@
             text-decoration: none;
         }
 
-        .main-layout__nav-item:not(.main-layout__nav-item--selected):hover {
+        .main-layout__nav-item:not([highlight]):hover {
             color: inherit;
         }
 
-        .main-layout__nav-item--selected {
+        .main-layout__nav-item[highlight] {
             color: var(--lumo-primary-text-color);
             cursor: default;
         }
