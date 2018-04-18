@@ -16,7 +16,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
         <vaadin.version>10.0.0.beta8</vaadin.version>
-
+        <flow.maven.plugin.version>1.0.0.beta7</flow.maven.plugin.version>
         <jetty.version>9.3.7.v20160115</jetty.version>
     </properties>
 
@@ -116,7 +116,7 @@
                     <plugin>
                         <groupId>com.vaadin</groupId>
                         <artifactId>flow-maven-plugin</artifactId>
-                        <version>1.0.0.beta5</version>
+                        <version>${flow.maven.plugin.version}</version>
                         <executions>
                             <execution>
                                 <goals>
