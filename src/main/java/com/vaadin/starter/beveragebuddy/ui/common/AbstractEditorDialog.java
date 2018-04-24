@@ -18,19 +18,15 @@ package com.vaadin.starter.beveragebuddy.ui.common;
 import java.io.Serializable;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.BinderValidationStatus;
-import com.vaadin.flow.data.binder.ValidationResult;
 import com.vaadin.flow.shared.Registration;
 
 /**
@@ -57,8 +53,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      * an already existing item.
      */
     public enum Operation {
-        ADD("New", "add", false),
-        EDIT("Edit", "edit", true);
+        ADD("New", "add", false), EDIT("Edit", "edit", true);
 
         private final String nameInTitle;
         private final String nameInText;
@@ -237,12 +232,21 @@ public abstract class AbstractEditorDialog<T extends Serializable>
             String additionalMessage) {
         close();
         confirmationDialog.open(title, message, additionalMessage, "Delete",
-                true, getCurrentItem(), this::deleteConfirmed,
-                this::open);
+                true, getCurrentItem(), this::deleteConfirmed, this::open);
+    }
+
+    /**
+     * Removes the {@code item} from the backend and close the dialog.
+     *
+     * @param item
+     *            the item to delete
+     */
+    protected void doDelete(T item) {
+        itemDeleter.accept(item);
+        close();
     }
 
     private void deleteConfirmed(T item) {
-        itemDeleter.accept(item);
-        close();
+        doDelete(item);
     }
 }

@@ -60,11 +60,14 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
                 .findReviews(getCurrentItem().getName()).size();
         if (reviewCount > 0) {
             openConfirmationDialog("Delete category",
-                    "Are you sure you want to delete the “" + getCurrentItem().getName()
+                    "Are you sure you want to delete the “"
+                            + getCurrentItem().getName()
                             + "” category? There are " + reviewCount
                             + " reviews associated with this category.",
                     "Deleting the category will mark the associated reviews as “undefined”. "
                             + "You can edit individual reviews to select another category.");
+        } else {
+            doDelete(getCurrentItem());
         }
     }
 }
