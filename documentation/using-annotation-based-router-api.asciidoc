@@ -36,7 +36,7 @@ mapping the `@Route` annotation from each navigation target, so there is no need
 to declare it manually.
 
 You can find more about this topic
-https://vaadin.com/docs/v10/flow/routing/tutorial-routing-annotation.asciidoc[
+https://vaadin.com/docs/v10/flow/routing/tutorial-routing-annotation.html[
 here].
 
 == Navigating between routes
@@ -51,5 +51,5 @@ categories.add(new Icon(VaadinIcons.ARCHIVES), new Text("Categories"));
 [TIP]
 You can also add a URL parameter in the `RouterLink` component.
 You can find more about this topic
-https://vaadin.com/docs/v10/flow/routing/tutorial-routing-navigation.asciidoc[
+https://vaadin.com/docs/v10/flow/routing/tutorial-routing-navigation.html[
 here].
