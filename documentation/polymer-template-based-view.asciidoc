@@ -55,24 +55,24 @@ for setting the list of items.
 [source, java]
 --------------
 public static interface ReviewsModel extends TemplateModel {
-    @Convert(value = LongToStringConverter.class, path = "id")
-    @Convert(value = LocalDateToStringConverter.class, path = "date")
-    @Convert(value = LongToStringConverter.class, path = "category.id")
+    @Encode(value = LongToStringEncoder.class, path = "id")
+    @Encode(value = LocalDateToStringEncoder.class, path = "date")
+    @Encode(value = LongToStringEncoder.class, path = "category.id")
     void setReviews(List<Review> reviews);
 }
 --------------
 There are two data types (`Long` and `LocalDate`) which are not supported  by
-`TemplateModel` directly, so we need to convert them by using the `@Convert`
-annotation. For more about `ModelConverters`, see
-https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-model-converters.asciidoc[
-Using Model Converters with a PolymerTemplate Model].
+`TemplateModel` directly, so we need to encode them by using the `@Encode`
+annotation. For more about `ModelEncoders`, see
+https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-model-encoders.html[
+Using Model Encoders with a PolymerTemplate Model].
 
 [NOTE]
 The name of the setter method should match the property name used in the
 template, `reviews` in our case.
 
 You can get more information about "Data Binding in PolymerTemplate" in the tutorial
-https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-list-bindings.asciidoc[
+https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-list-bindings.html[
 Creating Template Contents Dynamically Based on a List of Items].
 
 == Binding components from the template
@@ -80,11 +80,12 @@ Creating Template Contents Dynamically Based on a List of Items].
 In the HTML template, we have a text-field and a button with the corresponding identifiers.
 [source, html]
 --------------
-<vaadin-text-field id="search" autocapitalize=off>
-    <iron-icon icon="lumo:magnifier" slot="prefix"></iron-icon>
+<vaadin-text-field id="search" class="view-toolbar__search-field" autocapitalize=off>
+    <iron-icon icon="lumo:search" slot="prefix"></iron-icon>
 </vaadin-text-field>
-<vaadin-button id="newReview" theme="primary">
-    <iron-icon icon="lumo:plus"></iron-icon><span>New review</span>
+<vaadin-button id="newReview" class="view-toolbar__button" theme="primary">
+    <iron-icon icon="lumo:plus" slot="prefix"></iron-icon>
+    <span>New review</span>
 </vaadin-button>
 --------------
 
@@ -97,7 +98,7 @@ private TextField search;
 private Button addReview;
 --------------
 For more about this topic, see
-https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-components.asciidoc[
+https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-components.html[
 Binding Components from a PolymerTemplate].
 
 == Listening for user events from the template
@@ -113,6 +114,6 @@ private void edit(@ModelItem Review review) {
 }
 --------------
 You can check out
-https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-event-handlers.asciidoc[
+https://vaadin.com/docs/v10/flow/polymer-templates/tutorial-template-event-handlers.html[
 Handling User Events in a PolymerTemplate]
 for more information about sending events from template to the server.
