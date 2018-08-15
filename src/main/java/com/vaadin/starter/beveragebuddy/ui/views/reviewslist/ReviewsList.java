@@ -32,6 +32,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.shared.ui.LoadMode;
 import com.vaadin.flow.templatemodel.Encode;
 import com.vaadin.flow.templatemodel.TemplateModel;
 import com.vaadin.starter.beveragebuddy.backend.Review;
@@ -52,6 +53,11 @@ import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList.Reviews
 @PageTitle("Review List")
 @Tag("reviews-list")
 @HtmlImport("frontend://src/views/reviewslist/reviews-list.html")
+@HtmlImport(value = "frontend://bower_components/vaadin-ordered-layout/src/vaadin-horizontal-layout.html", loadMode = LoadMode.LAZY)
+@HtmlImport(value = "frontend://bower_components/vaadin-combo-box/src/vaadin-combo-box.html", loadMode = LoadMode.LAZY)
+@HtmlImport(value = "frontend://bower_components/vaadin-date-picker/src/vaadin-date-picker.html", loadMode = LoadMode.LAZY)
+@HtmlImport(value = "frontend://bower_components/vaadin-form-layout/src/vaadin-form-layout.html", loadMode = LoadMode.LAZY)
+@HtmlImport(value = "frontend://bower_components/vaadin-dialog/src/vaadin-dialog.html", loadMode = LoadMode.LAZY)
 public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
     public interface ReviewsModel extends TemplateModel {
