@@ -3,7 +3,9 @@
 # Beverage Buddy App Starter for Vaadin 10
 :coffee::tea::sake::baby_bottle::beer::cocktail::tropical_drink::wine_glass:
 
-This is a Vaadin 10 Flow example Java application, used to demonstrate features of the Vaadin Flow Java framework.
+This is a Vaadin 10 example Java application, used to demonstrate features of the Vaadin Flow Java framework.
+
+The easiest way of using it is via [https://vaadin.com/start](https://vaadin.com/start/v10-simple-ui) - you can choose the package naming you want.
 
 The Starter demonstrates the core Vaadin Flow concepts:
 * Building UIs in Java with Components based on [Vaadin components](https://vaadin.com/components/browse), such as `TextField`, `Button`, `ComboBox`, `DatePicker`, `VerticalLayout` and `Grid` (see `CategoriesList`)
