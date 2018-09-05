@@ -26,6 +26,7 @@ import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
+import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.starter.beveragebuddy.ui.views.categorieslist.CategoriesList;
 import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
@@ -35,6 +36,7 @@ import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
  * child views below that.
  */
 @HtmlImport("frontend://styles/shared-styles.html")
+@PWA(name = "Beverage Buddy", shortName = "BevBuddy")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
