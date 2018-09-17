@@ -221,7 +221,7 @@
             </vaadin-text-field>
             <vaadin-button id="newReview" class="view-toolbar__button" theme="primary">
                 <iron-icon icon="lumo:plus" slot="prefix"></iron-icon>
-                <span>New review</span>
+                <span>[[reviewButtonText]]</span>
             </vaadin-button>
         </div>
 
@@ -251,7 +251,7 @@
                             <p>[[item.date]]</p>
                         </div>
                         <vaadin-button on-click="edit" class="review__edit" theme="tertiary">
-                            <iron-icon icon="lumo:edit"></iron-icon><span>Edit</span>
+                            <iron-icon icon="lumo:edit"></iron-icon><span>[[editButtonText]]</span>
                         </vaadin-button>
                     </div>
                 </template>
