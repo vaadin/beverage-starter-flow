@@ -101,6 +101,7 @@
 
             <properties>
                 <vaadin.productionMode>true</vaadin.productionMode>
+                <transpilation.output>${project.build.directory}/build</transpilation.output>
             </properties>
 
             <dependencies>
