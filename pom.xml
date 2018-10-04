@@ -91,7 +91,8 @@
 
     <profiles>
         <profile>
-            <id>productionMode</id>
+            <!-- Production mode can be activated with either property or profile -->
+            <id>production-mode</id>
             <activation>
                 <property>
                     <name>vaadin.productionMode</name>
@@ -99,7 +100,7 @@
             </activation>
 
             <properties>
-                <transpilation.output>${project.build.directory}/build</transpilation.output>
+                <vaadin.productionMode>true</vaadin.productionMode>
             </properties>
 
             <dependencies>
@@ -121,9 +122,6 @@
                                     <goal>copy-production-files</goal>
                                     <goal>package-for-production</goal>
                                 </goals>
-                                <configuration>
-                                    <transpileOutputDirectory>${transpilation.output}</transpileOutputDirectory>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -132,26 +130,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-war-plugin</artifactId>
                         <version>3.1.0</version>
-                        <configuration>
-                            <webResources>
-                                <resource>
-                                    <directory>${transpilation.output}</directory>
-                                </resource>
-                            </webResources>
-                        </configuration>
-                    </plugin>
-
-                    <plugin>
-                        <groupId>org.eclipse.jetty</groupId>
-                        <artifactId>jetty-maven-plugin</artifactId>
-                        <version>${jetty.version}</version>
-                        <configuration>
-                            <webAppConfig>
-                                <resourceBases>
-                                    <resourceBase>${transpilation.output}</resourceBase>
-                                </resourceBases>
-                            </webAppConfig>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
