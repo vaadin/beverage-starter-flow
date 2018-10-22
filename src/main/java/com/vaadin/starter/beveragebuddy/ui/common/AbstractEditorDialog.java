@@ -52,31 +52,42 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      * The operations supported by this dialog. Delete is enabled when editing
      * an already existing item.
      */
-    public enum Operation {
+    public enum DialogOperation implements Operation {
         ADD("New", "add", false), EDIT("Edit", "edit", true);
 
         private final String nameInTitle;
         private final String nameInText;
         private final boolean deleteEnabled;
 
-        Operation(String nameInTitle, String nameInText,
+        DialogOperation(String nameInTitle, String nameInText,
                 boolean deleteEnabled) {
             this.nameInTitle = nameInTitle;
             this.nameInText = nameInText;
             this.deleteEnabled = deleteEnabled;
         }
 
+        @Override
         public String getNameInTitle() {
             return nameInTitle;
         }
 
+        @Override
         public String getNameInText() {
             return nameInText;
         }
 
+        @Override
         public boolean isDeleteEnabled() {
             return deleteEnabled;
         }
+    }
+
+    public interface Operation {
+        String getNameInTitle();
+
+        String getNameInText();
+
+        boolean isDeleteEnabled();
     }
 
     private final H3 titleField = new H3();

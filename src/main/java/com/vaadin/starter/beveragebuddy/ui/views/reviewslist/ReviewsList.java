@@ -77,7 +77,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         search.setValueChangeMode(ValueChangeMode.EAGER);
 
         addReview.addClickListener(e -> openForm(new Review(),
-                AbstractEditorDialog.Operation.ADD));
+                AbstractEditorDialog.DialogOperation.ADD));
 
         // Set review button and edit button text from Java
         getElement().setProperty("reviewButtonText", "New review");
@@ -120,7 +120,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
 
     @EventHandler
     private void edit(@ModelItem Review review) {
-        openForm(review, AbstractEditorDialog.Operation.EDIT);
+        openForm(review, AbstractEditorDialog.DialogOperation.EDIT);
     }
 
     private void openForm(Review review,
