@@ -230,9 +230,8 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      */
     protected final void openConfirmationDialog(String title, String message,
             String additionalMessage) {
-        close();
         confirmationDialog.open(title, message, additionalMessage, "Delete",
-                true, getCurrentItem(), this::deleteConfirmed, this::open);
+                true, getCurrentItem(), this::deleteConfirmed, null);
     }
 
     /**
