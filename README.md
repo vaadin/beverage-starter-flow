@@ -33,3 +33,4 @@ Brief introduction to the application parts can be found from the `documentation
 * `master` the latest version of the starter, using the latest platform snapshot
 * `V10` the version for Vaadin 10
 * `V11` the version for Vaadin 11
+* `V12` the version for Vaadin 12
