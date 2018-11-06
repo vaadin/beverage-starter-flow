@@ -15,6 +15,9 @@
  */
 package com.vaadin.starter.beveragebuddy.ui.common;
 
+import java.io.Serializable;
+import java.util.function.Consumer;
+
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
@@ -22,18 +25,13 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.shared.Registration;
 
-import java.io.Serializable;
-import java.util.function.Consumer;
-
-
 /**
  * A generic dialog for confirming or cancelling an action.
  *
  * @param <T>
  *            The type of the action's subject
  */
-class ConfirmationDialog<T extends Serializable>
-        extends Dialog {
+class ConfirmationDialog<T extends Serializable> extends Dialog {
 
     private final H3 titleField = new H3();
     private final Div messageLabel = new Div();
@@ -42,6 +40,9 @@ class ConfirmationDialog<T extends Serializable>
     private final Button cancelButton = new Button("Cancel");
     private Registration registrationForConfirm;
     private Registration registrationForCancel;
+
+    private static final Runnable NO_OP = () -> {
+    };
 
     /**
      * Constructor.
@@ -93,12 +94,14 @@ class ConfirmationDialog<T extends Serializable>
      *            The cancellation handler function
      */
     public void open(String title, String message, String additionalMessage,
-            String actionName, boolean isDisruptive, T item, Consumer<T> confirmHandler,
-            Runnable cancelHandler) {
+            String actionName, boolean isDisruptive, T item,
+            Consumer<T> confirmHandler, Runnable cancelHandler) {
         titleField.setText(title);
         messageLabel.setText(message);
         extraMessageLabel.setText(additionalMessage);
         confirmButton.setText(actionName);
+
+        Runnable cancelAction = cancelHandler == null ? NO_OP : cancelHandler;
 
         if (registrationForConfirm != null) {
             registrationForConfirm.remove();
@@ -109,10 +112,10 @@ class ConfirmationDialog<T extends Serializable>
             registrationForCancel.remove();
         }
         registrationForCancel = cancelButton
-                .addClickListener(e -> cancelHandler.run());
+                .addClickListener(e -> cancelAction.run());
         this.addOpenedChangeListener(e -> {
             if (!e.isOpened()) {
-               cancelHandler.run();
+                cancelAction.run();
             }
         });
         if (isDisruptive) {
