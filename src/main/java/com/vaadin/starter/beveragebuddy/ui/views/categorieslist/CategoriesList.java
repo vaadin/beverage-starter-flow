@@ -18,6 +18,7 @@ package com.vaadin.starter.beveragebuddy.ui.views.categorieslist;
 import java.util.List;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
 import com.vaadin.flow.component.html.Div;
@@ -78,7 +79,7 @@ public class CategoriesList extends VerticalLayout {
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
 
         Button newButton = new Button("New category", new Icon("lumo", "plus"));
-        newButton.getElement().setAttribute("theme", "primary");
+        newButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         newButton.addClassName("view-toolbar__button");
         newButton.addClickListener(e -> form.open(new Category(),
                 AbstractEditorDialog.Operation.ADD));
@@ -109,7 +110,7 @@ public class CategoriesList extends VerticalLayout {
                 AbstractEditorDialog.Operation.EDIT));
         edit.setIcon(new Icon("lumo", "edit"));
         edit.addClassName("review__edit");
-        edit.getElement().setAttribute("theme", "tertiary");
+        edit.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         if (CategoryService.getInstance().getUndefinedCategory().getId()
                 .equals(category.getId())) {
             edit.setEnabled(false);

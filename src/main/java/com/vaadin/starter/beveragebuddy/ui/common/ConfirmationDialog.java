@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.function.Consumer;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
@@ -52,10 +53,10 @@ class ConfirmationDialog<T extends Serializable> extends Dialog {
         setCloseOnOutsideClick(false);
 
         confirmButton.addClickListener(e -> close());
-        confirmButton.getElement().setAttribute("theme", "tertiary");
+        confirmButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         confirmButton.setAutofocus(true);
         cancelButton.addClickListener(e -> close());
-        cancelButton.getElement().setAttribute("theme", "tertiary");
+        cancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
         HorizontalLayout buttonBar = new HorizontalLayout(confirmButton,
                 cancelButton);
@@ -118,8 +119,9 @@ class ConfirmationDialog<T extends Serializable> extends Dialog {
                 cancelAction.run();
             }
         });
+        confirmButton.removeThemeVariants(ButtonVariant.LUMO_ERROR);
         if (isDisruptive) {
-            confirmButton.getElement().setAttribute("theme", "tertiary error");
+            confirmButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         }
         open();
     }
