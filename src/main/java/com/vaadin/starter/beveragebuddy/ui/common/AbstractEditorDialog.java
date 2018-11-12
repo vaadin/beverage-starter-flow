@@ -20,6 +20,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
@@ -135,10 +136,10 @@ public abstract class AbstractEditorDialog<T extends Serializable>
 
     private void initButtonBar() {
         saveButton.setAutofocus(true);
-        saveButton.getElement().setAttribute("theme", "primary");
+        saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         cancelButton.addClickListener(e -> close());
         deleteButton.addClickListener(e -> deleteClicked());
-        deleteButton.getElement().setAttribute("theme", "error");
+        deleteButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         buttonBar.setClassName("buttons");
         buttonBar.setSpacing(true);
         add(buttonBar);
