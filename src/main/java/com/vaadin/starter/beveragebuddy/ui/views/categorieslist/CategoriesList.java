@@ -20,8 +20,8 @@ import java.util.List;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.Grid.SelectionMode;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
@@ -46,7 +46,8 @@ import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
 @PageTitle("Categories List")
 public class CategoriesList extends VerticalLayout {
 
-    private final TextField searchField = new TextField("", "Search categories");
+    private final TextField searchField = new TextField("",
+            "Search categories");
     private final H2 header = new H2("Categories");
     private final Grid<Category> grid = new Grid<>();
 
@@ -91,8 +92,10 @@ public class CategoriesList extends VerticalLayout {
         container.setClassName("view-container");
         container.setAlignItems(Alignment.STRETCH);
 
-        grid.addColumn(Category::getName).setHeader("Name").setWidth("8em").setResizable(true);
-        grid.addColumn(this::getReviewCount).setHeader("Beverages").setWidth("6em");
+        grid.addColumn(Category::getName).setHeader("Name").setWidth("8em")
+                .setResizable(true);
+        grid.addColumn(this::getReviewCount).setHeader("Beverages")
+                .setWidth("6em");
         grid.addColumn(new ComponentRenderer<>(this::createEditButton))
                 .setFlexGrow(0);
         grid.setSelectionMode(SelectionMode.NONE);
@@ -107,6 +110,10 @@ public class CategoriesList extends VerticalLayout {
         edit.setIcon(new Icon("lumo", "edit"));
         edit.addClassName("review__edit");
         edit.getElement().setAttribute("theme", "tertiary");
+        if (CategoryService.getInstance().getUndefinedCategory().getId()
+                .equals(category.getId())) {
+            edit.setEnabled(false);
+        }
         return edit;
     }
 
@@ -123,7 +130,7 @@ public class CategoriesList extends VerticalLayout {
         grid.setItems(categories);
 
         if (searchField.getValue().length() > 0) {
-            header.setText("Search for “"+ searchField.getValue() +"”");
+            header.setText("Search for “" + searchField.getValue() + "”");
         } else {
             header.setText("Categories");
         }
@@ -134,7 +141,8 @@ public class CategoriesList extends VerticalLayout {
         CategoryService.getInstance().saveCategory(category);
 
         Notification.show(
-                "Category successfully " + operation.getNameInText() + "ed.", 3000, Position.BOTTOM_START);
+                "Category successfully " + operation.getNameInText() + "ed.",
+                3000, Position.BOTTOM_START);
         updateView();
     }
 
@@ -143,13 +151,14 @@ public class CategoriesList extends VerticalLayout {
                 .findReviews(category.getName());
 
         reviewsInCategory.forEach(review -> {
-            review.setCategory(CategoryService.getInstance()
-                    .findCategoryOrThrow("Undefined"));
+            review.setCategory(
+                    CategoryService.getInstance().getUndefinedCategory());
             ReviewService.getInstance().saveReview(review);
         });
         CategoryService.getInstance().deleteCategory(category);
 
-        Notification.show("Category successfully deleted.", 3000, Position.BOTTOM_START);
+        Notification.show("Category successfully deleted.", 3000,
+                Position.BOTTOM_START);
         updateView();
     }
 }
