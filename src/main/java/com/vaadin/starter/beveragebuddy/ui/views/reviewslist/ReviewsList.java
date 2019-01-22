@@ -17,6 +17,8 @@ package com.vaadin.starter.beveragebuddy.ui.views.reviewslist;
 
 import java.util.List;
 
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -75,6 +77,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         search.setPlaceholder("Search reviews");
         search.addValueChangeListener(e -> updateList());
         search.setValueChangeMode(ValueChangeMode.EAGER);
+        search.addFocusShortcut(Key.KEY_F, KeyModifier.CONTROL);
 
         addReview.addClickListener(e -> openForm(new Review(),
                 AbstractEditorDialog.Operation.ADD));
