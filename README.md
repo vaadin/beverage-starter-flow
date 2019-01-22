@@ -31,4 +31,6 @@ Brief introduction to the application parts can be found from the `documentation
 
 ### Branching information
 * `master` the latest version of the starter, using the latest platform snapshot
-* `v1*` the different Vaadin platform versions, eg. `v10` Vaadin 10
+* `v10` the version for Vaadin 10
+* `v11` the version for Vaadin 11
+* `v12` the version for Vaadin 12
