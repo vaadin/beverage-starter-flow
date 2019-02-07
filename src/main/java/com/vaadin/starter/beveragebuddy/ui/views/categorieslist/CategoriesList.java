@@ -86,6 +86,14 @@ public class CategoriesList extends VerticalLayout {
         newButton.addClassName("view-toolbar__button");
         newButton.addClickListener(e -> form.open(new Category(),
                 AbstractEditorDialog.Operation.ADD));
+        /*
+            This is a fall-back method:
+            '+' is not a event.code (DOM events), so as a fall-back shortcuts
+            will perform a character-based comparison. Since Key.ADD changes
+            locations frequently based on the keyboard language, we opted to use
+            a character instead.
+         */
+        newButton.addClickShortcut(Key.of("+"));
 
         viewToolbar.add(searchField, newButton);
         add(viewToolbar);
