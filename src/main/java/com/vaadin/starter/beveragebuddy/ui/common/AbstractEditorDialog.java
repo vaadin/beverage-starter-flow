@@ -87,7 +87,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     private final Button cancelButton = new Button("Cancel");
     private final Button deleteButton = new Button("Delete");
     private Registration registrationForSave;
-    private ShortcutRegistration saveShortcutRegistration;
+    private Registration saveShortcutRegistration;
     private Registration deleteShortcutRegistration;
 
     private final FormLayout formLayout = new FormLayout();
