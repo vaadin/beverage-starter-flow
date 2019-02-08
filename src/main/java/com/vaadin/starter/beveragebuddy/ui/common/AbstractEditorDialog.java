@@ -19,6 +19,8 @@ import java.io.Serializable;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.ShortcutRegistration;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -85,6 +87,8 @@ public abstract class AbstractEditorDialog<T extends Serializable>
     private final Button cancelButton = new Button("Cancel");
     private final Button deleteButton = new Button("Delete");
     private Registration registrationForSave;
+    private Registration saveShortcutRegistration;
+    private Registration deleteShortcutRegistration;
 
     private final FormLayout formLayout = new FormLayout();
     private final HorizontalLayout buttonBar = new HorizontalLayout(saveButton,
@@ -193,6 +197,9 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         binder.readBean(currentItem);
 
         deleteButton.setEnabled(operation.isDeleteEnabled());
+
+        enableShortcuts();
+
         open();
     }
 
@@ -231,8 +238,10 @@ public abstract class AbstractEditorDialog<T extends Serializable>
      */
     protected final void openConfirmationDialog(String title, String message,
             String additionalMessage) {
+        disableShortcuts();
         confirmationDialog.open(title, message, additionalMessage, "Delete",
-                true, getCurrentItem(), this::deleteConfirmed, null);
+                true, getCurrentItem(), this::deleteConfirmed,
+                this::deleteCancelled);
     }
 
     /**
@@ -246,7 +255,37 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         close();
     }
 
+    @Override
+    public void close() {
+        super.close();
+        disableShortcuts();
+    }
+
     private void deleteConfirmed(T item) {
         doDelete(item);
+    }
+
+    private void deleteCancelled() {
+        enableShortcuts();
+    }
+
+    private void enableShortcuts() {
+        disableShortcuts();
+        saveShortcutRegistration = saveButton.addClickShortcut(Key.ENTER);
+        if (deleteButton.isEnabled()) {
+            deleteShortcutRegistration =
+                    deleteButton.addClickShortcut(Key.DELETE);
+        }
+    }
+
+    private void disableShortcuts() {
+        if (saveShortcutRegistration != null) {
+            saveShortcutRegistration.remove();
+            saveShortcutRegistration = null;
+        }
+        if (deleteShortcutRegistration != null) {
+            deleteShortcutRegistration.remove();
+            deleteShortcutRegistration = null;
+        }
     }
 }
