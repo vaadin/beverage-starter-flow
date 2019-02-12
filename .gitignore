@@ -9,3 +9,9 @@ node_modules
 
 *.iml
 .DS_Store
+
+*.diff
+src/main/webapp/bower_components
+src/main/webapp/package-lock.json
+src/main/webapp/index*.js
+sources
