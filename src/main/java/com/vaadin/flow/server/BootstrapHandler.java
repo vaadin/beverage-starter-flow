@@ -16,6 +16,7 @@
 
 package com.vaadin.flow.server;
 
+import static com.vaadin.flow.server.BootstrapUtils.createEsModuleElement;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.BufferedReader;
@@ -87,6 +88,10 @@ import elemental.json.impl.JsonUtil;
  * @since 1.0
  */
 public class BootstrapHandler extends SynchronizedRequestHandler {
+
+    // TODO(manolo) move to Constants
+    private static Boolean bowerMode = Boolean.getBoolean("vaadin.bower.mode");
+
     private static final CharSequence GWT_STAT_EVENTS_JS = "if (typeof window.__gwtStatsEvent != 'function') {"
             + "window.Vaadin.Flow.gwtStatsEvents = [];"
             + "window.__gwtStatsEvent = function(event) {"
@@ -482,8 +487,10 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         List<JsonObject> themeContents = themeSettings.getHeadContents();
         if (themeContents != null) {
             themeContents.stream().map(
-                    dependency -> createDependencyElement(context, dependency))
-                    .forEach(element -> insertElements(element,
+                    dependency -> {
+                      return createDependencyElement(context, dependency);
+                     })
+                       .forEach(element -> insertElements(element,
                             document.head()::appendChild));
         }
 
@@ -604,6 +611,7 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
 
         for (int i = 0; i < dependencies.length(); i++) {
             JsonObject dependencyJson = dependencies.getObject(i);
+
             Dependency.Type dependencyType = Dependency.Type
                     .valueOf(dependencyJson.getString(Dependency.KEY_TYPE));
             Element dependencyElement = createDependencyElement(uriResolver,
@@ -633,8 +641,13 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
 
     private static void setupFrameworkLibraries(Element head,
             JsonObject initialUIDL, BootstrapContext context) {
-        inlineEs6Collections(head, context);
-        appendWebComponentsPolyfills(head, context);
+
+        if (bowerMode) {
+            inlineEs6Collections(head, context);
+            appendWebComponentsPolyfillsP2(head, context);
+        } else {
+            appendWebComponentsPolyfillsP3(head, context);
+        }
 
         if (context.getPushMode().isEnabled()) {
             head.appendChild(getPushScript(context));
@@ -766,7 +779,22 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         }
     }
 
-    private static void appendWebComponentsPolyfills(Element head,
+    private static void appendWebComponentsPolyfillsP3(Element head, BootstrapContext context) {
+        if (context.getSession().getConfiguration().isProductionMode()) {
+            head.appendChild(createEsModuleElement("main.js"));
+        } else {
+            // TODO(manolo) remove when dev mode is handled by webpack
+            head.appendChild(
+                    createJavaScriptElement("/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"));
+            // TODO(manolo) not needed
+            head.appendChild(createEsModuleElement("/node_modules/@polymer/polymer/polymer-element.js"));
+            // TODO(manolo) flow-component-renderer.html still being asked,
+            // remove from somewhere
+            head.appendChild(createEsModuleElement("/flow-component-renderer.js"));
+        }
+    }
+
+    private static void appendWebComponentsPolyfillsP2(Element head,
             BootstrapContext context) {
         VaadinSession session = context.getSession();
         DeploymentConfiguration config = session.getConfiguration();
@@ -801,7 +829,6 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         String resolvedUrl = context.getUriResolver()
                 .resolveVaadinUri(webcomponentsLoaderUrl);
         head.appendChild(createJavaScriptElement(resolvedUrl, false));
-
     }
 
     private static Element createInlineJavaScriptElement(
@@ -846,7 +873,7 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
             dependencyElement = createJavaScriptElement(url, !inlineElement);
             break;
         case HTML_IMPORT:
-            dependencyElement = createHtmlImportElement(url);
+            dependencyElement = bowerMode ? createHtmlImportElement(url) : createEsModuleElement(url);
             break;
         default:
             throw new IllegalStateException(
