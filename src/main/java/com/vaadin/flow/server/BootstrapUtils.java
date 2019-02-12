@@ -33,6 +33,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
+import org.jsoup.parser.Tag;
 
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
@@ -66,6 +67,9 @@ import elemental.json.JsonObject;
  * Utility methods used by the BootstrapHandler.
  */
 class BootstrapUtils {
+
+    // TODO(manolo) move to Constants
+    private static Boolean bowerMode = Boolean.getBoolean("vaadin.bower.mode");
 
     static class ThemeSettings {
         private List<JsonObject> headContents;
@@ -328,7 +332,8 @@ class BootstrapUtils {
             List<JsonObject> head = Stream
                     .of(themeClass.getAnnotationsByType(HtmlImport.class))
                     .map(HtmlImport::value)
-                    .map(url -> createImportLink(context.getUriResolver(), url))
+                    .map(url -> bowerMode ? createImportLink(context.getUriResolver(), url)
+                            : createESImportLink(context.getUriResolver(), url))
                     .map(BootstrapUtils::createInlineDependencyObject)
                     .collect(Collectors.toList());
             settings.setHeadContents(head);
@@ -415,6 +420,20 @@ class BootstrapUtils {
         String resolvedLink = bootstrapUriResolver.resolveVaadinUri(href);
         return "<link rel=\"import\" href=\"" + resolvedLink + "\">";
 
+    }
+
+    private static String createESImportLink(
+            BootstrapUriResolver bootstrapUriResolver, String href) {
+        return createEsModuleElement(href).toString();
+    }
+
+    static Element createEsModuleElement(String sourceUrl) {
+        // TODO(manolo) we need a better resolution utility class here
+        String module = sourceUrl
+                .replaceFirst("^.*bower_components/(vaadin-.*)\\.html", "/node_modules/@vaadin/$1.js")
+                .replaceFirst("^.*bower_components/((iron|paper)-.*)\\.html", "/node_modules/@polymer/$1.js")
+                .replaceFirst("^(.*frontend/.*/[^/]+-[^/]+)\\.html", "$1.js");
+        return new Element(Tag.valueOf("script"), "").attr("type", "module").attr("src", module);
     }
 
     private static JsonObject createInlineDependencyObject(String content) {
