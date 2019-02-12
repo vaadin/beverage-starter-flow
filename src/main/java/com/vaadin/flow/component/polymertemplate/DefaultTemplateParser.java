@@ -64,6 +64,9 @@ public final class DefaultTemplateParser implements TemplateParser {
             clazz -> new AtomicBoolean());
 
     private static final TemplateParser INSTANCE = new DefaultTemplateParser();
+    
+    // TODO(manolo) move to Constants
+    private static Boolean bowerMode = Boolean.getBoolean("vaadin.bower.mode");
 
     private DefaultTemplateParser() {
         // Doesn't allow external instantiation
@@ -96,8 +99,9 @@ public final class DefaultTemplateParser implements TemplateParser {
             if (dependency.getType() != Type.HTML_IMPORT) {
                 continue;
             }
+            
+            String url = bowerMode ? dependency.getUrl() : dependency.getUrl().replaceFirst("^(.*)\\.html$", "$1.js");
 
-            String url = dependency.getUrl();
             try (InputStream content = service.getResourceAsStream(url, browser,
                     null)) {
                 if (content == null) {
@@ -105,7 +109,10 @@ public final class DefaultTemplateParser implements TemplateParser {
                             String.format("Can't find resource '%s' "
                                     + "via the servlet context", url));
                 }
-                Element templateElement = parseHtmlImport(content, url, tag);
+                
+                Element templateElement = bowerMode ? parseHtmlImport(content, url, tag)
+                        : BundleParser.parseTemplateElement(url, content);                
+                
                 if (logEnabled && templateElement != null) {
                     getLogger().debug(
                             "Found a template file containing template "
