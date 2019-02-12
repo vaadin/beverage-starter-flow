@@ -61,7 +61,7 @@ $_documentContainer.innerHTML = `<dom-module id="view-styles">
             font-weight: 500;
         }
 
-        .main-layout &gt; * {
+        vaadin-vertical-layout, vaadin-grid {
             flex: auto;
         }
 

@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "@vaadin/vaadin-button": "^2.1.2",
+    "@vaadin/vaadin-combo-box": "^4.2.4",
+    "@vaadin/vaadin-crud": "^1.0.1",
+    "@vaadin/vaadin-date-picker": "^3.3.2",
+    "@vaadin/vaadin-dialog": "^2.2.1",
+    "@vaadin/vaadin-form-layout": "^2.1.1",
+    "@vaadin/vaadin-grid": "^5.3.1",
+    "@vaadin/vaadin-icons": "^4.2.1",
+    "@vaadin/vaadin-ordered-layout": "^1.1.0",
+    "@vaadin/vaadin-text-field": "^2.3.0",
+    "@webcomponents/webcomponentsjs": "^2.2.6"
+  },
+  "devDependencies": {
+    "webpack": "^4.29.2",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  }
+}

@@ -782,11 +782,11 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
 
     private static void appendWebComponentsPolyfillsP3(Element head, BootstrapContext context) {
         if (context.getSession().getConfiguration().isProductionMode()) {
-            head.appendChild(createEsModuleElement("main.js"));
+            head.appendChild(createEsModuleElement("index.js"));
         } else {
             // TODO(manolo) support for ES5
             if (bundleMode) {
-                head.appendChild(createEsModuleElement("/main.js"));
+                head.appendChild(createEsModuleElement("/index.js"));
             } else {
                 // TODO(manolo) remove when dev mode is handled by webpack
                 head.appendChild(
