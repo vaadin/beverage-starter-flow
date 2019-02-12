@@ -91,6 +91,7 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
 
     // TODO(manolo) move to Constants
     private static Boolean bowerMode = Boolean.getBoolean("vaadin.bower.mode");
+    private static Boolean bundleMode = !Boolean.getBoolean("vaadin.no.bundle");
 
     private static final CharSequence GWT_STAT_EVENTS_JS = "if (typeof window.__gwtStatsEvent != 'function') {"
             + "window.Vaadin.Flow.gwtStatsEvents = [];"
@@ -783,14 +784,19 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         if (context.getSession().getConfiguration().isProductionMode()) {
             head.appendChild(createEsModuleElement("main.js"));
         } else {
-            // TODO(manolo) remove when dev mode is handled by webpack
-            head.appendChild(
-                    createJavaScriptElement("/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"));
-            // TODO(manolo) not needed
-            head.appendChild(createEsModuleElement("/node_modules/@polymer/polymer/polymer-element.js"));
-            // TODO(manolo) flow-component-renderer.html still being asked,
-            // remove from somewhere
-            head.appendChild(createEsModuleElement("/flow-component-renderer.js"));
+            // TODO(manolo) support for ES5
+            if (bundleMode) {
+                head.appendChild(createEsModuleElement("/main.js"));
+            } else {
+                // TODO(manolo) remove when dev mode is handled by webpack
+                head.appendChild(
+                        createJavaScriptElement("/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"));
+                // TODO(manolo) not needed
+                head.appendChild(createEsModuleElement("/node_modules/@polymer/polymer/polymer-element.js"));
+                // TODO(manolo) flow-component-renderer.html still being asked,
+                // remove from somewhere
+                head.appendChild(createEsModuleElement("/flow-component-renderer.js"));
+            }
         }
     }
 

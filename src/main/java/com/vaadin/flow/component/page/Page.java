@@ -47,6 +47,11 @@ import com.vaadin.flow.shared.ui.LoadMode;
  */
 public class Page implements Serializable {
 
+    // TODO(manolo) move to Constants
+    private static Boolean bowerMode = Boolean.getBoolean("vaadin.bower.mode");
+    private static Boolean bundleMode = !Boolean.getBoolean("vaadin.no.bundle");
+
+
     @Tag(Tag.DIV)
     private static class ResizeEventReceiver extends Component {
 
@@ -290,7 +295,9 @@ public class Page implements Serializable {
      *            details
      */
     public void addHtmlImport(String url, LoadMode loadMode) {
-        addDependency(new Dependency(Type.HTML_IMPORT, url, loadMode));
+        if (bowerMode || !bundleMode) {
+            addDependency(new Dependency(Type.HTML_IMPORT, url, loadMode));
+        }
     }
 
     private void addDependency(Dependency dependency) {

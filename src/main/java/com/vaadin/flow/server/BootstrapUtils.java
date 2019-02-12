@@ -70,6 +70,7 @@ class BootstrapUtils {
 
     // TODO(manolo) move to Constants
     private static Boolean bowerMode = Boolean.getBoolean("vaadin.bower.mode");
+    private static Boolean bundleMode = !Boolean.getBoolean("vaadin.no.bundle");
 
     static class ThemeSettings {
         private List<JsonObject> headContents;
@@ -328,7 +329,7 @@ class BootstrapUtils {
         Class<? extends AbstractTheme> themeClass = themeDefinition.getTheme();
         AbstractTheme theme = ReflectTools.createInstance(themeClass);
 
-        if (!context.isProductionMode()) {
+        if (!context.isProductionMode() && !bundleMode) {
             List<JsonObject> head = Stream
                     .of(themeClass.getAnnotationsByType(HtmlImport.class))
                     .map(HtmlImport::value)
