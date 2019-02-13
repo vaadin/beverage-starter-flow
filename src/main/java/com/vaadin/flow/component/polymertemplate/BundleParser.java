@@ -44,29 +44,30 @@ public final class BundleParser {
     }
 
     public static Optional<Element> getIdElement(String id, String fileName, String statistics) {
-        Element template = parseTemplateElement(fileName, statistics);
+        Element template = parseTemplateElement(statistics, fileName, id);
         return Optional.ofNullable(template.getElementById(id));
     }
 
-    public static Element parseTemplateElement(String fileName, InputStream content) throws IOException {
-        return parseTemplateElement(fileName, IOUtils.toString(content, StandardCharsets.UTF_8));
+    public static Element parseTemplateElement(InputStream content, String url, String tag) throws IOException {
+        return parseTemplateElement(IOUtils.toString(content, StandardCharsets.UTF_8), url, tag);
     }
 
-    public static Element parseTemplateElement(String fileName, String source) {
+    public static Element parseTemplateElement(String source, String url, String tag) {
         ErrorReporter errorReporter = new SimpleErrorReporter();
 
         // parse a source file into an ast.
-        SourceFile sourceFile = new SourceFile(fileName, StaticSourceFile.SourceKind.STRONG);
+        SourceFile sourceFile = new SourceFile(url, StaticSourceFile.SourceKind.STRONG);
         ParserRunner.ParseResult parseResult = ParserRunner.parse(sourceFile, source, config, errorReporter);
 
         // run the visitor on the ast to extract the needed values.
         DependencyVisitor visitor = new DependencyVisitor();
         NodeUtil.visitPreOrder(parseResult.ast, visitor, Predicates.alwaysTrue());
 
-        Document template = Jsoup.parse(visitor.templateContent);
+        Document template = Jsoup.parse(
+                "<dom-module id=\"" + tag + "\"><template>" + visitor.templateContent + "</template></dom-module>");
 
         // Turn ast back to javascript.
-        return template.body();
+        return template.body().child(0);
     }
 
     private static class DependencyVisitor implements NodeUtil.Visitor {

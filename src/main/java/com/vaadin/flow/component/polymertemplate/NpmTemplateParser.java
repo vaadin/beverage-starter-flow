@@ -83,7 +83,7 @@ public class NpmTemplateParser implements TemplateParser {
                                     + "via the servlet context", url));
                 }
                 Element templateElement = BundleParser
-                        .parseTemplateElement(url, streamToString(content));
+                        .parseTemplateElement(streamToString(content), url, tag);
 
                 if (templateElement != null) {
                     getLogger()
