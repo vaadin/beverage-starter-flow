@@ -35,7 +35,7 @@ The project has a template view that needs to be accessible in server-side, ther
 
 ## Dependencies
 
-In `bower` mode, dependencies are managed by the flow framework, but in `npm` we still need to manually edit the `package.json` and `src/main/webapp/main.js` to add and import new dependencies respectively.
+In `bower` mode, dependencies are managed by the flow framework, but in `npm` we still need to manually edit the `package.json` and `src/main/webapp/frontend/main.js` to add and import new dependencies respectively.
 
 ## Running the Project
 

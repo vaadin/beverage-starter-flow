@@ -13,6 +13,6 @@ node_modules
 *.diff
 bower_components
 package-lock.json
-src/main/webapp/index*.js
+src/main/webapp/build
 src/main/webapp/webcomponentsjs
 sources
