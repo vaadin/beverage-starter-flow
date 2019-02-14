@@ -6,7 +6,7 @@ import '@vaadin/vaadin-lumo-styles/spacing.js';
 import '@vaadin/vaadin-lumo-styles/style.js';
 import '@vaadin/vaadin-lumo-styles/icons.js';
 
-import {FlowComponentRenderer} from './frontend/flow-component-renderer.js';
+import {FlowComponentRenderer} from './flow-component-renderer.js';
 import {VaadinButton} from '@vaadin/vaadin-button/vaadin-button';
 import {VaadinTextField} from '@vaadin/vaadin-text-field/vaadin-text-field';
 import {VaadinIcons} from '@vaadin/vaadin-icons/vaadin-icons';
@@ -18,10 +18,10 @@ import { FormLayoutElement } from '@vaadin/vaadin-form-layout/vaadin-form-layout
 import { VaadinVerticalLayout } from '@vaadin/vaadin-ordered-layout/vaadin-vertical-layout';
 import { VaadinHorizontalLayout } from '@vaadin/vaadin-ordered-layout/vaadin-horizontal-layout';
 
-import './frontend/gridConnector.js';
+import './gridConnector.js';
 import { GridElement } from '@vaadin/vaadin-grid/vaadin-grid.js';
 
-import './frontend/styles/shared-styles.js';
-import './frontend/src/views/reviewslist/reviews-list.js';
+import './styles/shared-styles.js';
+import './src/views/reviewslist/reviews-list.js';
 
 

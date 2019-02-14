@@ -1,8 +1,8 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const inputFolder = './src/main/webapp';
-const outputFolder = inputFolder;
+const inputFolder = './src/main/webapp/frontend';
+const outputFolder = './src/main/webapp/build';
 
 module.exports = {
   context: path.resolve(__dirname, inputFolder),
