@@ -784,18 +784,15 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         if (context.getSession().getConfiguration().isProductionMode()) {
             head.appendChild(createEsModuleElement("index.js"));
         } else {
+            // TODO(manolo) remove when dev mode is handled by webpack
+            head.appendChild(
+                    createJavaScriptElement("webcomponentsjs/webcomponents-loader.js"));
             // TODO(manolo) support for ES5
             if (bundleMode) {
                 head.appendChild(createEsModuleElement("/index.js"));
             } else {
-                // TODO(manolo) remove when dev mode is handled by webpack
-                head.appendChild(
-                        createJavaScriptElement("/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"));
-                // TODO(manolo) not needed
-                head.appendChild(createEsModuleElement("/node_modules/@polymer/polymer/polymer-element.js"));
                 // TODO(manolo) flow-component-renderer.html still being asked,
-                // remove from somewhere
-                head.appendChild(createEsModuleElement("/flow-component-renderer.js"));
+                head.appendChild(createEsModuleElement("/frontend/flow-component-renderer.js"));
             }
         }
     }

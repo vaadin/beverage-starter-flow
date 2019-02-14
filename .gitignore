@@ -11,7 +11,8 @@ node_modules
 .DS_Store
 
 *.diff
-src/main/webapp/bower_components
-src/main/webapp/package-lock.json
+bower_components
+package-lock.json
 src/main/webapp/index*.js
+src/main/webapp/webcomponentsjs
 sources
