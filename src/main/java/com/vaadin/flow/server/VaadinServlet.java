@@ -55,7 +55,7 @@ public class VaadinServlet extends HttpServlet {
 
     // TODO(manolo) move to Constants
     private static Boolean bowerMode = Boolean.getBoolean("vaadin.bower.mode");
-    
+
     /**
      * Called by the servlet container to indicate to a servlet that the servlet
      * is being placed into service.
@@ -262,8 +262,8 @@ public class VaadinServlet extends HttpServlet {
     protected boolean serveStaticOrWebJarRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
 
-        if (devmodeServer != null && devmodeServer.isDevModeRequest(request)) {
-            devmodeServer.serveFrontendFile(request, response);
+        if (devmodeServer != null && devmodeServer.isDevModeRequest(request)
+                && devmodeServer.serveFrontendFile(request, response)) {
             return true;
         }
         if (staticFileServer.isStaticResourceRequest(request)) {

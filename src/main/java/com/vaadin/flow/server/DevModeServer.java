@@ -18,6 +18,8 @@ public class DevModeServer implements Serializable {
 
     private static final int DEFAULT_BUFFER_SIZE = 32 * 1024;
     private static final Integer WEBPACK_PORT = 8081;
+    private static final String WEBPACK_FOLDER = "./src/main/webapp";
+    private static final String WECPACK_CONFIG = "./webpack.config.js";
 
     private final int bufferSize;
 
@@ -33,18 +35,20 @@ public class DevModeServer implements Serializable {
 
         System.out.println("Starting Webpack in dev mode ...");
         try {
-            File directory = new File("src/main/webapp").getAbsoluteFile();
+            File directory = new File(WEBPACK_FOLDER).getAbsoluteFile();
             if (!directory.exists()) {
                 throw new RuntimeException("Cannot change to " + directory);
             }
 
-            File webpack = new File(directory.getAbsolutePath() + "/node_modules/.bin/webpack-dev-server");
+            File webpack = new File("./node_modules/.bin/webpack-dev-server");
             if (!webpack.canExecute()) {
-                throw new RuntimeException("Cannot execute " + webpack);
+                throw new RuntimeException("Cannot execute " + webpack + ". Did you run `npm install`");
             }
 
-            System.err.println(webpack.getAbsolutePath());
-            System.err.println(System.getenv("PATH"));
+            File config = new File(WECPACK_CONFIG);
+            if (!webpack.exists()) {
+                throw new RuntimeException("There is not webpack configuration: " + config);
+            }
 
             ProcessBuilder process = new ProcessBuilder();
             process.directory(directory);
@@ -56,8 +60,8 @@ public class DevModeServer implements Serializable {
                         "node_modules/.bin:" + process.environment().get("PATH") + ":/usr/local/bin");
             }
 
-            process.command(
-                    new String[] { webpack.getAbsolutePath(), "--port", WEBPACK_PORT.toString(), "--colors", "false" });
+            process.command(new String[] { webpack.getAbsolutePath(), "--config", config.getAbsolutePath(), "--port",
+                    WEBPACK_PORT.toString(), "--colors", "false" });
 
             exec = process.start();
 
@@ -88,16 +92,14 @@ public class DevModeServer implements Serializable {
 
     public boolean isDevModeRequest(HttpServletRequest request) {
         String requestFilename = getRequestFilename(request);
-        return requestFilename.equals("/index.js");
+        return requestFilename.matches(".+\\.js");
     }
 
-    public void serveFrontendFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public boolean serveFrontendFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String requestFilename = getRequestFilename(request);
 
         URL uri = new URL("http://localhost:" + WEBPACK_PORT + requestFilename);
-        // Debug
-        System.err.println("Requested: " + uri);
 
         HttpURLConnection connection = (HttpURLConnection)uri.openConnection();
         connection.setRequestMethod(request.getMethod());
@@ -109,6 +111,14 @@ public class DevModeServer implements Serializable {
             String header = headerNames.nextElement();
             connection.setRequestProperty(header, request.getHeader(header));
         }
+        if (connection.getResponseCode() == 404) {
+            // webpack cannot access the resource, fallback to flow
+            return false;
+        }
+
+        // Debug
+        System.err.println("Served by webpack: " + uri);
+
         // Copies response headers
         connection.getHeaderFields().forEach((header, values) -> {
             if (header != null) {
@@ -119,6 +129,7 @@ public class DevModeServer implements Serializable {
         writeStream(response.getOutputStream(), connection.getInputStream());
         // Copies response code
         response.sendError(connection.getResponseCode());
+        return true;
     }
 
     private void writeStream(ServletOutputStream outputStream, InputStream inputStream) throws IOException {

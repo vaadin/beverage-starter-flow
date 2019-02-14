@@ -11,7 +11,7 @@ The Starter demonstrates the core Vaadin Flow concepts:
 * Building UIs in Java with Components based on [Vaadin components](https://vaadin.com/components/browse), such as `TextField`, `Button`, `ComboBox`, `DatePicker`, `VerticalLayout` and `Grid` (see `CategoriesList`)
 * [Creating forms with `Binder`](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-binder-in-review-editor-dialog.asciidoc) (`ReviewEditorDialog`)
 * Making reusable Components on server side with `Composite` (`AbstractEditorDialog`)
-* [Creating a Component based on a HTML Template](https://github.com/vaadin/free-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc) (`ReviewsList`) 
+* [Creating a Component based on a HTML Template](https://github.com/vaadin/free-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc) (`ReviewsList`)
   * This template can be opened and edited with [the Vaadin Designer](https://vaadin.com/designer)
 * [Creating Navigation with the Router API](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-annotation-based-router-api.asciidoc) (`MainLayout`, `ReviewsList`, `CategoriesList`)
 
@@ -35,11 +35,11 @@ The project has a template view that needs to be accessible in server-side, ther
 
 ## Dependencies
 
-In `bower` mode, dependencies are managed by the flow framework, but in `npm` we still need to manually edit the `src/main/webapp/package.json` and `src/main/webapp/main.js` to add and import new dependencies respectively.
+In `bower` mode, dependencies are managed by the flow framework, but in `npm` we still need to manually edit the `package.json` and `src/main/webapp/frontend/main.js` to add and import new dependencies respectively.
 
 ## Running the Project
 
-1. when in the `src/main/webapp` folder run `npm install`
+1. To install frontend dependencies run `npm install`
 2. To run devmode you have two options:
   - Run the project in Polymer 3.0 mode by executing `mvn jetty:run`
   - Otherwise, to run it in Polymer 2.0 mode use `mvn -Dvaadin.bower.mode jetty:run`
@@ -55,7 +55,7 @@ In `bower` mode, dependencies are managed by the flow framework, but in `npm` we
 
 ### Packaging and running for Polymer 3.0
 
-1. When in the `src/main/webapp` folder run `npm install`
+1. Install frontend dependencies by running `npm install`
 2. Generate the client bundle by executing `node_modules/.bin/webpack`
 3. Run `mvn package` to get the artifact.
 2. Deploy the  `target/beveragebuddy-1.0-SNAPSHOT.war`, and run with the `vaadin.productionMode` propertie set.
