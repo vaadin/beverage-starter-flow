@@ -16,7 +16,6 @@
 
 package com.vaadin.flow.server;
 
-import static com.vaadin.flow.server.BootstrapUtils.createEsModuleElement;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.BufferedReader;
@@ -88,11 +87,6 @@ import elemental.json.impl.JsonUtil;
  * @since 1.0
  */
 public class BootstrapHandler extends SynchronizedRequestHandler {
-
-    // TODO(manolo) move to Constants
-    private static Boolean bowerMode = Boolean.getBoolean("vaadin.bower.mode");
-    private static Boolean bundleMode = !Boolean.getBoolean("vaadin.no.bundle");
-
     private static final CharSequence GWT_STAT_EVENTS_JS = "if (typeof window.__gwtStatsEvent != 'function') {"
             + "window.Vaadin.Flow.gwtStatsEvents = [];"
             + "window.__gwtStatsEvent = function(event) {"
@@ -271,7 +265,7 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
 
             return uriResolver;
         }
-
+        
         /**
          * Checks if the application is running in production mode.
          *
@@ -281,7 +275,7 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         public boolean isProductionMode() {
             return request.getService().getDeploymentConfiguration()
                     .isProductionMode();
-        }
+        }       
 
         /**
          * Gets an annotation from the topmost class in the current navigation
@@ -437,8 +431,11 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
                 initialPageSettings -> handleInitialPageSettings(context, head,
                         initialPageSettings));
 
-        /* Append any theme elements to initial page. */
-        handleThemeContents(context, document);
+        // TODO(manolo): fix themes in devMode for npm when #5074
+        if (context.getSession().getConfiguration().isBowerMode()) {
+            /* Append any theme elements to initial page. */
+            handleThemeContents(context, document);
+        }
 
         if (!context.isProductionMode()) {
             exportUsageStatistics(document);
@@ -488,10 +485,8 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         List<JsonObject> themeContents = themeSettings.getHeadContents();
         if (themeContents != null) {
             themeContents.stream().map(
-                    dependency -> {
-                      return createDependencyElement(context, dependency);
-                     })
-                       .forEach(element -> insertElements(element,
+                    dependency -> createDependencyElement(context, dependency))
+                    .forEach(element -> insertElements(element,
                             document.head()::appendChild));
         }
 
@@ -588,8 +583,10 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         Map<LoadMode, JsonArray> dependenciesToProcessOnServer = popDependenciesToProcessOnServer(
                 initialUIDL);
         setupFrameworkLibraries(head, initialUIDL, context);
-        return applyUserDependencies(head, context,
-                dependenciesToProcessOnServer);
+        
+        return context.getSession().getConfiguration().isBowerMode()
+                ? applyUserDependencies(head, context, dependenciesToProcessOnServer)
+                : Collections.emptyList();
     }
 
     private static List<Element> applyUserDependencies(Element head,
@@ -612,7 +609,6 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
 
         for (int i = 0; i < dependencies.length(); i++) {
             JsonObject dependencyJson = dependencies.getObject(i);
-
             Dependency.Type dependencyType = Dependency.Type
                     .valueOf(dependencyJson.getString(Dependency.KEY_TYPE));
             Element dependencyElement = createDependencyElement(uriResolver,
@@ -642,12 +638,11 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
 
     private static void setupFrameworkLibraries(Element head,
             JsonObject initialUIDL, BootstrapContext context) {
-
-        if (bowerMode) {
-            inlineEs6Collections(head, context);
-            appendWebComponentsPolyfillsP2(head, context);
+        inlineEs6Collections(head, context);
+        if (context.getSession().getConfiguration().isBowerMode()) {
+            appendWebComponentsPolyfillsBower(head, context);
         } else {
-            appendWebComponentsPolyfillsP3(head, context);
+            appendWebComponentsPolyfillsNpm(head);
         }
 
         if (context.getPushMode().isEnabled()) {
@@ -780,24 +775,7 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         }
     }
 
-    private static void appendWebComponentsPolyfillsP3(Element head, BootstrapContext context) {
-        if (context.getSession().getConfiguration().isProductionMode()) {
-            head.appendChild(createEsModuleElement("/build/index.js"));
-        } else {
-            // TODO(manolo) remove when dev mode is handled by webpack
-            head.appendChild(
-                    createJavaScriptElement("webcomponentsjs/webcomponents-loader.js"));
-            // TODO(manolo) support for ES5
-            if (bundleMode) {
-                head.appendChild(createEsModuleElement("/build/index.js"));
-            } else {
-                // TODO(manolo) flow-component-renderer.html still being asked,
-                head.appendChild(createEsModuleElement("/frontend/flow-component-renderer.js"));
-            }
-        }
-    }
-
-    private static void appendWebComponentsPolyfillsP2(Element head,
+    private static void appendWebComponentsPolyfillsBower(Element head,
             BootstrapContext context) {
         VaadinSession session = context.getSession();
         DeploymentConfiguration config = session.getConfiguration();
@@ -832,6 +810,11 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         String resolvedUrl = context.getUriResolver()
                 .resolveVaadinUri(webcomponentsLoaderUrl);
         head.appendChild(createJavaScriptElement(resolvedUrl, false));
+
+    }
+
+    private static void appendWebComponentsPolyfillsNpm(Element head) {
+        head.appendChild(createJsModuleElement("/build/index.js", false));
     }
 
     private static Element createInlineJavaScriptElement(
@@ -848,6 +831,16 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
             boolean defer) {
         Element jsElement = new Element(Tag.valueOf(SCRIPT_TAG), "")
                 .attr("type", "text/javascript").attr(DEFER_ATTRIBUTE, defer);
+        if (sourceUrl != null) {
+            jsElement = jsElement.attr("src", sourceUrl);
+        }
+        return jsElement;
+    }
+
+    private static Element createJsModuleElement(String sourceUrl,
+            boolean defer) {
+        Element jsElement = new Element(Tag.valueOf(SCRIPT_TAG), "")
+                .attr("type", "module").attr(DEFER_ATTRIBUTE, defer);
         if (sourceUrl != null) {
             jsElement = jsElement.attr("src", sourceUrl);
         }
@@ -875,8 +868,11 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
         case JAVASCRIPT:
             dependencyElement = createJavaScriptElement(url, !inlineElement);
             break;
+        case JS_MODULE:
+            dependencyElement = createJsModuleElement(url, !inlineElement);
+            break;
         case HTML_IMPORT:
-            dependencyElement = bowerMode ? createHtmlImportElement(url) : createEsModuleElement(url);
+            dependencyElement = createHtmlImportElement(url);
             break;
         default:
             throw new IllegalStateException(

@@ -47,11 +47,6 @@ import com.vaadin.flow.shared.ui.LoadMode;
  */
 public class Page implements Serializable {
 
-    // TODO(manolo) move to Constants
-    private static Boolean bowerMode = Boolean.getBoolean("vaadin.bower.mode");
-    private static Boolean bundleMode = !Boolean.getBoolean("vaadin.no.bundle");
-
-
     @Tag(Tag.DIV)
     private static class ResizeEventReceiver extends Component {
 
@@ -261,6 +256,32 @@ public class Page implements Serializable {
     }
 
     /**
+     * Adds the given JavaScript module to the page and ensures that it is
+     * loaded successfully.
+     *
+     * @param module
+     *            the URL to load the JavaScript module from, not <code>null</code>
+     */
+    public void addJsModule(String module) {
+        addJsModule(module, LoadMode.EAGER);
+    }
+    /**
+     * Adds the given JavaScript to the page and ensures that it is loaded
+     * successfully.
+     *
+     * @param module
+     *            the URL to load the JavaScript module from, not <code>null</code>
+     * @param loadMode
+     *            determines dependency load mode, refer to {@link LoadMode} for
+     *            details
+     */
+    public void addJsModule(String module, LoadMode loadMode) {
+        // TODO(manolo): enable this when supporting unbundled dev-mode 
+        System.out.println("Skip loading JsModule in client: " + module);
+        // addDependency(new Dependency(Type.JS_MODULE, module, loadMode));
+    }
+
+    /**
      * Adds the given HTML import to the page and ensures that it is loaded
      * successfully.
      * <p>
@@ -295,9 +316,7 @@ public class Page implements Serializable {
      *            details
      */
     public void addHtmlImport(String url, LoadMode loadMode) {
-        if (bowerMode || !bundleMode) {
-            addDependency(new Dependency(Type.HTML_IMPORT, url, loadMode));
-        }
+        addDependency(new Dependency(Type.HTML_IMPORT, url, loadMode));
     }
 
     private void addDependency(Dependency dependency) {
