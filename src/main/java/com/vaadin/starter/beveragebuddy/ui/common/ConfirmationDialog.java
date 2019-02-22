@@ -18,6 +18,7 @@ package com.vaadin.starter.beveragebuddy.ui.common;
 import java.io.Serializable;
 import java.util.function.Consumer;
 
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -41,6 +42,7 @@ class ConfirmationDialog<T extends Serializable> extends Dialog {
     private final Button cancelButton = new Button("Cancel");
     private Registration registrationForConfirm;
     private Registration registrationForCancel;
+    private Registration shortcutRegistrationForConfirm;
 
     private static final Runnable NO_OP = () -> {
     };
@@ -102,6 +104,9 @@ class ConfirmationDialog<T extends Serializable> extends Dialog {
         extraMessageLabel.setText(additionalMessage);
         confirmButton.setText(actionName);
 
+        shortcutRegistrationForConfirm = confirmButton
+                .addClickShortcut(Key.ENTER);
+
         Runnable cancelAction = cancelHandler == null ? NO_OP : cancelHandler;
 
         if (registrationForConfirm != null) {
@@ -124,5 +129,13 @@ class ConfirmationDialog<T extends Serializable> extends Dialog {
             confirmButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
         }
         open();
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        if (shortcutRegistrationForConfirm != null) {
+            shortcutRegistrationForConfirm.remove();
+        }
     }
 }

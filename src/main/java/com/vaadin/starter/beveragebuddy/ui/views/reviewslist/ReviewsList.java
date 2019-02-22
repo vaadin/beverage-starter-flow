@@ -17,6 +17,8 @@ package com.vaadin.starter.beveragebuddy.ui.views.reviewslist;
 
 import java.util.List;
 
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -75,9 +77,19 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         search.setPlaceholder("Search reviews");
         search.addValueChangeListener(e -> updateList());
         search.setValueChangeMode(ValueChangeMode.EAGER);
+        search.addFocusShortcut(Key.KEY_F, KeyModifier.CONTROL);
 
         addReview.addClickListener(e -> openForm(new Review(),
                 AbstractEditorDialog.Operation.ADD));
+        /*
+            This is a fall-back method:
+            '+' is not a event.code (DOM events), so as a fall-back shortcuts
+            will perform a character-based comparison. Since Key.ADD changes
+            locations frequently based on the keyboard layout's language, we
+            opted to use a character instead.
+         */
+        addReview.addClickShortcut(Key.of("+"));
+
 
         // Set review button and edit button text from Java
         getElement().setProperty("reviewButtonText", "New review");

@@ -17,6 +17,8 @@ package com.vaadin.starter.beveragebuddy.ui.views.categorieslist;
 
 import java.util.List;
 
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
@@ -77,12 +79,21 @@ public class CategoriesList extends VerticalLayout {
         searchField.addClassName("view-toolbar__search-field");
         searchField.addValueChangeListener(e -> updateView());
         searchField.setValueChangeMode(ValueChangeMode.EAGER);
+        searchField.addFocusShortcut(Key.KEY_F, KeyModifier.CONTROL);
 
         Button newButton = new Button("New category", new Icon("lumo", "plus"));
         newButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         newButton.addClassName("view-toolbar__button");
         newButton.addClickListener(e -> form.open(new Category(),
                 AbstractEditorDialog.Operation.ADD));
+        /*
+            This is a fall-back method:
+            '+' is not a event.code (DOM events), so as a fall-back shortcuts
+            will perform a character-based comparison. Since Key.ADD changes
+            locations frequently based on the keyboard language, we opted to use
+            a character instead.
+         */
+        newButton.addClickShortcut(Key.of("+"));
 
         viewToolbar.add(searchField, newButton);
         add(viewToolbar);

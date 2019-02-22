@@ -34,3 +34,5 @@ Brief introduction to the application parts can be found from the `documentation
 * `v10` the version for Vaadin 10
 * `v11` the version for Vaadin 11
 * `v12` the version for Vaadin 12
+* `v13` the version for Vaadin 13
+
