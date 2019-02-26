@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const NpmInstallPlugin = require('webpack-plugin-install-deps');
 
 const inputFolder = path.resolve(__dirname, './src/main/webapp/frontend');
 const outputFolder = path.resolve(__dirname, './src/main/webapp/');
@@ -21,6 +22,7 @@ module.exports = {
   },
 
   plugins: [
+    new NpmInstallPlugin(),
     function (compiler) {
       compiler.plugin('after-emit', function (compilation, done) {
         console.log("Emitted " + statsFile)
