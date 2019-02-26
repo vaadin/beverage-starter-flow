@@ -496,9 +496,11 @@ public class BootstrapHandler extends SynchronizedRequestHandler {
             insertElements(dependency, document.head()::appendChild);
         }
 
-        if (themeSettings.getBodyAttributes() != null) {
-            themeSettings.getBodyAttributes()
-                    .forEach((key, value) -> document.body().attr(key, value));
+        if (themeSettings.getHtmlAttributes() != null) {
+            Element html = document.body().parent();
+            assert html.tagName().equalsIgnoreCase("html");
+            themeSettings.getHtmlAttributes()
+                    .forEach((key, value) -> html.attr(key, value));
         }
     }
 
