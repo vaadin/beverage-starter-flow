@@ -9,13 +9,15 @@ fs.mkdirSync(statsFolder, { recursive: true });
 const statsFile = statsFolder + '/stats.json';
 
 module.exports = {
-  context: path.resolve(__dirname, inputFolder),
-  entry: './main.js',
   mode: 'production',
+  context: inputFolder,
+  entry: {
+    index: './main.js'
+  },
 
   output: {
-    filename: 'build/index.js',
-    path: path.resolve(__dirname, outputFolder)
+    filename: 'build/[name].js',
+    path: outputFolder
   },
 
   plugins: [
