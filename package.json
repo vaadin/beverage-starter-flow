@@ -15,6 +15,9 @@
     "copy-webpack-plugin": "^4.6.0",
     "webpack": "^4.29.2",
     "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.1.14",
+    "babel-plugin-template-html-minifier": "^2.2.1",
+    "uglify-template-string-loader": "^1.1.0",
+    "webpack-babel-multi-target-plugin": "^2.1.0"
   }
 }
