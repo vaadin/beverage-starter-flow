@@ -22,7 +22,10 @@ module.exports = {
   },
 
   plugins: [
+
+    // Automatically execute `npm install` to download & install missing dependencies.
     new NpmInstallPlugin(),
+
     function (compiler) {
       compiler.plugin('after-emit', function (compilation, done) {
         console.log("Emitted " + statsFile)
@@ -30,6 +33,7 @@ module.exports = {
           JSON.stringify(compilation.getStats().toJson(), null, 2), done);
       });
     },
+
     new CopyWebpackPlugin(
       ['webcomponentsjs/**/*'],
       { context: path.resolve(__dirname, 'node_modules', '@webcomponents') }
