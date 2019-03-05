@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.vaadin.starter</groupId>
     <artifactId>beveragebuddy</artifactId>
@@ -12,7 +13,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.reporting.outputEncoding>UTF-8
+        </project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
         <vaadin.version>13.0-SNAPSHOT</vaadin.version>
@@ -32,7 +34,9 @@
         <!-- Repository needed for the snapshot versions of Vaadin -->
         <repository>
             <id>vaadin-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+            <url>
+                https://oss.sonatype.org/content/repositories/vaadin-snapshots/
+            </url>
         </repository>
     </repositories>
 
@@ -45,7 +49,9 @@
         <!-- Repository needed for the snapshot versions of Vaadin -->
         <pluginRepository>
             <id>vaadin-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+            <url>
+                https://oss.sonatype.org/content/repositories/vaadin-snapshots/
+            </url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -101,7 +107,7 @@
             <type>jar</type>
         </dependency>
 
-         <dependency>
+        <dependency>
             <groupId>com.google.javascript</groupId>
             <artifactId>closure-compiler</artifactId>
             <version>v20190121</version>
@@ -122,23 +128,6 @@
                 <configuration>
                     <scanIntervalSeconds>1</scanIntervalSeconds>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>com.vaadin</groupId>
-                <artifactId>flow-maven-plugin</artifactId>
-                <version>2.0-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>update-npm-dependencies</goal>
-                            <goal>update-imports</goal>
-                        </goals>
-                         <configuration>
-                           <jsFile>src/main/webapp/frontend/flow.js</jsFile>
-                         </configuration>
-                    </execution>
-                </executions>
             </plugin>
 
             <!--
@@ -165,12 +154,16 @@
                 </configuration>
             </plugin>
 
+            <!--
+                Execute fizzed-watcher asynchronously so that whenever a java
+                file changes, it'll run `mvn compile` to recompile the project.
+            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>process-classes</phase>
+                        <phase>generate-test-sources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -235,11 +228,47 @@
             </build>
         </profile>
 
+        <!-- Update and watch  -->
+        <profile>
+            <id>npm-update</id>
+            <activation>
+                <property>
+                    <name>!vaadin.bowerMode</name>
+                </property>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.vaadin</groupId>
+                        <artifactId>flow-maven-plugin</artifactId>
+                        <version>2.0-SNAPSHOT</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>update-npm-dependencies</goal>
+                                    <goal>update-imports</goal>
+                                </goals>
+                                <configuration>
+                                    <jsFile>src/main/webapp/frontend/flow.js</jsFile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!-- Install frontend NPM packages if not done yet -->
         <profile>
             <id>npm-install</id>
             <activation>
-                <file><missing>node_modules</missing></file>
+                <file>
+                    <missing>node_modules</missing>
+                </file>
+                <property>
+                    <name>!vaadin.bowerMode</name>
+                </property>
             </activation>
             <build>
                 <plugins>
@@ -250,7 +279,9 @@
                             <execution>
                                 <id>npm-install</id>
                                 <phase>validate</phase>
-                                <goals><goal>exec</goal></goals>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
                                 <configuration>
                                     <executable>npm</executable>
                                     <arguments>
