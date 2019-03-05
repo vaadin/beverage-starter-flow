@@ -1,27 +1,31 @@
-
-import '@vaadin/vaadin-lumo-styles/color.js';
-import '@vaadin/vaadin-lumo-styles/typography.js';
-import '@vaadin/vaadin-lumo-styles/sizing.js';
-import '@vaadin/vaadin-lumo-styles/spacing.js';
-import '@vaadin/vaadin-lumo-styles/style.js';
-import '@vaadin/vaadin-lumo-styles/icons.js';
-
-import {FlowComponentRenderer} from './flow-component-renderer.js';
-import {VaadinButton} from '@vaadin/vaadin-button/vaadin-button';
-import {VaadinTextField} from '@vaadin/vaadin-text-field/vaadin-text-field';
-import {VaadinIcons} from '@vaadin/vaadin-icons/vaadin-icons';
-import {VaadinCheckbox} from '@vaadin/vaadin-checkbox/vaadin-checkbox';
-import {VaadinDialog} from '@vaadin/vaadin-dialog/vaadin-dialog';
-import { ComboBoxElement } from '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import { DatePickerElement } from '@vaadin/vaadin-date-picker/vaadin-date-picker.js';
-import { FormLayoutElement } from '@vaadin/vaadin-form-layout/vaadin-form-layout.js';
-import { VaadinVerticalLayout } from '@vaadin/vaadin-ordered-layout/vaadin-vertical-layout';
-import { VaadinHorizontalLayout } from '@vaadin/vaadin-ordered-layout/vaadin-horizontal-layout';
-
-import './gridConnector.js';
-import { GridElement } from '@vaadin/vaadin-grid/vaadin-grid.js';
-
-import './styles/shared-styles.js';
+import '@vaadin/vaadin-grid';
+import '@vaadin/vaadin-icons';
+import '@vaadin/vaadin-split-layout';
+import '@vaadin/vaadin-combo-box';
+import '@vaadin/vaadin-upload';
+import '@vaadin/vaadin-dialog';
+import '@vaadin/vaadin-select';
+import './vaadin-grid-flow-selection-column.js';
+import '@vaadin/vaadin-app-layout';
+import '@vaadin/vaadin-item';
+import './flow-component-renderer.js';
+import '@vaadin/vaadin-notification';
+import '@vaadin/vaadin-progress-bar';
 import './src/views/reviewslist/reviews-list.js';
-
-
+import '@vaadin/vaadin-ordered-layout';
+import '@vaadin/vaadin-login';
+import '@vaadin/vaadin-button';
+import '@vaadin/vaadin-date-picker';
+import '@vaadin/vaadin-text-field';
+import '@vaadin/vaadin-custom-field';
+import '@vaadin/vaadin-form-layout';
+import '@vaadin/vaadin-accordion';
+import '@vaadin/vaadin-list-box';
+import '@vaadin/vaadin-checkbox';
+import '@vaadin/vaadin-details';
+import '@polymer/iron-icon';
+import '@vaadin/vaadin-time-picker';
+import '@vaadin/vaadin-context-menu';
+import '@vaadin/vaadin-tabs';
+import '@vaadin/vaadin-radio-button';
+import './styles/shared-styles.js';
