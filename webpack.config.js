@@ -26,6 +26,8 @@ module.exports = {
     // Automatically execute `npm install` to download & install missing dependencies.
     new NpmInstallPlugin(),
 
+    // Generates the `stats.json` file which is used by flow to read templates for
+    // server `@Id` binding
     function (compiler) {
       compiler.plugin('after-emit', function (compilation, done) {
         console.log("Emitted " + statsFile)
@@ -34,6 +36,8 @@ module.exports = {
       });
     },
 
+    // Copy webcomponents polyfills. They are not bundled because they
+    // have its own loader based on browser quirks.
     new CopyWebpackPlugin(
       ['webcomponentsjs/**/*'],
       { context: path.resolve(__dirname, 'node_modules', '@webcomponents') }
