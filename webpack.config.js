@@ -2,10 +2,13 @@ const path = require('path');
 const fs = require('fs');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const NpmInstallPlugin = require('webpack-plugin-install-deps');
+const { BabelMultiTargetPlugin } = require('webpack-babel-multi-target-plugin');
 
-const inputFolder = path.resolve(__dirname, './src/main/webapp/frontend');
-const outputFolder = path.resolve(__dirname, './src/main/webapp/');
-const statsFolder = path.resolve(__dirname, './target/classes/META-INF/resources');
+const baseDir = path.resolve(__dirname);
+const inputFolder = baseDir + '/src/main/webapp/frontend';
+const outputFolder = baseDir + '/src/main/webapp';
+const statsFolder = baseDir + '/target/classes/META-INF/resources';
+
 fs.mkdirSync(statsFolder, { recursive: true });
 const statsFile = statsFolder + '/stats.json';
 
@@ -21,7 +24,41 @@ module.exports = {
     path: outputFolder
   },
 
+  module: {
+    rules: [{
+      test: /\.js$/,
+      use: [BabelMultiTargetPlugin.loader()]
+    }]
+  },
+
   plugins: [
+
+    // Transpile with babel, and produce different bundles per browser
+    new BabelMultiTargetPlugin({
+      babel: {
+        presetOptions: {
+          useBuiltIns: false // polyfills are provided from webcomponents-loader.js
+        }
+      },
+      targets: {
+        'es6': {
+          browsers: [
+            'last 2 Chrome major versions',
+            'last 2 ChromeAndroid major versions',
+            'last 2 Edge major versions',
+            'last 2 Firefox major versions',
+            'last 2 Safari major versions',
+            'last 2 iOS major versions'
+          ],
+        },
+        'es5': {
+          browsers: [
+            'ie 11'
+          ],
+          tagAssetsWithKey: true, // append a suffix to the file name
+        }
+      }
+    }),
 
     // Automatically execute `npm install` to download & install missing dependencies.
     new NpmInstallPlugin(),
@@ -32,15 +69,15 @@ module.exports = {
       compiler.plugin('after-emit', function (compilation, done) {
         console.log("Emitted " + statsFile)
         fs.writeFile(path.resolve(__dirname, statsFile),
-          JSON.stringify(compilation.getStats().toJson(), null, 2), done);
+          JSON.stringify(compilation.getStats().toJson(), null, 1), done);
       });
     },
 
     // Copy webcomponents polyfills. They are not bundled because they
     // have its own loader based on browser quirks.
-    new CopyWebpackPlugin(
-      ['webcomponentsjs/**/*'],
-      { context: path.resolve(__dirname, 'node_modules', '@webcomponents') }
-    ),
+    new CopyWebpackPlugin([{
+      from: baseDir + '/node_modules/@webcomponents/webcomponentsjs',
+      to: 'build/webcomponentsjs/'
+    }]),
   ]
 };
