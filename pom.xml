@@ -228,6 +228,7 @@
                         <executions>
                             <execution>
                                 <goals>
+                                    <goal>copy-frontend-files</goal>
                                     <goal>update-npm-dependencies</goal>
                                     <goal>update-imports</goal>
                                 </goals>
