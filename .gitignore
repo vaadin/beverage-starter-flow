@@ -13,4 +13,3 @@ node_modules
 *.diff
 bower_components
 src/main/webapp/build
-src/main/webapp/webcomponentsjs
