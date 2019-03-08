@@ -7,10 +7,10 @@ const { BabelMultiTargetPlugin } = require('webpack-babel-multi-target-plugin');
 const baseDir = path.resolve(__dirname);
 const inputFolder = baseDir + '/src/main/webapp/frontend';
 const outputFolder = baseDir + '/src/main/webapp';
-const statsFolder = baseDir + '/target/classes/META-INF/resources';
+const build = 'build';
 
-fs.mkdirSync(statsFolder, { recursive: true });
-const statsFile = statsFolder + '/stats.json';
+fs.mkdirSync(`${outputFolder}/${build}`, { recursive: true });
+const statsFile = `${outputFolder}/${build}/stats.json`;
 
 module.exports = {
   mode: 'production',
@@ -20,7 +20,7 @@ module.exports = {
   },
 
   output: {
-    filename: 'build/[name].js',
+    filename: `${build}/[name].js`,
     path: outputFolder
   },
 
@@ -68,16 +68,15 @@ module.exports = {
     function (compiler) {
       compiler.plugin('after-emit', function (compilation, done) {
         console.log("Emitted " + statsFile)
-        fs.writeFile(path.resolve(__dirname, statsFile),
-          JSON.stringify(compilation.getStats().toJson(), null, 1), done);
+        fs.writeFile(statsFile, JSON.stringify(compilation.getStats().toJson(), null, 1), done);
       });
     },
 
     // Copy webcomponents polyfills. They are not bundled because they
     // have its own loader based on browser quirks.
     new CopyWebpackPlugin([{
-      from: baseDir + '/node_modules/@webcomponents/webcomponentsjs',
-      to: 'build/webcomponentsjs/'
+      from: `${baseDir}/node_modules/@webcomponents/webcomponentsjs`,
+      to: `${build}/webcomponentsjs/`
     }]),
   ]
 };
