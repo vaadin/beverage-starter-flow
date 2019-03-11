@@ -243,9 +243,6 @@
                                     <goal>update-npm-dependencies</goal>
                                     <goal>update-imports</goal>
                                 </goals>
-                                <configuration>
-                                    <jsFile>src/main/webapp/frontend/flow.js</jsFile>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
