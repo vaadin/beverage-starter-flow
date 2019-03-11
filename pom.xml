@@ -116,10 +116,8 @@
                 <artifactId>maven-clean-plugin</artifactId>
                 <configuration>
                     <filesets>
-                        <fileset>
-                            <directory>src/main/webapp/build</directory>
-                            <directory>src/main/webapp/node_modules</directory>
-                        </fileset>
+                        <fileset><directory>src/main/webapp/build</directory></fileset>
+                        <fileset><directory>src/main/webapp/node_modules</directory></fileset>
                     </filesets>
                 </configuration>
             </plugin>
