@@ -5,8 +5,8 @@ const NpmInstallPlugin = require('webpack-plugin-install-deps');
 const { BabelMultiTargetPlugin } = require('webpack-babel-multi-target-plugin');
 
 const baseDir = path.resolve(__dirname);
-const inputFolder = baseDir + '/src/main/webapp/frontend';
-const outputFolder = baseDir + '/src/main/webapp';
+const inputFolder = baseDir + '/webapp/frontend';
+const outputFolder = baseDir + '/webapp';
 const build = 'build';
 
 fs.mkdirSync(`${outputFolder}/${build}`, { recursive: true });
