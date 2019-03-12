@@ -12,4 +12,5 @@ node_modules
 
 *.diff
 bower_components
-src/main/webapp/build
+webapp/build
+webapp/frontend/main.js
