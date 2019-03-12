@@ -16,8 +16,8 @@ node_modules
 bower_components
 
 # following files are generated/updated by flow-maven
-src/main/webapp/build
-src/main/webapp/frontend/main.js
 package.json
 package-lock.json
 webpack.config.js
+webapp/build
+webapp/frontend/main.js
