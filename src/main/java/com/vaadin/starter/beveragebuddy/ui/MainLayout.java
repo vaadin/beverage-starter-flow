@@ -28,6 +28,8 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.theme.Theme;
+import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.starter.beveragebuddy.ui.views.categorieslist.CategoriesList;
 import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
 
@@ -38,6 +40,7 @@ import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
 @HtmlImport("frontend://styles/shared-styles.html")
 @PWA(name = "Beverage Buddy", shortName = "BevBuddy")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
+@Theme(value = Lumo.class, variant = Lumo.DARK)
 public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
 
