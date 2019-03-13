@@ -85,8 +85,7 @@ Brief introduction to the application parts can be found from the `documentation
 
 ## Adding new Polymer 3 templates
 
-To adda a new Polymer 3 template to the project create the file in `src/main/webapp/frontend/` and add the 
-import to `flow.js` with the relative path e.g. `import './src/views/reviewslist/reviews-list.js';` or `import './flow-component-renderer.js';`
+To add a new Polymer 3 template to the project create the JavaScript module in `src/main/webapp/frontend/`.
 
 Then in the PolymerTemplate using the P3 element add the `JsModule` annotation e.g. `@JsModule("./src/views/reviewslist/reviews-list.js")` 
  
