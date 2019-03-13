@@ -23,28 +23,30 @@ But additionally you need `node.js` and `npm` installed in your System.
 
 ## Polymer Versions
 
-There is a work in progress to support both Polymer 2.0 and Polymer 3.0 in this application.
-Since each version requires different JavaScript packaging system, we can use also `bower mode` for Polymer 2.0, or `npm mode` for Polymer 3.0.
-
-In this branch we have some hacks to make the project work with `npm` in the meanwhile Flow is fully prepared for it.
-Some of the workarounds are changes in copies of flow classes, or steps that the user needs to perform manually.
+This application supports both Polymer 2.0 and Polymer 3.0.
+Since the versions require different JavaScript packaging system to be used, 
+we also use the terms `bower mode` for Polymer 2.0 and `npm mode` for Polymer 3.0.
+ 
+The workarounds left are the .js files that can be found inside `src/main/webapp/frontend/**/*.js`. These will be removed
+as soon as the files are available in the webcomponents and in the right directory for the maven plugin to get. 
 
 ## Templates
 
-The project has a template view that needs to be accessible in server-side, there is no tooling so far to maintain synchronized Polymer 2.0 and 3.0 versions of the template, hence we need to maintain two versions of the file: `src/main/webapp/frontend/src/reviewlist/reviews-list.html` and `src/main/webapp/frontend/src/reviewlist/reviews-list.js`
+The project has a template view that needs to be accessible in server-side, 
+so far there is no tooling to maintain synchronized Polymer 2.0 and 3.0 versions of the template, 
+hence we need to maintain two versions of the file: `src/main/webapp/frontend/src/reviewlist/reviews-list.html` and `src/main/webapp/frontend/src/reviewlist/reviews-list.js`
 
 ## Dependencies
 
-In `bower` mode, dependencies are managed by the flow framework, but in `npm` we still need to manually edit the `package.json` and `src/main/webapp/frontend/main.js` to add and import new dependencies respectively.
+Dependencies are managed by the flow framework and flow-maven-plugin.
 
 ## Running the Project
 
-1. To install frontend dependencies run `npm install`
-2. To run devmode you have two options:
-  - Run the project in Polymer 3.0 mode by executing `mvn jetty:run`
+1. To run devmode you have two options:
+  - Run the project in Polymer 3.0 mode run `mvn jetty:run`
   - Otherwise, to run it in Polymer 2.0 mode use `mvn -Dvaadin.bower.mode jetty:run`
-3. Wait for the application to start
-4. Open http://localhost:8080/ to view the application
+2. Wait for the application to start
+3. Open http://localhost:8080/ to view the application
 
 ## Production Mode
 
@@ -64,11 +66,34 @@ In `bower` mode, dependencies are managed by the flow framework, but in `npm` we
 
 Brief introduction to the application parts can be found from the `documentation` folder. For Vaadin documentation for Java users, see [Vaadin.com/docs](https://vaadin.com/docs/v10/flow/Overview.html).
 
+## Polymer 3 development mode information
+
+### New configuration files
+
+* `webpack.config.js` is used to configure webpack target folders and transpilation to es5 
+* `package.json` contains project meta-data and is used to manage the project dependencies
+* `package-lock.json` is automatically generated for any operations where npm modifies either the node_modules tree, or package.json. It describes the exact tree that was generated, such that subsequent installs may generate identical trees, regardless of intermediate dependency updates.
+
+#### Additions to the pom.xml
+
+* The maven clean plugin addition clears the WebPack generated files on `mvn clean`
+* The `fizzed-watcher-maven-plugin` is used to watch for source file changes and recompile the Java classes.
+    * `exec-maven-plugin` runs the fizzed watcher so that there is no need to start it manually 
+* Added profiles that are run in npm mode
+    * `npm-update` profile executes the fizzer-watcher and runs the npm targets for `flow-maven-plugin`
+    * `npm-install` profile will run npm install if the `node_modules` folder doesn't exist
+
+## Adding new Polymer 3 templates
+
+To add a new Polymer 3 template to the project create the JavaScript module in `src/main/webapp/frontend/`.
+
+Then in the PolymerTemplate using the P3 element add the `JsModule` annotation e.g. `@JsModule("./src/views/reviewslist/reviews-list.js")` 
+ 
 ### Branching information
-* `2.0` the work in progress for the future version of Vaadin (14)
+* `2.0` the work in progress for the future version of Vaadin Platform (14)
 * `master` the latest version of the starter, using the latest platform snapshot
-* `v10` the version for Vaadin 10
-* `v11` the version for Vaadin 11
-* `v12` the version for Vaadin 12
-* `v13` the version for Vaadin 13
+* `v10` the version for Vaadin Platform 10
+* `v11` the version for Vaadin Platform 11
+* `v12` the version for Vaadin Platform 12
+* `v13` the version for Vaadin Platform 13
 
