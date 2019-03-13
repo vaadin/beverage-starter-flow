@@ -25,8 +25,7 @@ The project can be imported into the IDE of your choice, with Java 8 installed, 
 2. Wait for the application to start
 3. Open http://localhost:8080/ to view the application
 
-## Documentation
-
+## Documentat
 Brief introduction to the application parts can be found from the `documentation` folder. For Vaadin documentation for Java users, see [Vaadin.com/docs](https://vaadin.com/docs/v10/flow/Overview.html).
 
 ### Branching information
