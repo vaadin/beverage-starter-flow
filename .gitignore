@@ -12,5 +12,7 @@ node_modules
 
 *.diff
 bower_components
-webapp/build
-webapp/frontend/main.js
+frontend/main.js
+package.json
+package-lock.json
+webpack.config.js
