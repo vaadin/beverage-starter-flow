@@ -1,0 +1,42 @@
+{
+  "dependencies": {
+    "@polymer/iron-icon": "^3.0.1",
+    "@polymer/iron-list": "^3.0.2",
+    "@vaadin/vaadin-accordion": "^1.0.0",
+    "@vaadin/vaadin-app-layout": "^1.0.2",
+    "@vaadin/vaadin-button": "^2.1.4",
+    "@vaadin/vaadin-checkbox": "^2.2.7",
+    "@vaadin/vaadin-combo-box": "^4.2.5",
+    "@vaadin/vaadin-context-menu": "^4.3.2",
+    "@vaadin/vaadin-custom-field": "^1.0.1",
+    "@vaadin/vaadin-date-picker": "^3.3.2",
+    "@vaadin/vaadin-details": "^1.0.1",
+    "@vaadin/vaadin-dialog": "^2.2.1",
+    "@vaadin/vaadin-form-layout": "^2.1.2",
+    "@vaadin/vaadin-grid": "^5.3.3",
+    "@vaadin/vaadin-icons": "^4.2.1",
+    "@vaadin/vaadin-item": "^2.1.0",
+    "@vaadin/vaadin-list-box": "^1.1.0",
+    "@vaadin/vaadin-login": "^1.0.0",
+    "@vaadin/vaadin-lumo-styles": "^1.4.1",
+    "@vaadin/vaadin-material-styles": "^1.2.2",
+    "@vaadin/vaadin-notification": "^1.2.1",
+    "@vaadin/vaadin-ordered-layout": "^1.1.0",
+    "@vaadin/vaadin-progress-bar": "^1.1.0",
+    "@vaadin/vaadin-radio-button": "^1.1.5",
+    "@vaadin/vaadin-select": "^2.0.4",
+    "@vaadin/vaadin-split-layout": "^4.1.0",
+    "@vaadin/vaadin-tabs": "^2.1.2",
+    "@vaadin/vaadin-text-field": "^2.3.5",
+    "@vaadin/vaadin-time-picker": "^1.2.1",
+    "@vaadin/vaadin-upload": "^4.2.1",
+    "@webcomponents/webcomponentsjs": "^2.2.7"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^5.0.1",
+    "webpack": "^4.29.6",
+    "webpack-babel-multi-target-plugin": "^2.1.0",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  }
+}
