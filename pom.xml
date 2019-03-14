@@ -248,41 +248,5 @@
             </build>
         </profile>
 
-        <!-- Install frontend NPM packages if not done yet -->
-        <profile>
-            <id>npm-install</id>
-            <activation>
-                <file>
-                    <exists>package.json</exists>
-                    <missing>node_modules</missing>
-                </file>
-                <property>
-                    <name>!vaadin.bowerMode</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>npm-install</id>
-                                <phase>validate</phase>
-                                <goals><goal>exec</goal></goals>
-                                <configuration>
-                                    <executable>npm</executable>
-                                    <arguments>
-                                        <argument>install</argument>
-                                        <argument>--loglevel</argument>
-                                        <argument>info</argument>
-                                    </arguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
     </profiles>
 </project>

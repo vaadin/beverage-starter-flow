@@ -11,6 +11,13 @@ node_modules
 .DS_Store
 
 *.diff
+
+
 bower_components
+
+# following files are generated/updated by flow-maven
 src/main/webapp/build
 src/main/webapp/frontend/main.js
+package-lock.json
+package.json
+webpack.config.js
