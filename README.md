@@ -74,6 +74,8 @@ Brief introduction to the application parts can be found from the `documentation
 * `package.json` contains project meta-data and is used to manage the project dependencies
 * `package-lock.json` is automatically generated for any operations where npm modifies either the node_modules tree, or package.json. It describes the exact tree that was generated, such that subsequent installs may generate identical trees, regardless of intermediate dependency updates.
 
+NOTE: when `webpack.config.js` and `package.json` do not exists, they are automatically created by the `flow-maven-plugin`
+
 #### Additions to the pom.xml
 
 * The maven clean plugin addition clears the WebPack generated files on `mvn clean`

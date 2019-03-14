@@ -41,6 +41,10 @@ function runSonar {
     fi
 }
 
+npm --version
+node --version
+uname -a
+
 mvn -B -e -V clean verify
 
 # Get the status for the previous maven command and if not exception then run sonar.
