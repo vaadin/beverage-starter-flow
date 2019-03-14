@@ -41,7 +41,7 @@ function runSonar {
     fi
 }
 
-mvn -B -e -V clean verify
+mvn -B -e -V -X clean verify
 
 # Get the status for the previous maven command and if not exception then run sonar.
 STATUS=$?
