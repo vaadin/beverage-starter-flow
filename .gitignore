@@ -19,5 +19,4 @@ bower_components
 package.json
 package-lock.json
 webpack.config.js
-webapp/build
-webapp/frontend/main.js
+frontend/main.js
