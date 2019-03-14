@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const NpmInstallPlugin = require('webpack-plugin-install-deps');
 const { BabelMultiTargetPlugin } = require('webpack-babel-multi-target-plugin');
 
 const baseDir = path.resolve(__dirname);
@@ -59,9 +58,6 @@ module.exports = {
         }
       }
     }),
-
-    // Automatically execute `npm install` to download & install missing dependencies.
-    new NpmInstallPlugin(),
 
     // Generates the `stats.json` file which is used by flow to read templates for
     // server `@Id` binding

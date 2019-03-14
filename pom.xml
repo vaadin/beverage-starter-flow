@@ -252,7 +252,10 @@
         <profile>
             <id>npm-install</id>
             <activation>
-                <file><missing>node_modules</missing></file>
+                <file>
+                    <exists>package.json</exists>
+                    <missing>node_modules</missing>
+                </file>
                 <property>
                     <name>!vaadin.bowerMode</name>
                 </property>
