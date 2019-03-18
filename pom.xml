@@ -106,10 +106,10 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.14.v20181114</version>
-                <!--<configuration>-->
-                    <!--<scanIntervalSeconds>1</scanIntervalSeconds>-->
-                <!--</configuration>-->
+                <version>9.4.15.v20190215</version>
+                <configuration>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -121,6 +121,7 @@
                     </filesets>
                 </configuration>
             </plugin>
+
 
             <!--
                 Watch for the source file changes and recompile the Java classes.
@@ -141,36 +142,10 @@
                         </watch>
                     </watches>
                     <goals>
-                        <goal>process-classes</goal>
+                        <goal>compile</goal>
                     </goals>
                 </configuration>
             </plugin>
-
-            <!--
-                Execute fizzed-watcher asynchronously so that whenever a java
-                file changes, it'll run `mvn compile` to recompile the project.
-            -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>mvn</executable>
-                            <arguments>
-                                <argument>fizzed-watcher:run</argument>
-                            </arguments>
-                            <async>true</async>
-                            <asyncDestroyOnShutdown>true</asyncDestroyOnShutdown>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
 
@@ -229,6 +204,11 @@
                 </property>
             </activation>
 
+            <!--
+               Take care of synchronizing java dependencies and imports in
+               package.json and main.js files.
+               It also creates webpack.config.js if not exists yet.
+            -->
             <build>
                 <plugins>
                     <plugin>
@@ -241,6 +221,31 @@
                                     <goal>update-npm-dependencies</goal>
                                     <goal>update-imports</goal>
                                 </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!--
+                        Execute fizzed-watcher asynchronously so that whenever a java
+                        file changes, it'll run `mvn compile` to recompile the project.
+                    -->
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>mvn</executable>
+                                    <arguments>
+                                        <argument>fizzed-watcher:run</argument>
+                                    </arguments>
+                                    <async>true</async>
+                                    <asyncDestroyOnShutdown>true</asyncDestroyOnShutdown>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
