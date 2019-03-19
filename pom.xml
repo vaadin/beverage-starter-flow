@@ -16,6 +16,8 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
         <vaadin.version>13.0-SNAPSHOT</vaadin.version>
+
+        <tomcat.version>8.5.38</tomcat.version>
     </properties>
 
     <repositories>
@@ -100,17 +102,24 @@
             <version>1.9.2</version>
             <type>jar</type>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat</artifactId>
+            <version>8.5.38</version>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.15.v20190215</version>
-                <configuration>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
-                </configuration>
-            </plugin>
 
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -121,7 +130,83 @@
                     </filesets>
                 </configuration>
             </plugin>
+            
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.15.v20190215</version>
+                <configuration>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                </configuration>
+            </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <url>http://localhost:8080</url>
+                    <path>/</path>
+                    <server>TomcatServer</server>
+                    <username>admin</username>
+                    <password>password</password>
+                </configuration>
+            </plugin>
+
+
+            <!-- Tomcat Cargo -->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <configuration>
+                    <container>
+                        <containerId>tomcat8x</containerId>
+                        <artifactInstaller>
+                            <groupId>org.apache.tomcat</groupId>
+                            <artifactId>tomcat</artifactId>
+                            <version>${tomcat.version}</version>
+                        </artifactInstaller>
+                    </container>
+                    <configuration>
+                        <type>standalone</type>
+                        <home>
+                            ${project.build.directory}/apache-tomcat-${tomcat.version}
+                        </home>
+                        <properties>
+                            <cargo.servlet.port>8080</cargo.servlet.port>
+                            <cargo.logging>high</cargo.logging>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>/</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
 
             <!--
                 Watch for the source file changes and recompile the Java classes.
