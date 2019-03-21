@@ -41,11 +41,15 @@ function runSonar {
     fi
 }
 
+# some info about the build
 npm --version
 node --version
 uname -a
 
-mvn -B -e -V clean verify
+# For some reason recursive fs.mkdirSync in webpack.config.js fails in CI
+mvn clean
+mkdir -p target/generated-frontend/build
+mvn -B -e -V verify
 
 # Get the status for the previous maven command and if not exception then run sonar.
 STATUS=$?
