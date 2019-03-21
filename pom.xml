@@ -15,7 +15,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>13.0-SNAPSHOT</vaadin.version>
+        <vaadin.version>14.0-SNAPSHOT</vaadin.version>
     </properties>
 
     <repositories>
@@ -57,6 +57,13 @@
                 <type>pom</type>
                 <scope>import</scope>
                 <version>${vaadin.version}</version>
+            </dependency>
+
+            <!-- needed to have a es module fix in the connector-->
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-grid-flow</artifactId>
+                <version>3.1-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
