@@ -5,19 +5,17 @@
 .metadata/
 .project
 .settings/
-node_modules
 
 *.iml
 .DS_Store
 
 *.diff
 
-
+node_modules
 bower_components
 
 # following files are generated/updated by flow-maven
-src/main/webapp/build
-src/main/webapp/frontend/main.js
+frontend/main.js
 package.json
 package-lock.json
 webpack.config.js
