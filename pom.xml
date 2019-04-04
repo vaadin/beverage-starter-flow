@@ -216,28 +216,6 @@
                         </configuration>
                     </plugin>
 
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.6.0</version>
-                        <executions>
-                            <!--
-                                Run webpack just before packaging
-                            -->
-                           <execution>
-                               <id>run-webpack</id>
-                                <phase>prepare-package</phase>
-                                <goals><goal>exec</goal></goals>
-                                <configuration>
-                                    <executable>node</executable>
-                                    <arguments>
-                                        <argument>node_modules/.bin/webpack</argument>
-                                    </arguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-
                     <!--
                         In npmMode we need to change frontend folder to the generated
                     -->
