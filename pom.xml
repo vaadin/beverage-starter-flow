@@ -144,6 +144,7 @@
 
     <build>
         <plugins>
+            <!-- We use jetty plugin, replace it with your favourite developing servlet container -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -248,18 +249,8 @@
                             </filesets>
                         </configuration>
                     </plugin>
-
-                    <!--
-                        In npmMode we need to change frontend folder to the generated
-                    -->
-                    <plugin>
-                        <groupId>org.eclipse.jetty</groupId>
-                        <artifactId>jetty-maven-plugin</artifactId>
-                        <version>9.4.15.v20190215</version>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
-
     </profiles>
 </project>
