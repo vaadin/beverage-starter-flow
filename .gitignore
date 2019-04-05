@@ -12,10 +12,8 @@
 *.diff
 
 node_modules
-bower_components
 
-# following files are generated/updated by flow-maven
+# The following files are generated/updated by flow-maven-plugin
 frontend/main.js
 package.json
-package-lock.json
 webpack.config.js
