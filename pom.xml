@@ -166,6 +166,7 @@
                 <executions>
                     <execution>
                         <goals>
+                            <goal>validate</goal>
                             <goal>update-npm-dependencies</goal>
                             <goal>update-imports</goal>
                         </goals>
