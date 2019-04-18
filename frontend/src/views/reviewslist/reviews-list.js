@@ -1,31 +1,5 @@
-/*
-  ~ Copyright 2000-2017 Vaadin Ltd.
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not
-  ~ use this file except in compliance with the License. You may obtain a copy of
-  ~ the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-  ~ License for the specific language governing permissions and limitations under
-  ~ the License.
-  */
-/* Dependency resources */
-/* Added Web Component dependencies to make Vaadin Designer preview work */
-/* TODO Needed to show icons in Vaadin Designer preview mode for now, but can be removed soon */
-/* Defines the reviews-list element */
-/* Polymer boilerplate to register the reviews-list element */
-/*
-  FIXME(polymer-modulizer): the above comments were extracted
-  from HTML and may be out of place here. Review them and
-  then delete this comment!
-*/
-
-import { PolymerElement } from '@polymer/polymer/polymer-element.js';
-import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 import '@vaadin/vaadin-button/vaadin-button.js';
 import '@polymer/iron-icon/iron-icon.js';
 

@@ -20,72 +20,37 @@ The Starter demonstrates the core Vaadin Flow concepts:
 The project can be imported into the IDE of your choice, with Java 8 installed, as a Maven project.
 
 But additionally you need `node.js` installed in your System, and available in your `PATH`.
-
-## Polymer Versions
-
-This application supports both Polymer 2.0 and Polymer 3.0.
-Since the versions require different JavaScript packaging system to be used,
-we also use the terms `bower mode` for Polymer 2.0 and `npm mode` for Polymer 3.0.
-
-The workarounds left are the .js files that can be found inside `src/main/webapp/frontend/**/*.js`. These will be removed
-as soon as the files are available in the webcomponents and in the right directory for the maven plugin to get.
-
-## Templates
-
-The project has a template view that needs to be accessible in server-side,
-so far there is no tooling to maintain synchronized Polymer 2.0 and 3.0 versions of the template,
-hence we need to maintain two versions of the file: `src/main/webapp/frontend/src/reviewlist/reviews-list.html` and `src/main/webapp/frontend/src/reviewlist/reviews-list.js`
+See the [Node page](https://nodejs.org/en/) for the installation instructions.
 
 ## Dependencies
 
-Dependencies are managed by the flow framework and flow-maven-plugin.
+Dependencies are managed by the Flow framework and flow-maven-plugin.
 
 ## Running the Project in Developer Mode
 
-1. To run devmode you have two options:
-  - Run the project in Polymer 3.0 mode run `mvn jetty:run`
-  - Otherwise, to run it in Polymer 2.0 mode use `mvn -Dvaadin.bower.mode jetty:run`
+1. Run `mvn jetty:run`
 2. Wait for the application to start
 3. Open http://localhost:8080/ to view the application
 
+Note that there are two files created in the project structure automatically:
+
+* `webpack.config.js` is used to configure webpack target folders and transpilation to es5
+* `package.json` contains project meta-data and is used to manage the project dependencies
+
 ## Production Mode
 
-### Packaging and running for Polymer 2.0
-
-1. Run the command `mvn package -Dvaadin.productionMode -Dvaadin.bowerMode ` to get the artifact.
-2. Deploy the generated `target/beveragebuddy-1.0-SNAPSHOT.war` file in your production server, and run  with the `vaadin.bowerMode` property set.
-
-### Packaging and running for Polymer 3.0
-
 1. Run `mvn package -Dvaadin.productionMode` to get the artifact.
-2. Deploy the  `target/beveragebuddy-1.0-SNAPSHOT.war`.
+2. Deploy the `target/beveragebuddy-1.0-SNAPSHOT.war`.
+If you want to run the production build using the Jetty plugin, use `mvn jetty:run-exploded` after you've build the artifact in the production mode
+and navigate to the http://localhost:8080/ page.
 
 ## Documentation
 
 Brief introduction to the application parts can be found from the `documentation` folder. For Vaadin documentation for Java users, see [Vaadin.com/docs](https://vaadin.com/docs/v10/flow/Overview.html).
 
-## Polymer 3 development mode information
+## Adding new templates
 
-### New configuration files
-
-* `webpack.config.js` is used to configure webpack target folders and transpilation to es5
-* `package.json` contains project meta-data and is used to manage the project dependencies
-* `package-lock.json` is automatically generated for any operations where npm modifies either the node_modules tree, or package.json. It describes the exact tree that was generated, such that subsequent installs may generate identical trees, regardless of intermediate dependency updates.
-
-NOTE: when `webpack.config.js` and `package.json` do not exists, they are automatically created by the `flow-maven-plugin`
-
-#### Additions to the pom.xml
-
-* The maven clean plugin addition clears the WebPack generated files on `mvn clean`
-* The `fizzed-watcher-maven-plugin` is used to watch for source file changes and recompile the Java classes.
-    * `exec-maven-plugin` runs the fizzed watcher so that there is no need to start it manually
-* Added profiles that are run in npm mode
-    * `npm-update` profile executes the fizzer-watcher and runs the npm targets for `flow-maven-plugin`
-    * `npm-install` profile will run npm install if the `node_modules` folder doesn't exist
-
-## Adding new Polymer 3 templates
-
-To add a new Polymer 3 template to the project create the JavaScript module in `src/main/webapp/frontend/`.
+To add a new template to the project create the JavaScript module in `src/main/webapp/frontend/`.
 
 Then in the PolymerTemplate using the P3 element add the `JsModule` annotation e.g. `@JsModule("./src/views/reviewslist/reviews-list.js")`
 
