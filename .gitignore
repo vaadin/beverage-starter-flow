@@ -11,9 +11,7 @@
 
 *.diff
 
-node_modules
-
 # The following files are generated/updated by flow-maven-plugin
-frontend/main.js
 package.json
 webpack.config.js
+node_modules/
