@@ -50,7 +50,7 @@ Brief introduction to the application parts can be found from the `documentation
 
 ## Adding new templates
 
-To add a new template to the project create the JavaScript module in the `./frontend` directory.
+To add a new template or a style to the project create the JavaScript module in the `./frontend` directory.
 
 Then in the PolymerTemplate using the P3 element add the `JsModule` annotation e.g. `@JsModule("./src/views/reviewslist/reviews-list.js")`
 
