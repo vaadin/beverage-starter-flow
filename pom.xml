@@ -167,7 +167,7 @@
                     <execution>
                         <goals>
                             <goal>validate</goal>
-                            <goal>update-frontend</goal>
+                            <goal>build-frontend</goal>
                         </goals>
                     </execution>
                 </executions>
