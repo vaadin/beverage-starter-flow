@@ -95,6 +95,8 @@ public class CategoriesList extends VerticalLayout {
          */
         newButton.addClickShortcut(Key.of("+"));
 
+        // TODO include PaperSlider to the toolbar
+
         viewToolbar.add(searchField, newButton);
         add(viewToolbar);
     }

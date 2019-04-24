@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.vaadin.addon</groupId>
+  <artifactId>paper-slider-flow</artifactId>
+  <versioning>
+    <release>1.0.0</release>
+    <versions>
+      <version>1.0.0</version>
+    </versions>
+    <lastUpdated>20190424184011</lastUpdated>
+  </versioning>
+</metadata>
