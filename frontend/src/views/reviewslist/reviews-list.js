@@ -1,33 +1,11 @@
-<!--
-  ~ Copyright 2000-2017 Vaadin Ltd.
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License"); you may not
-  ~ use this file except in compliance with the License. You may obtain a copy of
-  ~ the License at
-  ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-  ~ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-  ~ License for the specific language governing permissions and limitations under
-  ~ the License.
-  -->
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+import '@vaadin/vaadin-button/vaadin-button.js';
+import '@polymer/iron-icon/iron-icon.js';
 
-<!-- Dependency resources -->
-<link rel="import" href="../../../bower_components/polymer/polymer-element.html">
-<!-- Added Web Component dependencies to make Vaadin Designer preview work -->
-<link rel="import" href="../../../bower_components/vaadin-text-field/src/vaadin-text-field.html">
-<link rel="import" href="../../../bower_components/vaadin-button/src/vaadin-button.html">
-<link rel="import" href="../../../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="../../../bower_components/vaadin-lumo-styles/badge.html">
-<!-- TODO Needed to show icons in Vaadin Designer preview mode for now, but can be removed soon -->
-<link rel="import" href="../../../bower_components/vaadin-lumo-styles/icons.html">
-
-
-<!-- Defines the reviews-list element -->
-<dom-module id="reviews-list">
-    <template>
+class ReviewListElement extends PolymerElement {
+  static get template() {
+    return html`
         <style include="lumo-color lumo-typography lumo-badge view-styles">
             :host {
                 display: block;
@@ -216,7 +194,7 @@
         </style>
 
         <div class="view-toolbar">
-            <vaadin-text-field id="search" class="view-toolbar__search-field" autocapitalize=off>
+            <vaadin-text-field id="search" class="view-toolbar__search-field" autocapitalize="off">
                 <iron-icon icon="lumo:search" slot="prefix"></iron-icon>
             </vaadin-text-field>
             <vaadin-button id="newReview" class="view-toolbar__button" theme="primary">
@@ -231,7 +209,7 @@
                 <template is="dom-repeat" items="[[reviews]]">
                     <div class="review">
                         <div class="review__rating">
-                            <p class="review__score" data-score$="[[item.score]]">[[item.score]]</p>
+                            <p class="review__score" data-score\$="[[item.score]]">[[item.score]]</p>
                             <p class="review__count">
                                 [[item.count]]
                                 <span>times tasted</span>
@@ -240,7 +218,7 @@
                         <div class="review__details">
                             <h4 class="review__name">[[item.name]]</h4>
                             <template is="dom-if" if="[[item.category]]">
-                                <p class="review__category" theme="badge small" style$="--category: [[item.category.id]];">[[item.category.name]]</p>
+                                <p class="review__category" theme="badge small" style\$="--category: [[item.category.id]];">[[item.category.name]]</p>
                             </template>
                             <template is="dom-if" if="[[!item.category]]">
                                 <p class="review__category" style="--category: -1;">Undefined</p>
@@ -261,20 +239,15 @@
                 <div class="reviews__no-matches">No matches</div>
             </template>
         </div>
-    </template>
+`;
+  }
 
-    <!-- Polymer boilerplate to register the reviews-list element -->
-    <script>
-        class ReviewListElement extends Polymer.Element {
-            static get is() {
-                return 'reviews-list'
-            }
+  static get is() {
+      return 'reviews-list'
+  }
 
-            _isEmpty(array) {
-                return array.length == 0;
-            }
-        }
-        customElements.define(ReviewListElement.is, ReviewListElement);
-    </script>
-
-</dom-module>
+  _isEmpty(array) {
+      return array.length == 0;
+  }
+}
+customElements.define(ReviewListElement.is, ReviewListElement);
