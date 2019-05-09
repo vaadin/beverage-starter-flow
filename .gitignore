@@ -5,7 +5,11 @@
 .metadata/
 .project
 .settings/
-node_modules
 
 *.iml
 .DS_Store
+
+*.diff
+
+# The following files are generated/updated by flow-maven-plugin
+node_modules/
