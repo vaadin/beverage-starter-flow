@@ -48,8 +48,8 @@ public class CategoryEditorDialog extends AbstractEditorDialog<Category> {
                         "Category name must contain at least 3 printable characters",
                         3, null))
                 .withValidator(
-                        name -> CategoryService.getInstance()
-                                .findCategories(name).size() == 0,
+                        name -> !CategoryService.getInstance()
+                                .findCategoryByName(name).isPresent(),
                         "Category name must be unique")
                 .bind(Category::getName, Category::setName);
     }
