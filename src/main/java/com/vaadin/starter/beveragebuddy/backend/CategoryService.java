@@ -96,19 +96,21 @@ public class CategoryService {
     }
 
     /**
-     * Searches for the exact category whose name matches the given filter text.
-     *
+     * Fetches the category with the given name.
+     * <p>
      * The matching is case insensitive.
      *
      * @param name
-     *            the filter text
+     *            the category name to look for
      * @return an {@link Optional} containing the category if found, or
      *         {@link Optional#empty()}
      * @throws IllegalStateException
      *             if the result is ambiguous
      */
     public Optional<Category> findCategoryByName(String name) {
-        List<Category> categoriesMatching = findCategories(name);
+        List<Category> categoriesMatching = categories.values().stream()
+                .filter(category -> name.equals(category.getName()))
+                .collect(Collectors.toList());
 
         if (categoriesMatching.isEmpty()) {
             return Optional.empty();
@@ -121,14 +123,14 @@ public class CategoryService {
     }
 
     /**
-     * Fetches the exact category whose name matches the given filter text.
-     *
+     * Fetches the category with the given name.
+     * <p>
      * Behaves like {@link #findCategoryByName(String)}, except that returns a
      * {@link Category} instead of an {@link Optional}. If the category can't be
      * identified, an exception is thrown.
      *
      * @param name
-     *            the filter text
+     *            the category name to look for
      * @return the category, if found
      * @throws IllegalStateException
      *             if not exactly one category matches the given name
