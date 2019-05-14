@@ -55,7 +55,6 @@ To add a new template or a style to the project create the JavaScript module in 
 Then in the PolymerTemplate using the P3 element add the `JsModule` annotation e.g. `@JsModule("./src/views/reviewslist/reviews-list.js")`
 
 ### Branching information
-* `2.0` the work in progress for the future version of Vaadin Platform (14)
 * `master` the latest version of the starter, using the latest platform snapshot
 * `v10` the version for Vaadin Platform 10
 * `v11` the version for Vaadin Platform 11
