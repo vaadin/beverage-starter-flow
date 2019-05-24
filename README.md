@@ -39,7 +39,7 @@ Note that there are two files created in the project structure automatically:
 
 ## Production Mode
 
-1. Run `mvn package -Dvaadin.productionMode` to get the artifact.
+1. Run `mvn package -Pproduction` to get the artifact.
 2. Deploy the `target/beveragebuddy-1.0-SNAPSHOT.war`.
 If you want to run the production build using the Jetty plugin, use `mvn jetty:run-exploded` after you've build the artifact in the production mode
 and navigate to the http://localhost:8080/ page.
