@@ -15,7 +15,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>14.0.0.beta1</vaadin.version>
+        <vaadin.version>14.0.0.beta2</vaadin.version>
 
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
         <drivers.downloader.phase>pre-integration-test</drivers.downloader.phase>
@@ -181,7 +181,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>validate</goal>
+                            <goal>prepare-frontend</goal>
                             <goal>build-frontend</goal>
                         </goals>
                     </execution>
