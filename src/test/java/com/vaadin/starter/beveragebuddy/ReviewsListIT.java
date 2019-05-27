@@ -7,27 +7,35 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.vaadin.flow.component.button.testbench.ButtonElement;
+import com.vaadin.flow.component.html.testbench.DivElement;
+import com.vaadin.flow.component.html.testbench.H2Element;
+import com.vaadin.flow.theme.lumo.Lumo;
+import com.vaadin.testbench.TestBenchElement;
+
 
 public class ReviewsListIT extends AbstractViewTest {
 
-    public ReviewsListIT() {
-        super("", By.tagName("reviews-list"));
+    @Test
+    public void reviewList_buttonLumoThemed() {
+        TestBenchElement reviewsList = $("reviews-list").first();
+        ButtonElement newButton = reviewsList.$(ButtonElement.class).first();
+        assertThemePresentOnElement(newButton, Lumo.class);
     }
 
     @Test
     public void reviewList_numberOfReviewsIsCorrect() {
-        List<WebElement> headerElements = findInShadowRoot(getRootElement(),
-                By.id("header"));
-        Assert.assertEquals("There must be one and only one header element.", 1,
-                headerElements.size());
+        TestBenchElement reviewsList = $("reviews-list").first();
 
-        String reviewsCountText = headerElements.get(0)
+        WebElement header = reviewsList.$(H2Element.class).id("header");
+        String reviewsCountText = header
                 .findElement(By.tagName("span")).getText();
         int reviewsCount = Integer.valueOf(
                 reviewsCountText.substring(0, reviewsCountText.indexOf(' ')));
 
-        List<WebElement> reviewElements = findInShadowRoot(getRootElement(),
-                By.className("review"));
+        List<DivElement> reviewElements = reviewsList.$(DivElement.class)
+                .attributeContains("class", "review").all();
+
         Assert.assertEquals(
                 "The number of rendered reviews must be equal to the actual number of the reviews.",
                 reviewsCount, reviewElements.size());
