@@ -130,6 +130,7 @@
     </dependencies>
 
     <build>
+        <defaultGoal>jetty:run</defaultGoal>
         <plugins>
             <!-- We use jetty plugin, replace it with your favourite developing servlet container -->
             <plugin>
