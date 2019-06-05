@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.vaadin.starter</groupId>
     <artifactId>beveragebuddy</artifactId>
@@ -9,8 +10,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.release>8</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
@@ -22,7 +22,8 @@
     </properties>
 
     <repositories>
-        <!-- The order of definitions matters. Explicitly defining central here to make sure it has the highest priority. -->
+        <!-- The order of definitions matters. Explicitly defining central 
+            here to make sure it has the highest priority. -->
 
         <!-- Main Maven repository -->
         <repository>
@@ -127,12 +128,23 @@
             <artifactId>vaadin-testbench</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>flow-server</artifactId>
+	<version>2.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
         <defaultGoal>jetty:run</defaultGoal>
         <plugins>
-            <!-- We use jetty plugin, replace it with your favourite developing servlet container -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+            </plugin>
+            <!-- We use jetty plugin, replace it with your favourite developing 
+                servlet container -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -170,15 +182,13 @@
                 </executions>
             </plugin>
 
-            <!--
-                Take care of synchronizing java dependencies and imports in
-                package.json and main.js files.
-                It also creates webpack.config.js if not exists yet.
-            -->
+            <!-- Take care of synchronizing java dependencies and imports 
+                in package.json and main.js files. It also creates webpack.config.js if not 
+                exists yet. -->
             <plugin>
                 <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-maven-plugin</artifactId>
-                <version>${vaadin.version}</version>
+                <artifactId>flow-maven-plugin</artifactId>
+                <version>2.0-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <goals>
