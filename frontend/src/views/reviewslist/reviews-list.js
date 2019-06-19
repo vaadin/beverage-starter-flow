@@ -1,6 +1,7 @@
 import {PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 import '@vaadin/vaadin-button/vaadin-button.js';
+import '@vaadin/vaadin-text-field/vaadin-text-field.js';
 import '@polymer/iron-icon/iron-icon.js';
 
 class ReviewListElement extends PolymerElement {
