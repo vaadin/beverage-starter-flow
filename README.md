@@ -39,7 +39,7 @@ Note that there are some files/folders generated in the project structure automa
 1. Run `mvn package -Pproduction` to get the artifact.
 2. Deploy the `target/beveragebuddy-2.0-SNAPSHOT.war`.
 
-If you want to run the production build using the Jetty plugin, use `mvn jetty:run-exploded -Pproduction` and navigate to the http://localhost:8080/.
+If you want to run the production build using the Jetty plugin, use `mvn jetty:run -Pproduction` and navigate to the http://localhost:8080/.
 
 ## Documentation
 
