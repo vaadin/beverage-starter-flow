@@ -3,28 +3,28 @@
 # Beverage Buddy App Starter for Vaadin Flow
 :coffee::tea::sake::baby_bottle::beer::cocktail::tropical_drink::wine_glass:
 
-This is a Vaadin platform Java example application, used to demonstrate features of the Vaadin Flow framework.
+This is a Vaadin platform example application created with Java and HTML. It is used to demonstrate features of Vaadin platform.
 
-The easiest way of using it is via [https://vaadin.com/start](https://vaadin.com/start/v10-simple-ui) - you can choose the package naming you want.
+The easiest way of using it is via [https://vaadin.com/start](https://vaadin.com/start) - you can choose the vaadin version and the package naming you want. If you want to use it with the latest vaadin version you can use this [direct link](https://vaadin.com/start/simple-ui).
 
 The Starter demonstrates the core Vaadin Flow concepts:
-* Building UIs in Java with Components based on [Vaadin components](https://vaadin.com/components/browse), such as `TextField`, `Button`, `ComboBox`, `DatePicker`, `VerticalLayout` and `Grid` (see `CategoriesList`)
-* [Creating forms with `Binder`](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-binder-in-review-editor-dialog.asciidoc) (`ReviewEditorDialog`)
-* Making reusable Components on server side with `Composite` (`AbstractEditorDialog`)
-* [Creating a Component based on a HTML Template](https://github.com/vaadin/free-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc) (`ReviewsList`)
+* Building UIs in Java with Components based on [Vaadin components](https://vaadin.com/components), such as `TextField`, `Button`, `ComboBox`, `DatePicker`, `VerticalLayout` and `Grid` (see `CategoriesList`)
+* [Creating forms with `Binder`](https://github.com/vaadin/beverage-starter-flow/blob/master/documentation/using-binder-in-review-editor-dialog.asciidoc) (see `ReviewEditorDialog`)
+* Making reusable Components on the server side (see `AbstractEditorDialog`)
+* [Creating a Component based on a HTML Template](https://github.com/vaadin/beverage-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc) (see `ReviewsList`)
   * This template can be opened and edited with [the Vaadin Designer](https://vaadin.com/designer)
-* [Creating Navigation with the Router API](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-annotation-based-router-api.asciidoc) (`MainLayout`, `ReviewsList`, `CategoriesList`)
+* [Creating Navigation with the Router API](https://github.com/vaadin/beverage-starter-flow/blob/master/documentation/using-annotation-based-router-api.asciidoc) (See `MainLayout`, `ReviewsList` and `CategoriesList`)
 
 ## Prerequisites
 
-The project can be imported into the IDE of your choice, with Java 8 installed, as a Maven project.
+The project can be imported into the IDE of your choice, with Java 8 or 11 installed, as a Maven project.
 
 But additionally you need `node.js` installed in your System, and available in your `PATH`.
-See the [Node page](https://nodejs.org/en/) for the installation instructions.
+See the [Node.js page](https://nodejs.org/en/) for the installation instructions.
 
 ## Dependencies
 
-Dependencies are managed by the Flow framework and flow-maven-plugin.
+Dependencies are managed by Vaadin platform and `vaadin-maven-plugin`.
 
 ## Running the Project in Developer Mode
 
@@ -32,21 +32,18 @@ Dependencies are managed by the Flow framework and flow-maven-plugin.
 2. Wait for the application to start
 3. Open http://localhost:8080/ to view the application
 
-Note that there are two files created in the project structure automatically:
-
-* `webpack.config.js` is used to configure webpack target folders and transpilation to es5
-* `package.json` contains project meta-data and is used to manage the project dependencies
+Note that there are some files/folders generated in the project structure automatically. You can find some information about them [here](https://vaadin.com/docs/v14/flow/v14-migration/v14-migration-guide.html#6-build-and-maintain-the-v14-project).
 
 ## Production Mode
 
 1. Run `mvn package -Pproduction` to get the artifact.
-2. Deploy the `target/beveragebuddy-1.0-SNAPSHOT.war`.
-If you want to run the production build using the Jetty plugin, use `mvn jetty:run-exploded` after you've build the artifact in the production mode
-and navigate to the http://localhost:8080/ page.
+2. Deploy the `target/beveragebuddy-2.0-SNAPSHOT.war`.
+
+If you want to run the production build using the Jetty plugin, use `mvn jetty:run -Pproduction` and navigate to the http://localhost:8080/.
 
 ## Documentation
 
-Brief introduction to the application parts can be found from the `documentation` folder. For Vaadin documentation for Java users, see [Vaadin.com/docs](https://vaadin.com/docs/v10/flow/Overview.html).
+Brief introduction to the application parts can be found from the `documentation` folder. For Vaadin documentation for Java users, see [Vaadin.com/docs](https://vaadin.com/docs/flow/Overview.html).
 
 ## Adding new templates
 
@@ -55,7 +52,7 @@ To add a new template or a style to the project create the JavaScript module in 
 Then in the PolymerTemplate using the P3 element add the `JsModule` annotation e.g. `@JsModule("./src/views/reviewslist/reviews-list.js")`
 
 ### Branching information
-* `master` the latest version of the starter, using the latest platform snapshot
+* `master` the latest version of the starter, using the latest platform version
 * `v10` the version for Vaadin Platform 10
 * `v11` the version for Vaadin Platform 11
 * `v12` the version for Vaadin Platform 12
