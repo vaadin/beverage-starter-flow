@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vaadin Connect demo</title>
+</head>
+<body>
+  <app-view></app-view>
+
+  <!-- Polyfills for the Web Component APIs are required to use vaadin-button and other Web Components
+       in the browsers that do not support these APIs natively (e.g. IE11) -->
+  <script src="webcomponentsjs/webcomponents-loader.js"></script>
+
+  <!-- A polyfill for the `fetch` API is required to use Vaadin Connect
+       in the browsers that do not support this API natively (e.g. IE11) -->
+  <script nomodule src="polyfills.es5.js"></script>
+  
+  <!-- index.ts is included here automatically (either by the dev server or during the build) -->
+</body>
+</html>

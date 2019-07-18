@@ -1,25 +1,7 @@
 {
   "name": "no-name",
-  "version": "0.9.4",
+  "version": "0.0.1",
   "description": "Vaadin Connect starter project",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vaadin/base-starter-connect.git"
-  },
-  "keywords": [
-    "Vaadin",
-    "Connect",
-    "Starter",
-    "Base"
-  ],
-  "scripts": {
-    "build:frontend": "connect-scripts build:frontend",
-    "build": "connect-scripts build",
-    "start": "connect-scripts start",
-    "test": "connect-scripts test",
-    "test:e2e": "connect-scripts test:e2e",
-    "test:unit": "connect-scripts test:unit"
-  },
   "dependencies": {
     "@ungap/url-search-params": "^0.1.2",
     "@vaadin/connect": "0.9.4",

@@ -2,16 +2,19 @@ package com.vaadin.starter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+
+import com.vaadin.connect.auth.server.EnableVaadinConnectOAuthServer;
+import com.vaadin.frontend.server.EnableVaadinFrontendServer;
 
 /**
- * The entry point of the Spring Boot application.
+ * Spring boot starter class.
  */
 @SpringBootApplication
-public class Application extends SpringBootServletInitializer {
+@EnableVaadinConnectOAuthServer
+@EnableVaadinFrontendServer
+public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-
 }
