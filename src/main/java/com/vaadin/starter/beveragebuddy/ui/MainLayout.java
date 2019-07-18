@@ -16,6 +16,7 @@
 package com.vaadin.starter.beveragebuddy.ui;
 
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
@@ -55,7 +56,15 @@ public class MainLayout extends Div
         categories.add(new Icon(VaadinIcon.ARCHIVES), new Text("Categories"));
         categories.addClassName("main-layout__nav-item");
 
-        Div navigation = new Div(reviews, categories);
+        Div connectCategories = new Div();
+        connectCategories.add(new Icon(VaadinIcon.ARCHIVES), new Text("Connect Categories"));
+        connectCategories.addClassName("main-layout__nav-item");
+        connectCategories.addClickListener(e -> {
+           UI.getCurrent().getPage().executeJs("window.location.replace('/')"); 
+        });
+
+        
+        Div navigation = new Div(reviews, categories, connectCategories);
         navigation.addClassName("main-layout__nav");
 
         Div header = new Div(title, navigation);

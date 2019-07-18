@@ -1,4 +1,4 @@
-import * as statusService from './generated/StatusService';
+import * as connectServices from './generated/ConnectServices';
 
 export type SetStatusCallback = (status: string) => void;
 
@@ -11,7 +11,7 @@ export class StatusController {
     if (!newStatus) {
       this.setStatusCallback('Enter a new status first!');
     } else {
-      const status = (await statusService.update(newStatus)) || '';
+      const status = (await connectServices.update(newStatus)) || '';
       this.setStatusCallback(status);
     }
   }

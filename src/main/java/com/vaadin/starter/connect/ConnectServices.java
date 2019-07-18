@@ -25,7 +25,7 @@ import com.vaadin.connect.VaadinService;
  * the Vaadin Connect documentation on more complete guide how to configure the application.
  */
 @VaadinService
-public class StatusService {
+public class ConnectServices {
     /**
      * Service method that can be called via the corresponding POST request.
      * Refer to the class javadoc for details.

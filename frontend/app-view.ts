@@ -4,6 +4,7 @@ import {LoginViewElement} from './login-view';
 
 import './login-view';
 import './status-view';
+import './connect-categories'
 
 @customElement('app-view')
 export class AppViewElement extends LitElement {
@@ -13,13 +14,18 @@ export class AppViewElement extends LitElement {
   @query('login-view')
   loginViewElement?: LoginViewElement;
 
-  createRenderRoot() {return this;}
+  createRenderRoot() {
+    this.style.display = 'block';
+    this.style.maxWidth = '960px';
+    this.style.margin = 'auto';
+    return this;
+  }
 
   render() {
     return html`
       ${!this.loggedIn
         ? html`<login-view></login-view>`
-        : html`<status-view></status-view>`
+        : html`<connect-categories></connect-categories>`
       }
     `;
   }
