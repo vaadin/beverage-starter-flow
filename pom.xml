@@ -16,6 +16,7 @@
 
         <vaadin.version>14.0-SNAPSHOT</vaadin.version>
         <flow.version>2.0-SNAPSHOT</flow.version>
+        <vaadin.connect.version>0.9.4</vaadin.connect.version>
 
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
         <drivers.downloader.phase>pre-integration-test</drivers.downloader.phase>
@@ -121,14 +122,32 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-connect</artifactId>
+            <version>${vaadin.connect.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-frontend-server</artifactId>
+            <version>${vaadin.connect.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-testbench</artifactId>
-            <scope>test</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 
@@ -149,6 +168,22 @@
                             <goal>prepare-frontend</goal>
                             <goal>build-frontend</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-connect-maven-plugin</artifactId>
+                <version>${vaadin.connect.version}</version>
+                <executions>
+                    <execution>
+                        <id>vaadin-connect-resources</id>
+                        <goals>
+                            <goal>generate-openapi-spec</goal>
+                            <goal>generate-vaadin-client</goal>
+                            <goal>generate-connect-modules</goal>
+                            <goal>generate-token-signing-key</goal>
+                         </goals>
                     </execution>
                 </executions>
             </plugin>
