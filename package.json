@@ -1,18 +1,82 @@
 {
   "name": "no-name",
-  "license": "UNLICENSED",
+  "version": "0.9.4",
+  "description": "Vaadin Connect starter project",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaadin/base-starter-connect.git"
+  },
+  "keywords": [
+    "Vaadin",
+    "Connect",
+    "Starter",
+    "Base"
+  ],
+  "scripts": {
+    "build:frontend": "connect-scripts build:frontend",
+    "build": "connect-scripts build",
+    "start": "connect-scripts start",
+    "test": "connect-scripts test",
+    "test:e2e": "connect-scripts test:e2e",
+    "test:unit": "connect-scripts test:unit"
+  },
   "dependencies": {
+    "@ungap/url-search-params": "^0.1.2",
+    "@vaadin/connect": "0.9.4",
+    "@vaadin/vaadin-login": "^1.0.0",
+    "abortcontroller-polyfill": "^1.2.9",
+    "babel-loader": "^8.0.6",
+    "lit-element": "^2.0.1",
+    "whatwg-fetch": "^3.0.0",
+    "@vaadin/flow-deps": "./target/frontend",
     "@polymer/polymer": "3.2.0",
-    "@webcomponents/webcomponentsjs": "^2.2.10",
-    "@vaadin/flow-deps": "./target/frontend"
+    "@webcomponents/webcomponentsjs": "^2.2.10"
   },
   "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@types/sinon": "^7.0.10",
+    "@types/sinon-chai": "^3.2.2",
+    "@vaadin/connect-scripts": "0.9.4",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-plugin-template-html-minifier": "^2.2.1",
+    "copy-webpack-plugin": "5.0.3",
+    "cross-spawn": "^6.0.5",
+    "express": "^4.16.4",
+    "html-webpack-include-assets-plugin": "^1.0.7",
+    "html-webpack-plugin": "^3.2.0",
+    "http-proxy-middleware": "^0.19.0",
+    "intern": "^4.4.2",
+    "proxyquire": "^2.1.0",
+    "regenerator-runtime": "^0.13.1",
+    "script-ext-html-webpack-plugin": "^2.1.3",
+    "sinon": "^7.2.7",
+    "sinon-chai": "^3.3.0",
+    "swagger-ui-dist": "^3.21.0",
+    "tree-kill": "^1.2.1",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.3.3333",
+    "uglify-template-string-loader": "^1.1.0",
     "webpack": "4.30.0",
+    "webpack-babel-multi-target-plugin": "2.1.0",
     "webpack-cli": "3.3.0",
     "webpack-dev-server": "3.3.0",
-    "webpack-babel-multi-target-plugin": "2.1.0",
-    "copy-webpack-plugin": "5.0.3",
     "webpack-merge": "4.2.1",
     "raw-loader": "3.0.0"
+  },
+  "author": "Vaadin Ltd",
+  "license": "UNLICENSED",
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": true
+          }
+        }
+      ]
+    ],
+    "sourceMaps": true
   }
 }
