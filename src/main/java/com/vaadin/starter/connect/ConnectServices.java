@@ -1,6 +1,12 @@
 package com.vaadin.starter.connect;
 
+import java.util.List;
+
 import com.vaadin.connect.VaadinService;
+import com.vaadin.starter.beveragebuddy.backend.Category;
+import com.vaadin.starter.beveragebuddy.backend.CategoryService;
+import com.vaadin.starter.beveragebuddy.backend.Review;
+import com.vaadin.starter.beveragebuddy.backend.ReviewService;
 
 /**
  * Simple Vaadin Connect Service definition.
@@ -35,5 +41,14 @@ public class ConnectServices {
      */
     public String update(String newStatus) {
         return String.format("Your status is: %s", newStatus);
+    }
+
+
+    public List<Category> categories(String filter) {
+        return CategoryService.getInstance().findCategories(filter);
+    }
+
+    public List<Review> reviews(String filter) {
+        return ReviewService.getInstance().findReviews(filter);
     }
 }

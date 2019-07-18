@@ -20,14 +20,12 @@ div.innerHTML = '<custom-style><style include="lumo-color lumo-typography"></sty
 document.head.insertBefore(div.firstElementChild, document.head.firstChild);
 
 
+import * as connectServices from './generated/ConnectServices';
 
 class SearchBar extends PolymerElement {
   static get template() {
     return html`
     <style>
-      *  {
-        font-family: helvetica;
-      }
       vaadin-grid {
       }
 
@@ -132,22 +130,22 @@ class SearchBar extends PolymerElement {
         <div class="main-layout__nav-item">
           <iron-icon icon="vaadin:archives"></iron-icon>Connect Categories</div>
       </div>
-    </div>    
+    </div>
 
     <div class="view-toolbar">
-      <vaadin-text-field class="view-toolbar__search-field" tabindex="0">
+      <vaadin-text-field id="search" on-change="update" class="view-toolbar__search-field" tabindex="0">
         <iron-icon icon="lumo:search" slot="prefix"></iron-icon>
       </vaadin-text-field>
-      
+
       <vaadin-button class="view-toolbar__button" theme="primary" tabindex="0" role="button">
         <iron-icon icon="lumo:plus" slot="prefix"></iron-icon>New category
       </vaadin-button>
-    </div>    
+    </div>
 
     <h3>Categories</h3>
-    <vaadin-grid>
+    <vaadin-grid id="grid">
       <vaadin-grid-column path="name" header="Name"></vaadin-grid-column>
-      <vaadin-grid-column path="beverages" header="Beverages"></vaadin-grid-column>
+      <vaadin-grid-column path="id" header="Beverages"></vaadin-grid-column>
     </vaadin-grid>
 `;
   }
@@ -157,6 +155,7 @@ class SearchBar extends PolymerElement {
   }
   static get properties() {
     return {
+
     };
   }
 
@@ -167,7 +166,11 @@ class SearchBar extends PolymerElement {
 
   ready() {
     super.ready();
-    // this.addEventListener('touchmove', e => e.preventDefault());
+    this.update();
+  }
+
+  update() {
+    connectServices.categories(this.$.search.value).then(items => this.$.grid.items = items);
   }
 }
 

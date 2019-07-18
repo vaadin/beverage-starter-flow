@@ -14,12 +14,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <vaadin.version>14.0-SNAPSHOT</vaadin.version>
+        <vaadin.version>14.0.0.rc5</vaadin.version>
         <flow.version>2.0-SNAPSHOT</flow.version>
         <vaadin.connect.version>0.9.4</vaadin.connect.version>
-
-        <drivers.dir>${project.basedir}/drivers</drivers.dir>
-        <drivers.downloader.phase>pre-integration-test</drivers.downloader.phase>
     </properties>
 
     <parent>
@@ -81,6 +78,7 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- FLOW -->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin</artifactId>
@@ -111,16 +109,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-spring-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.vaadin</groupId>
-                    <artifactId>vaadin-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+        <!-- CONNECT -->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-connect</artifactId>
@@ -131,6 +120,7 @@
             <artifactId>vaadin-frontend-server</artifactId>
             <version>${vaadin.connect.version}</version>
         </dependency>
+        <!-- SPRING -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -149,6 +139,17 @@
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!-- VAADIN SPRING -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>        
     </dependencies>
 
     <build>
@@ -158,10 +159,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!-- FLOW NPM -->
             <plugin>
                 <groupId>com.vaadin</groupId>
-                <artifactId>flow-maven-plugin</artifactId>
-                <version>${flow.version}</version>
+                <artifactId>vaadin-maven-plugin</artifactId>
+                <version>${vaadin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -171,6 +173,7 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- CONNECT GENERATORS -->
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-connect-maven-plugin</artifactId>
