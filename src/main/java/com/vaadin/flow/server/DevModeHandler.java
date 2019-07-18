@@ -104,6 +104,8 @@ public final class DevModeHandler implements Serializable {
 
     private int port;
     private transient Process webpackProcess;
+    private transient Process connectProcess;
+
     private final boolean reuseDevServer;
 
     private DevModeHandler(DeploymentConfiguration config,
@@ -127,15 +129,52 @@ public final class DevModeHandler implements Serializable {
                     "webpack-dev-server port '%d' is defined but it's not working properly", port));
         }
 
+        List<String> command;
+        ProcessBuilder processBuilder;
+
+        processBuilder = new ProcessBuilder().directory(npmFolder);
+
+        command = new ArrayList<>();
+        command.add(getNodeExecutable(
+                npmFolder.getAbsolutePath()));
+        command.add(webpack.getAbsolutePath().replace("-dev-server", ""));
+        command.add("--config");
+        command.add(webpackConfig.getAbsolutePath().replace("webpack.config.js", "webpack.config.connect.js"));
+        command.add("-w");
+        command.add("-d");
+
+        if (getLogger().isInfoEnabled()) {
+            getLogger().info(
+                    "Starting connect webpack watcher dir: {}\n   {}",
+                    npmFolder, String.join(" ", command));
+        }
+
+        processBuilder.command(command);
+        try {
+            connectProcess = processBuilder
+                    .redirectError(ProcessBuilder.Redirect.PIPE)
+                    .redirectErrorStream(true).start();
+
+            Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
+
+            Pattern succeed = Pattern.compile("Webpack is watching");
+            Pattern failure = Pattern.compile("compilation errors");
+
+            logStream(connectProcess.getInputStream(), succeed, failure);
+
+        } catch (IOException e) {
+            getLogger().error("Failed to start the webpack process", e);
+        }
+
         // Look for a free port
         port = getFreePort();
 
-        ProcessBuilder processBuilder = new ProcessBuilder()
+        processBuilder = new ProcessBuilder()
                 .directory(npmFolder);
 
         validateNodeAndNpmVersion(npmFolder.getAbsolutePath());
 
-        List<String> command = new ArrayList<>();
+        command = new ArrayList<>();
         command.add(getNodeExecutable(
                 npmFolder.getAbsolutePath()));
         command.add(webpack.getAbsolutePath());
@@ -150,7 +189,7 @@ public final class DevModeHandler implements Serializable {
 
         if (getLogger().isInfoEnabled()) {
             getLogger().info(
-                    "Starting webpack-dev-server, port: {} dir: {}\n   {}",
+                    "Starting flow webpack-dev-server, port: {} dir: {}\n   {}",
                     port, npmFolder, String.join(" ", command));
         }
 
@@ -590,6 +629,9 @@ public final class DevModeHandler implements Serializable {
 
         if (webpackProcess != null && webpackProcess.isAlive()) {
             webpackProcess.destroy();
+        }
+        if (connectProcess != null && connectProcess.isAlive()) {
+            connectProcess.destroy();
         }
 
         atomicHandler.set(null);
