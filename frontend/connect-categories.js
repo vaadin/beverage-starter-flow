@@ -153,16 +153,6 @@ class SearchBar extends PolymerElement {
   static get is() {
     return 'connect-categories';
   }
-  static get properties() {
-    return {
-
-    };
-  }
-
-  static get observers() {
-    return [
-    ];
-  }
 
   ready() {
     super.ready();

@@ -132,6 +132,7 @@ public final class DevModeHandler implements Serializable {
         List<String> command;
         ProcessBuilder processBuilder;
 
+        /***************** START CONNECT WEBPACK */
         processBuilder = new ProcessBuilder().directory(npmFolder);
 
         command = new ArrayList<>();
@@ -166,6 +167,7 @@ public final class DevModeHandler implements Serializable {
             getLogger().error("Failed to start the webpack process", e);
         }
 
+        /***************** START FLOW NPM WEBPACK */
         // Look for a free port
         port = getFreePort();
 
