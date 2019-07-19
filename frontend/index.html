@@ -1,21 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vaadin Connect demo</title>
+    <!--
+        Vaadin 14 uses the longer format, which is now unnecessary
+        (see https://stackoverflow.com/questions/4696499)
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    -->
+    <meta charset="UTF-8" />
+
+    <!--
+        Vaadin 14 adds a X-UA-Compatible meta. With HTML5 doctype this is unnecessary
+        (see https://stackoverflow.com/questions/6771258)
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    -->
+
+    <!-- Should be set by the Vaadin servlet based on the deployment root URL, and the page request URL -->
+    <base href="." />
+
+    <!-- May be overridden by Vaadin app after it starts (based on the @Viewport annotation)-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- May be overridden by Vaadin app after it starts (based on the @PageTitle annotation)-->
+    <title>Beverage Buddy</title>
+
+    <custom-style>
+        <style include="lumo-color lumo-typography"></style>
+    </custom-style>
 </head>
 <body>
-  <app-view></app-view>
-
-  <!-- Polyfills for the Web Component APIs are required to use vaadin-button and other Web Components
+    <!-- Polyfills for the Web Component APIs are required to use vaadin-button and other Web Components
        in the browsers that do not support these APIs natively (e.g. IE11) -->
-  <script src="webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="VAADIN/build/webcomponentsjs/webcomponents-loader.js"></script>
 
-  <!-- A polyfill for the `fetch` API is required to use Vaadin Connect
+    <!-- A polyfill for the `fetch` API is required to use Vaadin Connect
        in the browsers that do not support this API natively (e.g. IE11) -->
-  <script nomodule src="polyfills.es5.js"></script>
-  
-  <!-- index.ts is included here automatically (either by the dev server or during the build) -->
+    <script nomodule src="VAADIN/build/polyfills.es5.js"></script>
+
+    <div id="outlet"></div>
+    <!-- index.ts is included here automatically (either by the dev server or during the build) -->
 </body>
 </html>
