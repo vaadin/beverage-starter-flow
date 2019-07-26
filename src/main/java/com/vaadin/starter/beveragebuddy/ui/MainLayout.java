@@ -16,7 +16,7 @@
 package com.vaadin.starter.beveragebuddy.ui;
 
 import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
@@ -35,7 +35,8 @@ import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
  * The main layout contains the header with the navigation buttons, and the
  * child views below that.
  */
-@JsModule("frontend://styles/shared-styles.js")
+@CssImport(value = "./styles/view-styles.css", id = "view-styles")
+@CssImport(value = "./styles/shared-styles.css", include = "view-styles")
 @PWA(name = "Beverage Buddy", shortName = "BevBuddy")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class MainLayout extends Div
