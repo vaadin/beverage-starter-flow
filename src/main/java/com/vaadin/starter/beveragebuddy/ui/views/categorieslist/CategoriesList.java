@@ -154,7 +154,8 @@ public class CategoriesList extends VerticalLayout {
 
         Notification.show(
                 "Category successfully " + operation.getNameInText() + "ed.",
-                3000, Position.BOTTOM_START);
+                3000, Position.BOTTOM_START)
+            .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         updateView();
     }
 
@@ -170,7 +171,8 @@ public class CategoriesList extends VerticalLayout {
         CategoryService.getInstance().deleteCategory(category);
 
         Notification.show("Category successfully deleted.", 3000,
-                Position.BOTTOM_START);
+                Position.BOTTOM_START)
+            .addThemeVariants(NotificationVariant.LUMO_CONTRAST);
         updateView();
     }
 }
