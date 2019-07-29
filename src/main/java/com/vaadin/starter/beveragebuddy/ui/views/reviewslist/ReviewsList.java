@@ -104,7 +104,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         ReviewService.getInstance().saveReview(review);
         updateList();
         Notification.show(
-                "Category successfully " + operation.getNameInText() + "ed.",
+                "Beverage successfully " + operation.getNameInText() + "ed.",
                 3000, Position.BOTTOM_START)
             .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }
@@ -112,7 +112,7 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
     public void deleteUpdate(Review review) {
         ReviewService.getInstance().deleteReview(review);
         updateList();
-        Notification.show("Category successfully deleted.", 3000,
+        Notification.show("Beverage successfully deleted.", 3000,
                 Position.BOTTOM_START)
             .addThemeVariants(NotificationVariant.LUMO_CONTRAST);
     }
