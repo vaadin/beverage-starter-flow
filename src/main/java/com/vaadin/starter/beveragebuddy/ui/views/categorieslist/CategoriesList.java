@@ -27,6 +27,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -154,7 +155,8 @@ public class CategoriesList extends VerticalLayout {
 
         Notification.show(
                 "Category successfully " + operation.getNameInText() + "ed.",
-                3000, Position.BOTTOM_START);
+                3000, Position.BOTTOM_START)
+            .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
         updateView();
     }
 
@@ -170,7 +172,8 @@ public class CategoriesList extends VerticalLayout {
         CategoryService.getInstance().deleteCategory(category);
 
         Notification.show("Category successfully deleted.", 3000,
-                Position.BOTTOM_START);
+                Position.BOTTOM_START)
+            .addThemeVariants(NotificationVariant.LUMO_CONTRAST);
         updateView();
     }
 }
