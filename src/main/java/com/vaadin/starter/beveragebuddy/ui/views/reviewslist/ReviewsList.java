@@ -25,6 +25,7 @@ import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.Id;
@@ -105,14 +106,16 @@ public class ReviewsList extends PolymerTemplate<ReviewsModel> {
         updateList();
         Notification.show(
                 "Beverage successfully " + operation.getNameInText() + "ed.",
-                3000, Position.BOTTOM_START);
+                3000, Position.BOTTOM_START)
+            .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }
 
     public void deleteUpdate(Review review) {
         ReviewService.getInstance().deleteReview(review);
         updateList();
         Notification.show("Beverage successfully deleted.", 3000,
-                Position.BOTTOM_START);
+                Position.BOTTOM_START)
+            .addThemeVariants(NotificationVariant.LUMO_CONTRAST);
     }
 
     private void updateList() {
