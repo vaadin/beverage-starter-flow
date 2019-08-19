@@ -28,6 +28,7 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.server.VaadinService;
 import com.vaadin.starter.beveragebuddy.ui.views.categorieslist.CategoriesList;
 import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
 
@@ -43,6 +44,10 @@ public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
 
     public MainLayout() {
+        if (VaadinService.getCurrent().getDeploymentConfiguration().isClientSideMode()) {
+            return;
+        }
+
         H2 title = new H2("Beverage Buddy");
         title.addClassName("main-layout__title");
 
