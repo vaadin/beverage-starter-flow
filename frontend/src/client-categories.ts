@@ -37,4 +37,11 @@ export class ClientCategories extends LitElement {
     save(evt: any) {
       evt.detail.item.beverages = 0;
     }
+
+    onBeforeLeave(): any {
+      if (this.shadowRoot) {
+        const crud = this.shadowRoot.querySelector('vaadin-crud') as any;
+        return {cancel: crud.__isDirty};
+      }
+    }
 }
