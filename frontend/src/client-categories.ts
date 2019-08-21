@@ -1,4 +1,4 @@
-import {LitElement, html, css, customElement,  property} from 'lit-element';
+import {LitElement, html, css, customElement, property} from 'lit-element';
 
 import '@vaadin/vaadin-crud';
 import '@vaadin/vaadin-grid/vaadin-grid-filter-column';

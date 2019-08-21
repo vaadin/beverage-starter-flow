@@ -33,7 +33,7 @@ const routes = [
         component: 'main-layout',
         children: [
             {
-                path: '/client-categories',
+                path: '/categories',
                 title: 'Client Categories',
                 component: 'client-categories',
                 action: async () => {
