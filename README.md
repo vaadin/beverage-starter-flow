@@ -17,9 +17,9 @@ The Starter demonstrates the core Vaadin Flow concepts:
 
 ## CCDM (client centric development mode)
 
-In the `ccdm` branch it has been introduced a set of modifications to use client-routing, client-views and typescript, which can be done thanks to the new features being added to Flow-3.0-SNAPSHOT.
+In the `ccdm` branch it has been introduced a set of modifications to use client-routing, client-views and TypeScript, which can be done thanks to the new features being added to Flow-3.0-SNAPSHOT.
 
-For routing it's using `vaadin-router`, and the 'categories' view is now coded in typescript.
+For routing it's using `vaadin-router`, and the 'categories' view is now coded in TypeScript.
 
 By default this branch runs in client mode, but if you need to run the regular vaadin application add the `-Dvaadin.clientSideMode=false` option.
 
