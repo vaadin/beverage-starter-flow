@@ -2,6 +2,7 @@ import {LitElement, html, customElement, css, unsafeCSS, CSSResult} from 'lit-el
 import '@polymer/iron-icon';
 import '@vaadin/vaadin-icons';
 
+// FIXME: import .css files without @ts-ignore (https://github.com/vaadin/flow/issues/6335)
 //@ts-ignore
 import mainLayoutStyles from '../styles/main-layout-styles.css';
 const styles : CSSResult = unsafeCSS(mainLayoutStyles);
