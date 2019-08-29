@@ -41,7 +41,7 @@ export class ClientCategories extends LitElement {
     onBeforeLeave(): any {
       if (this.shadowRoot) {
         const crud = this.shadowRoot.querySelector('vaadin-crud') as any;
-        return {cancel: crud.__isDirty};
+        return {cancel: crud && crud.__isDirty};
       }
     }
 }

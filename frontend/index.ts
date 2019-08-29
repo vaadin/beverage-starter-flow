@@ -32,14 +32,10 @@ const routes = [
       {
         // fallback to server-side Flow routes if no client-side routes match
         path: '(.*)',
-        action: async (context: any): Promise<HTMLElement> => {
-          // FIXME: create the Flow fallback route with flow.route()
-          // when https://github.com/vaadin/flow/issues/6338 is implemented
-          const view = await flow.navigate(context);
-          const elem = document.createElement('div');
-          elem.appendChild(view);
-          return elem;
-        }
+
+        // FIXME: replace flow.navigate with flow.route()	
+        // when https://github.com/vaadin/flow/issues/6338 is implemented        
+        action: flow.navigate as any
       }
     ]
   }
