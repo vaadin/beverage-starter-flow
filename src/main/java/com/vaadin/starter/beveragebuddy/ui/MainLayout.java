@@ -23,6 +23,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.HighlightConditions;
+import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
@@ -39,6 +40,7 @@ import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
 @CssImport(value = "./styles/shared-styles.css", include = "view-styles")
 @PWA(name = "Beverage Buddy", shortName = "BevBuddy")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
+@PreserveOnRefresh
 public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
 
