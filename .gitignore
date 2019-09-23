@@ -9,6 +9,8 @@
 *.iml
 .DS_Store
 
+.vscode
+
 *.diff
 
 # The following files are generated/updated by flow-maven-plugin
