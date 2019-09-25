@@ -40,6 +40,9 @@ import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
 @CssImport(value = "./styles/shared-styles.css", include = "view-styles")
 @PWA(name = "Beverage Buddy", shortName = "BevBuddy")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
+
+// Enabling in this branch to check that client-side bootstrapping does not break the feature.
+// This change might go to master.
 @PreserveOnRefresh
 public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {

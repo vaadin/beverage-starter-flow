@@ -420,6 +420,11 @@ class OnBoardingComponent extends GestureEventListeners(PolymerElement) {
                                     <div class="text-content">
                                         <p class="text-content">You’re ready to start using Beverage Buddy.<br>By using the app, you agree to our <a href="https://vaadin.com/privacy-policy" target="_blank">cookie policy</a>.</p>
                                         <p class="text-content hide-on-mobile">
+                                            <!-- 
+                                              This QR links to the taskmob demo because there is no public demo
+                                              for this starter. This is an internal demo when developing CCDM
+                                              features so it's not an issue.
+                                            -->
                                             <img class="hide-on-mobile qr-code" src="images/qr-code.svg">
                                             <span>Don’t forget to try<br>the app on your phone.</span>
                                         </p>
