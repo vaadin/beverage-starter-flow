@@ -22,11 +22,18 @@ async function showOnboarding() {
   }
 
   // After onboarding is done, load Flow and let it take control over the page
-  const {Flow} = await import('@vaadin/flow-frontend/Flow');
+  const {Flow} = await import(/* webpackChunkName: "flow" */ '@vaadin/flow-frontend/Flow');
   const flow = new Flow({
     imports: () => import(
       // @ts-ignore
       /* webpackChunkName: "generated-flow-imports" */ '../target/frontend/generated-flow-imports')
   });
+
+  // Use this way to start Flow when client-side routes are not needed
   await flow.start();
+
+  // If client-side routes are needed, Flow should be used together with Vaadin Router:
+  // const {Router} = await import(/* webpackChunkName: "router" */ '@vaadin/router');
+  // const router = new Router(document.body);
+  // router.setRoutes([flow.route]);
 })();
