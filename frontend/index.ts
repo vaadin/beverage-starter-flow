@@ -29,6 +29,11 @@ async function showOnboarding() {
       /* webpackChunkName: "generated-flow-imports" */ '../target/frontend/generated-flow-imports')
   });
 
+  // FIXME: remove this workaround when https://github.com/vaadin/flow/issues/6558 is fixed
+  // TestBench needs this as an indication that a Flow app will be starting,
+  // and TestBench needs to wait for that before proceeding with tests.
+  (window as any).Vaadin = { Flow: {} };
+
   // Use this way to start Flow when client-side routes are not needed
   await flow.start();
 
