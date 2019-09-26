@@ -86,7 +86,7 @@ public abstract class AbstractViewTest extends ParallelTest {
      * @return URL to route
      */
     private static String getURL(String route) {
-        return String.format("http://%s:%d/%s", getDeploymentHostname(),
+        return String.format("http://%s:%d/%s?skip-onboarding", getDeploymentHostname(),
                 SERVER_PORT, route);
     }
 
