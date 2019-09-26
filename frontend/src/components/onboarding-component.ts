@@ -17,9 +17,9 @@ import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import {GestureEventListeners} from '@polymer/polymer/lib/mixins/gesture-event-listeners.js';
 import '@vaadin/vaadin-dialog/vaadin-dialog.js';
 
-const unsafeHtmlLiteral = function(value) {
+const unsafeHtmlLiteral = function(value: string | number) {
     const template = document.createElement('template');
-    template.innerHTML = value;
+    template.innerHTML = '' + value;
     return template;
 };
 
@@ -27,6 +27,9 @@ const mobileWidthPx = 500;
 const phoneMedia = `(max-width: ${mobileWidthPx}px), (max-height: ${mobileWidthPx}px)`;
 
 class OnBoardingComponent extends GestureEventListeners(PolymerElement) {
+
+    private trackStart: {x: number, y: number} | undefined;
+    private activeSlide = 1;
 
     static get properties() {
         return {
@@ -451,16 +454,16 @@ class OnBoardingComponent extends GestureEventListeners(PolymerElement) {
     }
 
     openDialog() {
-        this.$.dialog.opened = true;
-        this.updateTabIndexes();
+        (this.$.dialog as any).opened = true;
+        this.updateTabIndexes(this.activeSlide);
     }
 
     closeDialog() {
-        this.$.dialog.opened = false;
+        (this.$.dialog as any).opened = false;
         this.dispatchEvent(new CustomEvent('done'));
     }
 
-    onOpenedChanged(e) {
+    onOpenedChanged(e: CustomEvent) {
         if (e.detail.value) {
             document.documentElement.classList.add('onboarding');
         } else {
@@ -469,7 +472,7 @@ class OnBoardingComponent extends GestureEventListeners(PolymerElement) {
         }
     }
 
-    handleTrack(e) {
+    handleTrack(e: CustomEvent) {
         switch(e.detail.state) {
             case 'start':
                 this.trackStart = {
@@ -516,10 +519,10 @@ class OnBoardingComponent extends GestureEventListeners(PolymerElement) {
         this.activeSlide = 3;
     }
 
-    onActiveSlideChange(slide) {
-        const slidercage = document.querySelector('vaadin-dialog-overlay')
-            .shadowRoot.querySelector('#content')
-            .shadowRoot.querySelector('#slidercage');
+    onActiveSlideChange(slide: number) {
+        const slidercage = document.querySelector('vaadin-dialog-overlay')!
+            .shadowRoot!.querySelector('#content')!
+            .shadowRoot!.querySelector('#slidercage')!;
 
         slidercage.classList.remove('slide-1-active', 'slide-2-active', 'slide-3-active');
         slidercage.classList.add(`slide-${slide}-active`);
@@ -527,10 +530,10 @@ class OnBoardingComponent extends GestureEventListeners(PolymerElement) {
         this.updateTabIndexes(slide);
     }
 
-    updateTabIndexes(activeSlide) {
-        const slidercage = document.querySelector('vaadin-dialog-overlay')
-            .shadowRoot.querySelector('#content')
-            .shadowRoot.querySelector('#slidercage');
+    updateTabIndexes(activeSlide: number) {
+        const slidercage = document.querySelector('vaadin-dialog-overlay')!
+            .shadowRoot!.querySelector('#content')!
+            .shadowRoot!.querySelector('#slidercage')!;
         Array.from(slidercage.querySelectorAll('button, a[href]')).forEach(el => {
             if (this._buttonOrLinkForSlide(slidercage, el, activeSlide)) {
                 el.removeAttribute('tabindex');
@@ -540,7 +543,7 @@ class OnBoardingComponent extends GestureEventListeners(PolymerElement) {
         });
     }
 
-    _buttonOrLinkForSlide(slidercage, el, slideNum) {
+    _buttonOrLinkForSlide(slidercage: Element, el: Element, slideNum: number) {
         return slidercage.classList.contains(`slide-${slideNum}-active`) && (el.classList.contains('for-slide-' + slideNum) || el.closest('.slide-' + slideNum));
     }
 }
