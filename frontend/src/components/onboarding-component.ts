@@ -460,7 +460,6 @@ class OnBoardingComponent extends GestureEventListeners(PolymerElement) {
 
     closeDialog() {
         (this.$.dialog as any).opened = false;
-        this.dispatchEvent(new CustomEvent('done'));
     }
 
     onOpenedChanged(e: CustomEvent) {
@@ -468,7 +467,7 @@ class OnBoardingComponent extends GestureEventListeners(PolymerElement) {
             document.documentElement.classList.add('onboarding');
         } else {
             document.documentElement.classList.remove('onboarding');
-            this.dispatchEvent(new CustomEvent('onboarding-finished'));
+            this.dispatchEvent(new CustomEvent('onboarding-done'));
         }
     }
 
