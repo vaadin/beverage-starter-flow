@@ -5,6 +5,7 @@
 .metadata/
 .project
 .settings/
+.vscode/
 
 *.iml
 .DS_Store
