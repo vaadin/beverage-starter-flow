@@ -2,6 +2,7 @@ import {LitElement, html, css, customElement, property} from 'lit-element';
 
 import '@vaadin/vaadin-crud';
 import '@vaadin/vaadin-grid/vaadin-grid-filter-column';
+import * as connectServices from '../generated/ConnectServices';
 
 @customElement('client-categories')
 export class ClientCategories extends LitElement {
@@ -26,22 +27,28 @@ export class ClientCategories extends LitElement {
         `;
     }
 
-    @property() items: Array<any> = [];
+    @property() items: Array<any>|null = [];
 
     connectedCallback() {
       super.connectedCallback();
-      ['Mineral Water', 'Soft Drink', 'Coffee', 'Tea', 'Dairy', 'Cider', 'Beer', 'Wine', 'Other']
-        .forEach(name => this.items.push({name: name, beverages: Math.floor(Math.random() * 15)}))
+      connectServices.categories('').then(items => this.items = items);
     }
 
     save(evt: any) {
       evt.detail.item.beverages = 0;
+      connectServices.save(evt.detail.item).then(items => {
+        this.items = items
+        this.crud.__isDirty = false;
+      });
     }
 
     onBeforeLeave(): any {
       if (this.shadowRoot) {
-        const crud = this.shadowRoot.querySelector('vaadin-crud') as any;
-        return {cancel: crud && crud.__isDirty};
+        return {cancel: this.crud && this.crud.__isDirty};
       }
+    }
+
+    get crud() {
+      return this.shadowRoot && this.shadowRoot.querySelector('vaadin-crud') as any;
     }
 }

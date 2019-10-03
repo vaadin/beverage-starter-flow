@@ -19,6 +19,8 @@ export class MainLayout extends LitElement {
             <div class="main-layout__nav">
               <a class="main-layout__nav-item" href=""><iron-icon icon="vaadin:list"></iron-icon>Reviews</a>
               <a class="main-layout__nav-item" href="categories"><iron-icon icon="vaadin:archives"></iron-icon>Categories</a>
+              <a class="main-layout__nav-item" href="client-reviews"><iron-icon icon="vaadin:list"></iron-icon>Connect-Reviews</a>
+              <a class="main-layout__nav-item" href="client-categories"><iron-icon icon="vaadin:archives"></iron-icon>Connect-Categories</a>
             </div>
           </div>
           <slot></slot>

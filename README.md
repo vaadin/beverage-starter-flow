@@ -15,9 +15,9 @@ The Starter demonstrates the core Vaadin Flow concepts:
   * This template can be opened and edited with [the Vaadin Designer](https://vaadin.com/designer)
 * [Creating Navigation with the Router API](https://github.com/vaadin/beverage-starter-flow/blob/master/documentation/using-annotation-based-router-api.asciidoc) (See `MainLayout`, `ReviewsList` and `CategoriesList`)
 
-## CCDM (client centric development mode)
+## CCDM (client centric development mode) and CONNECT
 
-In the `ccdm` branch it has been introduced a set of modifications to use client-routing, client-views and TypeScript, which can be done thanks to the new features being added to Flow-3.0-SNAPSHOT.
+In this branch it has been introduced a set of modifications to use client-routing, client-views and TypeScript, which can be done thanks to the new features being added to Flow-3.0-SNAPSHOT.
 
 For routing it's using `vaadin-router`, and the 'categories' view is now coded in TypeScript.
 
