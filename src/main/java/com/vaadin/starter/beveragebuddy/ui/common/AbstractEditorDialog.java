@@ -20,6 +20,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.ShortcutRegistration;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -28,8 +29,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.router.BeforeLeaveEvent;
-import com.vaadin.flow.router.BeforeLeaveObserver;
+import com.vaadin.flow.data.binder.BinderValidationStatus;
 import com.vaadin.flow.shared.Registration;
 
 /**
@@ -49,7 +49,7 @@ import com.vaadin.flow.shared.Registration;
  *            the type of the item to be added, edited or deleted
  */
 public abstract class AbstractEditorDialog<T extends Serializable>
-        extends Dialog implements BeforeLeaveObserver {
+        extends Dialog {
 
     /**
      * The operations supported by this dialog. Delete is enabled when editing
@@ -210,7 +210,7 @@ public abstract class AbstractEditorDialog<T extends Serializable>
             itemSaver.accept(currentItem, operation);
             close();
         } else {
-            binder.validate();
+            BinderValidationStatus<T> status = binder.validate();
         }
     }
 
@@ -286,17 +286,6 @@ public abstract class AbstractEditorDialog<T extends Serializable>
         if (deleteShortcutRegistration != null) {
             deleteShortcutRegistration.remove();
             deleteShortcutRegistration = null;
-        }
-    }
-
-    @Override
-    public void beforeLeave(BeforeLeaveEvent event) {
-        if (isOpened()) {
-            if (getBinder().hasChanges()) {
-                event.postpone();
-            } else {
-                close();
-            }
         }
     }
 }
