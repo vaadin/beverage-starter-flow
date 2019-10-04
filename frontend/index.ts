@@ -9,7 +9,6 @@ import './src/client-categories';
 
 //------- Configure flow
 const {serverSideRoutes} = new Flow({
-  // @ts-ignore
   imports: () => import('../target/frontend/generated-flow-imports')
 });
 
