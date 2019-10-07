@@ -22,7 +22,7 @@ public class CategoriesListIT extends AbstractViewTest {
     private static final String NEW_CATEGORY_NAME = "Awesome drinks";
 
     public CategoriesListIT() {
-        super("categories");
+        super("server-categories");
     }
 
     @Test
