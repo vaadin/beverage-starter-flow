@@ -35,6 +35,7 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
@@ -47,6 +48,7 @@ import com.vaadin.starter.beveragebuddy.ui.common.AbstractEditorDialog;
  * buttons to add a new category or edit existing ones.
  */
 @Route(value = "categories", layout = MainLayout.class)
+@RouteAlias("server-categories")
 @PageTitle("Categories List")
 public class CategoriesList extends VerticalLayout {
 

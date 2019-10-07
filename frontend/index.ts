@@ -8,8 +8,7 @@ import './src/main-layout';
 import './src/client-categories';
 
 //------- Configure flow
-const flow = new Flow({
-  //@ts-ignore
+const {serverSideRoutes} = new Flow({
   imports: () => import('../target/frontend/generated-flow-imports')
 });
 
@@ -30,7 +29,7 @@ const routes = [
         }
       },
       // fallback to server-side Flow routes if no client-side routes match
-      flow.route
+      ...serverSideRoutes
     ]
   }
 ];
