@@ -28,7 +28,6 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.PageConfigurator;
-import com.vaadin.flow.server.VaadinService;
 import com.vaadin.starter.beveragebuddy.ui.views.categorieslist.CategoriesList;
 import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
 
@@ -37,18 +36,13 @@ import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
  * child views below that.
  */
 @CssImport(value = "./styles/view-styles.css", id = "view-styles")
-@CssImport(value = "./styles/main-layout-styles.css", id = "main-layout-styles")
-@CssImport(value = "./styles/shared-styles.css", include = "view-styles main-layout-styles")
+@CssImport(value = "./styles/shared-styles.css", include = "view-styles")
 @PWA(name = "Beverage Buddy", shortName = "BevBuddy")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class MainLayout extends Div
         implements RouterLayout, PageConfigurator {
 
     public MainLayout() {
-        if (VaadinService.getCurrent().getDeploymentConfiguration().isClientSideMode()) {
-            return;
-        }
-
         H2 title = new H2("Beverage Buddy");
         title.addClassName("main-layout__title");
 
