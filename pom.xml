@@ -15,11 +15,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>15.0-SNAPSHOT</vaadin.version>
+        <vaadin.version>15.0.0.alpha2</vaadin.version>
 
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
         <drivers.downloader.phase>pre-integration-test</drivers.downloader.phase>
-        <vaadin.clientSideMode>true</vaadin.clientSideMode>
     </properties>
 
     <repositories>
@@ -39,15 +38,6 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>vaadin-snapshots</id>
-            <url>
-                https://oss.sonatype.org/content/repositories/vaadin-snapshots/
-            </url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
         </repository>
         <!-- Repository used by many Vaadin add-ons -->
         <repository>
@@ -77,15 +67,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
-        <pluginRepository>
-            <id>vaadin-snapshots</id>
-            <url>
-                https://oss.sonatype.org/content/repositories/vaadin-snapshots/
-            </url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
     </pluginRepositories>
 
     <dependencyManagement>
@@ -101,6 +82,13 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- workaround for https://github.com/vaadin/flow/issues/6559 -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+
         <dependency>
             <groupId>com.vaadin</groupId>
             <!-- Replace artifactId with vaadin-core to use only free components -->
