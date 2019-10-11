@@ -78,6 +78,19 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- workaround  #6559 -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+        <!-- workaround  #6653 -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-spring</artifactId>
+            <version>12.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- FLOW -->
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -159,7 +172,7 @@
                     <artifactId>vaadin-core</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>        
+        </dependency>
     </dependencies>
 
     <build>
