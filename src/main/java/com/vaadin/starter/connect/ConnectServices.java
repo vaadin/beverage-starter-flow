@@ -32,6 +32,9 @@ import com.vaadin.starter.beveragebuddy.backend.ReviewService;
  */
 @VaadinService
 public class ConnectServices {
+    public String hello(String name) {
+        return "Hello, " + name + "!";
+    }
 
     public List<Category> categories(String filter) {
         return CategoryService.getInstance().findCategories(filter);
@@ -45,5 +48,5 @@ public class ConnectServices {
     public List<Review> reviews(String filter) {
         return ReviewService.getInstance().findReviews(filter);
     }
-    
+
 }
