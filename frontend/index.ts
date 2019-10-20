@@ -1,7 +1,6 @@
 //------- Client libraries
 import {Flow} from '@vaadin/flow-frontend/Flow';
 import {Router} from '@vaadin/router';
-import client from './generated/connect-client.default';
 
 //------- Application Views
 import './theme';
@@ -38,16 +37,4 @@ const routes = [
 
 const router = new Router(document.querySelector('#outlet'));
 router.setRoutes(routes);
-
-/// FIXME: Disable interactive login right now
-client.credentials = function() {
-  return new Promise((resolve) => {
-      resolve({
-          username: 'user',
-          password: 'user',
-          stayLoggedIn: true
-      })
-  })
-}
-
 

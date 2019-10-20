@@ -2,7 +2,7 @@ package com.vaadin.starter.connect;
 
 import java.util.List;
 
-import com.vaadin.connect.VaadinService;
+import com.vaadin.flow.server.connect.VaadinService;
 import com.vaadin.starter.beveragebuddy.backend.Category;
 import com.vaadin.starter.beveragebuddy.backend.CategoryService;
 import com.vaadin.starter.beveragebuddy.backend.Review;
