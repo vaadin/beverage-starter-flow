@@ -181,23 +181,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- CONNECT GENERATORS -->
-            <plugin>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-connect-maven-plugin</artifactId>
-                <version>${vaadin.connect.version}</version>
-                <executions>
-                    <execution>
-                        <id>vaadin-connect-resources</id>
-                        <goals>
-                            <goal>generate-openapi-spec</goal>
-                            <goal>generate-vaadin-client</goal>
-                            <goal>generate-connect-modules</goal>
-                            <goal>generate-token-signing-key</goal>
-                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 </project>
