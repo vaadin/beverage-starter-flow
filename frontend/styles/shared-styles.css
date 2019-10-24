@@ -8,6 +8,8 @@ body {
     /* Avoid horizontal scrollbars, mainly on IE11 */
     overflow-x: hidden;
     background-color: var(--lumo-contrast-5pct);
+    height: 100vh;
+    margin: 0;
 }
 
 vaadin-vertical-layout, vaadin-grid {

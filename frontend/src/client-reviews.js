@@ -20,9 +20,6 @@ class ClientReviews extends PolymerElement {
   static get template() {
     return html`
     <style>
-      vaadin-grid {
-      }
-
       .view-toolbar {
         display: flex;
       }
@@ -33,18 +30,18 @@ class ClientReviews extends PolymerElement {
     </style>
 
     <div class="view-toolbar">
-      <vaadin-text-field id="search" on-change="update" class="view-toolbar__search-field" tabindex="0">
+      <vaadin-text-field id="search" on-change="update" class="view-toolbar__search-field">
         <iron-icon icon="lumo:search" slot="prefix"></iron-icon>
       </vaadin-text-field>
 
-      <vaadin-button class="view-toolbar__button" theme="primary" tabindex="0" role="button">
+      <vaadin-button class="view-toolbar__button" theme="primary" role="button">
         <iron-icon icon="lumo:plus" slot="prefix"></iron-icon>New category
       </vaadin-button>
     </div>
 
     <h3>Reviews</h3>
     <vaadin-grid id="grid">
-      <vaadin-grid-column path="name" header="Beverate"></vaadin-grid-column>
+      <vaadin-grid-column path="name" header="Beverage"></vaadin-grid-column>
       <vaadin-grid-column path="category.name" header="Category Name"></vaadin-grid-column>
       <vaadin-grid-column path="score" header="Ratting"></vaadin-grid-column>
       <vaadin-grid-column path="count" header="Times Tasted"></vaadin-grid-column>
