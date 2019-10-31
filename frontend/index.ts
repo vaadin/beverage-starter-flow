@@ -5,7 +5,6 @@ import {Router} from '@vaadin/router';
 //------- Application Views
 import './theme';
 import './src/main-layout';
-import './src/client-categories';
 
 //------- Configure flow
 const {serverSideRoutes} = new Flow({
@@ -23,9 +22,7 @@ const routes = [
         title: 'Client Categories',
         component: 'client-categories',
         action: async () => {
-          // FIXME: remove the static import above and import the component dynamically
-          // when https://github.com/vaadin/flow/issues/6295 is fixed
-          // await import('./src/client-categories');
+          await import('./src/client-categories');
         }
       },
       // fallback to server-side Flow routes if no client-side routes match

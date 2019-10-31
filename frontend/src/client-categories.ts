@@ -3,6 +3,9 @@ import {LitElement, html, css, customElement, property} from 'lit-element';
 import '@vaadin/vaadin-crud';
 import '@vaadin/vaadin-grid/vaadin-grid-filter-column';
 
+import * as CategoryService from '../generated/CategoryService';
+import CategoryDTO from '../generated/com/vaadin/starter/beveragebuddy/connect/CategoryService/CategoryDTO';
+
 @customElement('client-categories')
 export class ClientCategories extends LitElement {
     static styles = css`
@@ -26,16 +29,18 @@ export class ClientCategories extends LitElement {
         `;
     }
 
-    @property() items: Array<any> = [];
+    @property() items: Array<CategoryDTO> = [];
 
-    connectedCallback() {
+    async connectedCallback() {
       super.connectedCallback();
-      ['Mineral Water', 'Soft Drink', 'Coffee', 'Tea', 'Dairy', 'Cider', 'Beer', 'Wine', 'Other']
-        .forEach(name => this.items.push({name: name, beverages: Math.floor(Math.random() * 15)}))
+      const response = await CategoryService.list('') || [];
+      this.items = response.filter(c => c !== null) as CategoryDTO[];
     }
 
-    save(evt: any) {
-      evt.detail.item.beverages = 0;
+    async save(evt: CustomEvent) {
+      const category: CategoryDTO = evt.detail.item;
+      category.beverages = 0;
+      await CategoryService.save(category);
     }
 
     onBeforeLeave(): any {

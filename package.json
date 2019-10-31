@@ -23,5 +23,5 @@
     "compression-webpack-plugin": "3.0.0",
     "script-ext-html-webpack-plugin": "2.1.4"
   },
-  "vaadinAppPackageHash": "4d5d3cfde203ea156181efe6d3501ac9ab95b84c99f251fc739f9eee7cc820c2"
+  "vaadinAppPackageHash": "112d493ba016312795cf99cfe62e29eeaca61a04306365246976c7448bb69615"
 }
