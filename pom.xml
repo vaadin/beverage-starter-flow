@@ -16,13 +16,12 @@
 
         <vaadin.version>15.0-SNAPSHOT</vaadin.version>
         <flow.version>3.0-SNAPSHOT</flow.version>
-        <vaadin.connect.version>0.9.4</vaadin.connect.version>
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.4.RELEASE</version>
+        <version>2.2.0.RELEASE</version>
     </parent>
 
     <pluginRepositories>
@@ -78,19 +77,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- workaround  #6559 -->
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.11.3</version>
-        </dependency>
-        <!-- workaround  #6653 -->
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-spring</artifactId>
-            <version>12.1-SNAPSHOT</version>
-        </dependency>
-
         <!-- FLOW -->
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -121,21 +107,6 @@
                     <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-server</artifactId>
-            <version>${flow.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-client</artifactId>
-            <version>${flow.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-html-components</artifactId>
-            <version>${flow.version}</version>
         </dependency>
         <!-- SPRING -->
         <dependency>
