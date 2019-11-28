@@ -7,13 +7,14 @@
     "@vaadin/router": "^1.4.3",
     "@vaadin/vaadin-shrinkwrap": "^14.0.10",
     "@webcomponents/webcomponentsjs": "^2.2.10",
-    "lit-element": "^2.2.1"
+    "lit-element": "^2.2.1",
+    "@vaadin/flow-frontend": "./target/flow-frontend"
   },
   "devDependencies": {
     "webpack": "4.30.0",
     "webpack-cli": "3.3.0",
     "webpack-dev-server": "3.3.0",
-    "webpack-babel-multi-target-plugin": "2.3.0",
+    "webpack-babel-multi-target-plugin": "2.3.1",
     "copy-webpack-plugin": "5.0.3",
     "webpack-merge": "4.2.1",
     "raw-loader": "3.0.0",
@@ -28,5 +29,5 @@
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "mkdirp": "0.5.1"
   },
-  "vaadinAppPackageHash": "d098f113f47ba035f9e9af7c430de42f152c254b35963e0de0c80285b46bb33b"
+  "vaadinAppPackageHash": "80938e511f12784349d863b6159eb9ee0b05514552bdd43be03b70f7a6ab196e"
 }
