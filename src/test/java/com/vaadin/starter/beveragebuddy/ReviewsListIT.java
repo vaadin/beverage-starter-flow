@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.vaadin.flow.component.button.testbench.ButtonElement;
 import com.vaadin.flow.component.combobox.testbench.ComboBoxElement;
@@ -92,7 +93,8 @@ public class ReviewsListIT extends AbstractViewTest {
     }
 
     private TestBenchElement getReviewsList() {
-        return $("reviews-list").first();
+        return (TestBenchElement) waitUntil(ExpectedConditions
+                .presenceOfElementLocated(By.tagName("reviews-list")), 500);
     }
 
     private List<TestBenchElement> getReviews() {
