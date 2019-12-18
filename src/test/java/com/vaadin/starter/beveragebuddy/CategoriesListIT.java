@@ -46,8 +46,10 @@ public class CategoriesListIT extends AbstractViewTest {
     }
 
     private void applyFilter(String filterName) {
-        findElement(By.className("view-toolbar__search-field"))
-                .sendKeys(filterName);
+        getCategoriesList()
+                .$(TextFieldElement.class).first()
+                .setValue(filterName);
+
         assertThat(
                 String.format("Expect to have only one category with name '%s'",
                         filterName),
