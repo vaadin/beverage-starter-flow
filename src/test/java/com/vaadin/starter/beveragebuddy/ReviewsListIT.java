@@ -93,6 +93,8 @@ public class ReviewsListIT extends AbstractViewTest {
     }
 
     private TestBenchElement getReviewsList() {
+        // This is a workaround for https://github.com/vaadin/testbench/issues/1229
+        // TODO: remove the workaround after the issue is fixed
         return (TestBenchElement) waitUntil(ExpectedConditions
                 .presenceOfElementLocated(By.tagName("reviews-list")), 500);
     }
