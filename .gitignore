@@ -13,6 +13,7 @@
 
 # The following files are generated/updated by flow-maven-plugin
 node_modules/
+pnpmfile.js
 
 # Browser drivers for local integration tests
 drivers/
