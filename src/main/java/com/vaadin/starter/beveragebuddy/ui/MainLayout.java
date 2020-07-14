@@ -21,13 +21,9 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.InitialPageSettings;
-import com.vaadin.flow.server.PWA;
-import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.starter.beveragebuddy.ui.views.categorieslist.CategoriesList;
 import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
 
@@ -37,10 +33,7 @@ import com.vaadin.starter.beveragebuddy.ui.views.reviewslist.ReviewsList;
  */
 @CssImport(value = "./styles/view-styles.css", id = "view-styles")
 @CssImport(value = "./styles/shared-styles.css", include = "view-styles")
-@PWA(name = "Beverage Buddy", shortName = "BevBuddy")
-@Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
-public class MainLayout extends Div
-        implements RouterLayout, PageConfigurator {
+public class MainLayout extends Div implements RouterLayout {
 
     public MainLayout() {
         H2 title = new H2("Beverage Buddy");
@@ -66,9 +59,4 @@ public class MainLayout extends Div
         addClassName("main-layout");
     }
 
-    @Override
-    public void configurePage(InitialPageSettings settings) {
-        settings.addMetaTag("apple-mobile-web-app-capable", "yes");
-        settings.addMetaTag("apple-mobile-web-app-status-bar-style", "black");
-    }
 }
