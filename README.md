@@ -1,3 +1,10 @@
+## This example application has been deprecated
+
+This project is not updated anymore, but is still visible as an old example for using Java and HTML in Vaadin 14. Please see [our starting page](https://vaadin.com/start) for newer project examples.
+
+
+
+
 # Beverage Buddy App Starter for Vaadin Flow
 :coffee::tea::sake::baby_bottle::beer::cocktail::tropical_drink::wine_glass:
 
